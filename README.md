@@ -4,3 +4,6 @@ What upcoming construction projects will affect the neighborhood? Is your street
 
 * Status: Defining goal
 * Needs: 
+  - [ ] ?
+  - [ ] ?
+  - [ ] ?
