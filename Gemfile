@@ -22,8 +22,11 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-
+# Use geocoder gym for getting neighborhood coordinates
 gem 'geocoder'
+# Use the httparty gem for doing rest calls with
+gem 'httparty'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
