@@ -1,4 +1,17 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-<% integer = 20 %>
-<p><%= integer %></p>
+<div class='text-center jumbotron bg-color title-color' style='margin-bottom: 0px; height:40%; margin-top:-50px;'>
+  <h1>NeighborStat</h1>
+  <h3>Information about your neighborhood.</h3>
+  <br><Br>
+  <div class='col-md-4 col-md-offset-4 '>
+  <form>
+    <input type='text' class='form-control input-lg' placeholder='Type Your Address...'></input>
+  </form>
+  </div>
+  <br>
+</div>
+<div id='map' style='height:60%; width:100%;'></div>
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
+var map = L.mapbox.map('map', 'mapbox.light')
+  .setView([39, -98.5795], 4);
+</script>
