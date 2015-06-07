@@ -81,6 +81,7 @@ GEM
     multi_xml (0.5.5)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    pg (0.18.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -107,6 +108,11 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.4)
+    rails_stdout_logging (0.0.3)
     railties (4.2.1)
       actionpack (= 4.2.1)
       activesupport (= 4.2.1)
@@ -160,8 +166,10 @@ DEPENDENCIES
   httparty
   jbuilder (~> 2.0)
   jquery-rails
+  pg
   pry
   rails (= 4.2.1)
+  rails_12factor
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring
