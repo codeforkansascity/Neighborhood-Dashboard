@@ -3,9 +3,9 @@
   <h3>Information about your neighborhood.</h3>
   <br><Br>
   <div class='col-md-4 col-md-offset-4 '>
-  <form>
-    <input type='text' class='form-control input-lg' placeholder='Type Your Address...'></input>
-  </form>
+  <%= form_tag neighborhood_index_path, method: :get do %>
+    <input name='search' type='text' class='form-control input-lg' placeholder='Type Your Address...'/>
+  <% end %>
   </div>
   <br>
 </div>
