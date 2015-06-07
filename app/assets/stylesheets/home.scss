@@ -25,3 +25,15 @@ html, body{
   height:100%;
   font-family: 'Roboto', sans-serif;
 }
+
+body .jumbotron {
+  margin-top: -20px;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+
+  select {
+    color: #000000;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
