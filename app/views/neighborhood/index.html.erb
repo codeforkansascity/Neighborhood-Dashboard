@@ -1,3 +1,13 @@
 <div class="container">
-  <h1><%= @neighborhood.name %></h1>
+  <section class="neighborhood-navigation col-md-3">
+    <ul>
+      <li class="active"><a href='#'>Home</a></li>
+      <li><a href='#'>About</a></li>
+      <li><a href='#'>Neighborhood Map</a></li>
+      <li><a href='#'></a></li>
+    </ul>
+  </section>
+  <section class="neighborhood col-md-9">
+    <h1>Dashboard for <%= @neighborhood.name %></h1>
+  </section>
 </div>
