@@ -13,12 +13,9 @@
     <canvas id="myChart" width="650" height="400"></canvas>
   </section>
   <script>
-    var years = <%= @neighborhood_data.yearly_311.map { |key,value| key.to_i }.to_json %>;
-    var dataSet = <%= @neighborhood_data.yearly_311.map { |key,value| value }.to_json %>;
-
     $(document).ready(function() {
       var data = {
-        labels: years,
+        labels: <%= @neighborhood.three_eleven_data.map { |key,value| key.to_i }.to_json %>,
         datasets: [
           {
               label: "Yearly 311 Report Counts",
@@ -28,7 +25,7 @@
               pointStrokeColor: "#fff",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(151,187,205,1)",
-              data: dataSet
+              data: <%= @neighborhood.three_eleven_data.map { |key,value| value }.to_json %>
           }
         ]
       };
