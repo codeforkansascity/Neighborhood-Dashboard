@@ -3,13 +3,8 @@
   <p>Information about your neighborhood.</p>
   <div class="container">
     <div class="col-md-6 col-md-offset-3">
-    <select class="navigation-select">
-      <%= @neighborhoods.each do |neighborhood| %>
-        <option value=<%= neighborhood_path(neighborhood)%>><%= neighborhood.name %></option>
-      <% end %>
-    </select>
     <%= form_tag neighborhood_index_path, method: :get do %>
-      <input name='search' type='text' class='form-control input-lg' placeholder='Type Your Address...'/>
+      <input name='search' type='text' class='form-control input-lg' placeholder='Find by Neighborhood or Address'/>
     <% end %>
     </div>
   </div>

@@ -1,6 +1,8 @@
 class NeighborhoodController < ApplicationController
   def index
-    @neighborhood = Neighborhood.find_by!(name: Neighborhood::Search.search(params[:search]))
+    @neighborhood = 
+      Neighborhood.includes(:coordinates).search_by_name(params[:search]).first || 
+      Neighborhood.includes(:coordinates).find_by!(name: Neighborhood::Search.search(params[:search]))
   end
 
   def show
