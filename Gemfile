@@ -13,6 +13,8 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer', platforms: :ruby
 # Use Bootstrap for styling the application
 gem 'bootstrap-sass', '~> 3.3.4'
+# Use font-awesome for icons
+gem 'font-awesome-rails', '~> 4.3.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

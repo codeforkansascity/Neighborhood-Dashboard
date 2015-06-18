@@ -1,18 +1,19 @@
-<div class='text-center jumbotron bg-color title-color'>
-  <h1>NeighborStat</h1>
-  <p>Information about your neighborhood.</p>
-  <div class="container">
-    <div class="col-md-6 col-md-offset-3">
-    <%= form_tag neighborhood_index_path, method: :get do %>
-      <input name='search' type='text' class='form-control input-lg' placeholder='Find by Neighborhood or Address'/>
+<section class="neighborstat-home-banner">
+  <h1>
+    <%= link_to root_path do%>
+      <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;NeighborStat</a>
     <% end %>
-    </div>
-  </div>
-  <br>
-</div>
-<div id='map' style='height:60%; width:100%;'></div>
+  </h1>
+  <p>Information about your neighborhood.</p>
+  <%= form_tag neighborhood_index_path, method: :get do %>
+    <input name='search' type='text' class='form-control input-lg' placeholder='Find by Neighborhood or Address'/>
+  <% end %>
+</section>
+<section class="neighborstat-home-map">
+  <div id="map"></div>
+</section>
 <script>
 L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
 var map = L.mapbox.map('map', 'mapbox.light')
-  .setView([39, -98.5795], 4);
+  .setView([39.056234, -94.572115], 13);
 </script>
