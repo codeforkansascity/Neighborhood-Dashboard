@@ -9,4 +9,8 @@ class Neighborhood < ActiveRecord::Base
   def three_eleven_data
     Neighborhood::ThreeElevenData.new(self).data
   end
+
+  def crime_data
+    Neighborhood::CrimeData.new(self)
+  end
 end

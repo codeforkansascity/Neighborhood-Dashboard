@@ -19,44 +19,34 @@
       <li><a href='#'>Neighborhood Map</a></li>
       <li><a href='#'></a></li>
     </ul>
+    <div id='map' style="width:100%; min-height: 400px;"></div>
   </section>
   <section class="neighborhood col-md-9">
     <h1>Dashboard for <%= @neighborhood.name %></h1>
-    <div id='map' style="width:100%; min-height: 400px;"></div>
-    <h2 class="chart-header">Yearly 311 Report Count</h2>
-    <canvas id="three-elevent-chart"></canvas>
+    <h2 class="chart-header">Neighborhood Trends</h2>
+    <div id="trending-data-graph" class="trending-graph">
+      <canvas></canvas>
+      <p class="graph-help">Click on the datasets to add them to the chart</p>
+      <ul class="graph-legend">
+        <li data-title="311 Reports" data-dataset-id="1" data-url=<%= neighborhood_trending_crime_path(@neighborhood) %>>
+          <span class="data-color" style="background-color: #E89B11;"></span> 311 Reports
+        </li>
+        <li data-title="Trending Crime" data-dataset-id="2" data-url=<%= neighborhood_trending_three_eleven_path(@neighborhood) %>>
+          <span class="data-color" style="background-color: #BA321A;"></span> Trending Crime
+        </li>
+      </ul>
+    </div>
+    </section>
   </section>
   <script>
     $(document).ready(function() {
-      var data = {
-        labels: <%= @neighborhood.three_eleven_data.map { |key,value| key.to_i }.to_json %>,
-        datasets: [
-          {
-              label: "Yearly 311 Report Counts",
-              fillColor: "rgba(151,187,205,0.2)",
-              strokeColor: "rgba(151,187,205,1)",
-              pointColor: "rgba(151,187,205,1)",
-              pointStrokeColor: "#fff",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(151,187,205,1)",
-              data: <%= @neighborhood.three_eleven_data.map { |key,value| value }.to_json %>
-          }
-        ]
-      };
-
-      var ctx = document.getElementById("three-elevent-chart").getContext("2d");
-      var myNewChart = new Chart(ctx).Line(data, {
-        responsive: true,
-        maintainAspectRation: true
-      });
-      
       L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
       var map = L.mapbox.map('map', 'mapbox.light').setView(
         [
           <%= @neighborhood.coordinates.first.longtitude%>,
           <%= @neighborhood.coordinates.first.latitude%>
         ], 
-      16);
+      14);
 
       var latitudeLines = <%= @neighborhood.coordinates.map { |coord| [coord.longtitude, coord.latitude] }.to_json %>;
       var polylineOptions = {
