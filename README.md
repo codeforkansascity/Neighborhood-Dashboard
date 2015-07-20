@@ -1,7 +1,24 @@
-Build an app to help neighborhood leaders and members to use information to keep everyone aware of changes and to solve problems.
-For example, what businesses are opening or closing? What building demolitions are planned? 
-What upcoming construction projects will affect the neighborhood? Is your street going to be closed for repairs?
+Welcome to the KCNeighborhoodStat app project! We're working  to help neighborhoods help themselves by giving them easy access to useful civic open data.
+We're ultimately hoping to develop an app that- by providing easier access to civic open data- lets neighborhood
+organization and neighbors:
 
-* Status: Defining goal
-* Needs: 
-  - [ ] ?
+*  Better understand their neighborhood through data
+What is my neighborhood- what are its boundaries? How many people live there? How much crime happens here?
+*  More easily track development and others projects in their neighborhoods
+Is a new business opening  down the street? Is a building being torn down?
+*  Make better decisions as a community
+Do we have a lot of senior citizens that need help with minor home repair?
+*  Become more effective advocates for their community
+We need more police patrols and codes inspections- here's the data
+
+# Civic data:the opportunity
+
+These days,we're seeing a greater availability of civic open data in cities
+across the country- Kansas City included! Researchers,business owners, and everyday residents can now search,download,and interact  with thousands of datasets about their cities-everything from the city budget to traffic counts and crime reports.
+
+We believe this trend towards more open data is especially good news for
+the neighborhoods that make up the fabric of the city.Rich,up-to-date information about crime, development, and demographics is what neighborhoods need to make better decisions and to advocate for themselves more effectively with government agencies and other
+organizations.
+
+In short, civic open data can help neighborhoods help themselves. When
+this happens, neighborhoods become a better place to live and residents and families can thrive.
