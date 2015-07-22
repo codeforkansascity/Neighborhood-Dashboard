@@ -33,3 +33,12 @@ To help realize the full potential of this data in benefitting our city’s neig
 * Customizable (users can select which datapoints to display for a particular neighborhood)
 * Capable of displaying data over time (so that users can understand trends, put data in context
 
+### How it works
+Users of the site will be prompted to select a neighborhood on the homepage. This will direct them to a "neighborhood page," 
+where they will be able to select a number of datapoints they would like to study. 
+
+Those data would be summarized in simple boxes, like in this example from this [civic data dashboard] (https://dashboard.edmonton.ca/) from the City of Edmonton, Canada’s website. 
+
+Another aspect of Edmonton’s dashboard we plan incorporate in our app is the ability to view data over time. By clicking on one of the data boxes, a detailed explanation of the data would expand and the data would be displayed on a graph. The graph could be standalone, allowing multiple datasets to be added to it, to allow comparison.
+
+Ideally, data with a specific location would be displayed on the page’s neighborhood map.
