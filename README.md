@@ -11,14 +11,24 @@ Do we have a lot of senior citizens that need help with minor home repair?
 *  Become more effective advocates for their community
 We need more police patrols and codes inspections- here's the data
 
-# Civic data:the opportunity
+## Civic data:the opportunity
 
-These days,we're seeing a greater availability of civic open data in cities
-across the country- Kansas City included! Researchers,business owners, and everyday residents can now search,download,and interact  with thousands of datasets about their cities-everything from the city budget to traffic counts and crime reports.
+These days, we're seeing a greater availability of civic open data in cities
+across the country- Kansas City included! We believe this trend towards more open data is especially good news for
+the neighborhoods that make up the fabric of the city. Rich,up-to-date information about crime, development, and demographics is what neighborhoods need to make better decisions and to advocate for themselves more effectively with government agencies and other organizations.
 
-We believe this trend towards more open data is especially good news for
-the neighborhoods that make up the fabric of the city.Rich,up-to-date information about crime, development, and demographics is what neighborhoods need to make better decisions and to advocate for themselves more effectively with government agencies and other
-organizations.
+## Civic data: the problem
 
-In short, civic open data can help neighborhoods help themselves. When
-this happens, neighborhoods become a better place to live and residents and families can thrive.
+Unfortunately, even though the data are out there,  its potential power to help neighborhoods isn’t yet realized.
+Accessing civic data might mean hours of wading through spreadsheets, then trying to interpret confusing terminology, or having to go through a website that is not easy to use for the average resident or neighborhood leader.
+Meanwhile, civic data is usually not presented at the neighborhood-level geography. Right now, for instance, it’s not possible to see the population of a neighborhood or the number of crimes that have occurred there recently. 
+
+# That’s why we created KCNeighborhoodStat
+*We’re making an application that displays relevant civic open data at the neighborhood level.*
+
+To help realize the full potential of this data in benefitting our city’s neighborhoods, we want this tool to be:
+
+* User-friendly/visually appealing
+* Customizable (users can select which datapoints to display for a particular neighborhood)
+* Capable of displaying data over time (so that users can understand trends, put data in context
+
