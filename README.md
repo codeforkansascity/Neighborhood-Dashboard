@@ -31,7 +31,7 @@ To help realize the full potential of this data in benefitting our city’s neig
 
 * User-friendly/visually appealing
 * Customizable (users can select which datapoints to display for a particular neighborhood)
-* Capable of displaying data over time (so that users can understand trends, put data in context
+* Capable of displaying data over time (so that users can understand trends, put data in context)
 
 ### How it works
 Users of the site will be prompted to select a neighborhood on the homepage. This will direct them to a "neighborhood page," 
