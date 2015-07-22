@@ -4,15 +4,12 @@ We're ultimately hoping to develop an app that- by providing easier access to ci
 organization and neighbors:
 
 *  **Better understand their neighborhood through data**
-
 *What is my neighborhood- what are its boundaries? How many people live there? How much crime happens here?*
 
 *  **More easily track development and others projects in their neighborhoods**
-
 *Is a new business opening  down the street? Is a building being torn down?*
 
 *  **Make better decisions as a community**
-
 *Do we have a lot of senior citizens that need help with minor home repair?*
 
 *  **Become more effective advocates for their community**
