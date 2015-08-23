@@ -1,19 +1,18 @@
-<section class="neighborstat-home-banner">
-  <h1>
-    <%= link_to root_path do%>
-      <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;NeighborStat</a>
+<nav class="navbar navbar-default" style='border-bottom:0px;'>
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand">Neighborhood Stat</a>
+    </div>
+    <%= form_tag neighborhood_index_path, method: :get, class: 'navbar-form navbar-right' do %>
+      <div class="form-group">
+        <input name='search' type='text' class='form-control input-lg' placeholder='Find by Neighborhood or Address'/>
+      </div>
     <% end %>
-  </h1>
-  <p>Information about your neighborhood.</p>
-  <%= form_tag neighborhood_index_path, method: :get do %>
-    <input name='search' type='text' class='form-control input-lg' placeholder='Find by Neighborhood or Address'/>
-  <% end %>
-</section>
-<section class="neighborstat-home-map">
-  <div id="map"></div>
-</section>
-<script>
-L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
-var map = L.mapbox.map('map', 'mapbox.light')
-  .setView([39.056234, -94.572115], 13);
-</script>
+  </div>
+</nav>

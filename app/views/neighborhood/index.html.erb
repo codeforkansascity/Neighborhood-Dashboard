@@ -30,18 +30,18 @@
       <li role="presentation" class="active"><a href="#">Crime</a></li>
       <li><a href="#">Property Value</a></li>
       <li><a href="#">Building Permits</a></li>
-      <li><a href="#">Business</a></li>
       <li><a href="#">Zoning</a></li>
     </ul>
   </nav>
   <div class="content-display">
-    <div id='map' style="width:50%; float:right; min-height: 400px;"></div>
+    <div class="statictics-panel"></div>
+    <div id='neighborhood-map'></div>
   </div>
 </div>
 <script>
   $(document).ready(function() {
     L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
-    var map = L.mapbox.map('map', 'mapbox.light').setView(
+    var map = L.mapbox.map('neighborhood-map', 'mapbox.light').setView(
       [
         <%= @neighborhood.coordinates.first.longtitude%>,
         <%= @neighborhood.coordinates.first.latitude%>

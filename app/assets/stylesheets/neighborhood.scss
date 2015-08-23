@@ -75,3 +75,12 @@
   @extend .clearfix;
   background-color: #F7F8FA;
 }
+
+#neighborhood-map {
+  @include make-md-column(6);
+  min-height: 400px;
+}
+
+.statictics-panel {
+  @include make-md-column(6);
+}
