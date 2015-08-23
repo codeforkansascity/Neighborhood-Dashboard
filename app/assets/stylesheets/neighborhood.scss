@@ -12,3 +12,60 @@
     font-size: 2em;
   }
 }
+
+.neighborhood-nav {
+  border-color: #456972;
+
+  li {
+
+    &.active > a {
+      font-weight: bolder;
+      background-color: #A6CDD4;
+      border-color: #456972;
+      border-bottom-color: #A6CDD4;
+
+      &:hover {
+        background-color: #A6CDD4;
+        border-color: #456972;
+        border-bottom-color: #A6CDD4;
+        cursor: pointer;
+      }
+    }
+
+    > a {
+      color: #456972;
+      margin-right: 0;
+      background-color: #C1DBE1;
+      border-color: #BCC5CB;
+      border-bottom-color: #456972;
+
+      &:hover {
+        background-color: #C1DBE1;
+        color: #000;
+        border-color: #BCC5CB;
+        border-bottom-color: #456972;
+      }
+    }
+  }
+}
+
+.sub-data .navbar {
+  border-radius: 0;
+  background-color: #A6CDD4;
+  border: none;
+  border-bottom: #456972 solid 3px;
+
+  .navbar-nav {
+    border: none;
+
+    margin: 0;
+    a {
+      color: #456972;
+    }
+
+    .active a {
+      font-weight: bolder;
+      background-color: #A6CDD4;
+    }
+  }
+}
