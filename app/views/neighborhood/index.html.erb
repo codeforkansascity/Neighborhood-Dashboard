@@ -25,15 +25,34 @@
     <li><a href="#">Housing</a></li>
     <li><a href="#">Vacancies</a></li>
   </ul>
-  <div class="sub-data">
-    <nav class="navbar navbar-default">
-      <ul class="navbar-nav nav">
-        <li role="presentation" class="active"><a href="#">Crime</a></li>
-        <li><a href="#">Property Value</a></li>
-        <li><a href="#">Building Permits</a></li>
-        <li><a href="#">Business</a></li>
-        <li><a href="#">Zoning</a></li>
-      </ul>
-    </nav>
+  <nav class="navbar navbar-default sub-data-nav">
+    <ul class="navbar-nav nav">
+      <li role="presentation" class="active"><a href="#">Crime</a></li>
+      <li><a href="#">Property Value</a></li>
+      <li><a href="#">Building Permits</a></li>
+      <li><a href="#">Business</a></li>
+      <li><a href="#">Zoning</a></li>
+    </ul>
+  </nav>
+  <div class="content-display">
+    <div id='map' style="width:50%; float:right; min-height: 400px;"></div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
+    var map = L.mapbox.map('map', 'mapbox.light').setView(
+      [
+        <%= @neighborhood.coordinates.first.longtitude%>,
+        <%= @neighborhood.coordinates.first.latitude%>
+      ], 
+    14);
+    var latitudeLines = <%= @neighborhood.coordinates.map { |coord| [coord.longtitude, coord.latitude] }.to_json %>;
+    var polylineOptions = {
+      color: '#000',
+      fillColor: '#000',
+      fillOpacity: 0.1
+    };
+    L.polyline(latitudeLines, polylineOptions).addTo(map);
+  });
+</script>

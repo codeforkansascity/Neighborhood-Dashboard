@@ -49,11 +49,12 @@
   }
 }
 
-.sub-data .navbar {
+.sub-data-nav {
   border-radius: 0;
   background-color: #A6CDD4;
   border: none;
   border-bottom: #456972 solid 3px;
+  margin-bottom: 0;
 
   .navbar-nav {
     border: none;
@@ -68,4 +69,9 @@
       background-color: #A6CDD4;
     }
   }
+}
+
+.content-display {
+  @extend .clearfix;
+  background-color: #F7F8FA;
 }
