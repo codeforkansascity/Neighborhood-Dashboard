@@ -1,35 +1,90 @@
-.neighborhood-navigation {
-  ul {
-    list-style: none;
-    padding-left: 0;
-    margin-left: 0;
+.navbar-brand {
+  font-size: 2em;
+}
 
-    li {
-      > * {
-        display: block;
-        padding: 5px 10px;
+.neighborhood-title {
+  margin-top: 15px;
+  float: right;
+  font-size: small;
 
-        &:hover {
-          background-color: #f2f2f2;
-        }
+  @media (max-width: $screen-md-min) {
+    float: none;
+    font-size: 2em;
+  }
+}
+
+.neighborhood-nav {
+  border-color: #456972;
+
+  li {
+
+    &.active > a {
+      font-weight: bolder;
+      background-color: #A6CDD4;
+      border-color: #456972;
+      border-bottom-color: #A6CDD4;
+
+      &:hover {
+        background-color: #A6CDD4;
+        border-color: #456972;
+        border-bottom-color: #A6CDD4;
+        cursor: pointer;
       }
+    }
 
-      &.active {
-        background-color: #3498db;
+    > a {
+      color: #456972;
+      margin-right: 0;
+      background-color: #C1DBE1;
+      border-color: #BCC5CB;
+      border-bottom-color: #456972;
 
-        > * {
-          color: #ffffff;
-        }
+      &:hover {
+        background-color: #C1DBE1;
+        color: #000;
+        border-color: #BCC5CB;
+        border-bottom-color: #456972;
       }
     }
   }
 }
 
-.neighborhood {
-  h1 {
-    margin-top: 0;
-    background-color: #f2f2f2;
-    padding: 30px;
-    text-align: center;
+.sub-data-nav {
+  border-radius: 0;
+  background-color: #A6CDD4;
+  border: none;
+  border-bottom: #456972 solid 3px;
+  margin-bottom: 0;
+
+  .navbar-nav {
+    border: none;
+
+    margin: 0;
+    a {
+      color: #456972;
+    }
+
+    .active a {
+      font-weight: bolder;
+      background-color: #A6CDD4;
+
+      &:hover {
+        background-color: #A6CDD4;
+      }
+    }
   }
+}
+
+.content-display {
+  @extend .clearfix;
+  background-color: #F7F8FA;
+}
+
+#neighborhood-map {
+  @include make-md-column(6);
+  min-height: 400px;
+}
+
+.statictics-panel {
+  @include make-md-column(6);
 }
