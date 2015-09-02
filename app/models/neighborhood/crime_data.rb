@@ -24,8 +24,11 @@ class Neighborhood::CrimeData
     service_url = URI::escape("https://data.kcmo.org/resource/nsn9-g8a4.json?#{query_polygon}")
     coordinates = HTTParty.get(service_url, verify: false)
 
+    # Not every coordinate is guaraneed to have location_1 populated with coordinates
     coordinates
-      .select{ |coordinate| coordinate["location_1"] && coordinates["location_1"]["coordinates"]}
+      .select{ |coordinate|
+        coordinate["location_1"].present? && coordinate["location_1"]["coordinates"].present?
+      }
       .map { |coordinate|
         {
           "type" => "Feature",
