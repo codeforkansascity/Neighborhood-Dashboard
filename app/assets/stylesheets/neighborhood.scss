@@ -75,6 +75,11 @@
   }
 }
 
+.toolbar {
+  background-color: #ddd;
+  padding: 10px;
+}
+
 .content-display {
   @extend .clearfix;
   background-color: #F7F8FA;
