@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>NeighborhoodDashboard</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
@@ -13,9 +13,10 @@
   <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script>
 
 </head>
-<body>
+<body ng-app="receta">
 
-<%= yield %>
+<div ng-controller="NeighborhoodCtrl"> <%= yield %>
+</div>
 
 </body>
 </html>
