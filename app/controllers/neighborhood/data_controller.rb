@@ -1,4 +1,9 @@
 class Neighborhood::DataController < ApplicationController
+
+  def crime
+    render json: Neighborhood.find(params[:id]).crime_data.homicides
+  end
+
   def trending_crime
     render json: Neighborhood.find(params[:id]).crime_data.yearly_counts
   end
