@@ -9,7 +9,7 @@
       </button>
       <a href="/" class="navbar-brand">Neighborhood Stat</a>
     </div>
-    <form class='navbar-form navbar-right' role: 'search' ng-submit='neighborhoodSearch(search)'>
+    <form class='navbar-form navbar-right' role: 'search' ng-submit="neighborhoodSearch(search)">
       <div class="form-group">
         <input name='search' type='text' class='form-control' placeholder='Find by Neighborhood or Address' ng-model="search.query"/>
       </div>
@@ -37,12 +37,12 @@
     <div class="toolbar">
       <form>
         <div class="btn-group">
-          <%= link_to '#', class: 'btn btn-default' do %>
+          <a href='#'class: 'btn btn-default'>
             <span class="fa fa fa-map-marker"></span>
-          <% end %>
-          <%= link_to '#', class: 'btn btn-default' do %>
+          </a>
+          <a>
             <span class="fa fa fa-fire"></span>
-          <% end %>
+          </a>
         </div>
       </form>
     </div>

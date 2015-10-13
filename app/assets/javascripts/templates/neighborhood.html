@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" style='border-bottom:0px;'>
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -9,15 +9,15 @@
       </button>
       <a href="/" class="navbar-brand">Neighborhood Stat</a>
     </div>
-    <%= form_tag neighborhood_index_path, method: :get, class: 'navbar-form navbar-right', role: 'search' do %>
+    <form class='navbar-form navbar-right' role: 'search' ng-submit="neighborhoodSearch(search)">
       <div class="form-group">
-        <input name='search' type='text' class='form-control' placeholder='Find by Neighborhood or Address'/>
+        <input name='search' type='text' class='form-control' placeholder='Find by Neighborhood or Address' ng-model="search.query"/>
       </div>
-    <% end %>
+    </form>
   </div>
 </nav>
-<div class="container">
-  <h1 class="neighborhood-title">Quality Hill</h1>
+<div my-directive my-directive-watch="neighborhood" ng-if="neighborhood" class="container">
+  <h1 class="neighborhood-title">{{neighborhood.name}}</h1>
   <ul class="nav nav-tabs neighborhood-nav">
     <li role="presentation" class="active"><a href="#">Crime</a></li>
     <li><a href="#">Demographics</a></li>
@@ -34,25 +34,19 @@
     </ul>
   </nav>
   <div class="content-display">
+    <div class="toolbar">
+      <form>
+        <div class="btn-group">
+          <a href='#'class: 'btn btn-default'>
+            <span class="fa fa fa-map-marker"></span>
+          </a>
+          <a>
+            <span class="fa fa fa-fire"></span>
+          </a>
+        </div>
+      </form>
+    </div>
     <div class="statictics-panel"></div>
     <div id='neighborhood-map'></div>
   </div>
 </div>
-<script>
-  $(document).ready(function() {
-    L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
-    var map = L.mapbox.map('neighborhood-map', 'mapbox.light').setView(
-      [
-        <%= @neighborhood.coordinates.first.longtitude%>,
-        <%= @neighborhood.coordinates.first.latitude%>
-      ],
-    14);
-    var latitudeLines = <%= @neighborhood.coordinates.map { |coord| [coord.longtitude, coord.latitude] }.to_json %>;
-    var polylineOptions = {
-      color: '#000',
-      fillColor: '#000',
-      fillOpacity: 0.1
-    };
-    L.polyline(latitudeLines, polylineOptions).addTo(map);
-  });
-</script>

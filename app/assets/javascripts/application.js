@@ -12,10 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require js-routes
-//= require chart
-//= require angular
+//= require angular/angular
+//= require angular-resource/angular-resource
+//= require angular-route/angular-route
 //= require angular-rails-templates
-//= require angular/app
-//= require_tree ./angular/controllers
-//= require_tree ./angular/directives
+//= require_tree ./templates
+//= require_tree .
