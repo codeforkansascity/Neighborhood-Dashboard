@@ -2,29 +2,31 @@
   [
     'templates',
     'ngRoute',
-    'ngResource'
+    'ngResource',
+    'ui.router'
   ]
 )
 
 @app.config([
   '$httpProvider',
-  '$routeProvider',
-  '$locationProvider',
-  ($httpProvider, $routeProvider, $locationProvider)->
+  '$stateProvider',
+  '$urlRouterProvider',
+  ($httpProvider, $stateProvider, $urlRouterProvider)->
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
 
-    $routeProvider
-      .when('/',
+    $stateProvider
+      .state('home',
+        url: '/'
         templateUrl: 'home.html'
         controller: 'NeighborhoodCtrl'
       )
-      .when('/neighborhood/:neighborhoodId',
+      .state('neighborhood',
+        url: '/neighborhood/:neighborhoodId'
         templateUrl: 'neighborhood.html'
         controller: 'NeighborhoodCtrl'
       )
-      .otherwise(
-        redirectTo: '/'
-      )
+
+    $urlRouterProvider.otherwise('/')
 ])
 
 @app.run(->

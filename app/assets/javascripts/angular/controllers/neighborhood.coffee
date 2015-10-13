@@ -2,10 +2,10 @@ angular.module('neighborhoodstat').controller("NeighborhoodCtrl",
   [
     '$scope',
     '$resource',
-    '$routeParams',
+    '$stateParams',
     '$location',
     '$http',
-    ($scope, $resource, $routeParams, $location, $http)->
+    ($scope, $resource, $stateParams, $location, $http)->
       Neighborhood = $resource('/neighborhood/:neighborhoodId', {neighborhoodId: "@id", format: 'json'})
 
       $scope.neighborhoodSearch = (search) ->
@@ -15,9 +15,9 @@ angular.module('neighborhoodstat').controller("NeighborhoodCtrl",
             $location.path("/neighborhood/#{neighborhood.id}")
         )
 
-      if $routeParams.neighborhoodId
+      if $stateParams.neighborhoodId
         Neighborhood.get(
-          {neighborhoodId: $routeParams.neighborhoodId},
+          {neighborhoodId: $stateParams.neighborhoodId},
           (neighborhood)->
             $scope.neighborhood = neighborhood
             $scope.neighborhoodCoordinates = ([coordinate.longtitude, coordinate.latitude] for coordinate in neighborhood.coordinates)
