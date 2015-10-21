@@ -34,6 +34,20 @@
     </ul>
   </nav>
   <div class="content-display">
+    <div class="toolbar">
+      <form>
+        <%= date_field(:crime, :start) %>
+        <%= date_field(:crime, :end) %>
+        <div class="btn-group">
+          <%= link_to '#', class: 'btn btn-default' do %>
+            <span class="fa fa fa-map-marker"></span>
+          <% end %>
+          <%= link_to '#', class: 'btn btn-default' do %>
+            <span class="fa fa fa-fire"></span>
+          <% end %>
+        </div>
+      </form>
+    </div>
     <div class="statictics-panel"></div>
     <div id='neighborhood-map'></div>
   </div>
@@ -41,18 +55,29 @@
 <script>
   $(document).ready(function() {
     L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
+
     var map = L.mapbox.map('neighborhood-map', 'mapbox.light').setView(
       [
         <%= @neighborhood.coordinates.first.longtitude%>,
         <%= @neighborhood.coordinates.first.latitude%>
       ],
     14);
+
     var latitudeLines = <%= @neighborhood.coordinates.map { |coord| [coord.longtitude, coord.latitude] }.to_json %>;
+
     var polylineOptions = {
       color: '#000',
       fillColor: '#000',
       fillOpacity: 0.1
     };
+
     L.polyline(latitudeLines, polylineOptions).addTo(map);
+
+    console.log(JSON.parse('<%= @neighborhood.crime_data.map_coordinates.to_json.html_safe %>'));
+
+    // Crime markers
+    L.mapbox.featureLayer().setGeoJSON(
+      JSON.parse('<%= @neighborhood.crime_data.map_coordinates.to_json.html_safe %>')
+    ).addTo(map);
   });
 </script>
