@@ -17,21 +17,6 @@
   border-color: #456972;
 
   li {
-
-    &.active > a {
-      font-weight: bolder;
-      background-color: #A6CDD4;
-      border-color: #456972;
-      border-bottom-color: #A6CDD4;
-
-      &:hover {
-        background-color: #A6CDD4;
-        border-color: #456972;
-        border-bottom-color: #A6CDD4;
-        cursor: pointer;
-      }
-    }
-
     > a {
       color: #456972;
       margin-right: 0;
@@ -44,6 +29,20 @@
         color: #000;
         border-color: #BCC5CB;
         border-bottom-color: #456972;
+      }
+
+      &.active {
+        font-weight: bolder;
+        background-color: #A6CDD4;
+        border-color: #456972;
+        border-bottom-color: #A6CDD4;
+
+        &:hover {
+          background-color: #A6CDD4;
+          border-color: #456972;
+          border-bottom-color: #A6CDD4;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -86,10 +85,9 @@
 }
 
 #neighborhood-map {
-  @include make-md-column(6);
   min-height: 400px;
 }
 
-.statictics-panel {
-  @include make-md-column(6);
+.statistics-panel {
+  padding: 10px;
 }
