@@ -7,8 +7,6 @@ class NeighborhoodController < ApplicationController
 
   def show
     @neighborhood = Neighborhood.find(params[:id])
-
-    render 'index'
   end
 end
 

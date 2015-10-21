@@ -1,0 +1,27 @@
+<nav class="navbar navbar-default sub-data-nav">
+  <ul id="neighborhood-sub-tabs" class="navbar-nav nav" role="tablist">
+    <li role="presentation" class="active">
+      <a aria-controls="statistics-table" role="tab" data-toggle="tab" data-target="#neighborhood-map">Map</a>
+    </li>
+    <li role="presentation">
+      <a aria-controls="neighborhood-map" role="tab" data-toggle="tab" data-target="#statistics-table">Report</a>
+    </li>
+  </ul>
+</nav>
+<div class="content-display">
+  <div class="toolbar">
+    <form>
+      <input type="date" />
+      <input type="date" />
+      <div class="btn-group">
+        <button type="button" class="btn btn-default">Legally Abandoned</button>
+        <button type="button" class="btn btn-default">Vacancy</button>
+        <button type="button" class="btn btn-default">Tax Delinquent</button>
+        <button type="button" class="btn btn-default">Code Violation</button>
+        <button type="button" class="btn btn-default">Dangerous Buildings</button>
+      </div>
+    </form>
+  </div>
+  <div class="statistics-panel"></div>
+  <div id='neighborhood-map'></div>
+</div>

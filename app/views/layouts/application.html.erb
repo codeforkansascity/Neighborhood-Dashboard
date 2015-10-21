@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>NeighborhoodDashboard</title>
+  <base href="/" />
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
@@ -14,9 +15,6 @@
 
 </head>
 <body ng-app="neighborhoodstat">
-
-<div ng-controller="NeighborhoodCtrl"> <%= yield %>
-</div>
-
+  <ui-view></ui-view>
 </body>
 </html>
