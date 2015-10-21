@@ -5,8 +5,8 @@ class Neighborhood::CrimeData
 
   def yearly_counts
     # TODO: Append the within_polygon to the where clause for the data set.
-    service_url = URI::escape("https://data.kcmo.org/resource/dfzx-ty3t.json")
-    crimes = HTTParty.get(service_url)
+    service_url = URI::escape("https://data.kcmo.org/resource/nsn9-g8a4.json?#{query_polygon}")
+    crimes = HTTParty.get(service_url, verify: false)
 
     yearly_counts = {}
 
@@ -20,13 +20,30 @@ class Neighborhood::CrimeData
     Hash[yearly_counts]
   end
 
+  def map_coordinates
+    service_url = URI::escape("https://data.kcmo.org/resource/nsn9-g8a4.json?#{query_polygon}")
+    coordinates = HTTParty.get(service_url, verify: false)
+
+    coordinates
+      .select{ |coordinate| coordinate["location_1"] && coordinates["location_1"]["coordinates"]}
+      .map { |coordinate|
+        {
+          "type" => "Feature",
+          "geometry" => {
+            "type" => "Point",
+            "coordinates" => coordinate["location_1"]["coordinates"]
+          }
+        }
+      }
+  end
+
   private
 
   def query_polygon
-    coordinates = @neighborhood.coordinates.map{ |neighborhood| 
+    coordinates = @neighborhood.coordinates.map{ |neighborhood|
       "#{neighborhood.latitude} #{neighborhood.longtitude}"
     }.join(',')
 
-    "$where=within_polygon(location, 'MULTIPOLYGON (((#{coordinates})))')"
+    "$where=within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')"
   end
 end
