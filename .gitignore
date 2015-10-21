@@ -15,3 +15,4 @@
 /log/*
 !/log/.keep
 /tmp
+lib/assets/bower_components/**/*
