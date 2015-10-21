@@ -10,15 +10,49 @@
 </nav>
 <div class="content-display">
   <div class="toolbar">
-    <form>
-      <div class="btn-group">
-        <a href='#'class: 'btn btn-default'>
-          <span class="fa fa fa-map-marker"></span>
-        </a>
-        <a>
-          <span class="fa fa fa-fire"></span>
-        </a>
+    <form class="form-inline">
+      <div class="form-group">
+        <input type="date" class="form-control" />
+        <label>Start Date</label>
       </div>
+      <div class="form-group">
+        <input type="date" class="form-control" />
+        <label>End Date</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <a class= 'btn btn-default'>
+            <span class="fa fa fa-map-marker"></span>
+          </a>
+          <a class= 'btn btn-default'>
+            <span class="fa fa fa-fire"></span>
+          </a>
+        </div>
+        <label>Display</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <a class= 'btn btn-default'>
+            Frequency
+          </a>
+          <a class= 'btn btn-default'>
+            Severity
+          </a>
+          <a class= 'btn btn-default'>
+            Type
+          </a>
+        </div>
+        <label>Data Type</label>
+      </div>
+      <div class="form-group">
+        <input type="radio" name="sex_offender" class="form-control" value="show"> Show
+        <input type="radio" value="sex_offender" class="form-control" value="hide"> Hide
+        <label>Sex Offender</label>
+      </div>
+      <button class="btn btn btn-success pull-right" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Dropdown
+        <span class="caret"></span>
+      </button>
     </form>
   </div>
   <div class="tab-content">
