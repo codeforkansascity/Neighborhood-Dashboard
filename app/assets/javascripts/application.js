@@ -12,7 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
+//= require bootstrap-sprockets
+//= require bootstrap/popover
+//= require tooltipster
 //= require angular/angular
 //= require angular-resource/angular-resource
 //= require angular-route/angular-route

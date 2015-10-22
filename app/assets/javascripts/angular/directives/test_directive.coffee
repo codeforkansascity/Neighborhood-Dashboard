@@ -6,12 +6,7 @@ angular.module('neighborhoodstat').directive 'myDirective', [ ->
       { post: (scope, element, attributes) ->
         scope.$watch 'myDirectiveWatch', (newNeighborhood, oldNeighborhood) ->
           L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
-
-          if oldNeighborhood.map
-            newNeighborhood.map = oldNeighborhood.map
-            newNeighborhood.map.removeLayer(oldNeighborhood.coordinatesLayer)
-          else
-            newNeighborhood.map = L.mapbox.map('neighborhood-map', 'mapbox.light')
+          newNeighborhood.map = L.mapbox.map('neighborhood-map', 'mapbox.light')
 
           newNeighborhood.map.setView(
             [

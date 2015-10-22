@@ -5,7 +5,8 @@
       "angular": "v1.4.7",
       "angular-route": "v1.4.x",
       "angular-resource": "latest",
-      "angular-ui-router": "latest"
+      "angular-ui-router": "latest",
+      "tooltipster": "latest"
     }
   },
   "vendor": {
