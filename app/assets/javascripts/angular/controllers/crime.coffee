@@ -3,4 +3,6 @@ angular.module('neighborhoodstat').controller("CrimeCtrl", [
   '$resource',
   '$stateParams',
   ($scope, $resource, $stateParams)->
+    $scope.clearFilters = () ->
+
 ])

@@ -21,8 +21,8 @@ class Neighborhood::CrimeData
     Hash[yearly_counts]
   end
 
-  def map_coordinates
-    service_url = URI::escape("#{RESOURCE_URL}?#{query_polygon}")
+  def map_coordinates(crime_codes)
+    service_url = URI::escape("#{RESOURCE_URL}?#{query_polygon} AND #{}")
     coordinates = HTTParty.get(service_url, verify: false)
     mapify_coordinates(coordinates)
   end
@@ -34,6 +34,10 @@ class Neighborhood::CrimeData
   end
 
   private
+
+  def process_filters(crime_codes)
+
+  end
 
   def mapify_coordinates(coordinates)
     # Not every coordinate is guaraneed to have location_1 populated with coordinates

@@ -1,0 +1,2 @@
+module Neighborhood::CrimeHelper
+end

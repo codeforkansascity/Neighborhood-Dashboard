@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  resources :neighborhood, only: [:index, :show]
+  resources :neighborhood, only: [:index, :show] do
+    resources :crime, only: [:index]
+  end
 
   namespace :neighborhood, path: '/neighborhood/:id' do
-    get 'crime' => 'data#crime'
     get 'trending_crime' => 'data#trending_crime'
     get 'trending_three_eleven' => 'data#trending_three_eleven'
   end
