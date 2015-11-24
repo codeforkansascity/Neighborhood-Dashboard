@@ -21,6 +21,7 @@ angular.module('neighborhoodstat').controller("NeighborhoodCtrl",
           (neighborhood)->
             $scope.neighborhood = neighborhood
             $scope.neighborhoodCoordinates = ([coordinate.longtitude, coordinate.latitude] for coordinate in neighborhood.coordinates)
+            $scope.neighborhoodMarkerSets = []
         )
   ]
 )

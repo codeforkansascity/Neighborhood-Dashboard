@@ -44,21 +44,6 @@ html, body{
   }
 }
 
-.map-filters {
-  @include make-row(10);
-
-  > * {
-    h2 {
-      border-bottom: #000 solid 1px;
-    }
-
-    label {
-      display: block;
-      font-weight: normal;
-    }
-  }
-}
-
 .tooltip-ref-content {
   display: none;
 }

@@ -77,6 +77,7 @@
 .toolbar {
   background-color: #ddd;
   padding: 10px;
+  position: relative;
 }
 
 .content-display {
@@ -90,4 +91,42 @@
 
 .statistics-panel {
   padding: 10px;
+}
+
+.map-filters {
+  @include make-row(10);
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.3);
+  margin: 0 -10px;
+  padding: 10px;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1001;
+  background-color: #fff;
+
+  &:after, &:before {
+    border-color: #fff;
+    bottom: 100%;
+    right: 1em;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #fff;
+    border-width: 2em;
+    margin-left: -2em;
+  }
+
+  > * {
+    h2 {
+      border-bottom: #000 solid 1px;
+    }
+
+    label {
+      display: block;
+      font-weight: normal;
+    }
+  }
 }

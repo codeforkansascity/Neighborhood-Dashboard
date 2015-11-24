@@ -1,32 +1,34 @@
-<nav class="navbar navbar-default" style='border-bottom:0px;'>
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-      </button>
-      <a href="/" class="navbar-brand">Neighborhood Stat</a>
-    </div>
-    <form class='navbar-form navbar-right' role: 'search' ng-submit="neighborhoodSearch(search)">
-      <div class="form-group">
-        <input name='search' type='text' class='form-control' placeholder='Find by Neighborhood or Address' ng-model="search.query"/>
+<body>
+  <nav class="navbar navbar-default" style='border-bottom:0px;'>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="/" class="navbar-brand">Neighborhood Stat</a>
       </div>
-    </form>
+      <form class='navbar-form navbar-right' role: 'search' ng-submit="neighborhoodSearch(search)">
+        <div class="form-group">
+          <input name='search' type='text' class='form-control' placeholder='Find by Neighborhood or Address' ng-model="search.query"/>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <div my-directive my-directive-watch="neighborhood" ng-if="neighborhood" class="container">
+    <h1 class="neighborhood-title">{{neighborhood.name}}</h1>
+    <ul class="nav nav-tabs neighborhood-nav">
+      <li role="presentation"><a ui-sref=".crime" ui-sref-active="active">Crime</a></li>
+      <li><a ui-sref=".vacancies" ui-sref-active="active">Vacancies</a></li>
+      <!--
+        TODO: Add these tabs back in later
+        <li><a href="#">Demographics</a></li>
+        <li><a href="#">Development</a></li>
+        <li><a href="#">Housing</a></li>
+      -->
+    </ul>
+    <div ui-view></div>
   </div>
-</nav>
-<div my-directive my-directive-watch="neighborhood" ng-if="neighborhood" class="container">
-  <h1 class="neighborhood-title">{{neighborhood.name}}</h1>
-  <ul class="nav nav-tabs neighborhood-nav">
-    <li role="presentation"><a ui-sref=".crime" ui-sref-active="active">Crime</a></li>
-    <li><a ui-sref=".vacancies" ui-sref-active="active">Vacancies</a></li>
-    <!--
-      TODO: Add these tabs back in later
-      <li><a href="#">Demographics</a></li>
-      <li><a href="#">Development</a></li>
-      <li><a href="#">Housing</a></li>
-    -->
-  </ul>
-  <div ui-view></div>
-</div>
+</body>

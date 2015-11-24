@@ -3,7 +3,8 @@
     'templates',
     'ngRoute',
     'ngResource',
-    'ui.router'
+    'ui.router',
+    'ngAnimate'
   ]
 )
 
