@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>NeighborhoodDashboard</title>
-  <base href="/" />
-  <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= javascript_include_tag 'application' %>
-  <%= csrf_meta_tags %>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
-  <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
-  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
-  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script>
-
-</head>
-<body ng-app="neighborhoodstat">
-  <ui-view></ui-view>
-</body>
+  <head>
+    <title>NeighborhoodDashboard</title>
+    <base href="/" />
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+    <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script>
+  </head>
+  <body ng-app="neighborhoodstat">
+    <ui-view></ui-view>
+  </body>
 </html>

@@ -5,8 +5,7 @@ class Neighborhood::CrimeData
   end
 
   def yearly_counts
-    # TODO: Append the within_polygon to the where clause for the data set.
-    service_url = URI::escape("#{RESOURCE_URL}?#{query_polygon}")
+    service_url = URI::escape("#{RESOURCE_URL}?$where=#{query_polygon}")
     crimes = HTTParty.get(service_url, verify: false)
 
     yearly_counts = {}
@@ -21,19 +20,26 @@ class Neighborhood::CrimeData
     Hash[yearly_counts]
   end
 
-  def map_coordinates
-    service_url = URI::escape("#{RESOURCE_URL}?#{query_polygon}")
-    coordinates = HTTParty.get(service_url, verify: false)
-    mapify_coordinates(coordinates)
-  end
+  def map_coordinates(crime_codes = [])
+    if crime_codes.present?
+      service_url = URI::escape("#{RESOURCE_URL}?$where= #{query_polygon} AND #{process_crime_filters(crime_codes)}")
+    else
+      service_url = URI::escape("#{RESOURCE_URL}?$where= #{query_polygon}")
+    end
 
-  def homicides
-    service_url = URI::escape("#{RESOURCE_URL}?#{query_polygon} AND offense >= 0900 AND offense < 1000")
-    coordinates = HTTParty.get(service_url, verify: false)
-    mapify_coordinates(coordinates)
+    mapify_coordinates(HTTParty.get(service_url, verify: false))
   end
 
   private
+
+  def process_crime_filters(crime_codes)
+    if crime_codes.present?
+      crime_code_filter = crime_codes.join("' OR ibrs='")
+      "(ibrs = '#{crime_code_filter}')"
+    else
+      ""
+    end
+  end
 
   def mapify_coordinates(coordinates)
     # Not every coordinate is guaraneed to have location_1 populated with coordinates
@@ -59,6 +65,6 @@ class Neighborhood::CrimeData
       "#{neighborhood.latitude} #{neighborhood.longtitude}"
     }.join(',')
 
-    "$where=within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')"
+    "within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')"
   end
 end

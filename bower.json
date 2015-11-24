@@ -4,8 +4,8 @@
     "dependencies": {
       "angular": "v1.4.7",
       "angular-route": "v1.4.x",
-      "angular-resource": "latest",
-      "angular-ui-router": "latest"
+      "angular-resource": "v1.4.8",
+      "angular-ui-router": "v0.2.15"
     }
   },
   "vendor": {

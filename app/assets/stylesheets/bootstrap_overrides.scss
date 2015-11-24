@@ -3,3 +3,19 @@ $navbar-default-color: #000;
 $navbar-default-link-color: #000;
 $navbar-default-brand-color: #000;
 $navbar-default-link-color: #000;
+
+.form-inline .form-group {
+  margin-right: 10px;
+
+  input[type="radio"] {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-top: -5px;
+  }
+
+  label {
+    display: block;
+    font-weight: normal;
+    margin-bottom: 0;
+  }
+}

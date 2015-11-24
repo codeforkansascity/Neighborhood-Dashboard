@@ -4,9 +4,10 @@ Rails.application.routes.draw do
   resources :neighborhood, only: [:index, :show]
 
   namespace :neighborhood, path: '/neighborhood/:id' do
-    get 'crime' => 'data#crime'
     get 'trending_crime' => 'data#trending_crime'
     get 'trending_three_eleven' => 'data#trending_three_eleven'
+
+    resources :crime, only: [:index]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

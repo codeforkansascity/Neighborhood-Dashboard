@@ -10,16 +10,194 @@
 </nav>
 <div class="content-display">
   <div class="toolbar">
-    <form>
-      <div class="btn-group">
-        <a href='#'class: 'btn btn-default'>
-          <span class="fa fa fa-map-marker"></span>
-        </a>
-        <a>
-          <span class="fa fa fa-fire"></span>
-        </a>
+    <form class="form-inline">
+      <div class="form-group">
+        <input type="date" class="form-control" />
+        <label>Start Date</label>
       </div>
+      <div class="form-group">
+        <input type="date" class="form-control" />
+        <label>End Date</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <a class= 'btn btn-default'>
+            <span class="fa fa fa-map-marker"></span>
+          </a>
+          <a class= 'btn btn-default'>
+            <span class="fa fa fa-fire"></span>
+          </a>
+        </div>
+        <label>Display</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <a class= 'btn btn-default'>
+            Frequency
+          </a>
+          <a class= 'btn btn-default'>
+            Severity
+          </a>
+          <a class= 'btn btn-default'>
+            Type
+          </a>
+        </div>
+        <label>Data Type</label>
+      </div>
+      <div class="form-group">
+        <input type="radio" name="sex_offender" class="form-control" value="show"> Show
+        <input type="radio" value="sex_offender" class="form-control" value="hide"> Hide
+        <label>Sex Offender</label>
+      </div>
+      <button class="btn btn btn-success pull-right" type="button" ng-click="activateFilters = !activateFilters">
+        Filters
+      </button>
     </form>
+    <div ng-show="activateFilters" class="map-filters">
+      <div class="col-md-2">
+        <h2>Person</h2>
+        <label>
+          <input type="checkbox" ng-model="crime.ALL_PEOPLE" />
+          All
+        </label>
+        <label>
+          <input type="checkbox" ng-model="crime.ASSAULT" />
+          Assault
+        </label>
+        <label>
+          <input type="checkbox" ng-model="crime.HOMICIDE" />
+          Homicide
+        </label>
+        <label>
+          <input type="checkbox" ng-model="crime.SEX_OFFENSE_FORCIBLE" />
+          Sex Offense, Forcible
+        </label>
+        <label>
+          <input type="checkbox" ng-model="crime.SEX_OFFENSE_NON_FORCIBLE" />
+          Sex Offense, Non Forcible
+        </label>
+      </div>
+      <div class="col-md-5">
+        <h2>Property</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <label>
+              <input type="checkbox" ng-model="crime.ALL_PROPERY" />
+              All
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.ARSON" />
+              Arson
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.BURGLARY" />
+              Burglary
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.CONTERFEITING" />
+              Counterfeiting
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.EMBEZZLEMENT" />
+              Embezzlement
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.EXTORTION" />
+              Extortion
+            </label>
+          </div>
+          <div class="col-md-6">
+            <label>
+              <input type="checkbox" ng-model="crime.FRAUD" />
+              Fraud
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.MOTOR_VEHICLE_THEFT" />
+              Motor Vehicle Theft
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.ROBBERY" />
+              Robbery
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.STOLEN_PROPERTY" />
+              Stolen Property
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.THEFT" />
+              Theft
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.VANDALISM" />
+              Vandalism
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <h2>Society</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <label>
+              <input type="checkbox" ng-model="crime.ALL_SOCIETY" />
+              All
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.BAD_CHECKS" />
+              Bad Checks
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.CURFEW" />
+              Curfew & Loitering
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.DISORDERLY_CONDUCT" />
+              Disorderly Conduct
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.DUE" />
+              DUI
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.DRUNKNESS" />
+              Drunkenness
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.DOMESTIC_VIOLENCE" />
+              Domestic Nonviolent
+            </label>
+          </div>
+          <div class="col-md-6">
+            <label>
+              <input type="checkbox" ng-model="crime.GAMBLING" />
+              Gambling
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.PORNOGRAPHY"/>
+              Pornography
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.LIQUOR_LAW_VIOLATION"/>
+              Liquor Law Violation
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.STOLEN_PROPERTY"/>
+              Stolen Property
+            </label>
+            <label>
+              <input type="checkbox" ng-model="crime.TRESPASSING"/>
+              Trespassing
+            </label>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="map-filter-actions pull-right">
+          <button class="btn btn-primary">Reset</button>
+          <button class="btn btn-primary" ng-click="getCrimeByCodes(crime)">Done</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="tab-content">
     <div class="statistics-panel tab-pane" role="tabpanel" class="tab-pane" id="statistics-table">
