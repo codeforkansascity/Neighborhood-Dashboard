@@ -1,3 +1,5 @@
+require 'crime_mapper'
+
 class Neighborhood::CrimeData
   RESOURCE_URL = "https://data.kcmo.org/resource/nsn9-g8a4.json"
   def initialize(neighborhood)
@@ -30,7 +32,19 @@ class Neighborhood::CrimeData
     mapify_coordinates(HTTParty.get(service_url, verify: false))
   end
 
+  def grouped_totals
+    service_url = URI::escape("#{RESOURCE_URL}?$where=#{query_polygon}&$select=ibrs,count(ibrs)&$group=ibrs")
+    crimes = HTTParty.get(service_url, verify: false)
+    convert_crime_key_to_application_key(crimes)
+  end
+
   private
+
+  def convert_crime_key_to_application_key(crime_groupings)
+    crime_groupings.inject({}) do |result, crime, count|
+      result.merge(CrimeMapper::CRIME_CODES[crime['ibrs']] => crime['count_ibrs'])
+    end
+  end
 
   def process_crime_filters(crime_codes)
     if crime_codes.present?
