@@ -35,14 +35,24 @@ class Neighborhood::CrimeData
   def grouped_totals
     service_url = URI::escape("#{RESOURCE_URL}?$where=#{query_polygon}&$select=ibrs,count(ibrs)&$group=ibrs")
     crimes = HTTParty.get(service_url, verify: false)
-    convert_crime_key_to_application_key(crimes)
+
+    crime_counts = crimes.inject({}) {|crime_hash, crime|
+      crime_hash.merge(crime['ibrs'] => crime['count_ibrs'])
+    }
+
+    convert_crime_key_to_application_key(crime_counts)
   end
 
   private
 
-  def convert_crime_key_to_application_key(crime_groupings)
-    crime_groupings.inject({}) do |result, crime, count|
-      result.merge(CrimeMapper::CRIME_CODES[crime['ibrs']] => crime['count_ibrs'])
+  def convert_crime_key_to_application_key(crime_counts)
+    CrimeMapper::CRIME_CATEGORIES.inject({}) do |result, crime_category|
+      puts crime_category[0]
+      crimes = crime_category[1].inject({}) do |crime_hash, crime|
+        crime_hash.merge(CrimeMapper::CRIME_CODES[crime] => crime_counts[crime].to_i)
+      end
+
+      result.merge(crime_category[0] => crimes)
     end
   end
 
