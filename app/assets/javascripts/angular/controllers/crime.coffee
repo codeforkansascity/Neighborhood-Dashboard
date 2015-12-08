@@ -67,25 +67,25 @@ angular
         if($scope.crimeStatistics)
           crimes = $scope.crimeStatistics[category]
 
-          switch category
-            when 'PERSON'
-              return crimes.ASSAULT_AGGRAVATED +
-                     crimes.ASSAULT_SIMPLE +
-                     crimes.ASSAULT_INTIMIDATION +
-                     crimes.HOMICIDE_NONNEGLIGENT_MANSLAUGHTER +
-                     crimes.HOMICIDE_NEGLIGENT_MANSLAUGHETER +
-                     crimes.SEX_OFFENSE_RAPE +
-                     crimes.SEX_OFFENSE_SODOMY +
-                     crimes.SEX_OFFENSE_ASSAULT_WITH_OBJECT +
-                     crimes.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE +
-                     crimes.SEX_OFFENSE_NONFORCIBLE_INCEST +
-                     crimes.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE
-            else
-              return 0
+          # switch category
+          #   when 'PERSON'
+          #     return crimes.ASSAULT_AGGRAVATED +
+          #            crimes.ASSAULT_SIMPLE +
+          #            crimes.ASSAULT_INTIMIDATION +
+          #            crimes.HOMICIDE_NONNEGLIGENT_MANSLAUGHTER +
+          #            crimes.HOMICIDE_NEGLIGENT_MANSLAUGHETER +
+          #            crimes.SEX_OFFENSE_RAPE +
+          #            crimes.SEX_OFFENSE_SODOMY +
+          #            crimes.SEX_OFFENSE_ASSAULT_WITH_OBJECT +
+          #            crimes.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE +
+          #            crimes.SEX_OFFENSE_NONFORCIBLE_INCEST +
+          #            crimes.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE
+          #   else
+          #     return 0
 
           # This is code that will get the count of all crimes in the category. If we can display
           # every crime inside the table, then we can use this code.
-          # return (count for code, count of $scope.crimeStatistics[category]).reduce (a,b) -> a + b
+          return (count for code, count of $scope.crimeStatistics[category]).reduce (a,b) -> a + b
         else
           return 0
   ])

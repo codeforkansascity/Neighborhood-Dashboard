@@ -221,10 +221,11 @@
         <tbody class="expandable-row">
           <tr class="expandable-trigger">
             <th>
-              <span class="glyphicon glyphicon-plus"></span>
+              <span class="btn btn-default glyphicon glyphicon-plus"></span>
               <span>
-                <h4>Crimes Against</h4>
-                Person
+                <span class="text-muted">Crimes Against</span>
+                <br/>
+                <strong>Person</strong>
               </span>
             </th>
             <td>
@@ -261,6 +262,213 @@
             </th>
             <td>
               {{crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_INCEST + crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE}}
+            </td>
+          </tr>
+        </tbody>
+        <tbody class="expandable-row">
+          <tr class="expandable-trigger">
+            <th>
+              <span class="btn btn-default glyphicon glyphicon-plus"></span>
+              <span>
+                <span class="text-muted">Crimes Against</span>
+                <br/>
+                <strong>Property</strong>
+              </span>
+            </th>
+            <td>
+              {{calculateCategoryTotals('PROPERTY')}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Arson
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.ARSON}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Bribery
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.BRIBERY}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Burglary
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.BURGLARY}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Forgery
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.FORGERY}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Vandalism
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.VANDALISM}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Embezzlement
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.EMBEZZLEMENT}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Extortion
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.EXTORTING}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Swindle
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.FRAUD_SWINDLE}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Credit Card
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.FRAUD_CREDIT_CARD}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Impersonation
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.FRAUD_IMPERSONATION}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Welfare
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.FRAUD_WELFARE}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Wire
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.FRAUD_WIRE}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Pocket Picking
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_POCKET_PICKING}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Purse Snatching
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_PURSE_SNATCHING}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Shop Lifting
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_SHOPLIFTING}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Theft From Building
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_FROM_BUILDING}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Theft from Coinoperated Device
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_FROM_THEFT_COINOPERATED_DEVICE}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Motor Vehicle
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_MOTOR_VEHICLE}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Motor Vehicle Parts
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_MOTOR_VEHICLE_PARTS}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Other
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_OTHER}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Motor Vehicle Theft
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.MOTOR_VEHICLE_THEFT}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Robbery
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.ROBBERY}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Stolen Property
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.STOLEN_PROPERTY}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Bad Checks
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.BAD_CHECKS}}
             </td>
           </tr>
         </tbody>

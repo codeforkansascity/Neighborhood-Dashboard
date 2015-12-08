@@ -41,6 +41,8 @@
   }
 
   .expandable-row {
+    border-bottom: #000 solid 1px;
+
     th {
       padding-left: 1em;
       font-weight: normal;
@@ -58,6 +60,20 @@
       th {
         padding: 0.5em 0em;
         font-weight: bold;
+
+        span {
+          display: inline-block;
+        }
+
+        .glyphicon {
+          vertical-align: top;
+          margin-right: 10px;
+        }
+
+        h4 {
+          margin-bottom: 0;
+          font-size: 1em;
+        }
       }
 
       td {
