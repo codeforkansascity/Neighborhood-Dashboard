@@ -47,7 +47,6 @@ class Neighborhood::CrimeData
 
   def convert_crime_key_to_application_key(crime_counts)
     CrimeMapper::CRIME_CATEGORIES.inject({}) do |result, crime_category|
-      puts crime_category[0]
       crimes = crime_category[1].inject({}) do |crime_hash, crime|
         crime_hash.merge(CrimeMapper::CRIME_CODES[crime] => crime_counts[crime].to_i)
       end
