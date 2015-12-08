@@ -49,12 +49,23 @@ angular
           .get(Routes.neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes}))
           .then(
             (response) ->
-              console.log($scope.neighborhood.map)
-
               L.mapbox.featureLayer()
                 .setGeoJSON(response.data)
                 .addTo($scope.neighborhood.map)
 
               $scope.activateFilters = false
           )
+
+      $http
+        .get(Routes.grouped_totals_neighborhood_crime_index_path($stateParams.neighborhoodId))
+        .then(
+          (response) ->
+            $scope.crimeStatistics = response.data
+        )
+
+      $scope.calculateCategoryTotals = (category) ->
+        if($scope.crimeStatistics)
+          return (count for code, count of $scope.crimeStatistics[category]).reduce (a,b) -> a + b
+        else
+          return 0
   ])

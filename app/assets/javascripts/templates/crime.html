@@ -200,7 +200,7 @@
     </div>
   </div>
   <div class="tab-content">
-    <div class="statistics-panel tab-pane" role="tabpanel" class="tab-pane" id="statistics-table">
+    <div class="statistics-panel tab-pane" role="tabpanel" class="tab-pane" id="statistics-table" ng-show="crimeStatistics">
       <table class="statistics-table">
         <thead>
           <tr class="title-row">
@@ -216,33 +216,20 @@
             <th>
               Total Incidents this Year
             </th>
-            <th>
-              Neighborhood per 100 people
-            </th>
-            <th>
-              City per 100 people
-            </th>
-            <th>
-            </th>
           </tr>
         </thead>
         <tbody class="expandable-row">
           <tr class="expandable-trigger">
             <th>
-              <span class="glyphicon glyphicon-plus"></span>
-              Person
+              <span class="btn btn-default glyphicon glyphicon-plus"></span>
+              <span>
+                <span class="text-muted">Crimes Against</span>
+                <br/>
+                <strong>Person</strong>
+              </span>
             </th>
             <td>
-              21
-            </td>
-            <td>
-              13
-            </td>
-            <td>
-              18
-            </td>
-            <td>
-              -5%
+              {{calculateCategoryTotals('PERSON')}}
             </td>
           </tr>
           <tr>
@@ -250,16 +237,7 @@
               Assault
             </th>
             <td>
-              18
-            </td>
-            <td>
-              9
-            </td>
-            <td>
-              11.7
-            </td>
-            <td>
-              +2.7%
+              {{crimeStatistics.PERSON.ASSAULT_AGGRAVATED + crimeStatistics.PERSON.ASSAULT_SIMPLE + crimeStatistics.PERSON.ASSAULT_INTIMIDATION}}
             </td>
           </tr>
           <tr>
@@ -267,16 +245,7 @@
               Homicide
             </th>
             <td>
-              1
-            </td>
-            <td>
-              0.5
-            </td>
-            <td>
-              1.7
-            </td>
-            <td>
-              -1.1%
+              {{crimeStatistics.PERSON.HOMICIDE_NONNEGLIGENT_MANSLAUGHTER + crimeStatistics.PERSON.HOMICIDE_NEGLIGENT_MANSLAUGHTER}}
             </td>
           </tr>
           <tr>
@@ -284,158 +253,222 @@
               Sex Offenses, Forcible
             </th>
             <td>
-              4
+              {{crimeStatistics.PERSON.SEX_OFFENSE_RAPE + crimeStatistics.PERSON.SEX_OFFENSE_SODOMY + crimeStatistics.PERSON.SEX_OFFENSE_ASSAULT_WITH_OBJECT + crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE}}
             </td>
+          </tr>
+          <tr>
+            <th>
+              Sex Offenses, Non-Forcible
+            </th>
             <td>
-              2
-            </td>
-            <td>
-              4.2
-            </td>
-            <td>
-              -2.2%
+              {{crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_INCEST + crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE}}
             </td>
           </tr>
         </tbody>
         <tbody class="expandable-row">
           <tr class="expandable-trigger">
             <th>
-              <span class="glyphicon glyphicon-plus"></span>
-              Person
+              <span class="btn btn-default glyphicon glyphicon-plus"></span>
+              <span>
+                <span class="text-muted">Crimes Against</span>
+                <br/>
+                <strong>Property</strong>
+              </span>
             </th>
             <td>
-              21
-            </td>
-            <td>
-              13
-            </td>
-            <td>
-              18
-            </td>
-            <td>
-              -5%
+              {{calculateCategoryTotals('PROPERTY')}}
             </td>
           </tr>
           <tr>
             <th>
-              Assault
+              Arson
             </th>
             <td>
-              18
-            </td>
-            <td>
-              9
-            </td>
-            <td>
-              11.7
-            </td>
-            <td>
-              +2.7%
+              {{crimeStatistics.PROPERTY.ARSON}}
             </td>
           </tr>
           <tr>
             <th>
-              Homicide
+              Bribery
             </th>
             <td>
-              1
-            </td>
-            <td>
-              0.5
-            </td>
-            <td>
-              1.7
-            </td>
-            <td>
-              -1.1%
+              {{crimeStatistics.PROPERTY.BRIBERY}}
             </td>
           </tr>
           <tr>
             <th>
-              Sex Offenses, Forcible
+              Burglary
             </th>
             <td>
-              4
-            </td>
-            <td>
-              2
-            </td>
-            <td>
-              4.2
-            </td>
-            <td>
-              -2.2%
-            </td>
-          </tr>
-        </tbody>
-        <tbody class="expandable-row">
-          <tr class="expandable-trigger">
-            <th>
-              <span class="glyphicon glyphicon-plus"></span>
-              Person
-            </th>
-            <td>
-              21
-            </td>
-            <td>
-              13
-            </td>
-            <td>
-              18
-            </td>
-            <td>
-              -5%
+              {{crimeStatistics.PROPERTY.BURGLARY}}
             </td>
           </tr>
           <tr>
             <th>
-              Assault
+              Forgery
             </th>
             <td>
-              18
-            </td>
-            <td>
-              9
-            </td>
-            <td>
-              11.7
-            </td>
-            <td>
-              +2.7%
+              {{crimeStatistics.PROPERTY.FORGERY}}
             </td>
           </tr>
           <tr>
             <th>
-              Homicide
+              Vandalism
             </th>
             <td>
-              1
-            </td>
-            <td>
-              0.5
-            </td>
-            <td>
-              1.7
-            </td>
-            <td>
-              -1.1%
+              {{crimeStatistics.PROPERTY.VANDALISM}}
             </td>
           </tr>
           <tr>
             <th>
-              Sex Offenses, Forcible
+              Embezzlement
             </th>
             <td>
-              4
+              {{crimeStatistics.PROPERTY.EMBEZZLEMENT}}
             </td>
+          </tr>
+          <tr>
+            <th>
+              Extortion
+            </th>
             <td>
-              2
+              {{crimeStatistics.PROPERTY.EXTORTING}}
             </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Swindle
+            </th>
             <td>
-              4.2
+              {{crimeStatistics.PROPERTY.FRAUD_SWINDLE}}
             </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Credit Card
+            </th>
             <td>
-              -2.2%
+              {{crimeStatistics.PROPERTY.FRAUD_CREDIT_CARD}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Impersonation
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.FRAUD_IMPERSONATION}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Welfare
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.FRAUD_WELFARE}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Fraud, Wire
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.FRAUD_WIRE}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Pocket Picking
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_POCKET_PICKING}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Purse Snatching
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_PURSE_SNATCHING}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Shop Lifting
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_SHOPLIFTING}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Theft From Building
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_FROM_BUILDING}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Theft from Coinoperated Device
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_FROM_THEFT_COINOPERATED_DEVICE}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Motor Vehicle
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_MOTOR_VEHICLE}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Motor Vehicle Parts
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_MOTOR_VEHICLE_PARTS}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Theft, Other
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.THEFT_OTHER}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Motor Vehicle Theft
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.MOTOR_VEHICLE_THEFT}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Robbery
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.ROBBERY}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Stolen Property
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.STOLEN_PROPERTY}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Bad Checks
+            </th>
+            <td>
+              {{crimeStatistics.PROPERTY.BAD_CHECKS}}
             </td>
           </tr>
         </tbody>
