@@ -25,7 +25,7 @@ the neighborhoods that make up the fabric of the city. Rich,up-to-date informati
 
 Unfortunately, even though the data are out there,  its potential power to help neighborhoods isn’t yet realized.
 Accessing civic data might mean hours of wading through spreadsheets, then trying to interpret confusing terminology, or having to go through a website that is not easy to use for the average resident or neighborhood leader.
-Meanwhile, civic data is usually not presented at the neighborhood-level geography. Right now, for instance, it’s not possible to see the population of a neighborhood or the number of crimes that have occurred there recently. 
+Meanwhile, civic data is usually not presented at the neighborhood-level geography. Right now, for instance, it’s not possible to see the population of a neighborhood or the number of crimes that have occurred there recently.
 
 ## That’s why we created KCNeighborhoodStat
 *We’re making an application that displays relevant civic open data at the neighborhood level.*
@@ -37,11 +37,37 @@ To help realize the full potential of this data in benefitting our city’s neig
 * Capable of displaying data over time (so that users can understand trends, put data in context)
 
 ### How it works
-Users of the site will be prompted to select a neighborhood on the homepage. This will direct them to a "neighborhood page," 
-where they will be able to select a number of datapoints they would like to study. 
+Users of the site will be prompted to select a neighborhood on the homepage. This will direct them to a "neighborhood page,"
+where they will be able to select a number of datapoints they would like to study.
 
-Those data would be summarized in simple boxes, like in this example from this [civic data dashboard] (https://dashboard.edmonton.ca/) from the City of Edmonton, Canada’s website. 
+Those data would be summarized in simple boxes, like in this example from this [civic data dashboard] (https://dashboard.edmonton.ca/) from the City of Edmonton, Canada’s website.
 
 Another aspect of Edmonton’s dashboard we plan incorporate in our app is the ability to view data over time. By clicking on one of the data boxes, a detailed explanation of the data would expand and the data would be displayed on a graph. The graph could be standalone, allowing multiple datasets to be added to it, to allow comparison.
 
 Ideally, data with a specific location would be displayed on the page’s neighborhood map.
+
+### Introduction for Developers
+Thank you for assisting with this project! We can always use more coders to assist with what we are doing!
+
+Our Application is built with Ruby on Rails as the backend, and AngularJS on the Frontend. If you are new to these concepts, these tutorials will be of great assistance.
+
+1. [Ruby on Rails Tutorial](https://www.railstutorial.org/book) (Chapters 1-6 should be sufficient)
+2. [Angular Rails Tutorial](http://angular-rails.com/) (Entire book is recommended)
+
+In addition, if you need assistance with git, I highly recommend going through this code school class.
+
+[Code School GIT Course](https://www.codeschool.com/courses/try-git)
+
+Once you have checkout out this application, run the following command to setup your Database
+
+    bundle exec rake db:create db:migrate db:seed
+
+After your database is ready, run the following script to import the required frontend scripts
+
+    bundle exec rake bower:install
+
+Finally, run the following command to start the server
+
+    rails server
+
+That's all you need! Now head to <http://localhost:3000> to view the application!
