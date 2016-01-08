@@ -4,9 +4,8 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
       element.attr('id', 'neighborhood-map');
       element.attr('class', 'tab-pane active');
       L.mapbox.accessToken = 'pk.eyJ1IjoiemFjaGZsYW5kZXJzIiwiYSI6Im5PQWUydWMifQ.K3IgstPvVhP6ZDoXsKNzJQ';
-      console.log($scope.neighborhood.map);
-      $scope.neighborhood.map = L.mapbox.map('neighborhood-map', 'mapbox.light')
 
+      $scope.neighborhood.map = L.mapbox.map('neighborhood-map', 'mapbox.light')
       $scope.neighborhood.map.setView(
         [
           $scope.neighborhood.coordinates[0].longtitude,

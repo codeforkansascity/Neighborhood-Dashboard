@@ -22,7 +22,11 @@ class Neighborhood::VacancyData
           "type" => "Feature",
           "geometry" => {
             "type" => "Point",
-            "coordinates" => [coordinate['location_1']['latitude'].to_f,coordinate['location_1']['longitude'].to_f]
+            "coordinates" => [coordinate['location_1']['longitude'].to_f,coordinate['location_1']['latitude'].to_f]
+          },
+          "properties" => {
+            "marker-color" => "#f28729",
+            "marker-size" => "small"
           }
         }
       }
