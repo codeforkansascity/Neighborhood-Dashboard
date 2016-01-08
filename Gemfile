@@ -30,6 +30,7 @@ gem 'httparty'
 # Angular Rails Dependencies
 gem 'angular-rails-templates'
 gem 'bower-rails'
+gem 'execjs'
 
 # Add routes to frontend of the app
 gem 'js-routes'

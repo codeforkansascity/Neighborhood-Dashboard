@@ -188,6 +188,7 @@ DEPENDENCIES
   bower-rails
   byebug
   coffee-rails (~> 4.1.0)
+  execjs
   font-awesome-rails (~> 4.3.0)
   geocoder
   httparty
