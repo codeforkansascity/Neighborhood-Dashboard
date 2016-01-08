@@ -16,3 +16,6 @@
 !/log/.keep
 /tmp
 lib/assets/bower_components/**/*
+
+node_modules
+vendor/assets/bower_components

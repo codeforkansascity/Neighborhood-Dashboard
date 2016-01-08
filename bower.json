@@ -13,5 +13,8 @@
     "name": "bower-rails generated vendor assets",
     "dependencies": {
     }
+  },
+  "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
