@@ -10,18 +10,23 @@
 </nav>
 <div class="content-display">
   <div class="toolbar">
-    <form>
-      <input type="date" />
-      <input type="date" />
-      <div class="btn-group">
-        <button type="button" class="btn btn-default">Legally Abandoned</button>
-        <button type="button" class="btn btn-default">Vacancy</button>
-        <button type="button" class="btn btn-default">Tax Delinquent</button>
-        <button type="button" class="btn btn-default">Code Violation</button>
-        <button type="button" class="btn btn-default">Dangerous Buildings</button>
+    <form class="form-inline">
+      <div class="form-group">
+        <input type="date" class="form-control" />
+        <label>Start Date</label>
+      </div>
+      <div class="form-group">
+        <input type="date" class="form-control" />
+        <label>End Date</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default">Legally Abandoned</button>
+          <button type="button" class="btn btn-default">Vacancy</button>
+        </div>
+        <label>&nbsp;</label>
       </div>
     </form>
   </div>
-  <div class="statistics-panel"></div>
-  <div id='neighborhood-map'></div>
+  <div neighborhood-map></div>
 </div>

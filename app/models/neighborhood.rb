@@ -1,4 +1,4 @@
-class Neighborhood < ActiveRecord::Base  
+class Neighborhood < ActiveRecord::Base
   scope :search_by_name, -> (name) { where("name LIKE ?", name) }
 
   # reverse_geocoded_by :latitude, :longitude
@@ -12,5 +12,9 @@ class Neighborhood < ActiveRecord::Base
 
   def crime_data
     Neighborhood::CrimeData.new(self)
+  end
+
+  def vacancy_data
+    Neighborhood::VacancyData.new(self)
   end
 end

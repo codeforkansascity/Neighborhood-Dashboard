@@ -1,4 +1,3 @@
-
 angular
   .module('neighborhoodstat')
   .constant('CRIME_CODES', {

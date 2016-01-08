@@ -12,6 +12,13 @@ Rails.application.routes.draw do
         get 'grouped_totals'
       end
     end
+
+    resource :vacancy, only: [] do
+      collection do
+        get 'dangerous_buildings'
+        get 'vacant_lots'
+      end
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

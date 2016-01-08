@@ -130,3 +130,23 @@
     }
   }
 }
+
+.legend {
+  ul {
+    list-style: none;
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+
+    ul {
+      padding-left: 2em;
+    }
+
+    .legend-element {
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+}
