@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resource :vacancy, only: [] do
       collection do
         get 'dangerous_buildings'
+        get 'vacant_lots'
       end
     end
   end

@@ -9,13 +9,8 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
       .then(
         (response) ->
           $scope.dangerousNeighborhoods = response.data
-          console.log($scope.dangerousNeighborhoods)
-          console.log($scope.neighborhood.map)
-
           layer = L.mapbox.featureLayer()
             .setGeoJSON(response.data)
             .addTo($scope.neighborhood.map)
-
-          console.log(layer)
       )
 ])
