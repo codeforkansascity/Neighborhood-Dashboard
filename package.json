@@ -1,12 +1,16 @@
 {
   "name": "Neighborhood-Dashboard",
-  "devDependencies" : {
+  "devDependencies": {
     "bower": "~1.6.5"
   },
   "dependencies": {
+    "bower": "^1.7.2"
   },
   "license": "MIT",
   "engines": {
     "node": ">= 0.10"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
