@@ -20,10 +20,7 @@ class Neighborhood::VacancyData
           "properties" => {
             "marker-size" => "small",
             "marker-color" => vacant_lot_color(coordinate),
-            "title" => coordinate['property_class'],
-            "description" =>
-              "<p>#{coordinate['property_condition']}</p>" +
-              "<p><b>Forclosure Year:</b> #{coordinate['foreclosure_year']}</p>"
+            "description" => vacant_lot_description(coordinate)
           }
         }
       }
@@ -47,6 +44,18 @@ class Neighborhood::VacancyData
     end
   rescue ArgumentError
     '#ffffff'
+  end
+
+  def vacant_lot_description(coordinate)
+    description =
+      "<h2>#{coordinate['property_condition']}</h2>" +
+      "<p>#{coordinate['property_class']}</p>"
+
+    if coordinate['foreclosure_year']
+      description += "<p><b>Foreclosure Year:</b> #{coordinate['foreclosure_year']}</p>"
+    end
+
+    description
   end
 
   def mapify_coordinates(coordinates)

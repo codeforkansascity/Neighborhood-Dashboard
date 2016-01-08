@@ -13,4 +13,14 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
             .setGeoJSON(response.data)
             .addTo($scope.neighborhood.map)
       )
+
+    $http
+      .get(Routes.vacant_lots_neighborhood_vacancy_path($stateParams.neighborhoodId))
+      .then(
+        (response) ->
+          $scope.vacantLots = response.data
+          layer = L.mapbox.featureLayer()
+            .setGeoJSON(response.data)
+            .addTo($scope.neighborhood.map)
+      )
 ])
