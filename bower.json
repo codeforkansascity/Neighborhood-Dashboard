@@ -1,4 +1,5 @@
 {
+  "name": "Neighborhood-Dashboard",
   "lib": {
     "name": "bower-rails generated lib assets",
     "dependencies": {
