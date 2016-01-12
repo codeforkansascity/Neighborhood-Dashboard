@@ -1,5 +1,4 @@
 {
-  "name": "Neighborhood-Dashboard",
   "lib": {
     "name": "bower-rails generated lib assets",
     "dependencies": {
@@ -13,8 +12,5 @@
     "name": "bower-rails generated vendor assets",
     "dependencies": {
     }
-  },
-  "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install"
   }
 }

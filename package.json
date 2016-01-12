@@ -1,16 +1,21 @@
 {
   "name": "Neighborhood-Dashboard",
-  "devDependencies": {
-    "bower": "~1.6.5"
-  },
-  "dependencies": {
-    "bower": "^1.7.2"
-  },
-  "license": "MIT",
-  "engines": {
-    "node": ">= 0.10"
-  },
+  "version": "1.0.0",
+  "description": "We're working to help neighborhoods help themselves by giving them easy access to useful data to allow them to identify and track problem areas in their neighborhood.",
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codeforkansascity/Neighborhood-Dashboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeforkansascity/Neighborhood-Dashboard/issues"
+  },
+  "homepage": "https://github.com/codeforkansascity/Neighborhood-Dashboard",
+  "dependencies": {
+    "bower": "^1.7.2"
   }
 }
