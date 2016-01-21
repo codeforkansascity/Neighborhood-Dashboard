@@ -36,6 +36,8 @@ class Neighborhood::CrimeData
     service_url = URI::escape("#{RESOURCE_URL}?$where=#{query_polygon}&$select=ibrs,count(ibrs)&$group=ibrs")
     crimes = HTTParty.get(service_url, verify: false)
 
+    binding.pry
+
     crime_counts = crimes.inject({}) {|crime_hash, crime|
       crime_hash.merge(crime['ibrs'] => crime['count_ibrs'])
     }
