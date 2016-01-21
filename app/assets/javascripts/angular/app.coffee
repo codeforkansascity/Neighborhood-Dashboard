@@ -10,8 +10,9 @@
 @app.config([
   '$httpProvider',
   '$stateProvider',
+  '$locationProvider'
   '$urlRouterProvider',
-  ($httpProvider, $stateProvider, $urlRouterProvider)->
+  ($httpProvider, $stateProvider, $locationProvider, $urlRouterProvider)->
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
 
     $stateProvider
@@ -36,5 +37,6 @@
         controller: 'VacanciesCtrl'
       )
 
+    $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise('/')
 ])

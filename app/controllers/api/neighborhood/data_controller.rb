@@ -1,4 +1,4 @@
-class Neighborhood::DataController < ApplicationController
+class Api::Neighborhood::DataController < ApplicationController
 
   def crime
     render json: Neighborhood.find(params[:id]).crime_data.homicides

@@ -45,7 +45,7 @@ angular
               fbiCodes.push(CRIME_CODES[item])
 
         $http
-          .get(Routes.neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes}))
+          .get(Routes.api_neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes}))
           .then(
             (response) ->
               L.mapbox.featureLayer()
@@ -56,7 +56,7 @@ angular
           )
 
       $http
-        .get(Routes.grouped_totals_neighborhood_crime_index_path($stateParams.neighborhoodId))
+        .get(Routes.grouped_totals_api_neighborhood_crime_index_path($stateParams.neighborhoodId))
         .then(
           (response) ->
             $scope.crimeStatistics = response.data

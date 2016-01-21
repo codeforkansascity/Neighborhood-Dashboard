@@ -5,7 +5,7 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
   '$http',
   ($scope, $resource, $stateParams, $http)->
     $http
-      .get(Routes.dangerous_buildings_neighborhood_vacancy_path($stateParams.neighborhoodId))
+      .get(Routes.dangerous_buildings_api_neighborhood_vacancy_path($stateParams.neighborhoodId))
       .then(
         (response) ->
           $scope.dangerousNeighborhoods = response.data
@@ -15,7 +15,7 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
       )
 
     $http
-      .get(Routes.vacant_lots_neighborhood_vacancy_path($stateParams.neighborhoodId))
+      .get(Routes.vacant_lots_api_neighborhood_vacancy_path($stateParams.neighborhoodId))
       .then(
         (response) ->
           $scope.vacantLots = response.data
