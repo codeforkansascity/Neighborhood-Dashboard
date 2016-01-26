@@ -7,16 +7,21 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
       </button>
-      <a href="/" class="navbar-brand">Neighborhood Stat</a>
+      <a href="/" class="navbar-brand"><span class="logo-prefix">KC</span>NeighborhoodStat</a>
     </div>
-    <form class='navbar-form navbar-right' role: 'search' ng-submit="neighborhoodSearch(search)">
-      <div class="form-group">
-        <input name='search' type='text' class='form-control' placeholder='Find by Neighborhood or Address' ng-model="search.query"/>
-      </div>
-    </form>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Our Data</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
   </div>
 </nav>
 <div ng-if="neighborhood" class="container">
+  <form class="neighborhood-search" role: 'search' ng-submit="neighborhoodSearch(search)">
+    <div class="form-group">
+      <input name='search' type='text' class='form-control' placeholder='Find by Neighborhood or Address' ng-model="search.query"/>
+    </div>
+  </form>
   <h1 class="neighborhood-title">{{neighborhood.name}}</h1>
   <ul class="nav nav-tabs neighborhood-nav">
     <li role="presentation"><a ui-sref=".crime" ui-sref-active="active">Crime</a></li>

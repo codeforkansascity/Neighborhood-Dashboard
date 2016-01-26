@@ -3,7 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 html, body{
   height:100%;
+  min-height: 500px;
+  position: relative;
   font-family: 'Roboto', sans-serif;
+  background: asset_url('union_station_background.jpg');
+  background-position: 50% 50%;
 }
 
 .chart-header {
@@ -46,4 +50,12 @@ html, body{
 
 .tooltip-ref-content {
   display: none;
+}
+
+.site-information-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
 }

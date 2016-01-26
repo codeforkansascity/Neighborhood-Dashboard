@@ -1,5 +1,51 @@
 .navbar-brand {
+  font-weight: bold;
   font-size: 2em;
+
+  .logo-prefix {
+    color: #2A8FFB;
+  }
+}
+
+.neighborhood-search {
+  color: #ffffff;
+  background-color: #6D7F82;
+  @include make-md-column(4);
+  text-align: center;
+
+  input {
+    margin-bottom: 15px;
+  }
+
+  h2 {
+    font-size: 1em;
+  }
+
+  .has-lined-sides {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 15px;
+
+    &:before, 
+    &:after {
+      background-color: #ffffff;
+      content: '\a0';
+      flex-grow: 1;
+      height: 1px;
+      position: relative;
+      top: 0.625em;
+    }
+
+    &:before {
+      margin-right:10px;
+    }
+
+    &:after {
+      margin-left:10px;
+    }
+  }
 }
 
 .neighborhood-title {
