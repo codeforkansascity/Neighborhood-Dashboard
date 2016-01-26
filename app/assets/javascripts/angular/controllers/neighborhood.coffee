@@ -8,7 +8,7 @@ angular
       '$location',
       '$http',
       ($scope, $resource, $stateParams, $location, $http)->
-        Neighborhood = $resource('/neighborhood/:neighborhoodId', {neighborhoodId: "@id", format: 'json'})
+        Neighborhood = $resource('/api/neighborhood/:neighborhoodId', {neighborhoodId: "@id", format: 'json'})
 
         $scope.neighborhoodSearch = (search) ->
           Neighborhood.get(

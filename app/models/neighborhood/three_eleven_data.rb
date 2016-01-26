@@ -5,7 +5,7 @@ class Neighborhood::ThreeElevenData
 
   def data
     service_url = URI::escape("https://data.kcmo.org/resource/7at3-sxhp.json?neighborhood=#{@neighborhood.name}")
-    response = HTTParty.get(service_url)
+    response = HTTParty.get(service_url, verify: false)
 
     yearly_311_data = {}
 
@@ -22,7 +22,7 @@ class Neighborhood::ThreeElevenData
     end
 
     temp_data = yearly_311_data.sort
-    
+
     returned_hash = {}
 
     temp_data.each { |item|
