@@ -1,23 +1,50 @@
-<nav class="navbar navbar-default" style='border-bottom:0px;'>
+<nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#primary-nav" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
       </button>
-      <a href="/" class="navbar-brand">Neighborhood Stat</a>
+      <a href="/" class="navbar-brand"><span class="logo-prefix">KC</span>NeighborhoodStat</a>
     </div>
-    <form class='navbar-form navbar-right' role: 'search' ng-submit="neighborhoodSearch(search)">
-      <div class="form-group">
-        <input name='search' type='text' class='form-control' placeholder='Find by Neighborhood or Address' ng-model="search.query"/>
-      </div>
-    </form>
+    <nav id="primary-nav" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Our Data</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
   </div>
 </nav>
 <div class="container">
-  <p>
-    Search by Neighborhood or Address to get started
-  </p>
+  <form class="neighborhood-search form-stacked" role: 'search' ng-submit="neighborhoodSearch(search)">
+    <h2>Search my Kansas City Neighborhood</h2>
+    <input name='search_neighborhood' type='text' class='form-control' placeholder='Enter neighborhood name' ng-model="search.queryNeighborhood"/>
+    <p class="has-lined-sides">Or</p>
+    <input name='search_address' type='text' class='form-control' placeholder='Enter Address' ng-model="search.queryAddress"/>
+    <input type="submit" class="hidden" aria-hidden="true" value="Search"/>
+  </form>
 </div>
+<footer class="site-information-footer">
+  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <div class="container">
+          <div class="site-info-box">
+            <h3>How it works</h3>
+            <img src="{{IMAGES.QUALITY_HILL}}" width="200" height="100"/>
+            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet dapibus felis. Praesent quis dui sapien. Integer ipsum tellus, tempor in nulla eu, suscipit convallis eros. Quisque pretium, lacus sit amet tincidunt aliquam, nisl ante gravida odio, id fringilla libero metus fermentum diam. Quisque laoreet molestie porttitor.</span>
+          </div>
+          <div class="site-info-box">
+            <h3>KCMO: Data Pioneer</h3>
+            <img src="{{IMAGES.UNION_STATION}}" width="200" height="100"/>
+            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet dapibus felis. Praesent quis dui sapien. Integer ipsum tellus, tempor in nulla eu, suscipit convallis eros. Quisque pretium, lacus sit amet tincidunt aliquam, nisl ante gravida odio, id fringilla libero metus fermentum diam. Quisque laoreet molestie porttitor.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

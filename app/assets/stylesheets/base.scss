@@ -1,0 +1,47 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+html,
+body {
+  height:100%;
+  font-family: 'Roboto', sans-serif;
+  background: asset_url('kansas_city_background.jpg');
+  background-position: 50% 50%;
+  background-attachment: fixed;
+}
+
+.application-wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
+.site-information-footer {
+  position: absolute;
+  min-height: 3em;
+  bottom: 0;
+  width: 100%;
+  background-color: #000;
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2f2f2f+0,212121+100 */
+  background: #212121; /* Old browsers */
+  background: -moz-linear-gradient(top,  #212121 0%, #2f2f2f 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #212121 0%,#2f2f2f 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #212121 0%,#2f2f2f 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#212121', endColorstr='#2f2f2f',GradientType=0 ); /* IE6-9 */
+
+  color: #fff;
+  font-size: 0.75em;
+
+  .site-info-box {
+    @include make-md-column(5, 0);
+
+    img {
+      float: left;
+      margin-right: 10px;
+    }
+  }
+
+  .site-info-box:last-child {
+    @include make-md-column-push(1);
+  }
+}

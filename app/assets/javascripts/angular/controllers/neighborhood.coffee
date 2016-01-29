@@ -1,5 +1,6 @@
 angular
   .module('neighborhoodstat')
+  .constant('IMAGES', imagePaths)
   .controller("NeighborhoodCtrl",
     [
       '$scope',
@@ -7,12 +8,15 @@ angular
       '$stateParams',
       '$location',
       '$http',
-      ($scope, $resource, $stateParams, $location, $http)->
+      'IMAGES',
+      ($scope, $resource, $stateParams, $location, $http, IMAGES)->
         Neighborhood = $resource('/api/neighborhood/:neighborhoodId', {neighborhoodId: "@id", format: 'json'})
+        $scope.IMAGES = IMAGES;
 
         $scope.neighborhoodSearch = (search) ->
           Neighborhood.get(
-            search: search.query,
+            search_neighborhood: search.queryNeighborhood,
+            search_address: search.queryAddress,
             (neighborhood)->
               $location.path("/neighborhood/#{neighborhood.id}/crime")
           )

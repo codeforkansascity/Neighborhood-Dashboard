@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default sub-data-nav">
+<nav class="navbar sub-data-nav">
   <ul id="neighborhood-sub-tabs" class="navbar-nav nav" role="tablist">
     <li role="presentation" class="active">
       <a aria-controls="statistics-table" role="tab" data-toggle="tab" data-target="#neighborhood-map">Map</a>
@@ -8,472 +8,470 @@
     </li>
   </ul>
 </nav>
-<div class="content-display">
-  <div class="toolbar">
-    <form class="form-inline">
-      <div class="form-group">
-        <input type="date" class="form-control" />
-        <label>Start Date</label>
+<div class="toolbar">
+  <form class="form-inline">
+    <div class="form-group">
+      <input type="date" class="form-control" />
+      <label>Start Date</label>
+    </div>
+    <div class="form-group">
+      <input type="date" class="form-control" />
+      <label>End Date</label>
+    </div>
+    <div class="form-group">
+      <div class="btn-group">
+        <a class= 'btn btn-default'>
+          <span class="fa fa fa-map-marker"></span>
+        </a>
+        <a class= 'btn btn-default'>
+          <span class="fa fa fa-fire"></span>
+        </a>
       </div>
-      <div class="form-group">
-        <input type="date" class="form-control" />
-        <label>End Date</label>
+      <label>Display</label>
+    </div>
+    <div class="form-group">
+      <div class="btn-group">
+        <a class= 'btn btn-default'>
+          Frequency
+        </a>
+        <a class= 'btn btn-default'>
+          Severity
+        </a>
+        <a class= 'btn btn-default'>
+          Type
+        </a>
       </div>
-      <div class="form-group">
-        <div class="btn-group">
-          <a class= 'btn btn-default'>
-            <span class="fa fa fa-map-marker"></span>
-          </a>
-          <a class= 'btn btn-default'>
-            <span class="fa fa fa-fire"></span>
-          </a>
+      <label>Data Type</label>
+    </div>
+    <div class="form-group">
+      <input type="radio" name="sex_offender" class="form-control" value="show"> Show
+      <input type="radio" value="sex_offender" class="form-control" value="hide"> Hide
+      <label>Sex Offender</label>
+    </div>
+    <button class="btn btn btn-success pull-right" type="button" ng-click="activateFilters = !activateFilters">
+      Filters
+    </button>
+  </form>
+  <div ng-show="activateFilters" class="map-filters">
+    <div class="col-md-2">
+      <h2>Person</h2>
+      <label>
+        <input type="checkbox" ng-model="crime.ALL_PEOPLE" />
+        All
+      </label>
+      <label>
+        <input type="checkbox" ng-model="crime.ASSAULT" />
+        Assault
+      </label>
+      <label>
+        <input type="checkbox" ng-model="crime.HOMICIDE" />
+        Homicide
+      </label>
+      <label>
+        <input type="checkbox" ng-model="crime.SEX_OFFENSE_FORCIBLE" />
+        Sex Offense, Forcible
+      </label>
+      <label>
+        <input type="checkbox" ng-model="crime.SEX_OFFENSE_NON_FORCIBLE" />
+        Sex Offense, Non Forcible
+      </label>
+    </div>
+    <div class="col-md-5">
+      <h2>Property</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <input type="checkbox" ng-model="crime.ALL_PROPERY" />
+            All
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.ARSON" />
+            Arson
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.BURGLARY" />
+            Burglary
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.CONTERFEITING" />
+            Counterfeiting
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.EMBEZZLEMENT" />
+            Embezzlement
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.EXTORTION" />
+            Extortion
+          </label>
         </div>
-        <label>Display</label>
-      </div>
-      <div class="form-group">
-        <div class="btn-group">
-          <a class= 'btn btn-default'>
-            Frequency
-          </a>
-          <a class= 'btn btn-default'>
-            Severity
-          </a>
-          <a class= 'btn btn-default'>
-            Type
-          </a>
-        </div>
-        <label>Data Type</label>
-      </div>
-      <div class="form-group">
-        <input type="radio" name="sex_offender" class="form-control" value="show"> Show
-        <input type="radio" value="sex_offender" class="form-control" value="hide"> Hide
-        <label>Sex Offender</label>
-      </div>
-      <button class="btn btn btn-success pull-right" type="button" ng-click="activateFilters = !activateFilters">
-        Filters
-      </button>
-    </form>
-    <div ng-show="activateFilters" class="map-filters">
-      <div class="col-md-2">
-        <h2>Person</h2>
-        <label>
-          <input type="checkbox" ng-model="crime.ALL_PEOPLE" />
-          All
-        </label>
-        <label>
-          <input type="checkbox" ng-model="crime.ASSAULT" />
-          Assault
-        </label>
-        <label>
-          <input type="checkbox" ng-model="crime.HOMICIDE" />
-          Homicide
-        </label>
-        <label>
-          <input type="checkbox" ng-model="crime.SEX_OFFENSE_FORCIBLE" />
-          Sex Offense, Forcible
-        </label>
-        <label>
-          <input type="checkbox" ng-model="crime.SEX_OFFENSE_NON_FORCIBLE" />
-          Sex Offense, Non Forcible
-        </label>
-      </div>
-      <div class="col-md-5">
-        <h2>Property</h2>
-        <div class="row">
-          <div class="col-md-6">
-            <label>
-              <input type="checkbox" ng-model="crime.ALL_PROPERY" />
-              All
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.ARSON" />
-              Arson
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.BURGLARY" />
-              Burglary
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.CONTERFEITING" />
-              Counterfeiting
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.EMBEZZLEMENT" />
-              Embezzlement
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.EXTORTION" />
-              Extortion
-            </label>
-          </div>
-          <div class="col-md-6">
-            <label>
-              <input type="checkbox" ng-model="crime.FRAUD" />
-              Fraud
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.MOTOR_VEHICLE_THEFT" />
-              Motor Vehicle Theft
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.ROBBERY" />
-              Robbery
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.STOLEN_PROPERTY" />
-              Stolen Property
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.THEFT" />
-              Theft
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.VANDALISM" />
-              Vandalism
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <h2>Society</h2>
-        <div class="row">
-          <div class="col-md-6">
-            <label>
-              <input type="checkbox" ng-model="crime.ALL_SOCIETY" />
-              All
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.BAD_CHECKS" />
-              Bad Checks
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.CURFEW" />
-              Curfew & Loitering
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.DISORDERLY_CONDUCT" />
-              Disorderly Conduct
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.DUE" />
-              DUI
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.DRUNKNESS" />
-              Drunkenness
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.DOMESTIC_VIOLENCE" />
-              Domestic Nonviolent
-            </label>
-          </div>
-          <div class="col-md-6">
-            <label>
-              <input type="checkbox" ng-model="crime.GAMBLING" />
-              Gambling
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.PORNOGRAPHY"/>
-              Pornography
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.LIQUOR_LAW_VIOLATION"/>
-              Liquor Law Violation
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.STOLEN_PROPERTY"/>
-              Stolen Property
-            </label>
-            <label>
-              <input type="checkbox" ng-model="crime.TRESPASSING"/>
-              Trespassing
-            </label>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="map-filter-actions pull-right">
-          <button class="btn btn-primary">Reset</button>
-          <button class="btn btn-primary" ng-click="getCrimeByCodes(crime)">Done</button>
+        <div class="col-md-6">
+          <label>
+            <input type="checkbox" ng-model="crime.FRAUD" />
+            Fraud
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.MOTOR_VEHICLE_THEFT" />
+            Motor Vehicle Theft
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.ROBBERY" />
+            Robbery
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.STOLEN_PROPERTY" />
+            Stolen Property
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.THEFT" />
+            Theft
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.VANDALISM" />
+            Vandalism
+          </label>
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-content">
-    <div class="statistics-panel tab-pane" role="tabpanel" class="tab-pane" id="statistics-table" ng-show="crimeStatistics">
-      <table class="statistics-table">
-        <thead>
-          <tr class="title-row">
-            <th>
-            </th>
-            <th colspan="4">
-              Annual
-            </th>
-          </tr>
-          <tr class="sub-title-row">
-            <th>
-            </th>
-            <th>
-              Total Incidents this Year
-            </th>
-          </tr>
-        </thead>
-        <tbody class="expandable-row">
-          <tr class="expandable-trigger">
-            <th>
-              <span class="btn btn-default glyphicon glyphicon-plus"></span>
-              <span>
-                <span class="text-muted">Crimes Against</span>
-                <br/>
-                <strong>Person</strong>
-              </span>
-            </th>
-            <td>
-              {{calculateCategoryTotals('PERSON')}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Assault
-            </th>
-            <td>
-              {{crimeStatistics.PERSON.ASSAULT_AGGRAVATED + crimeStatistics.PERSON.ASSAULT_SIMPLE + crimeStatistics.PERSON.ASSAULT_INTIMIDATION}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Homicide
-            </th>
-            <td>
-              {{crimeStatistics.PERSON.HOMICIDE_NONNEGLIGENT_MANSLAUGHTER + crimeStatistics.PERSON.HOMICIDE_NEGLIGENT_MANSLAUGHTER}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Sex Offenses, Forcible
-            </th>
-            <td>
-              {{crimeStatistics.PERSON.SEX_OFFENSE_RAPE + crimeStatistics.PERSON.SEX_OFFENSE_SODOMY + crimeStatistics.PERSON.SEX_OFFENSE_ASSAULT_WITH_OBJECT + crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Sex Offenses, Non-Forcible
-            </th>
-            <td>
-              {{crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_INCEST + crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE}}
-            </td>
-          </tr>
-        </tbody>
-        <tbody class="expandable-row">
-          <tr class="expandable-trigger">
-            <th>
-              <span class="btn btn-default glyphicon glyphicon-plus"></span>
-              <span>
-                <span class="text-muted">Crimes Against</span>
-                <br/>
-                <strong>Property</strong>
-              </span>
-            </th>
-            <td>
-              {{calculateCategoryTotals('PROPERTY')}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Arson
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.ARSON}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Bribery
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.BRIBERY}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Burglary
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.BURGLARY}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Forgery
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.FORGERY}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Vandalism
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.VANDALISM}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Embezzlement
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.EMBEZZLEMENT}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Extortion
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.EXTORTING}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Fraud, Swindle
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.FRAUD_SWINDLE}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Fraud, Credit Card
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.FRAUD_CREDIT_CARD}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Fraud, Impersonation
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.FRAUD_IMPERSONATION}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Fraud, Welfare
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.FRAUD_WELFARE}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Fraud, Wire
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.FRAUD_WIRE}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Theft, Pocket Picking
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.THEFT_POCKET_PICKING}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Theft, Purse Snatching
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.THEFT_PURSE_SNATCHING}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Theft, Shop Lifting
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.THEFT_SHOPLIFTING}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Theft, Theft From Building
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.THEFT_FROM_BUILDING}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Theft, Theft from Coinoperated Device
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.THEFT_FROM_THEFT_COINOPERATED_DEVICE}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Theft, Motor Vehicle
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.THEFT_MOTOR_VEHICLE}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Theft, Motor Vehicle Parts
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.THEFT_MOTOR_VEHICLE_PARTS}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Theft, Other
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.THEFT_OTHER}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Motor Vehicle Theft
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.MOTOR_VEHICLE_THEFT}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Robbery
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.ROBBERY}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Stolen Property
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.STOLEN_PROPERTY}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Bad Checks
-            </th>
-            <td>
-              {{crimeStatistics.PROPERTY.BAD_CHECKS}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-md-5">
+      <h2>Society</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <input type="checkbox" ng-model="crime.ALL_SOCIETY" />
+            All
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.BAD_CHECKS" />
+            Bad Checks
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.CURFEW" />
+            Curfew & Loitering
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.DISORDERLY_CONDUCT" />
+            Disorderly Conduct
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.DUE" />
+            DUI
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.DRUNKNESS" />
+            Drunkenness
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.DOMESTIC_VIOLENCE" />
+            Domestic Nonviolent
+          </label>
+        </div>
+        <div class="col-md-6">
+          <label>
+            <input type="checkbox" ng-model="crime.GAMBLING" />
+            Gambling
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.PORNOGRAPHY"/>
+            Pornography
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.LIQUOR_LAW_VIOLATION"/>
+            Liquor Law Violation
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.STOLEN_PROPERTY"/>
+            Stolen Property
+          </label>
+          <label>
+            <input type="checkbox" ng-model="crime.TRESPASSING"/>
+            Trespassing
+          </label>
+        </div>
+      </div>
     </div>
-    <div neighborhood-map></div>
+    <div>
+      <div class="map-filter-actions pull-right">
+        <button class="btn btn-primary">Reset</button>
+        <button class="btn btn-primary" ng-click="getCrimeByCodes(crime)">Done</button>
+      </div>
+    </div>
   </div>
+</div>
+<div class="tab-content">
+  <div class="statistics-panel tab-pane" role="tabpanel" class="tab-pane" id="statistics-table" ng-show="crimeStatistics">
+    <table class="statistics-table">
+      <thead>
+        <tr class="title-row">
+          <th>
+          </th>
+          <th colspan="4">
+            Annual
+          </th>
+        </tr>
+        <tr class="sub-title-row">
+          <th>
+          </th>
+          <th>
+            Total Incidents this Year
+          </th>
+        </tr>
+      </thead>
+      <tbody class="expandable-row">
+        <tr class="expandable-trigger">
+          <th>
+            <span class="btn btn-default glyphicon glyphicon-plus"></span>
+            <span>
+              <span class="text-muted">Crimes Against</span>
+              <br/>
+              <strong>Person</strong>
+            </span>
+          </th>
+          <td>
+            {{calculateCategoryTotals('PERSON')}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Assault
+          </th>
+          <td>
+            {{crimeStatistics.PERSON.ASSAULT_AGGRAVATED + crimeStatistics.PERSON.ASSAULT_SIMPLE + crimeStatistics.PERSON.ASSAULT_INTIMIDATION}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Homicide
+          </th>
+          <td>
+            {{crimeStatistics.PERSON.HOMICIDE_NONNEGLIGENT_MANSLAUGHTER + crimeStatistics.PERSON.HOMICIDE_NEGLIGENT_MANSLAUGHTER}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Sex Offenses, Forcible
+          </th>
+          <td>
+            {{crimeStatistics.PERSON.SEX_OFFENSE_RAPE + crimeStatistics.PERSON.SEX_OFFENSE_SODOMY + crimeStatistics.PERSON.SEX_OFFENSE_ASSAULT_WITH_OBJECT + crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Sex Offenses, Non-Forcible
+          </th>
+          <td>
+            {{crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_INCEST + crimeStatistics.PERSON.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE}}
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="expandable-row">
+        <tr class="expandable-trigger">
+          <th>
+            <span class="btn btn-default glyphicon glyphicon-plus"></span>
+            <span>
+              <span class="text-muted">Crimes Against</span>
+              <br/>
+              <strong>Property</strong>
+            </span>
+          </th>
+          <td>
+            {{calculateCategoryTotals('PROPERTY')}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Arson
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.ARSON}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Bribery
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.BRIBERY}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Burglary
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.BURGLARY}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Forgery
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.FORGERY}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Vandalism
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.VANDALISM}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Embezzlement
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.EMBEZZLEMENT}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Extortion
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.EXTORTING}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Fraud, Swindle
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.FRAUD_SWINDLE}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Fraud, Credit Card
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.FRAUD_CREDIT_CARD}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Fraud, Impersonation
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.FRAUD_IMPERSONATION}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Fraud, Welfare
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.FRAUD_WELFARE}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Fraud, Wire
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.FRAUD_WIRE}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Theft, Pocket Picking
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.THEFT_POCKET_PICKING}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Theft, Purse Snatching
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.THEFT_PURSE_SNATCHING}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Theft, Shop Lifting
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.THEFT_SHOPLIFTING}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Theft, Theft From Building
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.THEFT_FROM_BUILDING}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Theft, Theft from Coinoperated Device
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.THEFT_FROM_THEFT_COINOPERATED_DEVICE}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Theft, Motor Vehicle
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.THEFT_MOTOR_VEHICLE}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Theft, Motor Vehicle Parts
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.THEFT_MOTOR_VEHICLE_PARTS}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Theft, Other
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.THEFT_OTHER}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Motor Vehicle Theft
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.MOTOR_VEHICLE_THEFT}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Robbery
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.ROBBERY}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Stolen Property
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.STOLEN_PROPERTY}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Bad Checks
+          </th>
+          <td>
+            {{crimeStatistics.PROPERTY.BAD_CHECKS}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div neighborhood-map></div>
 </div>
