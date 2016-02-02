@@ -2,6 +2,7 @@
   color: #ffffff;
   background-color: #6D7F82;
   @include make-md-column(3);
+  padding-top: 15px;
   padding-bottom: 15px;
   text-align: center;
 
@@ -11,6 +12,7 @@
 
   h2 {
     font-size: 1em;
+    margin-top: 0;
   }
 
   .has-lined-sides {
@@ -45,6 +47,7 @@
   color: #000;
   margin-left: -1em;
   margin-right: -1em;
+  margin-top: -15px;
 
   h1 {
     margin-top: 0;
