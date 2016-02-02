@@ -1,0 +1,21 @@
+/* Portrait */
+@media (max-width: 1024px) {
+    .carousel-small {
+      display: block !important;
+    }
+
+    .carousel-large {
+      display: none !important;
+    }
+}
+
+/* Portrait */
+@media (min-width: 1024px) {
+    .carousel-small {
+      display: none !important;
+    }
+
+    .carousel-large {
+      display: block !important;
+    }
+}
