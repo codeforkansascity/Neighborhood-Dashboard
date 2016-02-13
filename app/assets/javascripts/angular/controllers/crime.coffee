@@ -48,10 +48,7 @@ angular
           .get(Routes.api_neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes}))
           .then(
             (response) ->
-              L.mapbox.featureLayer()
-                .setGeoJSON(response.data)
-                .addTo($scope.neighborhood.map)
-
+              $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
               $scope.activateFilters = false
           )
 

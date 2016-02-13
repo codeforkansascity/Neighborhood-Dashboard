@@ -15,11 +15,10 @@ class Neighborhood::VacancyData
           "type" => "Feature",
           "geometry" => {
             "type" => "Point",
-            "coordinates" => [coordinate['location_1']['longitude'].to_f,coordinate['location_1']['latitude'].to_f]
+            "coordinates" => [coordinate['location_1']['longitude'].to_f, coordinate['location_1']['latitude'].to_f]
           },
           "properties" => {
-            "marker-size" => "small",
-            "marker-color" => vacant_lot_color(coordinate),
+            "color" => vacant_lot_color(coordinate),
             "description" => vacant_lot_description(coordinate)
           }
         }
@@ -73,8 +72,7 @@ class Neighborhood::VacancyData
             "coordinates" => [coordinate['location_1']['longitude'].to_f,coordinate['location_1']['latitude'].to_f]
           },
           "properties" => {
-            "marker-color" => "#f28729",
-            "marker-size" => "small"
+            "color" => "#f28729",
           }
         }
       }

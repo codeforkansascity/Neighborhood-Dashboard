@@ -14,7 +14,7 @@ response.parsed_response.each do |neighborhood|
 
   if possible_coordinates.present?
     coordinates = possible_coordinates.map { |coordinate|
-      Coordinate.create(latitude: coordinate[0], longtitude: coordinate[1])
+      Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
     }
 
     Neighborhood.create(name: neighborhood['name'], coordinates: coordinates)

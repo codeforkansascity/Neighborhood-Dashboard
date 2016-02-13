@@ -9,9 +9,7 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
       .then(
         (response) ->
           $scope.dangerousNeighborhoods = response.data
-          layer = L.mapbox.featureLayer()
-            .setGeoJSON(response.data)
-            .addTo($scope.neighborhood.map)
+          $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
       )
 
     $http
@@ -19,16 +17,14 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
       .then(
         (response) ->
           $scope.vacantLots = response.data
-          layer = L.mapbox.featureLayer()
-            .setGeoJSON(response.data)
-            .addTo($scope.neighborhood.map)
+          $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
 
           drawLegend()
       )
 
     drawLegend= ()->
       legendMarkup =
-        "<nav class='legend clearfix'>" +
+        $("<nav class='legend clearfix'>" +
           '<ul>' +
             '<li>' +
               '<span class="legend-element" style="background-color: #A3F5FF;"></span>Vacant Lots' +
@@ -46,7 +42,8 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
             '</li>' +
             '<li><span class="legend-element" style="background-color: #f28729;"></span> Dangerous Building</li>' +
           '</ul>' +
-        '</nav>'
+        '</nav>');
 
-      $scope.legend = $scope.neighborhood.map.legendControl.addLegend(legendMarkup)
+      $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legendMarkup.get(0))
+
 ])
