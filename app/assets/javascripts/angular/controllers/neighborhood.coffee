@@ -18,7 +18,7 @@ angular
             search_neighborhood: search.queryNeighborhood,
             search_address: search.queryAddress,
             (neighborhood)->
-              $location.path("/neighborhood/#{neighborhood.id}/vacancies")
+              $location.path("/neighborhood/#{neighborhood.id}/crime")
           )
 
         if $stateParams.neighborhoodId

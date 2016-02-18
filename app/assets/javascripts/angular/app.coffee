@@ -26,17 +26,16 @@
         templateUrl: 'neighborhood.html'
         controller: 'NeighborhoodCtrl'
       )
+      .state('neighborhood.crime'
+        url: '/crime',
+        templateUrl: 'crime.html',
+        controller: 'CrimeCtrl'
+      )
       .state('neighborhood.vacancies',
         url: '/vacancies',
         templateUrl: 'vacancies.html',
         controller: 'VacanciesCtrl'
       )
-      # Crime tab is currently unavailable. Add back when the dataset is ready
-      # .state('neighborhood.crime'
-      #   url: '/crime',
-      #   templateUrl: 'crime.html',
-      #   controller: 'CrimeCtrl'
-      # )
 
     $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise('/')
