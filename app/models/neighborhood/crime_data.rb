@@ -85,7 +85,7 @@ class Neighborhood::CrimeData
 
   def query_polygon
     coordinates = @neighborhood.coordinates.map{ |neighborhood|
-      "#{neighborhood.latitude} #{neighborhood.longtitude}"
+      "#{neighborhood.longtitude} #{neighborhood.latitude}"
     }.join(',')
 
     "within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')"
