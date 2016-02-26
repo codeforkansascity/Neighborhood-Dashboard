@@ -61,6 +61,10 @@ group :development, :test do
   gem 'pry'
 end
 
+group :test do
+  gem 'rspec-rails', '~> 3.4.1'
+end
+
 group :production do
   gem 'pg'
 

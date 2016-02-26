@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'testing_controller/index'
+
   namespace :api do
     resources :neighborhood, only: [:index, :show]
 
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
         collection do
           get 'dangerous_buildings'
           get 'vacant_lots'
+          get 'legally_abandoned'
         end
       end
     end
