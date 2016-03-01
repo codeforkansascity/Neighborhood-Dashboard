@@ -58,6 +58,10 @@ In addition, if you need assistance with git, I highly recommend going through t
 
 [Code School GIT Course](https://www.codeschool.com/courses/try-git)
 
+When you have cloned the application, you need to install all of the required rails dependencies to start developing.
+
+    bundle install --without production
+
 Once you have checkout out this application, run the following command to setup your Database
 
     bundle exec rake db:create db:migrate db:seed
