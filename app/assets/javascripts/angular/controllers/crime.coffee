@@ -1,56 +1,47 @@
 angular
   .module('neighborhoodstat')
-  .constant('CRIME_CODES', {
-    ARSON: '200',
-    ASSAULT: '13',
-    ASSAULT_AGGRAVATED: '13A',
-    ASSAULT_SIMPLE: '13B',
-    ASSAULT_INTIMIDATION: '13C',
-    BRIBERY: '510',
-    BURGLARY: '220',
-    COUNTERFEITING: '250',
-    VANDALISM: '290',
-    DRUG: '35',
-    DRUG_NARCOTIC: '35A',
-    EMBEZZLEMENT: '270',
-    EXTORTION: '210',
-    FRAUD: '26',
-    FRAUD_SWINDLE: '26A'
-  })
   .controller("CrimeCtrl", [
     '$scope',
     '$resource',
     '$http',
     '$stateParams',
-    'CRIME_CODES',
-    ($scope, $resource, $http, $stateParams, CRIME_CODES)->
+    'CrimeCodeMapper',
+    ($scope, $resource, $http, $stateParams, CrimeCodeMapper)->
       $scope.visible = true
-      $scope.clearFilters = () ->
-      $scope.getCrimeByCodes = (crimeCodes) ->
-        selectedCrimes = (key for key, val of crimeCodes)
-        fbiCodes = []
-        selectedCrimes.forEach (item, index, array) ->
-          switch item
-            when 'ASSAULT'
-              fbiCodes.push(
-                CRIME_CODES.ASSAULT_AGGRAVATED,
-                CRIME_CODES.ASSAULT_SIMPLE,
-                CRIME_CODES.ASSAULT_INTIMIDATION
-              )
-            when 'DRUG'
-              fbiCodes.push(
-                CRIME_CODE.DRUG_NARCOTIC
-              )
-            else
-              fbiCodes.push(CRIME_CODES[item])
 
-        $http
-          .get(Routes.api_neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes}))
-          .then(
-            (response) ->
-              $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
-              $scope.activateFilters = false
-          )
+      $scope.clearFilters = (crimeCodes) ->
+        for key, val of crimeCodes
+          crimeCodes[key] = false
+
+      $scope.getCrimeByCodes = (crimeCodes) ->
+        fbiCodes = []
+        for key, val of crimeCodes
+          if val
+            fbiCodes.push(key)
+
+        fbiCodes = CrimeCodeMapper.createFBIMapping(fbiCodes)
+
+        if fbiCodes.length > 0
+          $http
+            .get(Routes.api_neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes}))
+            .then(
+              (response) ->
+                clearCrimeMarkers()
+
+                $scope.neighborhood.crimeMarkers =
+                  $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
+
+                $scope.activateFilters = false
+
+                if response.data.length == 0
+                  removeLegend()
+                else
+                  drawLegend()
+            )
+        else
+          clearCrimeMarkers()
+          removeLegend()
+          $scope.activateFilters = false
 
       $http
         .get(Routes.grouped_totals_api_neighborhood_crime_index_path($stateParams.neighborhoodId))
@@ -64,4 +55,41 @@ angular
           return (count for code, count of $scope.crimeStatistics[category]).reduce (a,b) -> a + b
         else
           return 0
+
+      drawLegend= ()->
+        # Don't draw the legend if it already exist
+        return if $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j[0]
+
+        legendMarkup =
+          $("<nav class='legend clearfix'>" +
+            '<ul>' +
+              '<li>' +
+                '<span class="legend-element" style="background-color: #626AB2;"></span>Person' +
+              '</li>' +
+              '<li>' +
+                '<span class="legend-element" style="background-color: #313945;"></span>Property' +
+              '</li>' +
+              '<li>' +
+                '<span class="legend-element" style="background-color: #6B7D96;"></span>Society' +
+              '</li>' +
+              '<li>' +
+                '<span class="legend-element" style="border: #000 solid 1px; background-color: #FFFFFF;"></span>Uncategorized' +
+              '</li>' +
+            '</ul>' +
+          '</nav>');
+
+        $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legendMarkup.get(0))
+
+      removeLegend= ()->
+        # We only want to remove the legend if it exists
+        return if !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j[0]
+        $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].pop()
+
+      clearCrimeMarkers= ()->
+        if $scope.neighborhood.crimeMarkers
+          $scope.neighborhood.map.data.forEach((feature) ->
+            $scope.neighborhood.map.data.remove(feature)
+          )
+
+          $scope.neighborhood.crimeMarkers = null
   ])

@@ -72,15 +72,31 @@ class Neighborhood::CrimeData
       }
       .map { |coordinate|
         {
-          "description" => coordinate['description'],
-          "offense" => coordinate['offense'],
+          "ibrs" => coordinate['ibrs'],
           "type" => "Feature",
           "geometry" => {
             "type" => "Point",
             "coordinates" => coordinate["location_1"]["coordinates"]
+          },
+          "properties" => {
+            "color" => crime_marker_color(coordinate['ibrs']),
+            "description" => coordinate['description']
           }
         }
       }
+  end
+
+  def crime_marker_color(ibrs)
+    case
+    when CrimeMapper::CRIME_CATEGORIES[:PERSON].include?(ibrs)
+      '#626AB2'
+    when CrimeMapper::CRIME_CATEGORIES[:PROPERTY].include?(ibrs)
+      '#313945'
+    when CrimeMapper::CRIME_CATEGORIES[:SOCIETY].include?(ibrs)
+      '#6B7D96'
+    else
+      '#ffffff'
+    end
   end
 
   def query_polygon

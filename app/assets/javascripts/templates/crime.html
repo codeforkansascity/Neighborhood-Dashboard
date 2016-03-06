@@ -56,10 +56,6 @@
     <div class="col-md-2">
       <h2>Person</h2>
       <label>
-        <input type="checkbox" ng-model="crime.ALL_PEOPLE" />
-        All
-      </label>
-      <label>
         <input type="checkbox" ng-model="crime.ASSAULT" />
         Assault
       </label>
@@ -81,10 +77,6 @@
       <div class="row">
         <div class="col-md-6">
           <label>
-            <input type="checkbox" ng-model="crime.ALL_PROPERY" />
-            All
-          </label>
-          <label>
             <input type="checkbox" ng-model="crime.ARSON" />
             Arson
           </label>
@@ -104,12 +96,12 @@
             <input type="checkbox" ng-model="crime.EXTORTION" />
             Extortion
           </label>
-        </div>
-        <div class="col-md-6">
           <label>
             <input type="checkbox" ng-model="crime.FRAUD" />
             Fraud
           </label>
+        </div>
+        <div class="col-md-6">
           <label>
             <input type="checkbox" ng-model="crime.MOTOR_VEHICLE_THEFT" />
             Motor Vehicle Theft
@@ -137,10 +129,6 @@
       <h2>Society</h2>
       <div class="row">
         <div class="col-md-6">
-          <label>
-            <input type="checkbox" ng-model="crime.ALL_SOCIETY" />
-            All
-          </label>
           <label>
             <input type="checkbox" ng-model="crime.BAD_CHECKS" />
             Bad Checks
@@ -180,10 +168,6 @@
             Liquor Law Violation
           </label>
           <label>
-            <input type="checkbox" ng-model="crime.STOLEN_PROPERTY"/>
-            Stolen Property
-          </label>
-          <label>
             <input type="checkbox" ng-model="crime.TRESPASSING"/>
             Trespassing
           </label>
@@ -192,7 +176,7 @@
     </div>
     <div>
       <div class="map-filter-actions pull-right">
-        <button class="btn btn-primary">Reset</button>
+        <button class="btn btn-primary" ng-click="clearFilters(crime)">Reset</button>
         <button class="btn btn-primary" ng-click="getCrimeByCodes(crime)">Done</button>
       </div>
     </div>
