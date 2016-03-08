@@ -5,7 +5,7 @@
       "angular": "=1.4.9",
       "angular-route": "=1.4.9",
       "angular-resource": "=1.4.9",
-      "angular-ui-router": "v0.2.15"
+      "angular-ui-router": "=0.2.15"
     }
   },
   "vendor": {
