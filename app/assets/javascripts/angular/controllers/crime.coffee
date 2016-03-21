@@ -9,13 +9,19 @@ angular
     ($scope, $resource, $http, $stateParams, CrimeCodeMapper)->
       $scope.visible = true
 
-      $scope.clearFilters = (crimeCodes) ->
-        for key, val of crimeCodes
-          crimeCodes[key] = false
+      $scope.clearFilters = (crimeFilters) ->
+        crimeFilters.startDate = null
+        crimeFilters.endDate = null
 
-      $scope.getCrimeByCodes = (crimeCodes) ->
+        for key, val of crimeFilters.codes
+          crimeFilters.codes[key] = false
+
+      $scope.filterCrimes = (crimeFilters) ->
         fbiCodes = []
-        for key, val of crimeCodes
+        startDate = crimeFilters.startDate
+        endDate = crimeFilters.endDate
+
+        for key, val of crimeFilters.codes
           if val
             fbiCodes.push(key)
 
@@ -23,7 +29,7 @@ angular
 
         if fbiCodes.length > 0
           $http
-            .get(Routes.api_neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes}))
+            .get(Routes.api_neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes, start_date: startDate, end_date: endDate}))
             .then(
               (response) ->
                 clearCrimeMarkers()

@@ -22,14 +22,25 @@ class Neighborhood::CrimeData
     Hash[yearly_counts]
   end
 
-  def map_coordinates(crime_codes = [])
+  def map_coordinates(params = {})
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    crime_codes = params[:crime_codes] || []
+
+    service_url = "#{RESOURCE_URL}?$where= #{query_polygon}"
+
     if crime_codes.present?
-      service_url = URI::escape("#{RESOURCE_URL}?$where= #{query_polygon} AND #{process_crime_filters(crime_codes)}")
-    else
-      service_url = URI::escape("#{RESOURCE_URL}?$where= #{query_polygon}")
+      service_url += " AND #{process_crime_filters(crime_codes)}"
     end
 
-    mapify_coordinates(HTTParty.get(service_url, verify: false))
+    if start_date && end_date
+      begin
+        service_url += " AND #{filter_dates(start_date, end_date)}"
+      rescue ArgumentError
+      end
+    end
+
+    mapify_coordinates(HTTParty.get(URI::escape(service_url), verify: false))
   end
 
   def grouped_totals
@@ -80,10 +91,17 @@ class Neighborhood::CrimeData
           },
           "properties" => {
             "color" => crime_marker_color(coordinate['ibrs']),
-            "description" => coordinate['description']
+            "description" => tooltip_description(coordinate)
           }
         }
       }
+  end
+
+  def tooltip_description(coordinate)
+    coordinate['description'] + '<br/>' + DateTime.parse(coordinate['from_date']).strftime("%m/%d/%Y")
+  rescue ArgumentError
+    puts 'Invalid Date Format Provided'
+    coordinate['description']
   end
 
   def crime_marker_color(ibrs)
@@ -105,5 +123,9 @@ class Neighborhood::CrimeData
     }.join(',')
 
     "within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')"
+  end
+
+  def filter_dates(start_date, end_date)
+    "from_date between '#{DateTime.parse(start_date).iso8601[0...-6]}' and '#{DateTime.parse(end_date).iso8601[0...-6]}'"
   end
 end
