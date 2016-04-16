@@ -6,17 +6,40 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-response = HTTParty.get('https://structuralfabric.org/api/hood')
+if Neighborhood.count <= 0
+  response = HTTParty.get('https://structuralfabric.org/api/hood')
 
-response.parsed_response.each do |neighborhood|
+  response.parsed_response.each do |neighborhood|
 
-  possible_coordinates = neighborhood['location']['shape']['coordinates'][0]
+    possible_coordinates = neighborhood['location']['shape']['coordinates'][0]
 
-  if possible_coordinates.present?
-    coordinates = possible_coordinates.map { |coordinate|
-      Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
-    }
+    if possible_coordinates.present?
+      coordinates = possible_coordinates.map { |coordinate|
+        Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
+      }
 
-    Neighborhood.create(name: neighborhood['name'], coordinates: coordinates)
+      Neighborhood.create(name: neighborhood['name'], coordinates: coordinates)
+    end
+  end
+end
+
+
+if Parcel.count <= 0
+  parcel_data = File.read(::Rails.root.join('data_sets', 'parcel_coordinates.json'))
+  parcel_json = JSON.parse(parcel_data)
+
+  parcel_json['features'].each do |parcel|
+    coordinates = parcel["geometry"]["coordinates"][0][0].map do |coordinate|
+      Coordinate.new(latitude: coordinate[1], longtitude: coordinate[0])
+    end
+
+    parcel_model = Parcel.create(
+      object_id: parcel['objectid'],
+      parcel_id: parcel['parcelid'],
+      apn: parcel['apn'],
+      own_name: parcel['own_name'],
+      land_bank: parcel['land_bank'],
+      coordinates: coordinates
+    )
   end
 end
