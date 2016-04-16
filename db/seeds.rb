@@ -33,12 +33,14 @@ if Parcel.count <= 0
       Coordinate.new(latitude: coordinate[1], longtitude: coordinate[0])
     end
 
+    parcel_properties = parcel['properties']
+
     parcel_model = Parcel.create(
-      object_id: parcel['objectid'],
-      parcel_id: parcel['parcelid'],
-      apn: parcel['apn'],
-      own_name: parcel['own_name'],
-      land_bank: parcel['land_bank'],
+      object_id: parcel_properties['objectid'],
+      parcel_id: parcel_properties['parcelid'],
+      apn: parcel_properties['apn'],
+      own_name: parcel_properties['own_name'],
+      land_bank: parcel_properties['land_bank'],
       coordinates: coordinates
     )
   end
