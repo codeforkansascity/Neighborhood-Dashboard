@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410175316) do
+ActiveRecord::Schema.define(version: 20150606222943) do
 
   create_table "coordinates", force: :cascade do |t|
     t.float    "latitude"
@@ -27,26 +27,9 @@ ActiveRecord::Schema.define(version: 20160410175316) do
     t.datetime "updated_at",      null: false
   end
 
-  create_table "coordinates_parcels", force: :cascade do |t|
-    t.integer  "parcel_id"
-    t.integer  "coordinate_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
   create_table "neighborhoods", force: :cascade do |t|
     t.string   "name"
     t.string   "code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "parcels", force: :cascade do |t|
-    t.string   "object_id"
-    t.string   "parcel_id"
-    t.string   "apn"
-    t.string   "own_name"
-    t.string   "land_bank"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

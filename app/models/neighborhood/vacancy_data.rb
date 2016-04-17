@@ -8,7 +8,7 @@ class Neighborhood::VacancyData
     parcel_data = HTTParty.get(request_url, verify: false)
 
     parcel_ids = parcel_data.map { |parcel| parcel['parcel_number'] }
-    parcels = Parcel.includes(:coordinates).where(apn: parcel_ids)
+    parcels = StaticData::PARCEL_DATA.select { |parcel| parcel_ids.include?(parcel['properties']['apn']) }
 
     parcel_data
       .select { |parcel|
@@ -132,10 +132,10 @@ class Neighborhood::VacancyData
   end
 
   def geometric_parcel_coordinates(parcels, parcel)
-    desired_parcel = parcels.find{ |current_parcel| current_parcel.apn == parcel['parcel_number'] }
+    desired_parcel = parcels.find { |current_parcel| current_parcel['properties']['apn'] == parcel['parcel_number'] }
 
     if desired_parcel.present? 
-      desired_parcel.coordinates.map{ |coordinate| [coordinate.longtitude, coordinate.latitude] }
+      desired_parcel["geometry"]["coordinates"][0][0]
     else
       []
     end

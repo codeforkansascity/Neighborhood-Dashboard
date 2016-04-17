@@ -22,26 +22,3 @@ if Neighborhood.count <= 0
     end
   end
 end
-
-
-if Parcel.count <= 0
-  parcel_data = File.read(::Rails.root.join('data_sets', 'parcel_coordinates.json'))
-  parcel_json = JSON.parse(parcel_data)
-
-  parcel_json['features'].each do |parcel|
-    coordinates = parcel["geometry"]["coordinates"][0][0].map do |coordinate|
-      Coordinate.new(latitude: coordinate[1], longtitude: coordinate[0])
-    end
-
-    parcel_properties = parcel['properties']
-
-    parcel_model = Parcel.create(
-      object_id: parcel_properties['objectid'],
-      parcel_id: parcel_properties['parcelid'],
-      apn: parcel_properties['apn'],
-      own_name: parcel_properties['own_name'],
-      land_bank: parcel_properties['land_bank'],
-      coordinates: coordinates
-    )
-  end
-end
