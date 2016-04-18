@@ -18,9 +18,8 @@ class Neighborhood::VacancyData
         {
           "type" => "Feature",
           "geometry" => {
-            "type" => "Point",
-            "coordinates" => [parcel['location_1']['longitude'].to_f, parcel['location_1']['latitude'].to_f],
-            "geometric_coordinates" => geometric_parcel_coordinates(parcels, parcel)
+            "type" => "Polygon",
+            "coordinates" => geometric_parcel_coordinates(parcels, parcel)
           },
           "properties" => {
             "color" => vacant_lot_color(parcel),
@@ -135,7 +134,7 @@ class Neighborhood::VacancyData
     desired_parcel = parcels.find { |current_parcel| current_parcel['properties']['apn'] == parcel['parcel_number'] }
 
     if desired_parcel.present? 
-      desired_parcel["geometry"]["coordinates"][0][0]
+      desired_parcel["geometry"]["coordinates"][0]
     else
       []
     end

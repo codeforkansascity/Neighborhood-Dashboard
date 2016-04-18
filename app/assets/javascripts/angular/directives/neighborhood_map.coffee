@@ -29,7 +29,13 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
         if e.feature.getGeometry().getType() == 'Point' && e.feature.getProperty('description')
           $scope.mapInfoWindow.setContent(e.feature.getProperty('description'));
           $scope.mapInfoWindow.setPosition(e.feature.getGeometry().get());
-          $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
+          $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, -30)});
+          $scope.mapInfoWindow.open($scope.neighborhood.map);
+
+        if e.feature.getGeometry().getType() == 'Polygon' && e.feature.getProperty('description')
+          $scope.mapInfoWindow.setContent(e.feature.getProperty('description'));
+          $scope.mapInfoWindow.setPosition(getGeometryCenter(e.feature.getGeometry().getArray()));
+          $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)});
           $scope.mapInfoWindow.open($scope.neighborhood.map);
       )
 
@@ -38,7 +44,27 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
           return {
             icon: drawMapMarker(feature.getProperty('color'))
           }
+
+        if feature.getGeometry().getType() == 'Polygon'
+          return {
+            fillColor: feature.getProperty('color'),
+            strokeColor: feature.getProperty('color')
+          }
       )
+
+      getGeometryCenter = (coordinates) ->
+        latitude = 0
+        longtitude = 0
+        coordinatesSize = 0
+
+        coordinates.forEach (path) ->
+          coordinatesSize = path.getArray().length
+
+          path.getArray().forEach (latLng) ->
+            latitude += latLng.lat()
+            longtitude += latLng.lng()
+
+        return new google.maps.LatLng(latitude / coordinatesSize, longtitude / coordinatesSize)
 
       drawMapMarker = (color) ->
         return {
