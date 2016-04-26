@@ -1,20 +1,24 @@
-  <div class="toolbar">
-    <form class="form-inline">
-      <div class="form-group">
-        <input type="date" class="form-control" />
-        <label>Start Date</label>
+<div class="toolbar">
+  <form class="form-inline" ng-submit="filterCrimes(crimeFilters)">
+    <div class="form-group">
+      <input type="date" name="start_date" class="form-control" ng-model="crimeFilters.startDate"/>
+      <label>Start Date</label>
+    </div>
+    <div class="form-group">
+      <input type="date" name="end_date" class="form-control" ng-model="crimeFilters.endDate" />
+      <label>End Date</label>
+    </div>
+    <button class="btn btn btn-success pull-right" type="button" ng-click="activateFilters = !activateFilters">
+      Filters
+    </button>
+    <div ng-show="activateFilters" class="map-filters">
+      <div class="col-md-6">
+        <h2>Legally Abandoned</h2>
       </div>
-      <div class="form-group">
-        <input type="date" class="form-control" />
-        <label>End Date</label>
+      <div class="col-md-6">
+        <h2>Vacant Indicators</h2>
       </div>
-      <div class="form-group">
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">Legally Abandoned</button>
-          <button type="button" class="btn btn-default">Vacancy</button>
-        </div>
-        <label>&nbsp;</label>
-      </div>
-    </form>
-  </div>
-  <div neighborhood-map></div>
+    </div>
+  </form>
+</div>
+<div neighborhood-map></div>
