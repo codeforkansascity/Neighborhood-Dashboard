@@ -17,4 +17,8 @@ class Neighborhood < ActiveRecord::Base
   def vacancy_data
     Neighborhood::VacancyData.new(self)
   end
+
+  def filtered_vacant_data(filters)
+    NeighborhoodServices::VacancyData::LandBank.new(self, filters).data
+  end
 end
