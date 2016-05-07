@@ -8,7 +8,7 @@ class Neighborhood::VacancyData
     parcel_data = HTTParty.get(request_url, verify: false)
 
     parcel_ids = parcel_data.map { |parcel| parcel['parcel_number'] }
-    parcels = StaticData::PARCEL_DATA.select { |parcel| parcel_ids.include?(parcel['properties']['apn']) }
+    parcels = StaticData::PARCEL_DATA().select { |parcel| parcel_ids.include?(parcel['properties']['apn']) }
 
     parcel_data
       .select { |parcel|

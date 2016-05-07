@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Api::Neighborhood::VacanciesController, :type => :controller do
+RSpec.describe Api::Neighborhood::VacancyController, :type => :controller do
   let(:neighborhood) { double(id: 24) }
 
   before do

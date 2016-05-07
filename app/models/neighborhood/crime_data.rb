@@ -91,17 +91,17 @@ class Neighborhood::CrimeData
           },
           "properties" => {
             "color" => crime_marker_color(coordinate['ibrs']),
-            "description" => tooltip_description(coordinate)
+            "disclosure_attributes" => disclosure_attributes(coordinate)
           }
         }
       }
   end
 
-  def tooltip_description(coordinate)
-    coordinate['description'] + '<br/>' + DateTime.parse(coordinate['from_date']).strftime("%m/%d/%Y")
+  def disclosure_attributes(coordinate)
+    [coordinate['description'] + '<br/>' + DateTime.parse(coordinate['from_date']).strftime("%m/%d/%Y")]
   rescue ArgumentError
     puts 'Invalid Date Format Provided'
-    coordinate['description']
+    [coordinate['description']]
   end
 
   def crime_marker_color(ibrs)

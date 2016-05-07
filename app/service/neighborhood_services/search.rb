@@ -1,4 +1,4 @@
-class Neighborhood::Search
+class NeighborhoodServices::Search
   def self.search(search)
     geocoded_information = Geocoder.search(search).first
 

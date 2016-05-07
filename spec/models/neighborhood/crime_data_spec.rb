@@ -87,7 +87,7 @@ RSpec.describe Neighborhood::CrimeData do
         },
         "properties" => {
           "color" => "#ffffff",
-          "description" => "Misc Violation\u003cbr/\u003e07/28/2014"
+          "disclosure_attributes" => ["Misc Violation\u003cbr/\u003e07/28/2014"]
         }
       },
       {
@@ -99,7 +99,7 @@ RSpec.describe Neighborhood::CrimeData do
         },
         "properties" => {
           "color" => "#313945",
-          "description" => "Auto Theft\u003cbr/\u003e07/25/2014"
+          "disclosure_attributes" => ["Auto Theft\u003cbr/\u003e07/25/2014"]
         }
       }
     ]
