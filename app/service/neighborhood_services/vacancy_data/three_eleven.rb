@@ -19,14 +19,14 @@ class NeighborhoodServices::VacancyData::ThreeEleven
     three_eleven_filtered_data(three_eleven_data)
       .values
       .select { |parcel|
-        parcel["location_1"].present? && parcel["location_1"]["latitude"].present?
+        parcel["address_with_geocode"].present? && parcel["address_with_geocode"]["latitude"].present?
       }
       .map { |parcel|
         {
           "type" => "Feature",
           "geometry" => {
-            "type" => "Polygon",
-            "coordinates" => geometric_parcel_coordinates(parcels, parcel)
+            "type" => "Point",
+            "coordinates" => [parcel["address_with_geocode"]["longitude"], parcel["address_with_geocode"]["latitude"]]
           },
           "properties" => {
             "parcel_number" => parcel['parcel_number'],
@@ -50,27 +50,17 @@ class NeighborhoodServices::VacancyData::ThreeEleven
     '#ffffff'
   end
 
-  def geometric_parcel_coordinates(parcels, parcel)
-    desired_parcel = parcels.find { |current_parcel| current_parcel['properties']['apn'] == parcel['parcel_number'] }
-
-    if desired_parcel.present? 
-      desired_parcel["geometry"]["coordinates"][0]
-    else
-      []
-    end
-  end
-
   def three_eleven_filtered_data(parcel_data)
     three_eleven_filtered_data = {}
 
     if @vacant_filters.include?('vacant_structure')
       foreclosure_data = ::NeighborhoodServices::VacancyData::Filters::VacantStructure.new(parcel_data).filtered_data
-      merge_data_set(land_bank_filtered_data, foreclosure_data)
+      merge_data_set(three_eleven_filtered_data, foreclosure_data)
     end
 
-    if @vacant_filters.include?('failure_to_register')
-      demo_needed_data = ::NeighborhoodServices::VacancyData::Filters::VacantRegistryFailure.new(parcel_data).filtered_data
-      merge_data_set(three_eleven_filtered_data, demo_needed_data)
+    if @vacant_filters.include?('open')
+      open_case_data = ::NeighborhoodServices::VacancyData::Filters::OpenThreeEleven.new(parcel_data).filtered_data
+      merge_data_set(three_eleven_filtered_data, open_case_data)
     end
 
     default_disclosure_attributes(three_eleven_filtered_data)
@@ -78,10 +68,10 @@ class NeighborhoodServices::VacancyData::ThreeEleven
 
   def merge_data_set(data, data_set)
     data_set.each do |entity|
-      if data[entity['parcel_number']]
-        data[entity['parcel_number']]['disclosure_attributes'] += entity['disclosure_attributes']
+      if data[entity['parcel_id_no']]
+        data[entity['parcel_id_no']]['disclosure_attributes'] += entity['disclosure_attributes']
       else
-        data[entity['parcel_number']] = entity
+        data[entity['parcel_id_no']] = entity
       end
     end
   end

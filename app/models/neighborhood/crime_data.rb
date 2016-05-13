@@ -45,7 +45,6 @@ class Neighborhood::CrimeData
 
   def grouped_totals
     service_url = URI::escape("#{RESOURCE_URL}?$where=#{query_polygon}&$select=ibrs,count(ibrs)&$group=ibrs")
-    binding.pry
 
     crimes = HTTParty.get(service_url, verify: false)
 
