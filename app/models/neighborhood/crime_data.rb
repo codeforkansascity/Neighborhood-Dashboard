@@ -27,7 +27,7 @@ class Neighborhood::CrimeData
     end_date = params[:end_date]
     crime_codes = params[:crime_codes] || []
 
-    service_url = "#{RESOURCE_URL}?$where= #{query_polygon}"
+    service_url = "#{RESOURCE_URL}?$where=#{query_polygon}"
 
     if crime_codes.present?
       service_url += " AND #{process_crime_filters(crime_codes)}"
@@ -45,6 +45,7 @@ class Neighborhood::CrimeData
 
   def grouped_totals
     service_url = URI::escape("#{RESOURCE_URL}?$where=#{query_polygon}&$select=ibrs,count(ibrs)&$group=ibrs")
+
     crimes = HTTParty.get(service_url, verify: false)
 
     crime_counts = crimes.inject({}) {|crime_hash, crime|

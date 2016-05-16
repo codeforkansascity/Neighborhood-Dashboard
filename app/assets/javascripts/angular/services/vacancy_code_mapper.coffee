@@ -5,8 +5,10 @@ angular
       DEMO_NEEDED: 'demo_needed',
       FORECLOSED: 'foreclosed'
     },
-    VACANT_INDICATORS: {
-
+    VACANT_INDICATOR: {
+      OPEN_THREE_ELEVEN: 'open',
+      VACANT_REGISTRATION_FAILURE: 'vacant_registration_failure',
+      VACANT_STRUCTURE: 'vacant_structure'
     }
   })  
   .service('VacancyCodeMapper', [

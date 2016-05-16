@@ -3,7 +3,7 @@ class NeighborhoodServices::VacancyData::LandBank
 
   def initialize(neighborhood, vacant_filters = {})
     @neighborhood = neighborhood
-    @vacant_filters = vacant_filters[:vacant_codes] || []
+    @vacant_filters = vacant_filters[:filters] || []
   end
 
   def data

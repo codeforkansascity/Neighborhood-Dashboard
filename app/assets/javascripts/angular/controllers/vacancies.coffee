@@ -10,7 +10,7 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
 
       if vacantCodes.length > 0
         $http
-          .get(Routes.api_neighborhood_vacancy_index_path($stateParams.neighborhoodId, vacant_codes: vacantCodes))
+          .get(Routes.api_neighborhood_vacancy_index_path($stateParams.neighborhoodId, filters: vacantCodes))
           .then(
             (response) ->
               clearVacancyDataMarkers()

@@ -143,7 +143,7 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
         }
       }
 
-      let(:vacant_filters) { {vacant_codes: ['foreclosed']} }
+      let(:vacant_filters) { {filters: ['foreclosed']} }
 
       before do
         allow(NeighborhoodServices::VacancyData::Filters::Foreclosure)

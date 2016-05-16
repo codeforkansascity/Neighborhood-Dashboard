@@ -112,7 +112,7 @@ RSpec.describe Neighborhood::CrimeData do
           "#{coordinate.longtitude} #{coordinate.latitude}"
         }.join(',')
 
-        base_url + "?$where= within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')"
+        base_url + "?$where=within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')"
       }
 
       before do
@@ -142,7 +142,7 @@ RSpec.describe Neighborhood::CrimeData do
         }.join(',')
 
         base_url +
-          "?$where= within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')" +
+          "?$where=within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')" +
           " AND from_date between '#{DateTime.parse(start_date).iso8601[0...-6]}' and '#{DateTime.parse(end_date).iso8601[0...-6]}'"
 
       }
@@ -175,7 +175,7 @@ RSpec.describe Neighborhood::CrimeData do
         crime_filters = crime_codes.join("' OR ibrs='")
 
         base_url +
-          "?$where= within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')" +
+          "?$where=within_polygon(location_1, 'MULTIPOLYGON (((#{coordinates})))')" +
           " AND (ibrs = '#{crime_filters}')"
       }
 
