@@ -4,7 +4,8 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
   '$stateParams',
   '$http',
   'VacancyCodeMapper',
-  ($scope, $resource, $stateParams, $http, VacancyCodeMapper)->
+  'StackedMarkerMapper',
+  ($scope, $resource, $stateParams, $http, VacancyCodeMapper, StackedMarkerMapper)->
     $scope.filterVacantData= (vacantFilters) ->
       vacantCodes = VacancyCodeMapper.createVacantMapping(vacantFilters.codes)
 
@@ -25,9 +26,10 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
           .then(
             (response) ->
               clearVacancyDataMarkers()
+              geoJSONData = StackedMarkerMapper.createStackedMarkerDataSet(response.data)
 
               $scope.neighborhood.vacantDataMarkers =
-                $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
+                $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: geoJSONData})
 
               $scope.activateFilters = false
           )
