@@ -4,6 +4,8 @@ class NeighborhoodServices::VacancyData::ThreeEleven
   def initialize(neighborhood, three_eleven_filters = {})
     @neighborhood = neighborhood
     @vacant_filters = three_eleven_filters[:filters] || []
+    @start_date = three_eleven_filters[:start_date]
+    @end_date = three_eleven_filters[:end_date]
   end
 
   def data
@@ -13,7 +15,7 @@ class NeighborhoodServices::VacancyData::ThreeEleven
   private
 
   def query_dataset
-    request_url = URI::escape("#{DATA_URL}?$where=neighborhood = '#{@neighborhood.name}'")
+    request_url = URI::escape("#{DATA_URL}?$query=#{build_socrata_query}")
     three_eleven_data = HTTParty.get(request_url, verify: false)
 
     three_eleven_filtered_data(three_eleven_data)
@@ -35,6 +37,34 @@ class NeighborhoodServices::VacancyData::ThreeEleven
           }
         }
       }
+  end
+
+  def build_socrata_query
+    query_string = "SELECT * where neighborhood = '#{@neighborhood.name}'"
+    query_elements = []
+
+    if @vacant_filters.include?('vacant_structure')
+      query_elements << "request_type='Nuisance Violations on Private Property Vacant Structure'"
+      query_elements  << "request_type='Vacant Structure Open to Entry'"
+    end
+
+    if @vacant_filters.include?('open')
+      query_elements << "status='OPEN'"
+    end
+
+    if query_elements.present?
+      query_string += " AND (#{query_elements.join(' or ')})"
+    end
+
+    if @start_date && @end_date
+      begin
+        query_string += " AND creation_date >= '#{DateTime.parse(@start_date).iso8601[0...-6]}'"
+        query_string += " AND creation_date <= '#{DateTime.parse(@end_date).iso8601[0...-6]}'"
+      rescue
+      end
+    end
+
+    query_string
   end
 
   def three_eleven_filtered_data(parcel_data)

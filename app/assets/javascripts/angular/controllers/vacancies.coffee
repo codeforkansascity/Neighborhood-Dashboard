@@ -9,8 +9,19 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
       vacantCodes = VacancyCodeMapper.createVacantMapping(vacantFilters.codes)
 
       if vacantCodes.length > 0
+        startDate = vacantFilters.startDate
+        endDate = vacantFilters.endDate
+
         $http
-          .get(Routes.api_neighborhood_vacancy_index_path($stateParams.neighborhoodId, filters: vacantCodes))
+          .get(
+            Routes.api_neighborhood_vacancy_index_path(
+              $stateParams.neighborhoodId,
+              filters: vacantCodes,
+              start_date: startDate,
+              end_date: endDate
+            )
+          )
+
           .then(
             (response) ->
               clearVacancyDataMarkers()

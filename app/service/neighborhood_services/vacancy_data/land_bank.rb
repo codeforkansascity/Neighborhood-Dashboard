@@ -4,6 +4,8 @@ class NeighborhoodServices::VacancyData::LandBank
   def initialize(neighborhood, vacant_filters = {})
     @neighborhood = neighborhood
     @vacant_filters = vacant_filters[:filters] || []
+    @start_date = vacant_filters[:start_date]
+    @end_date = vacant_filters[:end_date]
   end
 
   def data
@@ -13,7 +15,7 @@ class NeighborhoodServices::VacancyData::LandBank
   private
 
   def query_dataset
-    request_url = URI::escape("#{DATA_URL}?$where=neighborhood = '#{@neighborhood.name}'")
+    request_url = URI::escape("#{DATA_URL}?$query=#{build_socrata_query}")
     parcel_data = HTTParty.get(request_url, verify: false)
 
     parcel_ids = parcel_data.map { |parcel| parcel['parcel_number'] }
@@ -61,6 +63,33 @@ class NeighborhoodServices::VacancyData::LandBank
     else
       []
     end
+  end
+
+  def build_socrata_query
+    query_string = "SELECT * where neighborhood = '#{@neighborhood.name}'"
+    query_elements = []
+
+    if @vacant_filters.include?('demo_needed')
+      query_elements << "demo_needed='Y'"
+    end
+
+    if @vacant_filters.include?('foreclosed')
+      query_elements << "(foreclosure_year IS NOT NULL)"
+    end
+
+    if query_elements.present?
+      query_string += " AND (#{query_elements.join(' or ')})"
+    end
+
+    if @start_date && @end_date
+      begin
+        query_string += " AND acquisition_date >= '#{DateTime.parse(@start_date).iso8601[0...-6]}'"
+        query_string += " AND acquisition_date <= '#{DateTime.parse(@end_date).iso8601[0...-6]}'"
+      rescue
+      end
+    end
+
+    query_string
   end
 
   def land_bank_filtered_data(parcel_data)
