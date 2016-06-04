@@ -39,6 +39,8 @@ class NeighborhoodServices::VacancyData::LandBank
             "disclosure_attributes" => parcel['disclosure_attributes'].uniq
           }
         }
+      }.reject { |parcel|
+        parcel["geometry"]["coordinates"][0][0].size == 0
       }
   end
 
@@ -61,7 +63,7 @@ class NeighborhoodServices::VacancyData::LandBank
     if desired_parcel.present? 
       desired_parcel["geometry"]["coordinates"][0]
     else
-      []
+      [[[]]]
     end
   end
 
