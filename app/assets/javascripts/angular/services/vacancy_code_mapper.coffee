@@ -8,7 +8,8 @@ angular
     VACANT_INDICATOR: {
       OPEN_THREE_ELEVEN: 'open',
       VACANT_REGISTRATION_FAILURE: 'vacant_registration_failure',
-      VACANT_STRUCTURE: 'vacant_structure'
+      VACANT_STRUCTURE: 'vacant_structure',
+      ALL_PROPERTY_VIOLATIONS: 'all_property_violations'
     }
   })  
   .service('VacancyCodeMapper', [
