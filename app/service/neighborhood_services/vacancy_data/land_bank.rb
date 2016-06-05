@@ -40,7 +40,7 @@ class NeighborhoodServices::VacancyData::LandBank
           }
         }
       }.reject { |parcel|
-        parcel["geometry"]["coordinates"][0][0].size == 0
+        parcel["geometry"]["coordinates"].size == 0
       }
   end
 
@@ -63,7 +63,7 @@ class NeighborhoodServices::VacancyData::LandBank
     if desired_parcel.present? 
       desired_parcel["geometry"]["coordinates"][0]
     else
-      [[[]]]
+      []
     end
   end
 
@@ -71,12 +71,14 @@ class NeighborhoodServices::VacancyData::LandBank
     query_string = "SELECT * where neighborhood = '#{@neighborhood.name}'"
     query_elements = []
 
-    if @vacant_filters.include?('demo_needed')
-      query_elements << "demo_needed='Y'"
-    end
+    unless @vacant_filters.include?('all_vacant_filters')
+      if @vacant_filters.include?('demo_needed')
+        query_elements << "demo_needed='Y'"
+      end
 
-    if @vacant_filters.include?('foreclosed')
-      query_elements << "(foreclosure_year IS NOT NULL)"
+      if @vacant_filters.include?('foreclosed')
+        query_elements << "(foreclosure_year IS NOT NULL)"
+      end
     end
 
     if query_elements.present?
@@ -107,7 +109,12 @@ class NeighborhoodServices::VacancyData::LandBank
       merge_data_set(land_bank_filtered_data, demo_needed_data)
     end
 
-    default_disclosure_attributes(land_bank_filtered_data)
+    if @vacant_filters.include?('all_vacant_filters')
+      all_vacant_lots_data = ::NeighborhoodServices::VacancyData::Filters::AllVacantLots.new(parcel_data).filtered_data
+      merge_data_set(land_bank_filtered_data, all_vacant_lots_data)
+    end
+
+    land_bank_filtered_data
   end
 
   def merge_data_set(data, data_set)
@@ -118,15 +125,5 @@ class NeighborhoodServices::VacancyData::LandBank
         data[entity['parcel_number']] = entity
       end
     end
-  end
-
-  def default_disclosure_attributes(land_bank_data)
-    land_bank_data.dup.each { |kiva, land_bank|
-      land_bank['disclosure_attributes'] = [
-        "<b>Property Class:</b> #{land_bank['property_class']}",
-        "<b>Potential Use:</b> #{land_bank['potential_use']}",
-        "<b>Property Condition:</b> #{land_bank['property_condition']}"
-      ] + land_bank['disclosure_attributes']
-    }
   end
 end

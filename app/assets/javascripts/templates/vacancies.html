@@ -16,12 +16,12 @@
         <div class="col-md-6">
           <h2>Legally Abandoned</h2>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.DEMO_NEEDED" />
-            Demo Needed
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.ALL_VACANT_LOTS" />
+            Vacant Lot - Land Bank Property
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.FORECLOSED" />
-            Foreclosed
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS" />
+            All Property Violations
           </label>
         </div>
         <div class="col-md-6">
@@ -33,8 +33,14 @@
           <label>
             <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.OPEN_THREE_ELEVEN" />
             311 Open Cases
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS" />
-            All Property Violations
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.DEMO_NEEDED" />
+            Demo Needed - Land Bank Property
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.FORECLOSED" />
+            Foreclosed - Land Bank Property
           </label>
         </div>
       </div>

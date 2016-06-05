@@ -3,7 +3,8 @@ angular
   .constant('VACANT_CODES', {
     LEGALLY_ABANDONED: {
       DEMO_NEEDED: 'demo_needed',
-      FORECLOSED: 'foreclosed'
+      FORECLOSED: 'foreclosed',
+      ALL_VACANT_LOTS: 'all_vacant_filters'
     },
     VACANT_INDICATOR: {
       OPEN_THREE_ELEVEN: 'open',
