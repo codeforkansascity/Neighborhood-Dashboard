@@ -15,9 +15,9 @@
 //= require js-routes
 //= require bootstrap-sprockets
 //= require bootstrap/popover
-//= require angular/angular.min
-//= require angular-resource/angular-resource.min
-//= require angular-route/angular-route.min
+//= require angular/angular
+//= require angular-resource/angular-resource
+//= require angular-route/angular-route
 //= require angular-ui-router
 //= require angular-rails-templates
 //= require_tree ./templates
