@@ -26,11 +26,16 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
       $scope.mapInfoWindow = new google.maps.InfoWindow();
 
       $scope.neighborhood.map.data.addListener('click', (e) ->
-        if e.feature.getGeometry().getType() == 'Point' && e.feature.getProperty('description')
-          $scope.mapInfoWindow.setContent(e.feature.getProperty('description'));
+        if e.feature.getGeometry().getType() == 'Point'
           $scope.mapInfoWindow.setPosition(e.feature.getGeometry().get());
-          $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
-          $scope.mapInfoWindow.open($scope.neighborhood.map);
+          $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, -30)});
+
+        if e.feature.getGeometry().getType() == 'Polygon'
+          $scope.mapInfoWindow.setPosition(getPolygonCenter(e.feature.getGeometry().getArray()));
+          $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)});
+          
+        $scope.mapInfoWindow.setContent(outputDisclosureAttributes(e.feature.getProperty('disclosure_attributes')));
+        $scope.mapInfoWindow.open($scope.neighborhood.map);
       )
 
       $scope.neighborhood.map.data.setStyle((feature) ->
@@ -38,7 +43,30 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
           return {
             icon: drawMapMarker(feature.getProperty('color'))
           }
+
+        if feature.getGeometry().getType() == 'Polygon'
+          return {
+            fillColor: feature.getProperty('color'),
+            strokeColor: feature.getProperty('color')
+          }
       )
+
+      getPolygonCenter = (coordinates) ->
+        latitude = 0
+        longtitude = 0
+        coordinatesSize = 0
+
+        coordinates.forEach (path) ->
+          coordinatesSize = path.getArray().length
+
+          path.getArray().forEach (latLng) ->
+            latitude += latLng.lat()
+            longtitude += latLng.lng()
+
+        return new google.maps.LatLng(latitude / coordinatesSize, longtitude / coordinatesSize)
+
+      outputDisclosureAttributes = (disclosureAttributes) ->
+        return disclosureAttributes.join('<br/>')
 
       drawMapMarker = (color) ->
         return {

@@ -6,17 +6,19 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-response = HTTParty.get('https://structuralfabric.org/api/hood')
+if Neighborhood.count <= 0
+  response = HTTParty.get('https://structuralfabric.org/api/hood')
 
-response.parsed_response.each do |neighborhood|
+  response.parsed_response.each do |neighborhood|
 
-  possible_coordinates = neighborhood['location']['shape']['coordinates'][0]
+    possible_coordinates = neighborhood['location']['shape']['coordinates'][0]
 
-  if possible_coordinates.present?
-    coordinates = possible_coordinates.map { |coordinate|
-      Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
-    }
+    if possible_coordinates.present?
+      coordinates = possible_coordinates.map { |coordinate|
+        Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
+      }
 
-    Neighborhood.create(name: neighborhood['name'], coordinates: coordinates)
+      Neighborhood.create(name: neighborhood['name'], coordinates: coordinates)
+    end
   end
 end

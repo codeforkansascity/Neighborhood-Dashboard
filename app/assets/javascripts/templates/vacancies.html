@@ -1,20 +1,56 @@
-  <div class="toolbar">
-    <form class="form-inline">
-      <div class="form-group">
-        <input type="date" class="form-control" />
-        <label>Start Date</label>
-      </div>
-      <div class="form-group">
-        <input type="date" class="form-control" />
-        <label>End Date</label>
-      </div>
-      <div class="form-group">
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">Legally Abandoned</button>
-          <button type="button" class="btn btn-default">Vacancy</button>
+<div class="toolbar">
+  <form class="form-inline" ng-submit="filterVacantData(vacantFilters)">
+    <div class="form-group">
+      <input type="date" name="start_date" class="form-control" ng-model="vacantFilters.startDate"/>
+      <label>Start Date</label>
+    </div>
+    <div class="form-group">
+      <input type="date" name="end_date" class="form-control" ng-model="vacantFilters.endDate" />
+      <label>End Date</label>
+    </div>
+    <button class="btn btn btn-success pull-right" type="button" ng-click="activateFilters = !activateFilters">
+      Filters
+    </button>
+    <div ng-show="activateFilters" class="map-filters">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Legally Abandoned</h2>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.ALL_VACANT_LOTS" />
+            Vacant Lot - Land Bank Property
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS" />
+            All Property Violations
+          </label>
         </div>
-        <label>&nbsp;</label>
+        <div class="col-md-6">
+          <h2>Vacant Indicators</h2>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.VACANT_STRUCTURE" />
+            Vacant Structure
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.OPEN_THREE_ELEVEN" />
+            311 Open Cases
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.DEMO_NEEDED" />
+            Demo Needed - Land Bank Property
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.FORECLOSED" />
+            Foreclosed - Land Bank Property
+          </label>
+        </div>
       </div>
-    </form>
-  </div>
-  <div neighborhood-map></div>
+      <div>
+        <div class="map-filter-actions pull-right">
+          <button class="btn btn-primary" ng-click="clearFilters(crimeFilters)" type="button">Reset</button>
+          <button class="btn btn-primary">Done</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div neighborhood-map></div>

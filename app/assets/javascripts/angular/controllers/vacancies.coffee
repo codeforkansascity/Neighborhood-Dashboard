@@ -3,47 +3,46 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
   '$resource',
   '$stateParams',
   '$http',
-  ($scope, $resource, $stateParams, $http)->
-    $http
-      .get(Routes.dangerous_buildings_api_neighborhood_vacancy_path($stateParams.neighborhoodId))
-      .then(
-        (response) ->
-          $scope.dangerousNeighborhoods = response.data
-          $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
-      )
+  'VacancyCodeMapper',
+  'StackedMarkerMapper',
+  ($scope, $resource, $stateParams, $http, VacancyCodeMapper, StackedMarkerMapper)->
+    $scope.filterVacantData= (vacantFilters) ->
+      vacantCodes = VacancyCodeMapper.createVacantMapping(vacantFilters.codes)
 
-    $http
-      .get(Routes.vacant_lots_api_neighborhood_vacancy_path($stateParams.neighborhoodId))
-      .then(
-        (response) ->
-          $scope.vacantLots = response.data
-          $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
+      if vacantCodes.length > 0
+        startDate = vacantFilters.startDate
+        endDate = vacantFilters.endDate
 
-          drawLegend()
-      )
+        $http
+          .get(
+            Routes.api_neighborhood_vacancy_index_path(
+              $stateParams.neighborhoodId,
+              filters: vacantCodes,
+              start_date: startDate,
+              end_date: endDate
+            )
+          )
 
-    drawLegend= ()->
-      legendMarkup =
-        $("<nav class='legend clearfix'>" +
-          '<ul>' +
-            '<li>' +
-              '<span class="legend-element" style="background-color: #A3F5FF;"></span>Vacant Lots' +
-              '<ul>' +
-                '<li>' +
-                  '<span class="legend-element" style="background-color: #A3F5FF;"></span>0-1 Years Vacant' +
-                '</li>' +
-                '<li>' +
-                  '<span class="legend-element" style="background-color: #3A46B2;"></span>1-3 Years Vacant' +
-                '</li>' +
-                '<li>' +
-                  '<span class="legend-element" style="background-color: #000000;"></span>3+ Years Vacant' +
-                '</li>' +
-              '</ul>' +
-            '</li>' +
-            '<li><span class="legend-element" style="background-color: #f28729;"></span> Dangerous Building</li>' +
-          '</ul>' +
-        '</nav>');
+          .then(
+            (response) ->
+              clearVacancyDataMarkers()
+              geoJSONData = StackedMarkerMapper.createStackedMarkerDataSet(response.data)
 
-      $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legendMarkup.get(0))
+              $scope.neighborhood.vacantDataMarkers =
+                $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: geoJSONData})
+
+              $scope.activateFilters = false
+          )
+      else
+        clearVacancyDataMarkers()
+        $scope.activateFilters = false
+
+    clearVacancyDataMarkers= ()->
+      if $scope.neighborhood.vacantDataMarkers
+        $scope.neighborhood.map.data.forEach((feature) ->
+          $scope.neighborhood.map.data.remove(feature)
+        )
+
+        $scope.neighborhood.crimeMarkers = null
 
 ])

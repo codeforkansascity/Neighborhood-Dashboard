@@ -5,21 +5,25 @@ class Neighborhood::VacancyData
 
   def vacant_lots
     request_url = URI::escape("https://data.kcmo.org/resource/2ebw-sp7f.json?$where=neighborhood = '#{@neighborhood.name}'")
-    vacancy_coordinates = HTTParty.get(request_url, verify: false)
-    vacancy_coordinates
-      .select { |coordinate|
-        coordinate["location_1"].present? && coordinate["location_1"]["latitude"].present?
+    parcel_data = HTTParty.get(request_url, verify: false)
+
+    parcel_ids = parcel_data.map { |parcel| parcel['parcel_number'] }
+    parcels = StaticData::PARCEL_DATA().select { |parcel| parcel_ids.include?(parcel['properties']['apn']) }
+
+    parcel_data
+      .select { |parcel|
+        parcel["location_1"].present? && parcel["location_1"]["latitude"].present?
       }
-      .map { |coordinate|
+      .map { |parcel|
         {
           "type" => "Feature",
           "geometry" => {
-            "type" => "Point",
-            "coordinates" => [coordinate['location_1']['longitude'].to_f, coordinate['location_1']['latitude'].to_f]
+            "type" => "Polygon",
+            "coordinates" => geometric_parcel_coordinates(parcels, parcel)
           },
           "properties" => {
-            "color" => vacant_lot_color(coordinate),
-            "description" => vacant_lot_description(coordinate)
+            "color" => vacant_lot_color(parcel),
+            "description" => vacant_lot_description(parcel)
           }
         }
       }
@@ -124,6 +128,16 @@ class Neighborhood::VacancyData
           }
         }
       }
+  end
+
+  def geometric_parcel_coordinates(parcels, parcel)
+    desired_parcel = parcels.find { |current_parcel| current_parcel['properties']['apn'] == parcel['parcel_number'] }
+
+    if desired_parcel.present? 
+      desired_parcel["geometry"]["coordinates"][0]
+    else
+      []
+    end
   end
 
   # TODO: Fix API to use this value

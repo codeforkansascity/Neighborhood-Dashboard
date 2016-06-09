@@ -2,9 +2,9 @@
   "lib": {
     "name": "bower-rails generated lib assets",
     "dependencies": {
-      "angular": "v1.4.7",
-      "angular-route": "v1.4.x",
-      "angular-resource": "v1.4.8",
+      "angular": "v1.4.9",
+      "angular-route": "v1.4.9",
+      "angular-resource": "v1.4.9",
       "angular-animate": "v1.5.0",
       "angular-ui-router": "v0.2.15",
       "angular-flash-alert": "v2.2.4"
