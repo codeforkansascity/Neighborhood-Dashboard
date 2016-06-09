@@ -20,7 +20,7 @@
 //= require angular-route/angular-route
 //= require angular-ui-router
 //= require angular-animate
-//= require angular-flash-alert
+//= require angular-flash-alert/dist/angular-flash.min
 //= require angular-rails-templates
 //= require_tree ./templates
 //= require_tree .
