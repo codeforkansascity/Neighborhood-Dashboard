@@ -16,6 +16,8 @@
 //= require bootstrap-sprockets
 //= require bootstrap/popover
 //= require angular/angular
+//= require angular-animate/angular-animate
+//= require angular-flash-alert/dist/angular-flash.min
 //= require angular-resource/angular-resource
 //= require angular-route/angular-route
 //= require angular-ui-router
