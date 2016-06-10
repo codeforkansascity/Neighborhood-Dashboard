@@ -9,17 +9,24 @@ angular
       '$location',
       '$http',
       'IMAGES',
-      ($scope, $resource, $stateParams, $location, $http, IMAGES)->
+      'Flash',
+      ($scope, $resource, $stateParams, $location, $http, IMAGES, Flash)->
         Neighborhood = $resource('/api/neighborhood/:neighborhoodId', {neighborhoodId: "@id", format: 'json'})
         $scope.IMAGES = IMAGES;
 
         $scope.neighborhoodSearch = (search) ->
-          Neighborhood.get(
-            search_neighborhood: search.queryNeighborhood,
-            search_address: search.queryAddress,
-            (neighborhood)->
-              $location.path("/neighborhood/#{neighborhood.id}/crime")
-          )
+          if !$scope.searchingNeighborhood
+            $scope.searchingNeighborhood = true
+
+            Neighborhood.get(
+              {search_neighborhood: search.queryNeighborhood, search_address: search.queryAddress},
+              (neighborhood) ->
+                $location.path("/neighborhood/#{neighborhood.id}/crime")
+                $scope.searchingNeighborhood = false
+              (code)->
+                Flash.create('danger', 'Neighborhood Not Found', 5000)
+                $scope.searchingNeighborhood = false
+            )
 
         if $stateParams.neighborhoodId
           Neighborhood.get(
