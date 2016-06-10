@@ -7,18 +7,18 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 if Neighborhood.count <= 0
-  response = HTTParty.get('https://structuralfabric.org/api/hood')
+  response = JSON.parse(HTTParty.get('http://api.codeforkc.org/neighborhoods-geo/V0/99?city=KANSAS%20CITY&state=MO'))
+  neighborhoods = response['features']
 
-  response.parsed_response.each do |neighborhood|
-
-    possible_coordinates = neighborhood['location']['shape']['coordinates'][0]
+  neighborhoods.each do |neighborhood|
+    possible_coordinates = neighborhood['geometry']['coordinates'][0][0]
 
     if possible_coordinates.present?
       coordinates = possible_coordinates.map { |coordinate|
         Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
       }
 
-      Neighborhood.create(name: neighborhood['name'], coordinates: coordinates)
+      Neighborhood.create(name: neighborhood['properties']['name'], coordinates: coordinates)
     end
   end
 end
