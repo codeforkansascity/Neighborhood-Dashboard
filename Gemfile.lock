@@ -213,6 +213,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   js-routes
+  nokogiri (~> 1.6.6.2)
   pg
   pry
   rails (= 4.2.1)
