@@ -6,6 +6,11 @@ class Neighborhood < ActiveRecord::Base
   has_and_belongs_to_many :coordinates
   accepts_nested_attributes_for :coordinates
 
+  def addresses
+    uri = URI::escape("http://api.codeforkc.org//address-by-neighborhood/V0/#{name}?city=&state=mo")
+    JSON.parse(HTTParty.get(uri))
+  end
+
   def three_eleven_data
     Neighborhood::ThreeElevenData.new(self).data
   end
