@@ -15,6 +15,8 @@ gem 'therubyracer', platforms: :ruby
 gem 'bootstrap-sass', '~> 3.3.4'
 # Use font-awesome for icons
 gem 'font-awesome-rails', '~> 4.3.0'
+# Used for web scraping
+gem 'nokogiri', '~> 1.6.6.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

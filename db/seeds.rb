@@ -5,6 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+require 'open-uri'
+require 'nokogiri'
 
 if Neighborhood.count <= 0
   response = JSON.parse(HTTParty.get('http://api.codeforkc.org/neighborhoods-geo/V0/99?city=KANSAS%20CITY&state=MO'))
@@ -19,6 +21,32 @@ if Neighborhood.count <= 0
       }
 
       Neighborhood.create(name: neighborhood['properties']['name'], coordinates: coordinates)
+    end
+  end
+end
+
+if RegisteredVacantLot.count <= 0
+  uri = URI.parse('http://webfusion.kcmo.org/coldfusionapps/neighborhood/rentalreg/PropList.cfm')
+  response = Net::HTTP.get_response(uri)
+
+  data = Nokogiri::HTML(response.body)
+
+  data_table = data.css('table')
+  table_rows = data_table.css('tr')
+
+  table_rows.each do |table_row|
+    table_cells = table_row.css('td')
+
+    if table_cells.length == 8
+      RegisteredVacantLot.create(
+        property_address: table_cells[1].text.gsub(/\s+/, ' '),
+        contact_person: table_cells[2].text,
+        contact_address: table_cells[3].text,
+        contact_phone: table_cells[4].text,
+        property_type: table_cells[5].text,
+        registration_type: table_cells[6].text,
+        last_verified: table_cells[7].text
+      )
     end
   end
 end

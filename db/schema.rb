@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150606222943) do
+ActiveRecord::Schema.define(version: 20160614022048) do
 
   create_table "coordinates", force: :cascade do |t|
     t.float    "latitude"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(version: 20150606222943) do
     t.string   "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "registered_vacant_lots", force: :cascade do |t|
+    t.string   "property_address"
+    t.text     "contact_person"
+    t.text     "contact_address"
+    t.string   "contact_phone"
+    t.string   "property_type"
+    t.string   "registration_type"
+    t.datetime "last_verified"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
 end
