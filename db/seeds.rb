@@ -39,7 +39,7 @@ if RegisteredVacantLot.count <= 0
 
     if table_cells.length == 8
       RegisteredVacantLot.create(
-        property_address: table_cells[1].text,
+        property_address: table_cells[1].text.gsub(/\s+/, ' '),
         contact_person: table_cells[2].text,
         contact_address: table_cells[3].text,
         contact_phone: table_cells[4].text,

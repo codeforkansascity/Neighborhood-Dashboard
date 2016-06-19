@@ -7,8 +7,12 @@ class Neighborhood < ActiveRecord::Base
   accepts_nested_attributes_for :coordinates
 
   def addresses
+    return @addresses if @addresses.present?
+
     uri = URI::escape("http://api.codeforkc.org//address-by-neighborhood/V0/#{name}?city=&state=mo")
-    JSON.parse(HTTParty.get(uri))
+    @addresses = JSON.parse(HTTParty.get(uri))
+  rescue
+    @addresses = {}
   end
 
   def three_eleven_data
@@ -24,8 +28,15 @@ class Neighborhood < ActiveRecord::Base
   end
 
   def filtered_vacant_data(filters)
-    NeighborhoodServices::VacancyData::LandBank.new(self, filters).data + 
-    NeighborhoodServices::VacancyData::ThreeEleven.new(self, filters).data +
-    NeighborhoodServices::VacancyData::PropertyViolations.new(self, filters).data
+    data = 
+      NeighborhoodServices::VacancyData::LandBank.new(self, filters).data + 
+      NeighborhoodServices::VacancyData::ThreeEleven.new(self, filters).data +
+      NeighborhoodServices::VacancyData::PropertyViolations.new(self, filters).data
+
+    if filters['filters'].include?('registered_vacant')
+      data += NeighborhoodServices::VacancyData::VacantLotRegistry.new(self,filters).data
+    end
+
+    data
   end
 end
