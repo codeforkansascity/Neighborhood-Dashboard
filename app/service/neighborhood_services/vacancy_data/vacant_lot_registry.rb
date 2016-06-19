@@ -21,7 +21,7 @@ class NeighborhoodServices::VacancyData::VacantLotRegistry
           address_coordinates[address['single_line_address'].split(',')[0].downcase] = 
             [address['census_longitude'].to_f, address['census_latitude'].to_f]
 
-          "property_address LIKE '%#{address['single_line_address'].split(',')[0]}%'"
+          "UPPER(property_address) LIKE '%#{address['single_line_address'].split(',')[0]}%'"
         else
           nil
         end
