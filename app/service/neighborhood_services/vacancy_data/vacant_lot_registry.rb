@@ -15,7 +15,7 @@ class NeighborhoodServices::VacancyData::VacantLotRegistry
   def query_dataset
     address_coordinates = {}
 
-    vacant_lots = @neighborhood.addresses['data'].each_slice(999).inject([]) { |results, slice|
+    vacant_lots = @neighborhood.addresses['data'].each_slice(900).inject([]) { |results, slice|
       current_query = slice.map { |address|
         if address['single_line_address']
           address_coordinates[address['single_line_address'].split(',')[0].downcase] = 
@@ -41,6 +41,8 @@ class NeighborhoodServices::VacancyData::VacantLotRegistry
           "color" => '#ffffff',
           "disclosure_attributes" => [
             "<b>Address</b>: #{vacant_lot.property_address}",
+            "<b>Owner:</b> #{vacant_lot.contact_person}",
+            "<b>Phone Number:</b> #{vacant_lot.contact_phone}",
             "<b>Registration Type:</b> #{vacant_lot.registration_type}", 
             "<b>Last Verified:</b> #{get_date(vacant_lot.last_verified)}"
           ]
