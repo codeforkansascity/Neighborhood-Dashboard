@@ -7,10 +7,18 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'open-uri'
 require 'nokogiri'
+require 'similar_text'
+require 'vacant_lot/neighborhood_matcher'
+
+neighborhood_entities = []
 
 if Neighborhood.count <= 0
   response = JSON.parse(HTTParty.get('http://api.codeforkc.org/neighborhoods-geo/V0/99?city=KANSAS%20CITY&state=MO'))
   neighborhoods = response['features']
+  neighborhoods_count = neighborhoods.count
+  current_neighborhood_count = 0
+
+  puts "Now Loading Neighborhoods"
 
   neighborhoods.each do |neighborhood|
     possible_coordinates = neighborhood['geometry']['coordinates'][0][0]
@@ -20,10 +28,15 @@ if Neighborhood.count <= 0
         Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
       }
 
-      Neighborhood.create(name: neighborhood['properties']['name'], coordinates: coordinates)
+      neighborhood_entities << Neighborhood.create(name: neighborhood['properties']['name'], coordinates: coordinates)
     end
+
+    current_neighborhood_count += 1
+    puts "Loaded #{current_neighborhood_count}/#{neighborhoods_count}"
   end
 end
+
+puts "\n\nLoading Vacant Lots"
 
 if RegisteredVacantLot.count <= 0
   uri = URI.parse('http://webfusion.kcmo.org/coldfusionapps/neighborhood/rentalreg/PropList.cfm')
@@ -33,6 +46,9 @@ if RegisteredVacantLot.count <= 0
 
   data_table = data.css('table')
   table_rows = data_table.css('tr')
+
+  vacant_lot_count = table_rows.length
+  current_vacant_lot_count = 0
 
   table_rows.each do |table_row|
     table_cells = table_row.css('td')
@@ -48,5 +64,10 @@ if RegisteredVacantLot.count <= 0
         last_verified: table_cells[7].text
       )
     end
+
+    current_vacant_lot_count += 1
+    puts "Loaded #{current_vacant_lot_count}/#{vacant_lot_count}"
   end
 end
+
+VacantLot::NeighborhoodMatcher.new.match

@@ -13,29 +13,12 @@ class NeighborhoodServices::VacancyData::VacantLotRegistry
   private
 
   def query_dataset
-    address_coordinates = {}
-
-    vacant_lots = @neighborhood.addresses['data'].each_slice(900).inject([]) { |results, slice|
-      current_query = slice.map { |address|
-        if address['single_line_address']
-          address_coordinates[address['single_line_address'].split(',')[0].downcase] = 
-            [address['census_longitude'].to_f, address['census_latitude'].to_f]
-
-          "UPPER(property_address) LIKE '%#{address['single_line_address'].split(',')[0]}%'"
-        else
-          nil
-        end
-      }.compact.join(' OR ')
-
-      results << RegisteredVacantLot.where(current_query)
-    }.flatten
-
-    vacant_lots.map { |vacant_lot|
+    @neighborhood.registered_vacant_lots.map { |vacant_lot|
       {
         "type" => "Feature",
         "geometry" => {
           "type" => "Point",
-          "coordinates" => address_coordinates[vacant_lot.property_address.downcase]
+          "coordinates" => [vacant_lot.longitude, vacant_lot.latitude]
         },
         "properties" => {
           "color" => '#ffffff',

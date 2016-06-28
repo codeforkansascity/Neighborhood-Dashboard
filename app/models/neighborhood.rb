@@ -1,6 +1,8 @@
 class Neighborhood < ActiveRecord::Base
   scope :search_by_name, -> (name) { where("name LIKE ?", name) }
 
+  has_many :registered_vacant_lots
+
   # reverse_geocoded_by :latitude, :longitude
   # after_validation :reverse_geocode  # auto-fetch address
   has_and_belongs_to_many :coordinates

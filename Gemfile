@@ -17,6 +17,8 @@ gem 'bootstrap-sass', '~> 3.3.4'
 gem 'font-awesome-rails', '~> 4.3.0'
 # Used for web scraping
 gem 'nokogiri', '~> 1.6.6.2'
+# Compares strings to see how similar they are to each other
+gem 'similar_text'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

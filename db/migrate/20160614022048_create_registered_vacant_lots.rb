@@ -4,6 +4,8 @@ class CreateRegisteredVacantLots < ActiveRecord::Migration
       t.string :property_address
       t.text :contact_person
       t.text :contact_address
+      t.float :latitude
+      t.float :longitude
       t.string :contact_phone
       t.string :property_type
       t.string :registration_type
