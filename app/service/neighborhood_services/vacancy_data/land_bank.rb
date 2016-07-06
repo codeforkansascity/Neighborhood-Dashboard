@@ -1,5 +1,6 @@
 class NeighborhoodServices::VacancyData::LandBank
   DATA_URL = 'https://data.kcmo.org/resource/2ebw-sp7f.json'
+  POSSIBLE_FILTERS = ['foreclosed', 'demo_needed', 'all_vacant_filters']
 
   def initialize(neighborhood, vacant_filters = {})
     @neighborhood = neighborhood
@@ -9,7 +10,17 @@ class NeighborhoodServices::VacancyData::LandBank
   end
 
   def data
-    @data ||= query_dataset
+    return @data unless @data.nil?
+
+    querable_dataset = POSSIBLE_FILTERS.any? { |filter|
+      @vacant_filters.include? filter
+    }
+
+    if querable_dataset
+      @data ||= []
+    else
+      @data ||= query_dataset
+    end
   end
 
   private

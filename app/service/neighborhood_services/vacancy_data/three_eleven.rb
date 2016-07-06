@@ -1,15 +1,26 @@
 class NeighborhoodServices::VacancyData::ThreeEleven
   DATA_URL = 'https://data.kcmo.org/resource/7at3-sxhp.json'
+  POSSIBLE_FILTERS = ['vacant_structure', 'open']
 
   def initialize(neighborhood, three_eleven_filters = {})
     @neighborhood = neighborhood
-    @vacant_filters = three_eleven_filters[:filters] || []
+    @three_eleven_filters = three_eleven_filters[:filters] || []
     @start_date = three_eleven_filters[:start_date]
     @end_date = three_eleven_filters[:end_date]
   end
 
   def data
-    @data ||= query_dataset
+    return @data unless @data.nil?
+
+    querable_dataset = POSSIBLE_FILTERS.any? { |filter|
+      @three_eleven_filters.include? filter
+    }
+
+    if querable_dataset
+      @data ||= []
+    else
+      @data ||= query_dataset
+    end
   end
 
   private
@@ -43,12 +54,12 @@ class NeighborhoodServices::VacancyData::ThreeEleven
     query_string = "SELECT * where neighborhood = '#{@neighborhood.name}'"
     query_elements = []
 
-    if @vacant_filters.include?('vacant_structure')
+    if @three_eleven_filters.include?('vacant_structure')
       query_elements << "request_type='Nuisance Violations on Private Property Vacant Structure'"
       query_elements  << "request_type='Vacant Structure Open to Entry'"
     end
 
-    if @vacant_filters.include?('open')
+    if @three_eleven_filters.include?('open')
       query_elements << "status='OPEN'"
     end
 
@@ -70,12 +81,12 @@ class NeighborhoodServices::VacancyData::ThreeEleven
   def three_eleven_filtered_data(parcel_data)
     three_eleven_filtered_data = {}
 
-    if @vacant_filters.include?('vacant_structure')
+    if @three_eleven_filters.include?('vacant_structure')
       foreclosure_data = ::NeighborhoodServices::VacancyData::Filters::VacantStructure.new(parcel_data).filtered_data
       merge_data_set(three_eleven_filtered_data, foreclosure_data)
     end
 
-    if @vacant_filters.include?('open')
+    if @three_eleven_filters.include?('open')
       open_case_data = ::NeighborhoodServices::VacancyData::Filters::OpenThreeEleven.new(parcel_data).filtered_data
       merge_data_set(three_eleven_filtered_data, open_case_data)
     end

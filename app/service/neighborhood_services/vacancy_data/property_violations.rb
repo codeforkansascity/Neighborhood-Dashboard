@@ -1,5 +1,6 @@
 class NeighborhoodServices::VacancyData::PropertyViolations
   DATA_URL = 'https://data.kcmo.org/resource/nhtf-e75a.json'
+  POSSIBLE_FILTERS = ['all_property_violations']
 
   def initialize(neighborhood, property_violation_filters = {})
     @neighborhood = neighborhood
@@ -9,7 +10,17 @@ class NeighborhoodServices::VacancyData::PropertyViolations
   end
 
   def data
-    @data ||= query_dataset
+    return @data unless @data.nil?
+
+    querable_dataset = POSSIBLE_FILTERS.any? { |filter|
+      @property_violation_filters.include? filter
+    }
+
+    if querable_dataset
+      @data ||= []
+    else
+      @data ||= query_dataset
+    end
   end
 
   private
