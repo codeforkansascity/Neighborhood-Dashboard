@@ -17,9 +17,9 @@ class NeighborhoodServices::VacancyData::LandBank
     }
 
     if querable_dataset
-      @data ||= []
-    else
       @data ||= query_dataset
+    else
+      @data ||= []
     end
   end
 
@@ -47,7 +47,7 @@ class NeighborhoodServices::VacancyData::LandBank
           "properties" => {
             "parcel_number" => parcel['parcel_number'],
             "color" => land_bank_color(parcel),
-            "disclosure_attributes" => parcel['disclosure_attributes'].uniq
+            "disclosure_attributes" => all_disclosure_attributes(parcel)
           }
         }
       }.reject { |parcel|
@@ -136,5 +136,11 @@ class NeighborhoodServices::VacancyData::LandBank
         data[entity['parcel_number']] = entity
       end
     end
+  end
+
+  def all_disclosure_attributes(parcel)
+    disclosure_attributes = parcel['disclosure_attributes'].try(&:uniq) || []
+    address = JSON.parse(parcel["location_1"]["human_address"])["address"].titleize
+    ["<b>Address:</b> #{address}"] + disclosure_attributes
   end
 end

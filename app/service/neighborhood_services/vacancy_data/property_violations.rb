@@ -17,9 +17,9 @@ class NeighborhoodServices::VacancyData::PropertyViolations
     }
 
     if querable_dataset
-      @data ||= []
-    else
       @data ||= query_dataset
+    else
+      @data ||= []
     end
   end
 
@@ -43,7 +43,7 @@ class NeighborhoodServices::VacancyData::PropertyViolations
           },
           "properties" => {
             "color" => '#ffffff',
-            "disclosure_attributes" => violation['disclosure_attributes'].uniq
+            "disclosure_attributes" => all_disclosure_attributes(violation)
           }
         }
       }
@@ -91,5 +91,11 @@ class NeighborhoodServices::VacancyData::PropertyViolations
         data[entity['address']] = entity
       end
     end
+  end
+
+  def all_disclosure_attributes(violation)
+    disclosure_attributes = violation['disclosure_attributes'].try(&:uniq) || []
+    address = JSON.parse(violation["mapping_location"]["human_address"])["address"].titleize
+    ["<b>Address:</b> #{address}"] + disclosure_attributes
   end
 end

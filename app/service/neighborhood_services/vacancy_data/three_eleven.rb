@@ -17,9 +17,9 @@ class NeighborhoodServices::VacancyData::ThreeEleven
     }
 
     if querable_dataset
-      @data ||= []
-    else
       @data ||= query_dataset
+    else
+      @data ||= []
     end
   end
 
@@ -44,7 +44,7 @@ class NeighborhoodServices::VacancyData::ThreeEleven
           "properties" => {
             "parcel_number" => parcel['parcel_number'],
             "color" => '#ffffff',
-            "disclosure_attributes" => parcel['disclosure_attributes'].uniq
+            "disclosure_attributes" => all_disclosure_attributes(parcel)
           }
         }
       }
@@ -102,5 +102,11 @@ class NeighborhoodServices::VacancyData::ThreeEleven
         data[entity['parcel_id_no']] = entity
       end
     end
+  end
+
+  def all_disclosure_attributes(violation)
+    disclosure_attributes = violation['disclosure_attributes'].try(&:uniq) || []
+    address = JSON.parse(violation["address_with_geocode"]["human_address"])["address"].titleize
+    ["<b>Address:</b> #{address}"] + disclosure_attributes
   end
 end

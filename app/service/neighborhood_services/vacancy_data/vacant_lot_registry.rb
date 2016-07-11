@@ -27,7 +27,8 @@ class NeighborhoodServices::VacancyData::VacantLotRegistry
             "<b>Owner:</b> #{vacant_lot.contact_person}",
             "<b>Phone Number:</b> #{vacant_lot.contact_phone}",
             "<b>Registration Type:</b> #{vacant_lot.registration_type}", 
-            "<b>Last Verified:</b> #{get_date(vacant_lot.last_verified)}"
+            "<b>Last Verified:</b> #{get_date(vacant_lot.last_verified)}",
+            "<b>Vacant Since: </b>"
           ]
         }
       }
