@@ -2,16 +2,17 @@ angular
   .module('neighborhoodstat')
   .constant('VACANT_CODES', {
     LEGALLY_ABANDONED: {
-      DEMO_NEEDED: 'demo_needed',
-      FORECLOSED: 'foreclosed',
-      ALL_VACANT_LOTS: 'all_vacant_filters'
+      
     },
     VACANT_INDICATOR: {
       OPEN_THREE_ELEVEN: 'open',
       VACANT_REGISTRATION_FAILURE: 'vacant_registration_failure',
       VACANT_STRUCTURE: 'vacant_structure',
       ALL_PROPERTY_VIOLATIONS: 'all_property_violations',
-      REGISTERED_VACANT: 'registered_vacant'
+      REGISTERED_VACANT: 'registered_vacant',
+      ALL_VACANT_LOTS: 'all_vacant_filters',
+      DEMO_NEEDED: 'demo_needed',
+      FORECLOSED: 'foreclosed'
     }
   })  
   .service('VacancyCodeMapper', [

@@ -16,12 +16,38 @@
         <div class="col-md-6">
           <h2>Legally Abandoned</h2>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.ALL_VACANT_LOTS" />
-            Vacant Lot - Land Bank Property
+            <input type="checkbox"/>
+            View all Legally Abandoned Projects
+          </label>
+          <h4>Tax Delinquency</h4>
+          <label>
+            <input type="checkbox"/>
+            Tax Delinquent 1-3 Years
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS" />
-            All Property Violations
+            <input type="checkbox"/>
+            Tax Delinquent 3+ Years
+          </label>
+          <h4>Code Violations</h4>
+          <label>
+            <input type="checkbox"/>
+            Violation Length 1-3 Years
+          </label>
+          <label>
+            <input type="checkbox"/>
+            Violation Length 3+ Years
+          </label>
+          <label>
+            <input type="checkbox"/>
+            Vacant Property
+          </label>
+          <label>
+            <input type="checkbox"/>
+            Dangerous Building
+          </label>
+          <label>
+            <input type="checkbox"/>
+            Open Nuissance Cases/Failure to Register as Vacant
           </label>
         </div>
         <div class="col-md-6">
@@ -35,12 +61,20 @@
             311 Open Cases
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.DEMO_NEEDED" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.DEMO_NEEDED" />
             Demo Needed - Land Bank Property
           </label>
           <label>
             <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.REGISTERED_VACANT" />
             Registered Vacant
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_VACANT_LOTS" />
+            Vacant Lot - Land Bank Property
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS" />
+            All Property Violations
           </label>
         </div>
       </div>
