@@ -30,24 +30,20 @@
           </label>
           <h4>Code Violations</h4>
           <label>
-            <input type="checkbox"/>
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.ONE_THREE_YEARS"/>
             Violation Length 1-3 Years
           </label>
           <label>
-            <input type="checkbox"/>
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.THREE_YEARS_PLUS"/>
             Violation Length 3+ Years
           </label>
           <label>
-            <input type="checkbox"/>
-            Vacant Property
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.BOARDED_LONGTERM"/>
+            Vacant + Boarded
           </label>
           <label>
-            <input type="checkbox"/>
-            Dangerous Building
-          </label>
-          <label>
-            <input type="checkbox"/>
-            Open Nuissance Cases/Failure to Register as Vacant
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.VACANT_REGISTRY_FAILURE"/>
+            Open Nuissance Case/Failure to Register as Vacant
           </label>
         </div>
         <div class="col-md-6">

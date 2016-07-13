@@ -1,6 +1,6 @@
 class NeighborhoodServices::VacancyData::PropertyViolations
   DATA_URL = 'https://data.kcmo.org/resource/nhtf-e75a.json'
-  POSSIBLE_FILTERS = ['all_property_violations']
+  POSSIBLE_FILTERS = ['all_property_violations', 'vacant_registry_failure', 'boarded_longterm']
 
   def initialize(neighborhood, property_violation_filters = {})
     @neighborhood = neighborhood
@@ -55,6 +55,14 @@ class NeighborhoodServices::VacancyData::PropertyViolations
 
     if @property_violation_filters.include?('all_property_violations')
       query_elements << "status='Open'"
+    else
+      if @property_violation_filters.include?('vacant_registry_failure')
+        query_elements << "violation_code='NSVACANT'"
+      end
+
+      if @property_violation_filters.include?('boarded_longterm')
+        query_elements << "violation_code='NSBOARD01'"
+      end
     end
 
     if query_elements.present?
@@ -78,6 +86,16 @@ class NeighborhoodServices::VacancyData::PropertyViolations
     if @property_violation_filters.include?('all_property_violations')
       all_violations_data = ::NeighborhoodServices::VacancyData::Filters::AllPropertyViolations.new(violation_data).filtered_data
       merge_data_set(property_violations_filtered_data, all_violations_data)
+    else
+      if @property_violation_filters.include?('vacant_registry_failure')
+        vacant_registry_failure_data = ::NeighborhoodServices::VacancyData::Filters::VacantRegistryFailure.new(violation_data).filtered_data
+        merge_data_set(property_violations_filtered_data, vacant_registry_failure_data)
+      end
+
+      if @property_violation_filters.include?('boarded_longterm')
+        boarded_longterm_data = ::NeighborhoodServices::VacancyData::Filters::BoardedLongterm.new(violation_data).filtered_data
+        merge_data_set(property_violations_filtered_data, boarded_longterm_data)
+      end
     end
 
     property_violations_filtered_data

@@ -2,11 +2,13 @@ angular
   .module('neighborhoodstat')
   .constant('VACANT_CODES', {
     LEGALLY_ABANDONED: {
-      
+      ONE_THREE_YEARS: 'one_three_years_violation_length',
+      THREE_YEARS_PLUS: 'three_years_plus_violation_length',
+      BOARDED_LONGTERM: 'boarded_longterm',
+      VACANT_REGISTRY_FAILURE: 'vacant_registry_failure'
     },
     VACANT_INDICATOR: {
       OPEN_THREE_ELEVEN: 'open',
-      VACANT_REGISTRATION_FAILURE: 'vacant_registration_failure',
       VACANT_STRUCTURE: 'vacant_structure',
       ALL_PROPERTY_VIOLATIONS: 'all_property_violations',
       REGISTERED_VACANT: 'registered_vacant',
