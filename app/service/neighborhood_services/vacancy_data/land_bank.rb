@@ -1,5 +1,7 @@
+require 'socrata_client'
+
 class NeighborhoodServices::VacancyData::LandBank
-  DATA_URL = 'https://data.kcmo.org/resource/2ebw-sp7f.json'
+  DATA_SOURCE = '2ebw-sp7f'
   POSSIBLE_FILTERS = ['foreclosed', 'demo_needed', 'all_vacant_filters']
 
   def initialize(neighborhood, vacant_filters = {})
@@ -26,8 +28,7 @@ class NeighborhoodServices::VacancyData::LandBank
   private
 
   def query_dataset
-    request_url = URI::escape("#{DATA_URL}?$query=#{build_socrata_query}")
-    parcel_data = HTTParty.get(request_url, verify: false)
+    parcel_data = SocrataClient.get(DATA_SOURCE, build_socrata_query)
 
     parcel_ids = parcel_data.map { |parcel| parcel['parcel_number'] }
     parcels = StaticData::PARCEL_DATA().select { |parcel| parcel_ids.include?(parcel['properties']['apn']) }

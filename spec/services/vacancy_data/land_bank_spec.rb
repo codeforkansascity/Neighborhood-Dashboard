@@ -100,11 +100,8 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
 
   before do
     allow(StaticData).to receive(:PARCEL_DATA).and_return(parcel_geometric_data)
-
     allow(Date).to receive('today').and_return(Date.new(2016, 05, 15))
-
-    allow(URI).to receive(:escape).and_return(mocked_endpoint)
-    allow(HTTParty).to receive(:get).with(mocked_endpoint, verify: false).and_return(parcel_responses)
+    allow(SocrataClient).to receive(:get).and_return(parcel_responses)
   end
 
   subject { NeighborhoodServices::VacancyData::LandBank.new(neighborhood, vacant_filters) }

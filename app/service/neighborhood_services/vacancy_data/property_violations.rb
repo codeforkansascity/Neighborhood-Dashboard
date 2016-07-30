@@ -1,5 +1,5 @@
 class NeighborhoodServices::VacancyData::PropertyViolations
-  DATA_URL = 'https://data.kcmo.org/resource/nhtf-e75a.json'
+  DATA_SOURCE = 'nhtf-e75a'
   POSSIBLE_FILTERS = ['all_property_violations', 'vacant_registry_failure', 'boarded_longterm']
 
   def initialize(neighborhood, property_violation_filters = {})
@@ -26,8 +26,7 @@ class NeighborhoodServices::VacancyData::PropertyViolations
   private
 
   def query_dataset
-    request_url = URI::escape("#{DATA_URL}?$query=#{build_socrata_query}")
-    violation_data = HTTParty.get(request_url, verify: false)
+    violation_data = SocrataClient.get(DATA_SOURCE, build_socrata_query)
 
     property_violations_filtered_data(violation_data)
       .values

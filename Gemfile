@@ -39,6 +39,9 @@ gem 'execjs'
 # Add routes to frontend of the app
 gem 'js-routes'
 
+# Assists with querying the socrata apis
+gem 'soda-ruby', require: 'soda'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

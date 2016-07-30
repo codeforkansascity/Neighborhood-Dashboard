@@ -1,5 +1,5 @@
 class NeighborhoodServices::VacancyData::ThreeEleven
-  DATA_URL = 'https://data.kcmo.org/resource/7at3-sxhp.json'
+  DATA_SOURCE = '7at3-sxhp'
   POSSIBLE_FILTERS = ['vacant_structure', 'open']
 
   def initialize(neighborhood, three_eleven_filters = {})
@@ -26,8 +26,7 @@ class NeighborhoodServices::VacancyData::ThreeEleven
   private
 
   def query_dataset
-    request_url = URI::escape("#{DATA_URL}?$query=#{build_socrata_query}")
-    three_eleven_data = HTTParty.get(request_url, verify: false)
+    three_eleven_data = SocrataClient.get(DATA_SOURCE, build_socrata_query)
 
     three_eleven_filtered_data(three_eleven_data)
       .values
