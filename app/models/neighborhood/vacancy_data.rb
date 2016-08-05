@@ -1,3 +1,5 @@
+require 'socrata_client'
+
 class Neighborhood::VacancyData
   def initialize(neighborhood)
     @neighborhood = neighborhood
@@ -30,7 +32,7 @@ class Neighborhood::VacancyData
   end
 
   def dangerous_buildings
-    request_url = URI::escape("https://data.kcmo.org/resource/w6zu-4g2q.json?$where=neighborhood = '#{@neighborhood.name}'")
+    request_url = URI::escape("https://data.kcmo.org/resource/ax3m-jhxx.json?$where=neighborhood = '#{@neighborhood.name}'")
     mapify_coordinates(HTTParty.get(request_url, verify: false))
   end
 

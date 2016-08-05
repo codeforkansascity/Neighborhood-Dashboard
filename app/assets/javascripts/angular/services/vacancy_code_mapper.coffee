@@ -5,7 +5,8 @@ angular
       ONE_THREE_YEARS: 'one_three_years_violation_length',
       THREE_YEARS_PLUS: 'three_years_plus_violation_length',
       BOARDED_LONGTERM: 'boarded_longterm',
-      VACANT_REGISTRY_FAILURE: 'vacant_registry_failure'
+      VACANT_REGISTRY_FAILURE: 'vacant_registry_failure',
+      DANGEROUS_BUILDING: 'dangerous_building'
     },
     VACANT_INDICATOR: {
       OPEN_THREE_ELEVEN: 'open',
