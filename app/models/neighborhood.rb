@@ -29,6 +29,14 @@ class Neighborhood < ActiveRecord::Base
     Neighborhood::VacancyData.new(self)
   end
 
+  def within_polygon_query(location_attribute)
+    neighborhood_coordinates = coordinates.map{ |neighborhood|
+      "#{neighborhood.longtitude} #{neighborhood.latitude}"
+    }.join(',')
+
+    "within_polygon(#{location_attribute}, 'MULTIPOLYGON (((#{neighborhood_coordinates})))')"
+  end
+
   def filtered_vacant_data(filters)
     data = 
       NeighborhoodServices::VacancyData::LandBank.new(self, filters).data + 

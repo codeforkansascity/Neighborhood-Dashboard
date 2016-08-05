@@ -47,11 +47,7 @@ class NeighborhoodServices::VacancyData::DangerousBuildings
   end
 
   def build_socrata_query
-    coordinates = @neighborhood.coordinates.map{ |neighborhood|
-      "#{neighborhood.longtitude} #{neighborhood.latitude}"
-    }.join(',')
-
-    "SELECT * where within_polygon(location, 'MULTIPOLYGON (((#{coordinates})))')"
+    "SELECT * where #{@neighborhood.within_polygon_query('location')}"
   end
 
   def all_disclosure_attributes(building)
