@@ -1,3 +1,7 @@
+require 'kcmo_datasets/three_eleven_cases'
+require 'kcmo_datasets/property_violations'
+require 'kcmo_datasets/dangerous_buildings'
+
 class NeighborhoodServices::LegallyAbandonedCalculation
   THREE_ELEVEN = 'cyqf-nban'
   DANGEROUS_BUILDINGS = 'rm2v-mbk5'
@@ -9,7 +13,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
   end
 
   def calculate
-
+    vacant_indicators
   end
 
   private
@@ -24,20 +28,19 @@ class NeighborhoodServices::LegallyAbandonedCalculation
   end
 
   def vacant_indicators
-    property_violations = ['NSVACANT']
-    NeighborhoodServices::VacancyData::PropertyViolations.new(@neighborhood).data
+    three_eleven_data = KcmoDatasets::ThreeElevenCases.new(@neighborhood)
+                        .open_cases
+                        .vacant_called_in_violations
+                        .request_data
 
-    three_eleven_query_elements = []
-    three_eleven_query_elements << "request_type='Nuisance Violations on Private Property Vacant Structure'"
-    three_eleven_query_elements << "request_type='Vacant Structure Open to Entry'"
-    three_eleven_query_elements << "status='OPEN'"
+    property_violations = KcmoDatasets::PropertyViolations.new(@neighborhood)
+                          .vacant_registry_failure
+                          .request_data
 
-    neighborhood_within_polygon = 
-    three_eleven_query = "SELECT * where #{@neighborhood.within_polygon_query()} AND (#{three_eleven_query_elements})"
+    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood)
+                          .request_data
 
-
-    SocrataClient.get(DATA_SOURCE, build_socrata_query)
-    # 311 Code Data
+    # Registered Vacant
 
   end
 
