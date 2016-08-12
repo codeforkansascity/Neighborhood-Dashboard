@@ -3,14 +3,14 @@ module VacantLot
     def initialize
     end
 
-    def tables
-      @tables ||= fetch_data
+    def data
+      @data ||= fetch_data
     end
 
     private
 
     def fetch_data
-      tables = []
+      vacant_lots = []
 
       uri = URI.parse('http://webfusion.kcmo.org/coldfusionapps/neighborhood/rentalreg/PropList.cfm')
       response = Net::HTTP.get_response(uri)
@@ -27,7 +27,7 @@ module VacantLot
         table_cells = table_row.css('td')
 
         if table_cells.length == 8
-          tables << 
+          vacant_lots << 
             {
               property_address: table_cells[1].text.gsub(/\s+/, ' '),
               contact_person: table_cells[2].text,
@@ -43,7 +43,7 @@ module VacantLot
         puts "Loaded #{current_vacant_lot_count}/#{vacant_lot_count}"
       end
 
-      tables
+      vacant_lots
     end
   end
 end

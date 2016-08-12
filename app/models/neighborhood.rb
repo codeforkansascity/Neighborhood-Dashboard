@@ -11,7 +11,7 @@ class Neighborhood < ActiveRecord::Base
   def addresses
     return @addresses if @addresses.present?
 
-    uri = URI::escape("http://api.codeforkc.org//address-by-neighborhood/V0/#{name}?city=&state=mo")
+    uri = URI::escape("http://dev-api.codeforkc.org//address-by-neighborhood/V0/#{name}?city=&state=mo")
     @addresses = JSON.parse(HTTParty.get(uri))
   rescue
     @addresses = {}
