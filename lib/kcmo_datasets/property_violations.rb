@@ -20,6 +20,12 @@ module KcmoDatasets
       self
     end
 
+    def self.grouped_address_counts(@neighborhood)
+      query =  "SELECT address, count(address) where #{@neighborhood.within_polygon_query('mapping_location')}"
+      query += " GROUP BY address"
+
+    end
+
     private
 
     def build_socrata_query

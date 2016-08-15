@@ -28,6 +28,9 @@ class NeighborhoodServices::LegallyAbandonedCalculation
   end
 
   def vacant_indicators
+    vacant_registries = KcmoDataSets::LandBankData.new(@neighborhood)
+                        .request_data
+
     three_eleven_data = KcmoDatasets::ThreeElevenCases.new(@neighborhood)
                         .open_cases
                         .vacant_called_in_violations
@@ -39,9 +42,6 @@ class NeighborhoodServices::LegallyAbandonedCalculation
 
     dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood)
                           .request_data
-
-    # Registered Vacant
-
   end
 
   def three_eleven_data_query
