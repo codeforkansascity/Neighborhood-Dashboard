@@ -35,6 +35,8 @@ module KcmoDatasets
       if @requested_datasets.present?
         query += " AND (#{build_query_filters})"
       end
+
+      query
     end
 
     def build_query_filters

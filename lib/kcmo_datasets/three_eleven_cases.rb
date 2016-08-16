@@ -33,6 +33,8 @@ module KcmoDatasets
       if @requested_datasets.present?
         query += " AND (#{build_query_filters})"
       end
+
+      query
     end
 
     def build_query_filters
@@ -60,7 +62,7 @@ module KcmoDatasets
     end
 
     def open_cases_query
-      "status='Open'"
+      "status='OPEN'"
     end
   end
 end
