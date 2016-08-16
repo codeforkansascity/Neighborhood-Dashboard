@@ -22,19 +22,21 @@ class NeighborhoodServices::LegallyAbandonedCalculation
                         .vacant_called_in_violations
                         .request_data
 
-    binding.pry
-
     three_eleven_data.each_with_object({}) do |violation, hash|
-      if hash[violation['street_address'].downcase]
-        hash[violation['street_address'].downcase][:points] += 1
-        hash[violation['street_address'].downcase] += violation['violation_description']
-      else
-        hash[violation['street_address'].downcase] = {
-          points: 1,
-          longitude: violation['address_with_geocode']['coordinates'][1].to_f,
-          latitude: violation['address_with_geocode']['coordinates'][0].to_f,
-          disclosure_attributes: [violation['violation_description']]
-        }
+      street_address = violation['street_address'].downcase
+
+      if street_address
+        if hash[street_address]
+          hash[street_address][:points] += 1
+          hash[street_address][:disclosure_attributes] << violation['request_type']
+        else
+          hash[street_address] = {
+            points: 1,
+            longitude: violation['address_with_geocode']['coordinates'][1].to_f,
+            latitude: violation['address_with_geocode']['coordinates'][0].to_f,
+            disclosure_attributes: [violation['request_type']]
+          }
+        end
       end
     end
   end
@@ -46,6 +48,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
 
     tax_delinquent_datasets
     address_violation_counts
+    three_eleven_points
 
     vacant_registries = KcmoDataSets::LandBankData.new(@neighborhood)
                         .request_data

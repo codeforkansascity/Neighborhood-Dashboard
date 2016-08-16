@@ -58,7 +58,7 @@ module KcmoDatasets
         "'Vacant Structure Open to Entry'"
       ]
 
-      "request_type in ('','','')"
+      "request_type in (#{vacant_violations.join(',')})"
     end
 
     def open_cases_query
