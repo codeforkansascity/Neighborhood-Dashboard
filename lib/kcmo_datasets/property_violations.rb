@@ -20,10 +20,11 @@ module KcmoDatasets
       self
     end
 
-    def self.grouped_address_counts(@neighborhood)
-      query =  "SELECT address, count(address) where #{@neighborhood.within_polygon_query('mapping_location')}"
-      query += " GROUP BY address"
-
+    def self.grouped_address_counts(neighborhood)
+      query =  "SELECT address, mapping_location, count(address) where #{neighborhood.within_polygon_query('mapping_location')}"
+      query += " AND status !='Closed'"
+      query += " GROUP BY address, mapping_location"
+      SocrataClient.get(DATASET, query)
     end
 
     private

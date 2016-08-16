@@ -16,24 +16,38 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     vacant_indicators
   end
 
-  private
-
-  def score_parcels
-  end
-
-  def tax_delinquent_data
-  end
-
-  def code_violations
-  end
-
-  def vacant_indicators
-    vacant_registries = KcmoDataSets::LandBankData.new(@neighborhood)
-                        .request_data
-
+  def three_eleven_points
     three_eleven_data = KcmoDatasets::ThreeElevenCases.new(@neighborhood)
                         .open_cases
                         .vacant_called_in_violations
+                        .request_data
+
+    binding.pry
+
+    three_eleven_data.each_with_object({}) do |violation, hash|
+      if hash[violation['street_address'].downcase]
+        hash[violation['street_address'].downcase][:points] += 1
+        hash[violation['street_address'].downcase] += violation['violation_description']
+      else
+        hash[violation['street_address'].downcase] = {
+          points: 1,
+          longitude: violation['address_with_geocode']['coordinates'][1].to_f,
+          latitude: violation['address_with_geocode']['coordinates'][0].to_f,
+          disclosure_attributes: [violation['violation_description']]
+        }
+      end
+    end
+  end
+
+  private
+
+  def vacant_indicators
+    address = {}
+
+    tax_delinquent_datasets
+    address_violation_counts
+
+    vacant_registries = KcmoDataSets::LandBankData.new(@neighborhood)
                         .request_data
 
     property_violations = KcmoDatasets::PropertyViolations.new(@neighborhood)
@@ -44,6 +58,16 @@ class NeighborhoodServices::LegallyAbandonedCalculation
                           .request_data
   end
 
-  def three_eleven_data_query
+  def tax_delinquent_datasets
+    addresses = @neighborhood.addresses['data']
+    NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent.new(addresses).calculated_data
+  end
+
+  def address_violation_counts
+    violation_counts = KcmoDatasets::PropertyViolations.grouped_address_counts(@neighborhood)
+    NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount.new(violation_counts).calculated_data
+  end
+
+  def merge_data_set(large_dataset, primary_dataset)
   end
 end
