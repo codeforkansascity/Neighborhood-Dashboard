@@ -16,6 +16,34 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     vacant_indicators
   end
 
+  private
+
+  def vacant_indicators
+    address = {}
+
+    tax_delinquent_datasets
+    address_violation_counts
+    three_eleven_points
+    vacant_registries 
+
+    property_violations = KcmoDatasets::PropertyViolations.new(@neighborhood)
+                          .vacant_registry_failure
+                          .request_data
+
+    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood)
+                          .request_data
+  end
+
+  def tax_delinquent_datasets
+    addresses = @neighborhood.addresses['data']
+    NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent.new(addresses).calculated_data
+  end
+
+  def address_violation_counts
+    violation_counts = KcmoDatasets::PropertyViolations.grouped_address_counts(@neighborhood)
+    NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount.new(violation_counts).calculated_data
+  end
+
   def three_eleven_points
     three_eleven_data = KcmoDatasets::ThreeElevenCases.new(@neighborhood)
                         .open_cases
@@ -41,34 +69,22 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     end
   end
 
-  private
+  def vacant_registries
+    vacant_lots = StaticData::VACANT_LOT_DATA().select{ |lot| lot['neighborhood'] == @neighborhood.name }
 
-  def vacant_indicators
-    address = {}
+    vacant_lots.each_with_object({}) do |vacant_lot, points_hash|
+      display = "<b>Registration Type:</b> #{vacant_lot['registration_type']}<br/><b>Last Verified: #{vacant_lot['last_verified']}</b>"
 
-    tax_delinquent_datasets
-    address_violation_counts
-    three_eleven_points
-
-    vacant_registries = KcmoDataSets::LandBankData.new(@neighborhood)
-                        .request_data
-
-    property_violations = KcmoDatasets::PropertyViolations.new(@neighborhood)
-                          .vacant_registry_failure
-                          .request_data
-
-    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood)
-                          .request_data
+      points_hash[vacant_lot['property_address']] = {
+        points: 2,
+        longitude: vacant_lot['longitude'],
+        latitude: vacant_lot['latitude'],
+        disclosure_attributes: [display]
+      }
+    end
   end
 
-  def tax_delinquent_datasets
-    addresses = @neighborhood.addresses['data']
-    NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent.new(addresses).calculated_data
-  end
-
-  def address_violation_counts
-    violation_counts = KcmoDatasets::PropertyViolations.grouped_address_counts(@neighborhood)
-    NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount.new(violation_counts).calculated_data
+  def vacant_registry_failures
   end
 
   def merge_data_set(large_dataset, primary_dataset)
