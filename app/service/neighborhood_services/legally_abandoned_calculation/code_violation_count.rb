@@ -7,7 +7,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
     addresses = {}
 
     @code_violation_data.each do |address|
-      if address['mapping_location'].present?
+      mapping_address = address['mapping_location'].downcase
+      if mapping_address.present?
         current_violation_count = address['count_address'].to_i
 
         points = if current_violation_count >= 3
@@ -20,12 +21,14 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
 
         message = "#{current_violation_count} Property Violations"
 
-        addresses[address['address'].downcase] = {
-          points: points,
-          longitude: address['mapping_location']['coordinates'][0].to_f,
-          latitude: address['mapping_location']['coordinates'][1].to_f,
-          disclosure_attributes: [message]
-        }
+        if points > 0
+          addresses[mapping_address] = {
+            points: points,
+            longitude: address['mapping_location']['coordinates'][0].to_f,
+            latitude: address['mapping_location']['coordinates'][1].to_f,
+            disclosure_attributes: [message]
+          }
+        end
       end
     end
 

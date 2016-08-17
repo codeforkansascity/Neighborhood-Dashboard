@@ -31,12 +31,14 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
 
         delinquent_message = consecutive_years > 0 ? "#{consecutive_years} years(s) Vacant" : nil
 
-        addresses[current_address] = {
-          points: points,
-          longitude: taxed_address['census_longitude'],
-          latitude: taxed_address['census_latitude'],
-          disclosure_attributes: [delinquent_message]
-        }
+        if points > 0
+          addresses[current_address.downcase] = {
+            points: points,
+            longitude: taxed_address['census_longitude'],
+            latitude: taxed_address['census_latitude'],
+            disclosure_attributes: [delinquent_message]
+          }
+        end
       end
     end
 

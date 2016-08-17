@@ -3,35 +3,52 @@ require 'kcmo_datasets/property_violations'
 require 'kcmo_datasets/dangerous_buildings'
 
 class NeighborhoodServices::LegallyAbandonedCalculation
-  THREE_ELEVEN = 'cyqf-nban'
-  DANGEROUS_BUILDINGS = 'rm2v-mbk5'
-  PROPERTY_VIOLATIONS = 'ha6k-d6qu'
-  LAND_BANK_DATA = 'n653-v74j'
-
   def initialize(neighborhood)
     @neighborhood = neighborhood
   end
 
-  def calculate
-    vacant_indicators
+  def vacant_indicators
+    addresses = merge_dataset(three_eleven_points, {})
+    addresses = merge_dataset(vacant_registries, addresses)
+    addresses = merge_dataset(dangerous_buildings, addresses)
+    addresses = merge_dataset(property_violations, addresses)
+
+    # For the first 4 categories, a max of 2 points can be awarded
+    addresses.each do |(k,v)|
+      v[:points] = [v[:points], 2].min
+    end
+
+    addresses = merge_dataset(tax_delinquent_datasets, addresses)
+    addresses = merge_dataset(address_violation_counts, addresses)
+
+    # We can have instances where the same violation appears twice in a disclosure 
+    # array. We only want the violation to appear once in the disclosure array
+    addresses.each do |(k,v)|
+      v[:disclosure_attributes].uniq!
+    end
+
+    addresses
   end
 
   private
 
-  def vacant_indicators
-    address = {}
-
-    tax_delinquent_datasets
-    address_violation_counts
-    three_eleven_points
-    vacant_registries 
-
+  def property_violations
     property_violations = KcmoDatasets::PropertyViolations.new(@neighborhood)
                           .vacant_registry_failure
                           .request_data
 
-    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood)
-                          .request_data
+    property_violations.each_with_object({}) do |violation, hash|
+      street_address = violation['address'].downcase
+
+      if street_address
+        hash[street_address] = {
+          points: 1,
+          longitude: violation['mapping_location']['coordinates'][1].to_f,
+          latitude: violation['mapping_location']['coordinates'][0].to_f,
+          disclosure_attributes: [violation['violation_description'].titleize]
+        }
+      end
+    end
   end
 
   def tax_delinquent_datasets
@@ -75,7 +92,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     vacant_lots.each_with_object({}) do |vacant_lot, points_hash|
       display = "<b>Registration Type:</b> #{vacant_lot['registration_type']}<br/><b>Last Verified: #{vacant_lot['last_verified']}</b>"
 
-      points_hash[vacant_lot['property_address']] = {
+      points_hash[vacant_lot['property_address'].downcase] = {
         points: 2,
         longitude: vacant_lot['longitude'],
         latitude: vacant_lot['latitude'],
@@ -85,8 +102,40 @@ class NeighborhoodServices::LegallyAbandonedCalculation
   end
 
   def vacant_registry_failures
+    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood)
+                          .request_data
   end
 
-  def merge_data_set(large_dataset, primary_dataset)
+  def dangerous_buildings
+    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood)
+                          .request_data
+
+    dangerous_buildings.each_with_object({}) do |dangerous_building, points_hash|
+      address = dangerous_building['location'].downcase
+
+      if address
+        points_hash[address] = {
+          points: 2,
+          longitude: dangerous_building['location']['coordinates'][1].to_f,
+          latitude: dangerous_building['location']['coordinates'][0].to_f,
+          disclosure_attributes: [dangerous_building['statusofcase']]
+        }
+      end
+    end
+  end
+
+  def merge_dataset(primary_dataset, combined_dataset)
+    combined_dataset_dup = combined_dataset.dup
+
+    primary_dataset.each do |(k,v)|
+      if combined_dataset_dup[k].present?
+        combined_dataset_dup[k][:points] += v[:points]
+        combined_dataset_dup[k][:disclosure_attributes] += v[:disclosure_attributes]
+      else
+        combined_dataset_dup[k] = v
+      end
+    end
+
+    combined_dataset_dup
   end
 end
