@@ -8,10 +8,10 @@ class NeighborhoodServices::LegallyAbandonedCalculation
   end
 
   def vacant_indicators
-    addresses = merge_dataset(three_eleven_points, {})
+    addresses = merge_dataset(three_eleven_data, {})
     addresses = merge_dataset(vacant_registries, addresses)
     addresses = merge_dataset(dangerous_buildings, addresses)
-    addresses = merge_dataset(property_violations, addresses)
+    addresses = merge_dataset(vacant_registry_failures, addresses)
 
     # For the first 4 categories, a max of 2 points can be awarded
     addresses.each do |(k,v)|
@@ -28,27 +28,44 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     end
 
     attach_geometric_coordinates(addresses)
+      .select{ |address, value|
+        value[:geometric_coordinates].present?
+      }
+      .map { |(address, value)|
+        {
+          "type" => "Feature",
+          "geometry" => {
+            "type" => "Polygon",
+            "coordinates" => value[:geometric_coordinates]
+          },
+          "properties" => {
+            "color" => land_bank_color(value[:points]),
+            "disclosure_attributes" => value[:disclosure_attributes],
+            "points" => value[:points]
+          }
+        }
+      }
   end
 
   private
 
-  def property_violations
+  def land_bank_color(points)
+    case points
+    when 1 then '#FFF'
+    when 2 then '#CCC'
+    when 3 then '#999'
+    when 4 then '#666'
+    when 5 then '#333'
+    when 6 then '#000'
+    end
+  end
+
+  def vacant_registry_failures
     property_violations = KcmoDatasets::PropertyViolations.new(@neighborhood)
                           .vacant_registry_failure
                           .request_data
 
-    property_violations.each_with_object({}) do |violation, hash|
-      street_address = violation['address'].downcase
-
-      if street_address
-        hash[street_address] = {
-          points: 1,
-          longitude: violation['mapping_location']['coordinates'][1].to_f,
-          latitude: violation['mapping_location']['coordinates'][0].to_f,
-          disclosure_attributes: [violation['violation_description'].titleize]
-        }
-      end
-    end
+    NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations.new(property_violations).calculated_data
   end
 
   def tax_delinquent_datasets
@@ -61,67 +78,23 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount.new(violation_counts).calculated_data
   end
 
-  def three_eleven_points
+  def three_eleven_data
     three_eleven_data = KcmoDatasets::ThreeElevenCases.new(@neighborhood)
                         .open_cases
                         .vacant_called_in_violations
                         .request_data
 
-    three_eleven_data.each_with_object({}) do |violation, hash|
-      street_address = violation['street_address'].downcase
-
-      if street_address
-        if hash[street_address]
-          hash[street_address][:points] += 1
-          hash[street_address][:disclosure_attributes] << violation['request_type']
-        else
-          hash[street_address] = {
-            points: 1,
-            longitude: violation['address_with_geocode']['coordinates'][1].to_f,
-            latitude: violation['address_with_geocode']['coordinates'][0].to_f,
-            disclosure_attributes: [violation['request_type']]
-          }
-        end
-      end
-    end
+    NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData.new(three_eleven_data).calculated_data
   end
 
   def vacant_registries
     vacant_lots = StaticData::VACANT_LOT_DATA().select{ |lot| lot['neighborhood'] == @neighborhood.name }
-
-    vacant_lots.each_with_object({}) do |vacant_lot, points_hash|
-      display = "<b>Registration Type:</b> #{vacant_lot['registration_type']}<br/><b>Last Verified: #{vacant_lot['last_verified']}</b>"
-
-      points_hash[vacant_lot['property_address'].downcase] = {
-        points: 2,
-        longitude: vacant_lot['longitude'],
-        latitude: vacant_lot['latitude'],
-        disclosure_attributes: [display]
-      }
-    end
-  end
-
-  def vacant_registry_failures
-    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood)
-                          .request_data
+    NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistries.new(vacant_lots).calculated_data
   end
 
   def dangerous_buildings
-    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood)
-                          .request_data
-
-    dangerous_buildings.each_with_object({}) do |dangerous_building, points_hash|
-      address = dangerous_building['location'].downcase
-
-      if address
-        points_hash[address] = {
-          points: 2,
-          longitude: dangerous_building['location']['coordinates'][1].to_f,
-          latitude: dangerous_building['location']['coordinates'][0].to_f,
-          disclosure_attributes: [dangerous_building['statusofcase']]
-        }
-      end
-    end
+    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood).request_data
+    NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings.new(dangerous_buildings).calculated_data
   end
 
   def merge_dataset(primary_dataset, combined_dataset)
@@ -143,7 +116,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     dataset_dup = dataset.dup
 
     parcel_coordinates = StaticData.PARCEL_DATA().each_with_object({}) do |parcel, hash|
-      hash[parcel['properties']['land_ban60'].split("\n")[0].downcase] = parcel['geometry']['coordinates']
+      hash[parcel['properties']['land_ban60'].split("\n")[0].downcase] = parcel['geometry']['coordinates'][0]
     end
 
     dataset_dup.each do |(address, value)|

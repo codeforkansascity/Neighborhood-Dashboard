@@ -1,0 +1,20 @@
+class NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings
+  def initialize(dangerous_building_data)
+    @dangerous_building_data = dangerous_building_data
+  end
+
+  def calculated_data
+    @dangerous_building_data.each_with_object({}) do |dangerous_building, points_hash|
+      address = dangerous_building['location'].downcase
+
+      if address
+        points_hash[address] = {
+          points: 2,
+          longitude: dangerous_building['location']['coordinates'][1].to_f,
+          latitude: dangerous_building['location']['coordinates'][0].to_f,
+          disclosure_attributes: [dangerous_building['statusofcase']]
+        }
+      end
+    end
+  end
+end

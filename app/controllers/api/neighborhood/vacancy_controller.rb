@@ -12,6 +12,15 @@ class Api::Neighborhood::VacancyController < ApplicationController
   end
 
   def index
-    render json: ::Neighborhood.find(params[:id]).filtered_vacant_data(params)
+
+    # data = [NeighborhoodServices::FilteredVacantData.new(params[:id]).filtered_vacant_data(params)]
+
+    if params[:filters].include?('all_abandoned')
+      data = [NeighborhoodServices::LegallyAbandonedCalculation.new(::Neighborhood.find(params[:id])).vacant_indicators]
+    else
+      data = []
+    end
+
+    render json: data.flatten
   end
 end
