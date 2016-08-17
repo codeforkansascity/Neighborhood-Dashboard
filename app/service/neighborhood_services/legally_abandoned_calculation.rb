@@ -27,7 +27,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
       v[:disclosure_attributes].uniq!
     end
 
-    addresses
+    attach_geometric_coordinates(addresses)
   end
 
   private
@@ -137,5 +137,19 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     end
 
     combined_dataset_dup
+  end
+
+  def attach_geometric_coordinates(dataset)
+    dataset_dup = dataset.dup
+
+    parcel_coordinates = StaticData.PARCEL_DATA().each_with_object({}) do |parcel, hash|
+      hash[parcel['properties']['land_ban60'].split("\n")[0].downcase] = parcel['geometry']['coordinates']
+    end
+
+    dataset_dup.each do |(address, value)|
+      value[:geometric_coordinates] = parcel_coordinates[address]
+    end
+
+    dataset_dup
   end
 end
