@@ -1,7 +1,7 @@
 require 'socrata_client'
 
 module KcmoDatasets
-  class DangerousBuildings
+  class LandBankData
     DATASET = 'n653-v74j'
 
     attr_accessor :requested_datasets
