@@ -17,16 +17,8 @@ class Neighborhood < ActiveRecord::Base
     @addresses = {}
   end
 
-  def three_eleven_data
-    Neighborhood::ThreeElevenData.new(self).data
-  end
-
   def crime_data
     Neighborhood::CrimeData.new(self)
-  end
-
-  def vacancy_data
-    Neighborhood::VacancyData.new(self)
   end
 
   def within_polygon_query(location_attribute)
