@@ -1,12 +1,13 @@
 class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
-  def initialize(code_violation_data)
-    @code_violation_data = code_violation_data
+  def initialize(neighborhood)
+    @neighborhood = neighborhood
   end
 
   def calculated_data
     addresses = {}
 
-    @code_violation_data.each do |address|
+    code_violation_data = KcmoDatasets::PropertyViolations.grouped_address_counts(@neighborhood)
+    code_violation_data.each do |address|
       mapping_address = address['mapping_location'].downcase
       if mapping_address.present?
         current_violation_count = address['count_address'].to_i

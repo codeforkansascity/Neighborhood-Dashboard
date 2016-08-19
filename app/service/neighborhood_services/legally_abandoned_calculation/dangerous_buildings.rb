@@ -1,10 +1,12 @@
 class NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings
-  def initialize(dangerous_building_data)
-    @dangerous_building_data = dangerous_building_data
+  def initialize(neighborhood)
+    @neighborhood = neighborhood
   end
 
   def calculated_data
-    @dangerous_building_data.each_with_object({}) do |dangerous_building, points_hash|
+    dangerous_building_data = KcmoDatasets::DangerousBuildings.new(@neighborhood).request_data
+
+    dangerous_building_data.each_with_object({}) do |dangerous_building, points_hash|
       address = dangerous_building['location'].downcase
 
       if address

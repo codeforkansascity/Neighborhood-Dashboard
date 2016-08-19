@@ -61,40 +61,27 @@ class NeighborhoodServices::LegallyAbandonedCalculation
   end
 
   def vacant_registry_failures
-    property_violations = KcmoDatasets::PropertyViolations.new(@neighborhood)
-                          .vacant_registry_failure
-                          .request_data
-
-    NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations.new(property_violations).calculated_data
+    NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations.new(@neighborhood).calculated_data
   end
 
   def tax_delinquent_datasets
-    addresses = @neighborhood.addresses['data']
-    NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent.new(addresses).calculated_data
+    NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent.new(@neighborhood).calculated_data
   end
 
   def address_violation_counts
-    violation_counts = KcmoDatasets::PropertyViolations.grouped_address_counts(@neighborhood)
-    NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount.new(violation_counts).calculated_data
+    NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount.new(@neighborhood).calculated_data
   end
 
   def three_eleven_data
-    three_eleven_data = KcmoDatasets::ThreeElevenCases.new(@neighborhood)
-                        .open_cases
-                        .vacant_called_in_violations
-                        .request_data
-
-    NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData.new(three_eleven_data).calculated_data
+    NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData.new(@neighborhood).calculated_data
   end
 
   def vacant_registries
-    vacant_lots = StaticData::VACANT_LOT_DATA().select{ |lot| lot['neighborhood'] == @neighborhood.name }
-    NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistries.new(vacant_lots).calculated_data
+    NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistries.new(@neighborhood).calculated_data
   end
 
   def dangerous_buildings
-    dangerous_buildings = KcmoDatasets::DangerousBuildings.new(@neighborhood).request_data
-    NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings.new(dangerous_buildings).calculated_data
+    NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings.new(@neighborhood).calculated_data
   end
 
   def merge_dataset(primary_dataset, combined_dataset)

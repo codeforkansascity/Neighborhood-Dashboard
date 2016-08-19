@@ -1,10 +1,14 @@
 class NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations
-  def initialize(property_violations_data)
-    @property_violations_data = property_violations_data
+  def initialize(neighborhood)
+    @neighborhood = neighborhood
   end
 
   def calculated_data
-    @property_violations_data.each_with_object({}) do |violation, hash|
+    property_violations_data = KcmoDatasets::PropertyViolations.new(@neighborhood)
+                               .vacant_registry_failure
+                               .request_data
+
+    property_violations_data.each_with_object({}) do |violation, hash|
       street_address = violation['address'].downcase
 
       if street_address

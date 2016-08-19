@@ -1,10 +1,15 @@
 class NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData
-  def initialize(three_eleven_data)
-    @three_eleven_data = three_eleven_data
+  def initialize(neighborhood)
+    @neighborhood = neighborhood
   end
 
   def calculated_data
-    @three_eleven_data.each_with_object({}) do |violation, hash|
+    three_eleven_data = KcmoDatasets::ThreeElevenCases.new(@neighborhood)
+                        .open_cases
+                        .vacant_called_in_violations
+                        .request_data
+
+    three_eleven_data.each_with_object({}) do |violation, hash|
       street_address = violation['street_address'].downcase
 
       if street_address
