@@ -41,7 +41,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation
           "properties" => {
             "color" => land_bank_color(value[:points]),
             "disclosure_attributes" => value[:disclosure_attributes],
-            "points" => value[:points]
+            "points" => value[:points],
+            "address" => address
           }
         }
       }
