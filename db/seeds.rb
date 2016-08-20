@@ -26,6 +26,8 @@ if Neighborhood.count <= 0
       }
     end
 
+    Neighborhood.create(name: neighborhood['properties']['name'], coordinates: coordinates)
+
     current_neighborhood_count += 1
     puts "Loaded #{current_neighborhood_count}/#{neighborhoods_count}"
   end

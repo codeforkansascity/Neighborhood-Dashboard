@@ -1,27 +1,26 @@
 class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
+  START_YEAR = 2015
   def initialize(neighborhood)
     @neighborhood = neighborhood
   end
 
   def calculated_data
     addresses = {}
-    possible_years = [2015, 2014, 2013, 2012]
+    start_year = [2015, 2014, 2013, 2012]
     tax_delinquent_data = @neighborhood.addresses['data']
 
     tax_delinquent_data.each do |taxed_address|
       current_address = taxed_address['street_address']
 
       if current_address.present?
+        current_year = START_YEAR
         consecutive_years = 0
 
-        possible_years.each do |year|
-          if taxed_address["county_delinquent_tax_#{year}"].to_f > 0
-            consecutive_years += 1
-          else
-            break
-          end
+        while taxed_address["county_delinquent_tax_#{current_year}"].to_f > 0 do
+          consecutive_years += 1
+          current_year -= 1
         end
-
+        
         points = if consecutive_years >= 3
                    2
                  elsif consecutive_years >= 1
@@ -30,14 +29,12 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
                    0
                  end
 
-        delinquent_message = consecutive_years > 0 ? "#{consecutive_years} years(s) Vacant" : nil
-
         if points > 0
           addresses[current_address.downcase] = {
             points: points,
-            longitude: taxed_address['census_longitude'],
-            latitude: taxed_address['census_latitude'],
-            disclosure_attributes: [delinquent_message]
+            longitude: taxed_address['census_longitude'].to_f,
+            latitude: taxed_address['census_latitude'].to_f,
+            disclosure_attributes: ["#{consecutive_years} year(s) Tax Delinquent"]
           }
         end
       end

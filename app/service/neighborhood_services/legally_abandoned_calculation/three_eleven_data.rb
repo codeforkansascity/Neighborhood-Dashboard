@@ -19,8 +19,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData
         else
           hash[street_address] = {
             points: 1,
-            longitude: violation['address_with_geocode']['coordinates'][1].to_f,
-            latitude: violation['address_with_geocode']['coordinates'][0].to_f,
+            longitude: violation['address_with_geocode']['coordinates'][0].to_f,
+            latitude: violation['address_with_geocode']['coordinates'][1].to_f,
             disclosure_attributes: [violation['request_type']]
           }
         end
