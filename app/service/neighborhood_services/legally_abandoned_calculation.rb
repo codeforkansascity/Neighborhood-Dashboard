@@ -93,7 +93,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
         combined_dataset_dup[k][:points] += v[:points]
         combined_dataset_dup[k][:disclosure_attributes] += v[:disclosure_attributes]
       else
-        combined_dataset_dup[k] = v
+        combined_dataset_dup[k] = v.dup
       end
     end
 
