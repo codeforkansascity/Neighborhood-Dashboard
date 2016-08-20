@@ -11,39 +11,21 @@ class Neighborhood < ActiveRecord::Base
   def addresses
     return @addresses if @addresses.present?
 
-    uri = URI::escape("http://api.codeforkc.org//address-by-neighborhood/V0/#{name}?city=&state=mo")
+    uri = URI::escape("http://dev-api.codeforkc.org//address-by-neighborhood/V0/#{name}?city=&state=mo")
     @addresses = JSON.parse(HTTParty.get(uri))
   rescue
     @addresses = {}
-  end
-
-  def three_eleven_data
-    Neighborhood::ThreeElevenData.new(self).data
   end
 
   def crime_data
     Neighborhood::CrimeData.new(self)
   end
 
-  def vacancy_data
-    Neighborhood::VacancyData.new(self)
-  end
+  def within_polygon_query(location_attribute)
+    neighborhood_coordinates = coordinates.map{ |neighborhood|
+      "#{neighborhood.longtitude} #{neighborhood.latitude}"
+    }.join(',')
 
-  def filtered_vacant_data(filters)
-    data = 
-      NeighborhoodServices::VacancyData::LandBank.new(self, filters).data + 
-      NeighborhoodServices::VacancyData::ThreeEleven.new(self, filters).data +
-      NeighborhoodServices::VacancyData::PropertyViolations.new(self, filters).data +
-      NeighborhoodServices::VacancyData::DangerousBuildings.new(self, filters).data
-
-    if filters['filters'].include?('registered_vacant')
-      data += NeighborhoodServices::VacancyData::VacantLotRegistry.new(self,filters).data
-    end
-
-    if filters['filters'].include?('dangerous_building')
-      data += NeighborhoodServices::VacancyData::DangerousBuildings.new(self, filters).data
-    end
-
-    data
+    "within_polygon(#{location_attribute}, 'MULTIPOLYGON (((#{neighborhood_coordinates})))')"
   end
 end

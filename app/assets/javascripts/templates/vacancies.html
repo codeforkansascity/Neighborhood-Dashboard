@@ -16,39 +16,32 @@
         <div class="col-md-6">
           <h2>Legally Abandoned</h2>
           <label>
-            <input type="checkbox"/>
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.ALL_ABANDONED"/>
             View all Legally Abandoned Projects
           </label>
           <h4>Tax Delinquency</h4>
-          <label>
-            <input type="checkbox"/>
+          <p>
             Tax Delinquent 1-3 Years
-          </label>
-          <label>
-            <input type="checkbox"/>
+          </p>
+          <p>
             Tax Delinquent 3+ Years
-          </label>
+          </p>
           <h4>Code Violations</h4>
-          <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.ONE_THREE_YEARS"/>
+          <p>
             Violation Length 1-3 Years
-          </label>
-          <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.THREE_YEARS_PLUS"/>
+          </p>
+          <p>
             Violation Length 3+ Years
-          </label>
-          <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.BOARDED_LONGTERM"/>
+          </p>
+          <p>
             Vacant + Boarded
-          </label>
-          <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.VACANT_REGISTRY_FAILURE"/>
+          </p>
+          <p>
             Open Nuissance Case/Failure to Register as Vacant
-          </label>
-          <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.DANGEROUS_BUILDING"/>
+          </p>
+          <p>
             Dangerous Building
-          </label>
+          </p>
         </div>
         <div class="col-md-6">
           <h2>Vacant Indicators</h2>

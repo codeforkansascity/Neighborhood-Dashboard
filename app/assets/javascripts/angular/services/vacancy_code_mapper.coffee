@@ -2,6 +2,7 @@ angular
   .module('neighborhoodstat')
   .constant('VACANT_CODES', {
     LEGALLY_ABANDONED: {
+      ALL_ABANDONED: 'all_abandoned',
       ONE_THREE_YEARS: 'one_three_years_violation_length',
       THREE_YEARS_PLUS: 'three_years_plus_violation_length',
       BOARDED_LONGTERM: 'boarded_longterm',

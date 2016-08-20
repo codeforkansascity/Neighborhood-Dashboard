@@ -8,9 +8,6 @@
 require 'open-uri'
 require 'nokogiri'
 require 'similar_text'
-require 'vacant_lot/neighborhood_matcher'
-
-neighborhood_entities = []
 
 if Neighborhood.count <= 0
   response = JSON.parse(HTTParty.get('http://api.codeforkc.org/neighborhoods-geo/V0/99?city=KANSAS%20CITY&state=MO'))
@@ -27,47 +24,12 @@ if Neighborhood.count <= 0
       coordinates = possible_coordinates.map { |coordinate|
         Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
       }
-
-      neighborhood_entities << Neighborhood.create(name: neighborhood['properties']['name'], coordinates: coordinates)
     end
+
+    Neighborhood.create(name: neighborhood['properties']['name'], coordinates: coordinates)
 
     current_neighborhood_count += 1
     puts "Loaded #{current_neighborhood_count}/#{neighborhoods_count}"
   end
 end
 
-puts "\n\nLoading Vacant Lots"
-
-if RegisteredVacantLot.count <= 0
-  uri = URI.parse('http://webfusion.kcmo.org/coldfusionapps/neighborhood/rentalreg/PropList.cfm')
-  response = Net::HTTP.get_response(uri)
-
-  data = Nokogiri::HTML(response.body)
-
-  data_table = data.css('table')
-  table_rows = data_table.css('tr')
-
-  vacant_lot_count = table_rows.length
-  current_vacant_lot_count = 0
-
-  table_rows.each do |table_row|
-    table_cells = table_row.css('td')
-
-    if table_cells.length == 8
-      RegisteredVacantLot.create(
-        property_address: table_cells[1].text.gsub(/\s+/, ' '),
-        contact_person: table_cells[2].text,
-        contact_address: table_cells[3].text,
-        contact_phone: table_cells[4].text,
-        property_type: table_cells[5].text,
-        registration_type: table_cells[6].text,
-        last_verified: table_cells[7].text
-      )
-    end
-
-    current_vacant_lot_count += 1
-    puts "Loaded #{current_vacant_lot_count}/#{vacant_lot_count}"
-  end
-end
-
-VacantLot::NeighborhoodMatcher.new.match
