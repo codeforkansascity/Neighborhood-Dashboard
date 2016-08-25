@@ -42,6 +42,9 @@ gem 'js-routes'
 # Assists with querying the socrata apis
 gem 'soda-ruby', require: 'soda'
 
+# Allows us to easily parse xlsx files
+gem 'roo', '~> 2.5.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
