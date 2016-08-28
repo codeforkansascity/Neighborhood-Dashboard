@@ -1,51 +1,451 @@
 <div class="tab-content">
-  <div class="statistics-panel" id="statistics-table" >
+  <div class="statistics-panel" id="statistics-table" ng-show="censusDataStatistics">
     <table class="statistics-table">
-      <!-- <thead>
+      <thead>
         <tr class="title-row">
           <th>
           </th>
-          <th colspan="4">
-            Annual
-          </th>
-        </tr>
-        <tr class="sub-title-row">
           <th>
+            2010 (2008-2012 ACS)
           </th>
           <th>
-            Total Incidents this Year
+            Neighborhood % of Total
+          </th>
+          <th>
+            CityWide % of Total
           </th>
         </tr>
-      </thead> -->
+      </thead>
       <tbody class="expandable-row">
         <tr class="expandable-trigger">
-          <th colspan="2">
+          <th colspan="">
             <span class="btn btn-default glyphicon glyphicon-plus"></span>
-            <strong>Person</strong>
+            <strong>Population</strong>
           </th>
+          <td>
+            {{censusDataStatistics.population}}
+          </td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <th>
-            Gender
+            <strong>Gender</strong>
           </th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Male</th>
           <td>
+            {{censusDataStatistics.male | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.male / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.male / censusDataStatistics.total_city_population) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>Female</th>
+          <td>
+            {{censusDataStatistics.female | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.female / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.female / censusDataStatistics.total_city_population) | number: 2}}%
           </td>
         </tr>
         <tr>
           <th>
-            Male
+            Age
           </th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>School Age (5-19)</th>
           <td>
-            3
+            {{censusDataStatistics.school_age | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.school_age / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.school_age / censusDataStatistics.total_city_population) | number: 2}}%
           </td>
         </tr>
         <tr>
-          <th>
-            Female
+          <th>Older Adults</th>
+          <td>
+            {{censusDataStatistics.elderly | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.elderly / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.elderly / censusDataStatistics.total_city_population) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Race</strong></th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>White</th>
+          <td>
+            {{censusDataStatistics.white | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.white / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.white / censusDataStatistics.total_city_population) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>Black</th>
+          <td>
+            {{censusDataStatistics.black | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.black / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.black / censusDataStatistics.total_city_population) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>Native American Asian/Pacific Islander</th>
+          <td>
+            {{censusDataStatistics.black | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.black / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.black / censusDataStatistics.total_city_population) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>Other race</th>
+          <td>
+            {{censusDataStatistics.other_race | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.other_race / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.other_race / censusDataStatistics.total_city_population) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>Multiracial</th>
+          <td>
+            {{censusDataStatistics.multiracial | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.multiracial / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.multiracial / censusDataStatistics.total_city_population) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>All Hispanic</th>
+          <td>
+            {{censusDataStatistics.hispanic | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.hispanic / censusDataStatistics.population) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.hispanic / censusDataStatistics.total_city_population) | number: 2}}%
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="expandable-row">
+        <tr class="expandable-trigger">
+          <th colspan="">
+            <span class="btn btn-default glyphicon glyphicon-plus"></span>
+            <strong>Housing/Income</strong>
           </th>
           <td>
-            43
+            {{censusDataStatistics.housing_units | number: 0}}
           </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><strong>Occupancy</strong></th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Owner Occupied</th>
+          <td>
+            {{censusDataStatistics.owner_occupied_housing_units | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.owner_occupied_housing_units / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.owner_occupied_housing_units / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>vacant_housing_units
+        <tr>
+          <th>Renter Occupied</th>
+          <td>
+            {{censusDataStatistics.renter_occupied_housing_units | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.renter_occupied_housing_units / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.renter_occupied_housing_units / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Vacancy</strong></th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Total Vacant</th>
+          <td>
+            {{censusDataStatistics.vacant_housing_units | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.vacant_housing_units / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.vacant_housing_units / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>Vacant: Not for sale or rent</th>
+          <td>
+            {{censusDataStatistics.vacant_other | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.vacant_other / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.vacant_other / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Housing units moved into during previous 5 years</strong></th>
+          <td>{{censusDataStatistics.housing_units_moved_into_during_previous_5_years | number: 0}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><strong>Household Size</strong></th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>1-Person Households</th>
+          <td>
+            {{censusDataStatistics['1_person_households'] | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['1_person_households'] / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['1_person_households'] / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>2-Person Households</th>
+          <td>
+            {{censusDataStatistics['2_person_households'] | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['2_person_households'] / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['2_person_households'] / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>3-Person Households</th>
+          <td>
+            {{censusDataStatistics['3_person_households'] | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['3_person_households'] / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['3_person_households'] / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>4-Person Households</th>
+          <td>
+            {{censusDataStatistics['4_person_households'] | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['4_person_households'] / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['4_person_households'] / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>5-Person Households</th>
+          <td>
+            {{censusDataStatistics['5_person_households'] | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['5_person_households'] / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['5_person_households'] / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>6-Person Households</th>
+          <td>
+            {{censusDataStatistics['6_person_households'] | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['6_person_households'] / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['6_person_households'] / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>7 Or More-Person Households</th>
+          <td>
+            {{censusDataStatistics['7_or_more_person_households'] | number: 0}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['7_or_more_person_households'] / censusDataStatistics.housing_units) | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['7_or_more_person_households'] / censusDataStatistics.total_housing_units) | number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Household Type</strong></th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Married Couple Households with Own Children</th>
+          <td>{{censusDataStatistics.married_couple_households_with_own_children_present | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.married_couple_households_with_own_children_present / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.married_couple_households_with_own_children_present / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Married Couple without Own Children</th>
+          <td>{{censusDataStatistics.married_couple_households_without_own_children_present | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.married_couple_households_without_own_children_present / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.married_couple_households_without_own_children_present / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Female Householders Households, no Husband Present, with Own Children</th>
+          <td>{{censusDataStatistics.female_householder_households__no_husband_present__with_own_children_present | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.female_householder_households__no_husband_present__with_own_children_present / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.female_householder_households__no_husband_present__with_own_children_present / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Female Householders Households, no Husband Present, without Own Children</th>
+          <td>{{censusDataStatistics.female_householder_households__no_husband_present__without_own_children_present | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.female_householder_households__no_husband_present__without_own_children_present / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.female_householder_households__no_husband_present__without_own_children_present / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Non Family Households</th>
+          <td>{{censusDataStatistics.non_family_households | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.non_family_households / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.non_family_households / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th><strong>Overcrowding Housing Units</strong></th>
+          <td>{{censusDataStatistics.overcrowded_housing_units | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.overcrowded_housing_units / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.overcrowded_housing_units / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th><strong>Housing Costs</strong></th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Mean Rents</th>
+          <td>{{(censusDataStatistics.aggregate_rent_spent_by_all_renter_housing_units / censusDataStatistics.rental_units_for_which_rent_expenditures_calculated) | number: 2}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><strong>Housing Year Built</strong></th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Housing Units Built Before 1940</th>
+          <td>{{censusDataStatistics.housing_units_built_before_1940 | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_before_1940 / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_before_1940 / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Housing Units Built 1940-1949</th>
+          <td>{{censusDataStatistics.housing_units_built_1940_1949 | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1940_1949 / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1940_1949 / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Housing Units Built 1950-1959</th>
+          <td>{{censusDataStatistics.housing_units_built_1950_1959 | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1950_1959 / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1950_1959 / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Housing Units Built 1960-1969</th>
+          <td>{{censusDataStatistics.housing_units_built_1960_1969 | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1960_1969 / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1960_1969 / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Housing Units Built 1970-1979</th>
+          <td>{{censusDataStatistics.housing_units_built_1970_1979 | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1970_1979 / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1970_1979 / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Housing Units Built 1980-1989</th>
+          <td>{{censusDataStatistics.housing_units_built_1980_1989 | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1980_1989 / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1980_1989 / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Housing Units Built 1990-1999</th>
+          <td>{{censusDataStatistics.housing_units_built_1990_1999 | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1990_1999 / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_1990_1999 / censusDataStatistics.total_housing_units) | number: 2}}%</td>
+        </tr>
+        <tr>
+          <th>Housing Units Built 2000-2009</th>
+          <td>{{censusDataStatistics.housing_units_built_2000_2009 | number: 0}}</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_2000_2009 / censusDataStatistics.housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics.housing_units_built_2000_2009 / censusDataStatistics.total_housing_units) | number: 2}}%</td>
         </tr>
       </tbody>
     </table>
