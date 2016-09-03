@@ -19,7 +19,7 @@ angular
             $scope.searchingNeighborhood = true
 
             Neighborhood.get(
-              {search_neighborhood: search.queryNeighborhood, search_address: search.queryAddress},
+              {neighborhoodId: 'locate', search_address: search.queryAddress},
               (neighborhood) ->
                 $location.path("/neighborhood/#{neighborhood.id}/crime")
                 $scope.searchingNeighborhood = false

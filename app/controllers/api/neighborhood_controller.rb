@@ -1,11 +1,15 @@
 class Api::NeighborhoodController < ApplicationController
-  def index
-    @neighborhood =
-      ::Neighborhood.includes(:coordinates).search_by_name(params[:search_neighborhood]).first ||
-      ::Neighborhood.includes(:coordinates).find_by!(name: NeighborhoodServices::Search.search(params[:search_address]))
+  def show
+    @neighborhood = ::Neighborhood.includes(:coordinates).find_by(id: params[:id])
   end
 
-  def show
-    @neighborhood = ::Neighborhood.find(params[:id])
+  def search
+    @neighborhoods = ::Neighborhood.find_by_fuzzy_name(params[:search_neighborhood])
   end
+
+  def locate
+    @neighborhood = ::Neighborhood.includes(:coordinates).find_by!(name: NeighborhoodServices::Search.search(params[:search_address]))
+    render 'show'
+  end
+
 end

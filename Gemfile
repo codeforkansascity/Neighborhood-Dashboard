@@ -36,8 +36,8 @@ gem 'angular-rails-templates'
 gem 'bower-rails'
 gem 'execjs'
 
-#
 gem 'fuzzily', '~> 0.3.3'
+gem 'select2-rails', '~> 4.0.3'
 
 # Add routes to frontend of the app
 gem 'js-routes'

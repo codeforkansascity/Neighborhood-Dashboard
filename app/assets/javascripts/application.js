@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require js-routes
+//= require select2-full
 //= require bootstrap-sprockets
 //= require bootstrap/popover
 //= require angular/angular
