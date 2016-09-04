@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'census_data/neighborhood/controller'
+
   get 'testing_controller/index'
 
   namespace :api do
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
       end
 
       resources :vacancy, only: [:index]
+      resources :census_data, only: [:index]
     end
   end
 

@@ -38,6 +38,11 @@
         templateUrl: 'vacancies.html',
         controller: 'VacanciesCtrl'
       )
+      .state('neighborhood.census_data',
+        url: '/demographics',
+        templateUrl: 'census_data.html',
+        controller: 'CensusDataCtrl'
+      )
 
     $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise('/')
