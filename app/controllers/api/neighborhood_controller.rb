@@ -1,6 +1,6 @@
 class Api::NeighborhoodController < ApplicationController
   def show
-    @neighborhood = ::Neighborhood.includes(:coordinates).find_by(id: params[:id])
+    @neighborhood = ::Neighborhood.includes(:coordinates).find(params[:id])
   end
 
   def search

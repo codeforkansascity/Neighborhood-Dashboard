@@ -19,6 +19,7 @@ angular.module('neighborhoodstat').directive('neighborhoodSearch',
               },
               ajax: {
                 url: Routes.neighborhood_search_api_neighborhood_index_path(),
+                delay: 250,
                 dataType: 'json',
                 data: (params) ->
                   return {
@@ -26,9 +27,10 @@ angular.module('neighborhoodstat').directive('neighborhoodSearch',
                   }
                 ,
                 processResults: (data, params) ->
-                  console.log(data);
+                  formattedResponse = data.map (element) ->
+                    {id: element.id, text: element.name}
 
-                  return {results: data}
+                  return {results: formattedResponse}
                 ,
                 cache: true
               }
