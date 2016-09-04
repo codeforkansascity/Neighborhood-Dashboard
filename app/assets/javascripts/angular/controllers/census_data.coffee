@@ -9,8 +9,5 @@ angular.module('neighborhoodstat').controller("CensusDataCtrl", [
         .then(
           (response) ->
             $scope.censusDataStatistics = response.data
-            console.log(response.data)
-            console.log('Owner Numbers')
-            console.log(response.data.owner_occupied_housing_units)
         )
 ])
