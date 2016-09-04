@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   get 'testing_controller/index'
 
   namespace :api do
-    resources :neighborhood, only: [:index, :show]
+    resources :neighborhood, only: [:show] do
+      collection do
+        get 'search', as: :neighborhood_search
+        get 'locate', as: :neighborhood_locate
+      end
+    end
 
     namespace :neighborhood, path: '/neighborhood/:id' do
       get 'trending_crime' => 'data#trending_crime'

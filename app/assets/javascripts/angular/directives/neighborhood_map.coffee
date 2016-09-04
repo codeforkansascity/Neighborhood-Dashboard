@@ -33,7 +33,7 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
         if e.feature.getGeometry().getType() == 'Polygon'
           $scope.mapInfoWindow.setPosition(getPolygonCenter(e.feature.getGeometry().getArray()));
           $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)});
-          
+
         $scope.mapInfoWindow.setContent(outputDisclosureAttributes(e.feature.getProperty('disclosure_attributes')));
         $scope.mapInfoWindow.open($scope.neighborhood.map);
       )
