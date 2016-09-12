@@ -1,9 +1,11 @@
 class Api::Neighborhood::CrimeController < ApplicationController
   def index
-    render json: ::Neighborhood.find(params[:id]).crime_data.map_coordinates(params)
+    neighborhood = ::Neighborhood.find(params[:id])
+    render json: NeighborhoodServices::Crime.new(neighborhood, params).mapped_coordinates
   end
 
   def grouped_totals
-    render json: ::Neighborhood.find(params[:id]).crime_data.grouped_totals
+    neighborhood = ::Neighborhood.find(params[:id])
+    render json: NeighborhoodServices::Crime.new(neighborhood, params).grouped_totals
   end
 end

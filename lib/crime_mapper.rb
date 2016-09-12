@@ -79,4 +79,14 @@ module CrimeMapper
     'SOCIETY': ['35','35A', '35B', '39', '39A', '39B', '39C', '39D', '370', '40', '40A', '40B', '40C', '520',
       '90B', '90C', '90D', '90E', '90F', '90G', '90H', '90J']
   }
+
+  def self.convert_crime_key_to_application_key(crime_counts)
+    CRIME_CATEGORIES.inject({}) do |result, crime_category|
+      crimes = crime_category[1].inject({}) do |crime_hash, crime|
+        crime_hash.merge(CrimeMapper::CRIME_CODES[crime] => crime_counts[crime].to_i)
+      end
+
+      result.merge(crime_category[0] => crimes)
+    end
+  end
 end
