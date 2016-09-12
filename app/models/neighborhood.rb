@@ -19,10 +19,6 @@ class Neighborhood < ActiveRecord::Base
     @addresses = {}
   end
 
-  def crime_data
-    Neighborhood::CrimeData.new(self)
-  end
-
   def within_polygon_query(location_attribute)
     neighborhood_coordinates = coordinates.map{ |neighborhood|
       "#{neighborhood.longtitude} #{neighborhood.latitude}"

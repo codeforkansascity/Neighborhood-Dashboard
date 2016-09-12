@@ -22,27 +22,6 @@ class Neighborhood::CrimeData
     Hash[yearly_counts]
   end
 
-  def map_coordinates(params = {})
-    start_date = params[:start_date]
-    end_date = params[:end_date]
-    crime_codes = params[:crime_codes] || []
-
-    service_url = "#{RESOURCE_URL}?$where=#{query_polygon}"
-
-    if crime_codes.present?
-      service_url += " AND #{process_crime_filters(crime_codes)}"
-    end
-
-    if start_date && end_date
-      begin
-        service_url += " AND #{filter_dates(start_date, end_date)}"
-      rescue ArgumentError
-      end
-    end
-
-    mapify_coordinates(HTTParty.get(URI::escape(service_url), verify: false))
-  end
-
   def grouped_totals
     service_url = URI::escape("#{RESOURCE_URL}?$where=#{query_polygon}&$select=ibrs,count(ibrs)&$group=ibrs")
 
@@ -76,46 +55,25 @@ class Neighborhood::CrimeData
     end
   end
 
-  def mapify_coordinates(coordinates)
-    # Not every coordinate is guaraneed to have location_1 populated with coordinates
-    coordinates
-      .select{ |coordinate|
-        coordinate["location_1"].present? && coordinate["location_1"]["coordinates"].present?
-      }
-      .map { |coordinate|
-        {
-          "ibrs" => coordinate['ibrs'],
-          "type" => "Feature",
-          "geometry" => {
-            "type" => "Point",
-            "coordinates" => coordinate["location_1"]["coordinates"]
-          },
-          "properties" => {
-            "color" => crime_marker_color(coordinate['ibrs']),
-            "disclosure_attributes" => disclosure_attributes(coordinate)
-          }
-        }
-      }
-  end
+  def map_coordinates(params = {})
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    crime_codes = params[:crime_codes] || []
 
-  def disclosure_attributes(coordinate)
-    [coordinate['description'] + '<br/>' + DateTime.parse(coordinate['from_date']).strftime("%m/%d/%Y")]
-  rescue ArgumentError
-    puts 'Invalid Date Format Provided'
-    [coordinate['description']]
-  end
+    service_url = "#{RESOURCE_URL}?$where=#{query_polygon}"
 
-  def crime_marker_color(ibrs)
-    case
-    when CrimeMapper::CRIME_CATEGORIES[:PERSON].include?(ibrs)
-      '#626AB2'
-    when CrimeMapper::CRIME_CATEGORIES[:PROPERTY].include?(ibrs)
-      '#313945'
-    when CrimeMapper::CRIME_CATEGORIES[:SOCIETY].include?(ibrs)
-      '#6B7D96'
-    else
-      '#ffffff'
+    if crime_codes.present?
+      service_url += " AND #{process_crime_filters(crime_codes)}"
     end
+
+    if start_date && end_date
+      begin
+        service_url += " AND #{filter_dates(start_date, end_date)}"
+      rescue ArgumentError
+      end
+    end
+
+    mapify_coordinates(HTTParty.get(URI::escape(service_url), verify: false))
   end
 
   def query_polygon
