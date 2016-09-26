@@ -14,7 +14,10 @@
     <div ng-show="activateFilters" class="map-filters">
       <div class="row">
         <div class="col-md-6">
-          <h2>Legally Abandoned</h2>
+          <h2>
+            Legally Abandoned
+            <span class="fa fa-info-circle pull-right tooltipster" aria-hidden="true" title="Under the Missouri Abandoned Housing Act, a lawsuit maybe filed on properties that are legally abandoned allowing new owners to purchase the property. To be considered legally abandoned, a property must be vacant for at least 6 months, tax delinquent, and have open code violations."></span>
+          </h2>
           <label>
             <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.ALL_ABANDONED"/>
             View all Legally Abandoned Projects
@@ -44,7 +47,10 @@
           </p>
         </div>
         <div class="col-md-6">
-          <h2>Vacant Indicators</h2>
+          <h2>
+            Vacant Indicators
+            <span class="fa fa-info-circle pull-right tooltipster" aria-hidden="true" title="Because there is not a fully complete list of vacant properties and no easy way to create one - anyone interested in determining whether a property is vacant must instead look to indicators of vacancy Note that interpreting indicatiors is not 100% accurate and even when a property appears vacant, it may still be occupied."></span>
+          </h2>
           <label>
             <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.VACANT_STRUCTURE" />
             Vacant Structure

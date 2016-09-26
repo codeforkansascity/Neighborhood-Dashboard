@@ -4,3 +4,10 @@
 $ ->
   trendingGraph = new TrendingGraph('trending-data-graph')
   trendingGraph.renderGraph()
+
+$(document).on 'click', '.tooltipster', ->
+  $tooltip = $(this)
+
+  if !$tooltip.hasClass('tooltipstered')
+    $tooltip.tooltipster(trigger: 'click', maxWidth: 500)
+    $tooltip.tooltipster('open')

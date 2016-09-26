@@ -23,5 +23,6 @@
 //= require angular-route/angular-route
 //= require angular-ui-router
 //= require angular-rails-templates
+//= require tooltipster
 //= require_tree ./templates
 //= require_tree .
