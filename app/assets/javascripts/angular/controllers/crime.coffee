@@ -64,7 +64,8 @@ angular
 
       drawLegend= ()->
         # Don't draw the legend if it already exist
-        return if $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j[0]
+        return if $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j && 
+                  $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j[0]
 
         legendMarkup =
           $("<nav class='legend clearfix'>" +
@@ -88,7 +89,9 @@ angular
 
       removeLegend= ()->
         # We only want to remove the legend if it exists
-        return if !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j[0]
+        return if !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j && 
+                  !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j[0]
+
         $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].pop()
 
       clearCrimeMarkers= ()->
