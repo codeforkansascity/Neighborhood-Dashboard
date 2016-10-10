@@ -16,6 +16,13 @@
     </form>
   </div>
 </nav>
+<nav class="navbar">
+  <form class='navbar-form navbar-right' role: 'search' ng-submit="neighborhoodSearch(search)">
+    <div class="form-group">
+      <input name='search' type='text' class='form-control' placeholder='Find by Neighborhood or Address' ng-model="search.query"/>
+    </div>
+  </form>
+</nav>
 <div my-directive my-directive-watch="neighborhood" ng-if="neighborhood" class="container">
   <h1 class="neighborhood-title">{{neighborhood.name}}</h1>
   <ul class="nav nav-tabs neighborhood-nav">

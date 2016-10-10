@@ -1,4 +1,8 @@
 class Api::NeighborhoodController < ApplicationController
+  def index
+    @neighborhoods = ::Neighborhood.includes(:coordinates).all
+  end
+
   def show
     @neighborhood = ::Neighborhood.includes(:coordinates).find(params[:id])
   end

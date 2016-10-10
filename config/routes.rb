@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'testing_controller/index'
 
   namespace :api do
-    resources :neighborhood, only: [:show] do
+    resources :neighborhood, only: [:index, :show] do
       collection do
         get 'search', as: :neighborhood_search
         get 'locate', as: :neighborhood_locate

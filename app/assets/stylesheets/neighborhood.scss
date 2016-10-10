@@ -1,44 +1,8 @@
-.neighborhood-search {
-  color: #ffffff;
-  background-color: #6D7F82;
-  @include make-md-column(3);
-  padding-top: 15px;
-  padding-bottom: 15px;
-  text-align: center;
+.navbar-inverse .neighborhood-search {
+  color: #fff;
 
-  input {
-    margin-bottom: 15px;
-  }
-
-  h2 {
-    font-size: 1em;
-    margin-top: 0;
-  }
-
-  .has-lined-sides {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 15px;
-
-    &:before,
-    &:after {
-      background-color: #ffffff;
-      content: '\a0';
-      flex-grow: 1;
-      height: 1px;
-      position: relative;
-      top: 0.625em;
-    }
-
-    &:before {
-      margin-right:10px;
-    }
-
-    &:after {
-      margin-left:10px;
-    }
+  > * {
+    vertical-align: bottom;
   }
 }
 
@@ -56,9 +20,6 @@
 }
 
 .neighborhood-content {
-  margin-top: 10px;
-  margin-bottom: 30px;
-  @include make-md-column(9);
   @extend .clearfix;
   background: none;
 }

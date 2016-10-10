@@ -13,10 +13,8 @@ angular.module('neighborhoodstat').directive('neighborhoodSearch',
             {
               minimumInputLength: 1,
               allowClear: true,
-              placeholder: {
-                id: '-1',
-                placeholder: 'Search for Neighborhood'
-              },
+              width: '15em',
+              placeholder: 'Search for Neighborhood',
               ajax: {
                 url: Routes.neighborhood_search_api_neighborhood_index_path(),
                 delay: 250,
