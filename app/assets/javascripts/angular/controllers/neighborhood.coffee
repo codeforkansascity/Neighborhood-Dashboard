@@ -12,7 +12,7 @@ angular
       'Flash',
       ($scope, $resource, $stateParams, $location, $http, IMAGES, Flash)->
         Neighborhood = $resource(
-          '/api/neighborhood/:neighborhoodId', 
+          '/api/neighborhood/:neighborhoodId',
           {neighborhoodId: "@id", format: 'json'},
           {
             index:   { method: 'GET', isArray: true, responseType: 'json' },
@@ -51,7 +51,7 @@ angular
           )
 
         populateNeighborhoodMap = (neighborhoods) ->
-          for neighborhood in neighborhoods 
+          for neighborhood in neighborhoods
             do (neighborhood) ->
               latitudeLines = ({lat: coord.latitude, lng: coord.longtitude} for coord in neighborhood.coordinates)
               neighborhoodLayer = new google.maps.Polygon(
@@ -62,26 +62,24 @@ angular
                   fillOpacity: 0.1
                 }
               )
-
               neighborhoodLayer.setMap($scope.map)
               neighborhoodLayer.addListener 'click', (e) ->
                 $scope.cityInfoWindow.setPosition(getPolygonCenter(this.getPath()));
                 $scope.cityInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)});
+                $scope.cityInfoWindow.setContent(
+                  '<p>' + neighborhood.name + '</p>' +
+                  '<a class="btn btn-primary" ui-sref="neighborhood.crime.detail({neighborhoodId: neighborhood.id})" href="/neighborhood/' + neighborhood.id + '/vacancies">Go to Neighborhood</a>'
+                );
+                $scope.cityInfoWindow.open($scope.map);
 
         getPolygonCenter = (coordinates) ->
           latitude = 0
           longtitude = 0
-          coordinatesSize = 0
+          coordinatesSize = coordinates.length
 
-          console.log(coordinates.length)
-
-          coordinates.forEach (path) ->
-            console.log(path)
-            coordinatesSize = path.getArray().length
-
-            path.getArray().forEach (latLng) ->
-              latitude += latLng.lat()
-              longtitude += latLng.lng()
+          coordinates.forEach (coordinate) ->
+            latitude += coordinate.lat()
+            longtitude += coordinate.lng()
 
           return new google.maps.LatLng(latitude / coordinatesSize, longtitude / coordinatesSize)
     ]
