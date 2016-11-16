@@ -22,6 +22,7 @@ angular
         )
 
         $scope.IMAGES = IMAGES;
+        $scope.showSearch = false;
 
         $scope.neighborhoodSearch = (search) ->
           if !$scope.searchingNeighborhood
@@ -30,8 +31,11 @@ angular
             Neighborhood.get(
               {neighborhoodId: 'locate', search_address: search.queryAddress},
               (neighborhood) ->
+                console.log($("#neighborhood-search-modal"))
+                $("#neighborhood-search-modal").modal('hide')
                 $location.path("/neighborhood/#{neighborhood.id}/crime")
                 $scope.searchingNeighborhood = false
+                $('.modal-open').removeClass('modal-open')
               (code)->
                 Flash.create('danger', 'Neighborhood Not Found', 5000)
                 $scope.searchingNeighborhood = false
@@ -57,20 +61,30 @@ angular
               neighborhoodLayer = new google.maps.Polygon(
                 {
                   paths: latitudeLines,
-                  strokeColor: '#000',
+                  strokeColor: '#666',
                   fillColor: '#000',
-                  fillOpacity: 0.1
+                  fillOpacity: 0.2,
+                  strokeWidth: '0.5px'
                 }
               )
               neighborhoodLayer.setMap($scope.map)
-              neighborhoodLayer.addListener 'click', (e) ->
-                $scope.cityInfoWindow.setPosition(getPolygonCenter(this.getPath()));
-                $scope.cityInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)});
-                $scope.cityInfoWindow.setContent(
-                  '<p>' + neighborhood.name + '</p>' +
-                  '<a class="btn btn-primary" ui-sref="neighborhood.crime.detail({neighborhoodId: neighborhood.id})" href="/neighborhood/' + neighborhood.id + '/vacancies">Go to Neighborhood</a>'
-                );
-                $scope.cityInfoWindow.open($scope.map);
+              neighborhoodLayer.addListener 'mouseover', displayNeighborhoodTooltip(neighborhood)
+
+              neighborhoodLayer.addListener 'mouseover', (e) ->
+                this.setOptions({fillOpacity: 0.4})
+
+              neighborhoodLayer.addListener 'mouseout', (e) ->
+                this.setOptions({fillOpacity: 0.2})
+
+        displayNeighborhoodTooltip = (neighborhood) ->
+          return (e) ->
+            $scope.cityInfoWindow.setPosition(getPolygonCenter(this.getPath()))
+            $scope.cityInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)})
+            $scope.cityInfoWindow.setContent(
+              '<p>' + neighborhood.name + '</p>' +
+              '<a class="btn btn-primary" ui-sref="neighborhood.crime.detail({neighborhoodId: neighborhood.id})" href="/neighborhood/' + neighborhood.id + '/vacancies">Go to Neighborhood</a>'
+            )
+            $scope.cityInfoWindow.open($scope.map)
 
         getPolygonCenter = (coordinates) ->
           latitude = 0

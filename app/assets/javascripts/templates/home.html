@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#primary-nav" aria-expanded="false" aria-controls="navbar">
@@ -14,73 +14,10 @@
         <li><a href="#">About</a></li>
         <li><a href="#">Our Data</a></li>
         <li><a href="#">Contact</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#neighborhood-search-modal">Neighborhood Search</a></li>
       </ul>
     </nav>
   </div>
 </nav>
-<nav class="navbar navbar-inverse neighborhood-search-container">
-  <div class="container">
-    <form class="neighborhood-search form-inline navbar-form" role: 'search' ng-submit="neighborhoodSearch(search)">
-      <flash-message duration="5000"></flash-message>
-      <p class="form-group">
-        <label for="neighborhood-search">Find Neighborhood</label>
-        <select neighborhood-search></select>
-      </p>
-      <p class="form-group">
-        <label for="neighborhood-address">Or</label>
-        <input id="neighborhood-address" name='search_address' type='text' class='form-control' placeholder='Enter Address' ng-model="search.queryAddress"/>
-      </p>
-      <p class="form-group">
-        <input type="submit" class="form-control btn btn-success" value="Search"/>
-      </p>
-      <p ng-show="searchingNeighborhood">
-        <span class="glyphicon glyphicon-refresh spin"></span>
-      </p>
-    </form>
-  </div>
-</nav>
+<neighborhood-search></neighborhood-search>
 <div city-map></div>
-<footer class="site-information-footer">
-  <div class="carousel carousel-large slide" data-ride="carousel">
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <div class="container">
-          <div class="site-info-box">
-            <h3>How it works</h3>
-            <img src="{{IMAGES.QUALITY_HILL}}" width="200" height="100"/>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet dapibus felis. Praesent quis dui sapien. Integer ipsum tellus, tempor in nulla eu, suscipit convallis eros. Quisque pretium, lacus sit amet tincidunt aliquam, nisl ante gravida odio, id fringilla libero metus fermentum diam. Quisque laoreet molestie porttitor.</span>
-          </div>
-          <div class="site-info-box">
-            <h3>KCMO: Data Pioneer</h3>
-            <img src="{{IMAGES.UNION_STATION}}" width="200" height="100"/>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet dapibus felis. Praesent quis dui sapien. Integer ipsum tellus, tempor in nulla eu, suscipit convallis eros. Quisque pretium, lacus sit amet tincidunt aliquam, nisl ante gravida odio, id fringilla libero metus fermentum diam. Quisque laoreet molestie porttitor.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="carousel carousel-small slide" data-ride="carousel">
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <div class="container">
-          <div class="site-info-box">
-            <h3>How it works</h3>
-            <img src="{{IMAGES.QUALITY_HILL}}" width="200" height="100"/>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet dapibus felis. Praesent quis dui sapien. Integer ipsum tellus, tempor in nulla eu, suscipit convallis eros. Quisque pretium, lacus sit amet tincidunt aliquam, nisl ante gravida odio, id fringilla libero metus fermentum diam. Quisque laoreet molestie porttitor.</span>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="container">
-          <div class="site-info-box">
-            <h3>KCMO: Data Pioneer</h3>
-            <img src="{{IMAGES.UNION_STATION}}" width="200" height="100"/>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet dapibus felis. Praesent quis dui sapien. Integer ipsum tellus, tempor in nulla eu, suscipit convallis eros. Quisque pretium, lacus sit amet tincidunt aliquam, nisl ante gravida odio, id fringilla libero metus fermentum diam. Quisque laoreet molestie porttitor.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>

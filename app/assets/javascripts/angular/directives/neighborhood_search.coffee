@@ -3,12 +3,8 @@ angular.module('neighborhoodstat').directive('neighborhoodSearch',
     '$location',
     ($location) ->
       return {
+        templateUrl: 'neighborhood_search.html',
         link: ($scope, element, attrs)->
-          element.attr('id', 'neighborhood-search');
-          element.attr('name', 'search_neighborhood');
-          element.attr('class', 'form-control');
-          element.attr('placeholder', 'Enter neighborhood name');
-
           $('#neighborhood-search').select2(
             {
               minimumInputLength: 1,
@@ -36,6 +32,8 @@ angular.module('neighborhoodstat').directive('neighborhoodSearch',
           );
 
           $('#neighborhood-search').on 'change', (e) ->
+            $('body').removeClass('modal-open')
+            $('.modal-backdrop').remove()
             $location.path("/neighborhood/#{this.value}/crime");
             $scope.$apply();
       }

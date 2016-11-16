@@ -1,11 +1,3 @@
-.navbar-inverse .neighborhood-search {
-  color: #fff;
-
-  > * {
-    vertical-align: bottom;
-  }
-}
-
 .chosen-neighborhood {
   background-color: #fff;
   color: #000;
@@ -19,31 +11,41 @@
   }
 }
 
+.navbar-fixed-top {
+  z-index: 1;
+}
+
 .neighborhood-content {
   @extend .clearfix;
   background: none;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
 }
 
 .neighborhood-nav {
+  width: 100%;
+  background-color: #fff;
+
   li {
     > a {
       color: #000000;
       margin-right: 0;
-      background-color: #d6dee0;
+      background-color: #ffffff;
       border-color: #8D9192;
-      border-bottom-color: #ffffff;
       border-radius: 0;
       border: none;
+      border-bottom: #ddd solid 1px;
 
       &:hover {
         background-color: #e9eef1;
         border-color: #BCC5CB;
-        border-bottom-color: #456972;
+        border-bottom-color: #ddd;
       }
 
       &.active {
         font-weight: bolder;
-        background-color: #ffffff;
+        background-color: #d6dee0;
         border-color: #456972;
         border-bottom-color: #A6CDD4;
 
@@ -90,10 +92,6 @@
   background-color: #ffffff;
   padding: 10px;
   position: relative;
-}
-
-#neighborhood-map {
-  min-height: 400px;
 }
 
 .statistics-panel {
@@ -162,3 +160,4 @@
     }
   }
 }
+

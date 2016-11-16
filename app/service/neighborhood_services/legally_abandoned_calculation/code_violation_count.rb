@@ -13,6 +13,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
       if mapping_address.present?
         current_violation_count = address['count_address'].to_i
 
+        # Fix this defect. The 2 should be a 1
         points = if current_violation_count >= 3
                    2
                  elsif current_violation_count >= 2
