@@ -25,7 +25,8 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
 
           .then(
             (response) ->
-              clearVacancyDataMarkers()
+              clearData()
+              removeLegend()
               geoJSONData = StackedMarkerMapper.createStackedMarkerDataSet(response.data)
 
               $scope.neighborhood.vacantDataMarkers =
@@ -34,15 +35,20 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
               $scope.activateFilters = false
           )
       else
-        clearVacancyDataMarkers()
+        clearData()
+        removeLegend()
         $scope.activateFilters = false
 
-    clearVacancyDataMarkers= ()->
-      if $scope.neighborhood.vacantDataMarkers
+    removeLegend= ()->
+      # We only want to remove the legend if it exists
+      return if !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].b ||
+                !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].b[0]
+
+      $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].pop()
+
+    clearData= ()->
+      if $scope.neighborhood.map.data
         $scope.neighborhood.map.data.forEach((feature) ->
           $scope.neighborhood.map.data.remove(feature)
         )
-
-        $scope.neighborhood.crimeMarkers = null
-
 ])

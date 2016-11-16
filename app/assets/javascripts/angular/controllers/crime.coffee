@@ -32,10 +32,9 @@ angular
             .get(Routes.api_neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes, start_date: startDate, end_date: endDate}))
             .then(
               (response) ->
-                clearCrimeMarkers()
+                clearData()
 
-                $scope.neighborhood.crimeMarkers =
-                  $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
+                $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: response.data})
 
                 $scope.activateFilters = false
 
@@ -45,7 +44,7 @@ angular
                   drawLegend()
             )
         else
-          clearCrimeMarkers()
+          clearData()
           removeLegend()
           $scope.activateFilters = false
 
@@ -64,8 +63,8 @@ angular
 
       drawLegend= ()->
         # Don't draw the legend if it already exist
-        return if $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j && 
-                  $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j[0]
+        return if $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].b &&
+                  $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].b[0]
 
         legendMarkup =
           $("<nav class='legend clearfix'>" +
@@ -89,16 +88,14 @@ angular
 
       removeLegend= ()->
         # We only want to remove the legend if it exists
-        return if !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j && 
-                  !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].j[0]
+        return if !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].b ||
+                  !$scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].b[0]
 
         $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].pop()
 
-      clearCrimeMarkers= ()->
-        if $scope.neighborhood.crimeMarkers
+      clearData= ()->
+        if $scope.neighborhood.map.data
           $scope.neighborhood.map.data.forEach((feature) ->
             $scope.neighborhood.map.data.remove(feature)
           )
-
-          $scope.neighborhood.crimeMarkers = null
   ])

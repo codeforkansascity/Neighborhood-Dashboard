@@ -1,5 +1,4 @@
-<nav class="navbar navbar-default">
-  <div class="container">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#primary-nav" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
@@ -10,30 +9,15 @@
       <a href="/" class="navbar-brand"><span class="logo-prefix">KC</span>NeighborhoodStat</a>
     </div>
     <nav id="primary-nav" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav pull-right">
         <li><a href="#">About</a></li>
         <li><a href="#">Our Data</a></li>
         <li><a href="#">Contact</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#neighborhood-search-modal">Neighborhood Search</a></li>
       </ul>
     </nav>
-  </div>
 </nav>
-<div ng-if="neighborhood" class="container">
-  <form class="neighborhood-search" role: 'search' ng-submit="neighborhoodSearch(search)">
-    <div class="chosen-neighborhood">
-      <h1>{{neighborhood.name}}</h1>
-    </div>
-    <flash-message duration="5000"></flash-message>
-    <h2>Search for another Kansas City Neighborhood</h2>
-    <select neighborhood-search></select>
-    <p class="has-lined-sides">Or</p>
-    <input name='search_address' type='text' class='form-control' placeholder='Enter Address' ng-model="search.queryAddress"/>
-
-    <input type="submit" class="form-control btn btn-success" value="Search"/>
-    <p ng-show="searchingNeighborhood">
-      <span class="glyphicon glyphicon-refresh spin"></span>
-    </p>
-  </form>
+<div ng-if="neighborhood">
   <div class="neighborhood-content">
     <ul class="nav nav-tabs neighborhood-nav">
       <li role="presentation"><a ui-sref=".crime" ui-sref-active="active">Crime</a></li>
@@ -48,5 +32,5 @@
     <div ui-view></div>
   </div>
 </div>
-<footer class="site-information-footer">
-</footer>
+<div ng-if="neighborhood" neighborhood-map></div>
+<neighborhood-search></neighborhood-search>

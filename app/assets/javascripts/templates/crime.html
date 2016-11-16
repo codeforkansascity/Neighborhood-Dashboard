@@ -1,10 +1,9 @@
 <nav class="navbar sub-data-nav">
-  <ul id="neighborhood-sub-tabs" class="navbar-nav nav" role="tablist">
-    <li role="presentation" class="active">
-      <a aria-controls="statistics-table" role="tab" data-toggle="tab" data-target="#neighborhood-map">Map</a>
-    </li>
+  <ul id="neighborhood-sub-tabs" class="navbar-nav nav">
     <li role="presentation">
-      <a aria-controls="neighborhood-map" role="tab" data-toggle="tab" data-target="#statistics-table">Report</a>
+      <a role="tab" ng-click="showStatistics = !showStatistics">
+        {{showStatistics ? 'Close' : 'Open'}} Report
+      </a>
     </li>
   </ul>
 </nav>
@@ -152,8 +151,8 @@
     </div>
   </form>
 </div>
-<div class="tab-content">
-  <div class="statistics-panel tab-pane" role="tabpanel" class="tab-pane" id="statistics-table" ng-show="crimeStatistics">
+<div>
+  <div class="statistics-panel" id="statistics-table" ng-show="crimeStatistics &&showStatistics">
     <table class="statistics-table">
       <thead>
         <tr class="title-row">
@@ -427,5 +426,4 @@
       </tbody>
     </table>
   </div>
-  <div neighborhood-map></div>
 </div>

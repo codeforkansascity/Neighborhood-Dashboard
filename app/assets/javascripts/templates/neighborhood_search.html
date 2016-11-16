@@ -1,0 +1,27 @@
+<div class="modal fade" id="neighborhood-search-modal" role="dialog">
+  <form class="neighborhood-search form-inline navbar-form" role: 'search' ng-submit="neighborhoodSearch(search)" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Neighborhood Search</h4>
+        </div>
+        <div class="modal-body">
+          <flash-message duration="5000"></flash-message>
+          <p class="form-group">
+            <label for="neighborhood-search">Find Neighborhood</label>
+            <select id="neighborhood-search" name="search_neighborhood" class="form-control" placeholder="Enter neighborhood name"></select>
+          </p>
+          <p class="form-group">
+            <label for="neighborhood-address">Or</label>
+            <input id="neighborhood-address" name='search_address' type='text' class='form-control' placeholder='Enter Address' ng-model="search.queryAddress"/>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <input ng-show="!searchingNeighborhood" type="submit" class="form-control btn btn-success" value="Search"/>
+          <span ng-show="searchingNeighborhood" class="glyphicon glyphicon-refresh spin"></span>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -3,6 +3,7 @@ $navbar-default-color: #000;
 $navbar-default-link-color: #000;
 $navbar-default-brand-color: #000;
 $navbar-default-link-color: #000;
+$navbar-inverse-color: #ffffff;
 
 .navbar .navbar-brand {
   font-weight: bold;
@@ -19,7 +20,7 @@ $navbar-default-link-color: #000;
   &.navbar {
     border-radius: 0;
     margin-bottom: 0;
-    z-index: 1;
+    z-index: 2;
   }
 }
 
@@ -37,4 +38,8 @@ $navbar-default-link-color: #000;
     font-weight: normal;
     margin-bottom: 0;
   }
+}
+
+.navbar-fixed-top {
+  z-index: 1;
 }

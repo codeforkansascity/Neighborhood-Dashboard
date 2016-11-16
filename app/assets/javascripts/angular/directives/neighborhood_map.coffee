@@ -3,11 +3,12 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
     link: ($scope, element, attrs)->
       element.attr('id', 'neighborhood-map');
       element.attr('class', 'tab-pane active');
+      element.attr('style', 'position: absolute; top: 0; bottom: 0; width: 100%; height: 100%;')
 
       $scope.neighborhood.map = new google.maps.Map(
         document.getElementById('neighborhood-map'),
         {
-          center: new google.maps.LatLng($scope.neighborhood.coordinates[0].latitude, $scope.neighborhood.coordinates[0].longtitude),
+          center: new google.maps.LatLng($scope.neighborhood.coordinates[0].latitude + 0.006, $scope.neighborhood.coordinates[0].longtitude),
           zoom: 14
         }
       )

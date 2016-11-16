@@ -21,7 +21,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     addresses = merge_dataset(tax_delinquent_datasets, addresses)
     addresses = merge_dataset(address_violation_counts, addresses)
 
-    # We can have instances where the same violation appears twice in a disclosure 
+    # We can have instances where the same violation appears twice in a disclosure
     # array. We only want the violation to appear once in the disclosure array
     addresses.each do |(k,v)|
       v[:disclosure_attributes].uniq!
