@@ -10,7 +10,7 @@ require 'nokogiri'
 require 'similar_text'
 
 if Neighborhood.count <= 0
-  response = JSON.parse(HTTParty.get('http://api.codeforkc.org/neighborhoods-geo/V0/99?city=KANSAS%20CITY&state=MO'))
+  response = JSON.parse(HTTParty.get('https://data.kcmo.org/api/geospatial/q45j-ejyk?method=export&format=GeoJSON'))
   neighborhoods = response['features']
   neighborhoods_count = neighborhoods.count
   current_neighborhood_count = 0
@@ -18,15 +18,17 @@ if Neighborhood.count <= 0
   puts "Now Loading Neighborhoods"
 
   neighborhoods.each do |neighborhood|
-    possible_coordinates = neighborhood['geometry']['coordinates'][0][0]
+    if neighborhood['properties']['nbhname'].present?
+      possible_coordinates = neighborhood['geometry']['coordinates'][0][0]
 
-    if possible_coordinates.present?
-      coordinates = possible_coordinates.map { |coordinate|
-        Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
-      }
+      if possible_coordinates.present?
+        coordinates = possible_coordinates.map { |coordinate|
+          Coordinate.create(latitude: coordinate[1], longtitude: coordinate[0])
+        }
+      end
+
+      Neighborhood.create(id: neighborhood['properties']['nbhid'], name: neighborhood['properties']['nbhname'], coordinates: coordinates)
     end
-
-    Neighborhood.create(name: neighborhood['properties']['name'], coordinates: coordinates)
 
     current_neighborhood_count += 1
     puts "Loaded #{current_neighborhood_count}/#{neighborhoods_count}"

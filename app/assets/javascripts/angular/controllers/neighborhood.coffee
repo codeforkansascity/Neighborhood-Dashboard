@@ -46,44 +46,6 @@ angular
             (neighborhood)->
               $scope.neighborhood = neighborhood
           )
-        else
-          Neighborhood.index(
-            {},
-            (neighborhoods)->
-              populateNeighborhoodMap(neighborhoods)
-          )
-
-        populateNeighborhoodMap = (neighborhoods) ->
-          for neighborhood in neighborhoods
-            do (neighborhood) ->
-              latitudeLines = ({lat: coord.latitude, lng: coord.longtitude} for coord in neighborhood.coordinates)
-              neighborhoodLayer = new google.maps.Polygon(
-                {
-                  paths: latitudeLines,
-                  strokeColor: '#666',
-                  fillColor: '#000',
-                  fillOpacity: 0.2,
-                  strokeWidth: '0.5px'
-                }
-              )
-              neighborhoodLayer.setMap($scope.map)
-              neighborhoodLayer.addListener 'mouseover', displayNeighborhoodTooltip(neighborhood)
-
-              neighborhoodLayer.addListener 'mouseover', (e) ->
-                this.setOptions({fillOpacity: 0.4})
-
-              neighborhoodLayer.addListener 'mouseout', (e) ->
-                this.setOptions({fillOpacity: 0.2})
-
-        displayNeighborhoodTooltip = (neighborhood) ->
-          return (e) ->
-            $scope.cityInfoWindow.setPosition(getPolygonCenter(this.getPath()))
-            $scope.cityInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)})
-            $scope.cityInfoWindow.setContent(
-              '<p>' + neighborhood.name + '</p>' +
-              '<a class="btn btn-primary" ui-sref="neighborhood.crime.detail({neighborhoodId: neighborhood.id})" href="/neighborhood/' + neighborhood.id + '/vacancies">Go to Neighborhood</a>'
-            )
-            $scope.cityInfoWindow.open($scope.map)
 
         getPolygonCenter = (coordinates) ->
           latitude = 0
