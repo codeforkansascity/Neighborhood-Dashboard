@@ -18,7 +18,12 @@ angular.module('neighborhoodstat').directive('cityMap', () ->
             $scope.map.data.remove(data)
       )
 
-      $scope.map.data.addListener 'mouseover', (e) ->
+      if 'ontouchstart' in document.documentElement
+        clickListener = 'mousedown'
+      else
+        clickListener = 'mouseover'
+
+      $scope.map.data.addListener clickListener, (e) ->
         neighborhood = e.feature
         $scope.cityInfoWindow.setPosition(getPolygonCenter(neighborhood.getGeometry()))
         $scope.cityInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)})
