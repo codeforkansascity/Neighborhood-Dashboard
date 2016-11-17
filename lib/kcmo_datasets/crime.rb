@@ -9,6 +9,9 @@ module KcmoDatasets
   API_DATASOURCE_2015 = 'geta-wrqs'
 
   class Crime
+    CRIME_SOURCE_2014_URI = 'https://data.kcmo.org/Crime/KCPD-Crime-Data-2014/yu5f-iqbp/data'
+    CRIME_SOURCE_2015_URI = 'https://data.kcmo.org/Crime/KCPD-Crime-Data-2015/kbzx-7ehe'
+
     def initialize(neighborhood, options)
       @neighborhood = neighborhood
       @options = options

@@ -41,7 +41,13 @@ class NeighborhoodServices::Crime
   end
 
   def all_disclosure_attributes(coordinate)
-    [coordinate['description'] + '<br/>' + DateTime.parse(coordinate['from_date']).strftime("%m/%d/%Y")]
+    crime_date = DateTime.parse(coordinate['from_date'])
+
+    [
+      coordinate['description'],
+      "Commited on #{crime_date.strftime("%m/%d/%Y")}",
+      "<a href=#{crime_datasource(crime_date)}>Data Source</a>"
+    ]
   rescue ArgumentError
     puts 'Invalid Date Format Provided'
     [coordinate['description']]
@@ -58,5 +64,9 @@ class NeighborhoodServices::Crime
     else
       '#ffffff'
     end
+  end
+
+  def crime_datasource(crime_date)
+    crime_date.year == 2015 ? KcmoDatasets::Crime::CRIME_SOURCE_2015_URI : KcmoDatasets::Crime::CRIME_SOURCE_2014_URI
   end
 end
