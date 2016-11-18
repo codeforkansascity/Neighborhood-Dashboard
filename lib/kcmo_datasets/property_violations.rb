@@ -15,6 +15,11 @@ module KcmoDatasets
       SocrataClient.get(DATASET, build_socrata_query)
     end
 
+    def open_cases
+      @requested_datasets = ['open_cases']
+      self
+    end
+
     def vacant_registry_failure
       @requested_datasets = ['vacant_registry_failure']
       self
@@ -46,6 +51,10 @@ module KcmoDatasets
         filters << vacant_registry_failure_query
       end
 
+      if @requested_datasets.include?('open_cases')
+        filters << open_cases_query
+      end
+
       filters.join(' OR ')
     end
 
@@ -53,6 +62,10 @@ module KcmoDatasets
       vacant_registry_code = ["'NSVACANT'", "'NSBOARD01'"]
 
       "violation_code in (#{vacant_registry_code.join(',')})"
-    end    
+    end
+
+    def open_cases_query
+      "status='Open'"
+    end
   end
 end

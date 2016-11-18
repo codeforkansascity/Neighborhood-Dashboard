@@ -27,17 +27,11 @@ class NeighborhoodServices::LegallyAbandonedCalculation
       v[:disclosure_attributes].uniq!
     end
 
-    attach_geometric_coordinates(addresses)
-      .select{ |address, value|
-        value[:geometric_coordinates].present?
-      }
+    attach_geometric_data(addresses)
       .map { |(address, value)|
         {
           "type" => "Feature",
-          "geometry" => {
-            "type" => "Polygon",
-            "coordinates" => value[:geometric_coordinates]
-          },
+          "geometry" => value[:geometry],
           "properties" => {
             "color" => land_bank_color(value[:points]),
             "disclosure_attributes" => value[:disclosure_attributes],
@@ -100,17 +94,27 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     combined_dataset_dup
   end
 
-  def attach_geometric_coordinates(dataset)
-    dataset_dup = dataset.dup
+  def attach_geometric_data(addresses)
+    addresses_dup = addresses.dup
 
     parcel_coordinates = StaticData.PARCEL_DATA().each_with_object({}) do |parcel, hash|
       hash[parcel['properties']['land_ban60'].split("\n")[0].downcase] = parcel['geometry']['coordinates'][0]
     end
 
-    dataset_dup.each do |(address, value)|
-      value[:geometric_coordinates] = parcel_coordinates[address]
+    addresses_dup.each do |(address, value)|
+      if parcel_coordinates[address].present?
+        value[:geometry] = {
+          "type" => "Polygon",
+          "coordinates" => parcel_coordinates[address]
+        }
+      else
+        value[:geometry] = {
+          "type" => "Point",
+          "coordinates" => [value[:longitude].to_f, value[:latitude].to_f]
+        }
+      end
     end
 
-    dataset_dup
+    addresses_dup
   end
 end

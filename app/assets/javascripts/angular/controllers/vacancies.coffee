@@ -29,6 +29,7 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
               removeLegend()
               geoJSONData = StackedMarkerMapper.createStackedMarkerDataSet(response.data)
 
+              debugger
               $scope.neighborhood.vacantDataMarkers =
                 $scope.neighborhood.map.data.addGeoJson({type: 'FeatureCollection', features: geoJSONData})
 
