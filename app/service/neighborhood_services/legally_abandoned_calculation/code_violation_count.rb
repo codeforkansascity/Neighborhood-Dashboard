@@ -29,7 +29,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
 
           if current_address.present?
             current_address[:points] = [points, currentAddress[:point]].max
-            current_address[:disclosure_attributes] << "address['violation_description'].titleize: #{address['days_open'].to_i % 365} Years open"
+            current_address[:disclosure_attributes] << "#{address['violation_description'].titleize}: #{address['days_open'].to_i % 365} Years open"
           else
             source_link = "<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}' target='_blank'>Source</a>"
 

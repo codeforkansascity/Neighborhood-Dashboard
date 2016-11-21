@@ -8,28 +8,32 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
     [
       {
         'address' => 'Address 1',
-        'count_address' => 9,
+        'days_open' => 1100,
+        'violation_description' => 'Description',
         'mapping_location' => {
           'coordinates' => [-45, 100]
         }
       },
       {
         'address' => 'Address 2',
-        'count_address' => 3,
+        'days_open' => 1000,
+        'violation_description' => 'Description',
         'mapping_location' => {
           'coordinates' => [-45, 100]
         }
       },
       {
         'address' => 'Address 3',
-        'count_address' => 2,
+        'days_open' => 240,
+        'violation_description' => 'Description',
         'mapping_location' => {
           'coordinates' => [-45, 100]
         }
       },
       {
         'address' => 'Address 4',
-        'count_address' => 1,
+        'days_open' => 240,
+        'violation_description' => 'Description',
         'mapping_location' => {
           'coordinates' => [-45, 100]
         }
@@ -46,7 +50,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
   describe '#calculated_data' do
     let(:calculated_data) { dataset.calculated_data }
 
-    context 'when an address has greater than 3 violations' do
+    context 'when an address has had a code violation that is older than 3 years' do
       it 'has a value of 2 points for that address' do
         expect(calculated_data['address 1'][:points]).to eq(2)
       end
@@ -57,13 +61,15 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
       end
 
       it 'adds a message detailing the violation count' do
-        expect(calculated_data['address 1'][:disclosure_attributes]).to eq(['9 Property Violations'])
+        expect(calculated_data['address 1'][:disclosure_attributes][1]).to eq(
+          'Description: 3 Years open'
+        )
       end
     end
 
-    context 'when an address has 3 violations' do
+    context 'when an address has had a violation that is between 1 and 3 years old' do
       it 'has a value of 2 points for that address' do
-        expect(calculated_data['address 2'][:points]).to eq(2)
+        expect(calculated_data['address 2'][:points]).to eq(1)
       end
 
       it 'adds the longitude and latitude to the data' do
@@ -72,28 +78,15 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
       end
 
       it 'adds a message detailing the violation count' do
-        expect(calculated_data['address 2'][:disclosure_attributes]).to eq(['3 Property Violations'])
+        expect(calculated_data['address 2'][:disclosure_attributes][1]).to eq(
+          'Description: 2 Years open'
+        )
       end
     end
 
-    context 'when an address has 2 violations' do
-      it 'has a value of 2 points for that address' do
-        expect(calculated_data['address 3'][:points]).to eq(1)
-      end
-
-      it 'adds the longitude and latitude to the data' do
-        expect(calculated_data['address 3'][:longitude]).to eq(-45)
-        expect(calculated_data['address 3'][:latitude]).to eq(100)
-      end
-
-      it 'adds a message detailing the violation count' do
-        expect(calculated_data['address 3'][:disclosure_attributes]).to eq(['2 Property Violations'])
-      end
-    end
-
-    context 'when an address has less than 2 violations' do
-      it 'does not add the address to the returned hash' do
-        expect(calculated_data['address 4']).to be_nil
+    context 'when an address has a violation that is less than a year old' do
+      it 'does not include the violation in the dataset' do
+        expect(calculated_data['address 3']).to be_nil
       end
     end
   end
