@@ -17,11 +17,15 @@ class NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData
           hash[street_address][:points] += 1
           hash[street_address][:disclosure_attributes] << violation['request_type']
         else
+          source_link = "<a href='#{KcmoDatasets::ThreeElevenCases::SOURCE_URI}' target='_blank'>Source</a>"
           hash[street_address] = {
             points: 1,
             longitude: violation['address_with_geocode']['coordinates'][0].to_f,
             latitude: violation['address_with_geocode']['coordinates'][1].to_f,
-            disclosure_attributes: [violation['request_type']]
+            disclosure_attributes: [
+              "<h2 class='info-window-header'>311 Violations</h2>&nbsp;#{source_link}",
+              violation['request_type']
+            ]
           }
         end
       end

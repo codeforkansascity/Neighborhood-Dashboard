@@ -29,13 +29,17 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
                    0
                  end
 
-
-        addresses[current_address.downcase] = {
-          points: points,
-          longitude: taxed_address['census_longitude'].to_f,
-          latitude: taxed_address['census_latitude'].to_f,
-          disclosure_attributes: ["#{consecutive_years} year(s) Tax Delinquent"]
-        }
+        if points > 0
+          addresses[current_address.downcase] = {
+            points: points,
+            longitude: taxed_address['census_longitude'].to_f,
+            latitude: taxed_address['census_latitude'].to_f,
+            disclosure_attributes: [
+              "<h2 class='info-window-header'>Tax Delinquency</h2>&nbsp;<a href='#{@neighborhood.address_source_uri}'>Source</a>",
+              "#{consecutive_years} year(s) Tax Delinquent"
+            ]
+          }
+        end
       end
     end
 

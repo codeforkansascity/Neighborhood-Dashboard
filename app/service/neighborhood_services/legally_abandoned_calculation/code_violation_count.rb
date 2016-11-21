@@ -31,12 +31,14 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
             current_address[:points] = [points, currentAddress[:point]].max
             current_address[:disclosure_attributes] << "address['violation_description'].titleize: #{address['days_open'].to_i % 365} Years open"
           else
+            source_link = "<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}' target='_blank'>Source</a>"
+
             addresses[mapping_address.downcase] = {
               points: points,
               longitude: address['mapping_location']['coordinates'][0].to_f,
               latitude: address['mapping_location']['coordinates'][1].to_f,
               disclosure_attributes: [
-                '<h2>Current Violations</h2>',
+                "<h3 class='info-window-header'>Current Violations</h3>&nbsp;#{source_link}",
                 "#{address['violation_description'].titleize}: #{(address['days_open'].to_i / 365).floor} Years open"
               ]
             }

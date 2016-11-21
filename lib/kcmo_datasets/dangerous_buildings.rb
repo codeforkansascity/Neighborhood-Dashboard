@@ -3,6 +3,7 @@ require 'socrata_client'
 module KcmoDatasets
   class DangerousBuildings
     DATASET = 'rm2v-mbk5'
+    SOURCE_URI = 'https://data.kcmo.org/Property/Dangerous-Buildings-List/ax3m-jhxx/data'
 
     attr_accessor :requested_datasets
 

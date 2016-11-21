@@ -38,7 +38,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
   end
 
   before do
-    allow(KcmoDatasets::PropertyViolations).to receive(:grouped_address_counts).and_return(code_violation_data)
+    allow(KcmoDatasets::PropertyViolations).to receive(:new).and_return(violation_query_object)
+    allow(violation_query_object).to receive(:open_cases).and_return(violation_query_object)
+    allow(violation_query_object).to receive(:request_data ).and_return(code_violation_data)
   end
 
   describe '#calculated_data' do

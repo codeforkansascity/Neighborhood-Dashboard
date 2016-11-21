@@ -3,6 +3,7 @@ require 'socrata_client'
 module KcmoDatasets
   class PropertyViolations
     DATASET = 'ha6k-d6qu'
+    SOURCE_URI = 'https://data.kcmo.org/Housing/Property-Violations/nhtf-e75a/data'
 
     attr_accessor :requested_datasets
 
