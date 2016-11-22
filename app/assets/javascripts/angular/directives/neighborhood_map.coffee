@@ -40,12 +40,23 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
       )
 
       $scope.neighborhood.map.data.setStyle((feature) ->
-        if feature.getGeometry().getType() == 'Point'
+
+        if feature.getProperty('marker_style') == 'Circle'
+          return {
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 5,
+              fillColor: feature.getProperty('color'),
+              fillOpacity: 0.9,
+              strokeWeight: 0
+            }
+          }
+        else if feature.getGeometry().getType() == 'Point'
           return {
             icon: drawMapMarker(feature.getProperty('color'))
           }
 
-        if feature.getGeometry().getType() == 'Polygon'
+        else if feature.getGeometry().getType() == 'Polygon'
           return {
             fillColor: feature.getProperty('color'),
             strokeColor: feature.getProperty('color')

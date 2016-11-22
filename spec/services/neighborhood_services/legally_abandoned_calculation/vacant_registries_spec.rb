@@ -95,15 +95,15 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistri
 
     it 'adds the registration type as one of the disclosure_attributes' do
       expect(calculated_data['test address 1'][:disclosure_attributes][1]).to eq(
-        '<b>Registration Type:</b> Registered<br/><b>Last Verified:</b> Yesterday'
+        'Registration Type: Registered<br/>Last Verified: Yesterday'
       )
 
       expect(calculated_data['test address 2'][:disclosure_attributes][1]).to eq(
-        '<b>Registration Type:</b> Registered<br/><b>Last Verified:</b> Yesterday'
+        'Registration Type: Registered<br/>Last Verified: Yesterday'
       )
 
       expect(calculated_data['test address 6'][:disclosure_attributes][1]).to eq(
-        '<b>Registration Type:</b> Registered<br/><b>Last Verified:</b> Yesterday'
+        'Registration Type: Registered<br/>Last Verified: Yesterday'
       )
     end
   end
