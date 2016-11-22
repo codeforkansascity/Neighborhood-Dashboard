@@ -45,6 +45,7 @@ class NeighborhoodServices::Crime
 
     [
       coordinate['description'],
+      coordinate['address'].try(:titleize),
       "Commited on #{crime_date.strftime("%m/%d/%Y")}",
       "<a href=#{crime_datasource(crime_date)}>Data Source</a>"
     ]

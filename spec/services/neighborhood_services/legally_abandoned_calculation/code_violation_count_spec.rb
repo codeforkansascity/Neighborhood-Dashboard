@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount do
-  let(:neighborhood) { double(name: 'Neighborhood 1') }
+  let(:neighborhood) { double(name: 'Neighborhood 1', address_source_uri: 'http://data.hax') }
   let(:dataset) { NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount.new(neighborhood) }
   let(:violation_query_object) { double }
   let(:code_violation_data) do

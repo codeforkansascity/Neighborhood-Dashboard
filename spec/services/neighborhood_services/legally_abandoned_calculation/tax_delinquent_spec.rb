@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent do
-  let(:neighborhood) { double(name: 'Neighborhood') }
+  let(:neighborhood) { double(name: 'Neighborhood', address_source_uri: 'http://data.hax') }
 
   let(:dataset) { NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent.new(neighborhood) }
   let(:addresses) do
@@ -98,9 +98,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent 
       end
 
       it 'adds the vacant display with the appropriate amount of years' do
-        expect(calculated_data['address 4'][:disclosure_attributes]).to eq(["1 year(s) Tax Delinquent"])
+        expect(calculated_data['address 4'][:disclosure_attributes][1]).to eq('1 year(s) Tax Delinquent')
 
-        expect(calculated_data['address 5'][:disclosure_attributes]).to eq(["2 year(s) Tax Delinquent"])
+        expect(calculated_data['address 5'][:disclosure_attributes][1]).to eq('2 year(s) Tax Delinquent')
       end
 
       it 'adds the latitude and longitude of the addresses to the returned hash' do
@@ -120,9 +120,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent 
       end
 
       it 'adds the vacant display with the appropriate amount of years' do
-        expect(calculated_data['address 3'][:disclosure_attributes]).to eq(["6 year(s) Tax Delinquent"])
+        expect(calculated_data['address 3'][:disclosure_attributes][1]).to eq('6 year(s) Tax Delinquent')
 
-        expect(calculated_data['address 6'][:disclosure_attributes]).to eq(["3 year(s) Tax Delinquent"])
+        expect(calculated_data['address 6'][:disclosure_attributes][1]).to eq('3 year(s) Tax Delinquent')
       end
 
       it 'adds the latitude and longitude of the addresses to the returned hash' do
