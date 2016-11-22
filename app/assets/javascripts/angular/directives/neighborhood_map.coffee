@@ -29,9 +29,8 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
       $scope.neighborhood.map.data.addListener('click', (e) ->
         if e.feature.getGeometry().getType() == 'Point'
           $scope.mapInfoWindow.setPosition(e.feature.getGeometry().get());
-          $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, -30)});
-
-        if e.feature.getGeometry().getType() == 'Polygon'
+          $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)});
+        else if e.feature.getGeometry().getType() == 'Polygon'
           $scope.mapInfoWindow.setPosition(getPolygonCenter(e.feature.getGeometry()));
           $scope.mapInfoWindow.setOptions({pixelOffset: new google.maps.Size(0, 0)});
 
