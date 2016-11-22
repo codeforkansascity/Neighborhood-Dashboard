@@ -3,6 +3,7 @@ require 'socrata_client'
 module KcmoDatasets
   class ThreeElevenCases
     DATASET = 'cyqf-nban'
+    SOURCE_URI = 'https://data.kcmo.org/311/311-Call-Center-Service-Requests/7at3-sxhp/data'
 
     attr_accessor :requested_datasets
 

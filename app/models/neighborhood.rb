@@ -13,10 +13,14 @@ class Neighborhood < ActiveRecord::Base
   def addresses
     return @addresses if @addresses.present?
 
-    uri = URI::escape("http://dev-api.codeforkc.org//address-by-neighborhood/V0/#{name}?city=&state=mo")
+    uri = address_source_uri
     @addresses = JSON.parse(HTTParty.get(uri))
   rescue
     @addresses = {}
+  end
+
+  def address_source_uri
+    URI::escape("http://dev-api.codeforkc.org//address-by-neighborhood/V0/#{name}?city=&state=mo")
   end
 
   def within_polygon_query(location_attribute)

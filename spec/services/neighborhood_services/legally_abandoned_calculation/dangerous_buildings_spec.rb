@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings do
-  let(:neighborhood) { double(name: 'Neighborhood') }
+  let(:neighborhood) { double(name: 'Neighborhood', address_source_uri: 'http://data.hax') }
   let(:dataset) { NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings.new(neighborhood) }
   let(:dangerous_building_data_query) { double }
   let(:dangerous_building_data) {
@@ -52,7 +52,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuild
     end
 
     it 'adds the status onto the set of disclosure_attributes' do
-      expect(calculated_data['address 1'][:disclosure_attributes]).to eq(['statusofcase'])
+      expect(calculated_data['address 1'][:disclosure_attributes][1]).to eq('statusofcase')
     end
   end
 end

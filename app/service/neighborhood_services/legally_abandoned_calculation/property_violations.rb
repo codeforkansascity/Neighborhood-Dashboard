@@ -12,11 +12,13 @@ class NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations
       street_address = violation['address']
 
       if street_address.present?
+        header = "<h2 class='info-window-header'></h2><a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'>Source</a>"
+
         hash[street_address.downcase] = {
           points: 1,
           longitude: violation['mapping_location']['coordinates'][0].to_f,
           latitude: violation['mapping_location']['coordinates'][1].to_f,
-          disclosure_attributes: [violation['violation_description'].titleize]
+          disclosure_attributes: [header, violation['violation_description'].titleize]
         }
       end
     end

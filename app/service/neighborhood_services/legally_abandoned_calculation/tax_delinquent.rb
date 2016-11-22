@@ -20,7 +20,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
           consecutive_years += 1
           current_year -= 1
         end
-        
+
         points = if consecutive_years >= 3
                    2
                  elsif consecutive_years >= 1
@@ -34,7 +34,10 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
             points: points,
             longitude: taxed_address['census_longitude'].to_f,
             latitude: taxed_address['census_latitude'].to_f,
-            disclosure_attributes: ["#{consecutive_years} year(s) Tax Delinquent"]
+            disclosure_attributes: [
+              "<h2 class='info-window-header'>Tax Delinquency</h2>&nbsp;<a href='#{@neighborhood.address_source_uri}'>Source</a>",
+              "#{consecutive_years} year(s) Tax Delinquent"
+            ]
           }
         end
       end

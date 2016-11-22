@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData do
-  let(:neighborhood) { double(name: 'Neighborhood')}
+  let(:neighborhood) { double(name: 'Neighborhood', address_source_uri: 'http://data.hax')}
   let(:dataset) { NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData.new(neighborhood) }
   let(:three_eleven_client_query) { double }
   let(:three_eleven_data) {

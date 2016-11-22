@@ -2,6 +2,7 @@ require 'socrata_client'
 
 class NeighborhoodServices::VacancyData::DangerousBuildings
   DATA_SOURCE = 'rm2v-mbk5'
+  SOURCE_URI = ''
 
   def initialize(neighborhood, dangerous_building_filters = {})
     @neighborhood = neighborhood

@@ -59,8 +59,8 @@ angular.module('neighborhoodstat').directive('neighborhoodMap', () ->
 
         geometry.forEachLatLng (coord) ->
           coordinatesSize += 1
-          latitude += latLng.lat()
-          longtitude += latLng.lng()
+          latitude += coord.lat()
+          longtitude += coord.lng()
 
         return new google.maps.LatLng(latitude / coordinatesSize, longtitude / coordinatesSize)
 

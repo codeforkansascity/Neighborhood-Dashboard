@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistries do
-  let(:neighborhood) { double(name: 'Neighborhood 1') }
+  let(:neighborhood) { double(name: 'Neighborhood 1', address_source_uri: 'http://data.hax') }
   let(:dataset) { NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistries.new(neighborhood) }
   let(:vacant_lot_data) {
     [
@@ -94,16 +94,16 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistri
     end
 
     it 'adds the registration type as one of the disclosure_attributes' do
-      expect(calculated_data['test address 1'][:disclosure_attributes]).to eq(
-        ['<b>Registration Type:</b> Registered<br/><b>Last Verified:</b> Yesterday']
+      expect(calculated_data['test address 1'][:disclosure_attributes][1]).to eq(
+        '<b>Registration Type:</b> Registered<br/><b>Last Verified:</b> Yesterday'
       )
 
-      expect(calculated_data['test address 2'][:disclosure_attributes]).to eq(
-        ['<b>Registration Type:</b> Registered<br/><b>Last Verified:</b> Yesterday']
+      expect(calculated_data['test address 2'][:disclosure_attributes][1]).to eq(
+        '<b>Registration Type:</b> Registered<br/><b>Last Verified:</b> Yesterday'
       )
 
-      expect(calculated_data['test address 6'][:disclosure_attributes]).to eq(
-        ['<b>Registration Type:</b> Registered<br/><b>Last Verified:</b> Yesterday']
+      expect(calculated_data['test address 6'][:disclosure_attributes][1]).to eq(
+        '<b>Registration Type:</b> Registered<br/><b>Last Verified:</b> Yesterday'
       )
     end
   end

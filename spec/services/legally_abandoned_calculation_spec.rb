@@ -178,6 +178,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
     )
 
     allow(NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations).to receive(:new).and_return(vacant_registry_failures)
+    
     allow(vacant_registry_failures).to receive(:calculated_data).and_return(
       {'address 1' => mock_addresses['address 1'], 'address 2' => mock_addresses['address 2'], 'address 3' => mock_addresses['address 3']}
     )
@@ -244,9 +245,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
       expect(test_address_three.first['properties']['color']).to eq('#888')
     end
 
-    it 'strips out any addresses that do not have geometric coordinates' do
-      target_address = vacant_indicators.select{ |address| address['properties']['address'] == 'address 9' }
-      expect(target_address.length).to eq(0)
+    it 'converts any parcels without geometric coordinates to a point' do
+      target_address = vacant_indicators.select{ |address| address['properties']['address'] == 'address 9' }.first
+      expect(target_address['geometry']['type']).to eq('Point')
     end
   end
 end
