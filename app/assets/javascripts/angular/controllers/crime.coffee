@@ -8,6 +8,7 @@ angular
     'CrimeCodeMapper',
     ($scope, $resource, $http, $stateParams, CrimeCodeMapper)->
       $scope.visible = true
+      $scope.isQueryingFilters = false
 
       $scope.clearFilters = (crimeFilters) ->
         crimeFilters.startDate = null
@@ -28,6 +29,8 @@ angular
         fbiCodes = CrimeCodeMapper.createFBIMapping(fbiCodes)
 
         if fbiCodes.length > 0
+          $scope.isQueryingFilters = true
+
           $http
             .get(Routes.api_neighborhood_crime_index_path($stateParams.neighborhoodId, {crime_codes: fbiCodes, start_date: startDate, end_date: endDate}))
             .then(
@@ -42,6 +45,11 @@ angular
                   removeLegend()
                 else
                   drawLegend()
+            )
+            .finally(
+              () ->
+                $scope.isQueryingFilters = false
+                $scope.activateFilters = false
             )
         else
           clearData()

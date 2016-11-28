@@ -17,10 +17,11 @@
       <input type="date" name="end_date" class="form-control" ng-model="crimeFilters.endDate" />
       <label>End Date</label>
     </div>
-    <button class="btn btn btn-success pull-right" type="button" ng-click="activateFilters = !activateFilters">
+    <span class="pull-right" ng-show="isQueryingFilters"><i class="fa fa-refresh fa-large fa-spin"></i></span>
+    <button class="btn btn btn-success pull-right" ng-show="!isQueryingFilters" type="button" ng-click="activateFilters = !activateFilters">
       Filters
     </button>
-    <div ng-show="activateFilters" class="map-filters">
+    <div ng-show="activateFilters && !isQueryingFilters" class="map-filters">
       <div class="col-md-2">
         <h2>Person</h2>
         <label>

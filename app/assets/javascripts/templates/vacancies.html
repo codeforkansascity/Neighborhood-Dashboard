@@ -1,9 +1,10 @@
 <div class="toolbar">
   <form class="form-inline" ng-submit="filterVacantData(vacantFilters)">
-    <button class="btn btn btn-success pull-right" type="button" ng-click="activateFilters = !activateFilters">
+    <button ng-show="!isQueryingFilters" class="btn btn btn-success pull-right" type="button" ng-click="activateFilters = !activateFilters">
       Filters
     </button>
-    <div ng-show="activateFilters" class="map-filters">
+    <span class="pull-right" ng-show="isQueryingFilters"><i class="fa fa-refresh fa-large fa-spin"></i></span>
+    <div ng-show="activateFilters && !isQueryingFilters" class="map-filters">
       <div class="row">
         <div class="col-md-6">
           <h2>
