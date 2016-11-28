@@ -33,6 +33,8 @@ angular
               (neighborhood) ->
                 $("#neighborhood-search-modal").modal('hide')
                 $location.path("/neighborhood/#{neighborhood.id}/crime")
+                $('body').removeClass('modal-open')
+                $('.modal-backdrop').remove()
                 $scope.searchingNeighborhood = false
                 $('.modal-open').removeClass('modal-open')
               (code)->
