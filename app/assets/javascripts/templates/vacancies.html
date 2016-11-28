@@ -1,13 +1,5 @@
 <div class="toolbar">
   <form class="form-inline" ng-submit="filterVacantData(vacantFilters)">
-    <div class="form-group">
-      <input type="date" name="start_date" class="form-control" ng-model="vacantFilters.startDate"/>
-      <label>Start Date</label>
-    </div>
-    <div class="form-group">
-      <input type="date" name="end_date" class="form-control" ng-model="vacantFilters.endDate" />
-      <label>End Date</label>
-    </div>
     <button class="btn btn btn-success pull-right" type="button" ng-click="activateFilters = !activateFilters">
       Filters
     </button>
@@ -75,6 +67,14 @@
             <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS" />
             All Property Violations
           </label>
+          <div class="form-group">
+            <input type="date" name="start_date" class="form-control" ng-model="vacantFilters.startDate"/>
+            <label>Start Date</label>
+          </div>
+          <div class="form-group">
+            <input type="date" name="end_date" class="form-control" ng-model="vacantFilters.endDate" />
+            <label>End Date</label>
+          </div>
         </div>
       </div>
       <div>
