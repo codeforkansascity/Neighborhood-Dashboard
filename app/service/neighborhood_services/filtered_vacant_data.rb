@@ -14,17 +14,13 @@ class NeighborhoodServices::FilteredVacantData
       filters_copy['filters'] += NeighborhoodServices::VacancyData::LandBank::POSSIBLE_FILTERS
       filters_copy['filters'] += NeighborhoodServices::VacancyData::ThreeEleven::POSSIBLE_FILTERS
       filters_copy['filters'] += NeighborhoodServices::VacancyData::PropertyViolations::POSSIBLE_FILTERS
-      filters_copy['filters'] += ['registered_vacant','dangerous_building']
+      filters_copy['filters'] += ['registered_vacant']
     end
 
     data =
       NeighborhoodServices::VacancyData::LandBank.new(neighborhood, filters_copy).data + 
       NeighborhoodServices::VacancyData::ThreeEleven.new(neighborhood, filters_copy).data +
       NeighborhoodServices::VacancyData::PropertyViolations.new(neighborhood, filters_copy).data
-
-    if filters_copy['filters'].include?('dangerous_building')
-      data += NeighborhoodServices::VacancyData::DangerousBuildings.new(neighborhood, filters_copy).data
-    end
 
     data
   end

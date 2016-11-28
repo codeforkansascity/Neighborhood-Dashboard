@@ -4,7 +4,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations
   end
 
   def calculated_data
-    property_violations_data = KcmoDatasets::PropertyViolations.new(@neighborhood)
+    dataset = KcmoDatasets::PropertyViolations.new(@neighborhood)
+    property_violations_data = dataset
                                .vacant_registry_failure
                                .request_data
 
@@ -12,15 +13,24 @@ class NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations
       street_address = violation['address']
 
       if street_address.present?
-        header = "<h2 class='info-window-header'></h2><a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'>Source</a>"
+        header = "<h2 class='info-window-header'>Property Violations:</h2>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'>Source</a>"
+        last_updated = "Last Updated: #{last_updated_date(dataset.metadata)}"
 
         hash[street_address.downcase] = {
           points: 1,
           longitude: violation['mapping_location']['coordinates'][0].to_f,
           latitude: violation['mapping_location']['coordinates'][1].to_f,
-          disclosure_attributes: [header, violation['violation_description'].titleize]
+          disclosure_attributes: [header, last_updated, violation['violation_description'].titleize]
         }
       end
     end
+  end
+
+  private
+
+  def last_updated_date(metadata)
+    DateTime.strptime(metadata['viewLastModified'].to_s, '%s').strftime('%m/%d/%Y')
+  rescue
+    'N/A'
   end
 end

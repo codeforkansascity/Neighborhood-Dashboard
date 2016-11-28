@@ -1,5 +1,6 @@
 class NeighborhoodServices::VacancyData::ThreeEleven
   DATA_SOURCE = '7at3-sxhp'
+  DATA_SOURCE_URI = 'https://data.kcmo.org/311/311-Call-Center-Service-Requests/7at3-sxhp'
   POSSIBLE_FILTERS = ['vacant_structure', 'open']
 
   def initialize(neighborhood, three_eleven_filters = {})
@@ -105,7 +106,18 @@ class NeighborhoodServices::VacancyData::ThreeEleven
 
   def all_disclosure_attributes(violation)
     disclosure_attributes = violation['disclosure_attributes'].try(&:uniq) || []
-    address = JSON.parse(violation["address_with_geocode"]["human_address"])["address"].titleize
-    ["<b>Address:</b> #{address}"] + disclosure_attributes
+    title = "<h3 class='info-window-header'>Three Eleven Data:</h3>&nbsp;<a href='#{DATA_SOURCE_URI}'>Source</a>"
+    last_updated = "Last Updated Date: #{last_updated_date}"
+    address = "<b>Address:</b>&nbsp;#{JSON.parse(violation['address_with_geocode']['human_address'])['address'].titleize}"
+    [title, last_updated, address] + disclosure_attributes
+  end
+
+  private
+
+  def last_updated_date
+    metadata = JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/7at3-sxhp/').response.body)
+    DateTime.strptime(metadata['viewLastModified'].to_s, '%s').strftime('%m/%d/%Y')
+  rescue
+    'N/A'
   end
 end

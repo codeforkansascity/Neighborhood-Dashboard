@@ -26,6 +26,12 @@ module KcmoDatasets
       self
     end
 
+    def metadata
+      @metadata ||= JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/nhtf-e75a/').response.body)
+    rescue
+      {}
+    end
+
     def self.grouped_address_counts(neighborhood)
       query =  "SELECT address, mapping_location, count(address) where #{neighborhood.within_polygon_query('mapping_location')}"
       query += " AND status !='Closed'"

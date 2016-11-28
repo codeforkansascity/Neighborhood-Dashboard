@@ -26,6 +26,12 @@ module KcmoDatasets
       self
     end
 
+    def metadata
+      @metadata ||= JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/cyqf-nban/').response.body)
+    rescue
+      {}
+    end
+
     private
 
     def build_socrata_query

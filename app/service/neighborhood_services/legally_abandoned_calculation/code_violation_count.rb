@@ -6,7 +6,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
   def calculated_data
     addresses = {}
 
-    code_violation_data = KcmoDatasets::PropertyViolations.new(@neighborhood)
+    dataset = KcmoDatasets::PropertyViolations.new(@neighborhood)
+    code_violation_data = dataset
                           .open_cases
                           .request_data
 
@@ -38,7 +39,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
               longitude: address['mapping_location']['coordinates'][0].to_f,
               latitude: address['mapping_location']['coordinates'][1].to_f,
               disclosure_attributes: [
-                "<h3 class='info-window-header'>Current Violations</h3>&nbsp;#{source_link}",
+                "<h3 class='info-window-header'>Current Violations:</h3>&nbsp;#{source_link}",
+                "Last Updated: #{last_updated_date(dataset.metadata)}",
                 "#{address['violation_description'].titleize}: #{(address['days_open'].to_i / 365).floor} Years open"
               ]
             }
@@ -48,5 +50,11 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
     end
 
     addresses
+  end
+
+  def last_updated_date(metadata)
+    DateTime.strptime(metadata['viewLastModified'].to_s, '%s').strftime('%m/%d/%Y')
+  rescue
+    'N/A'
   end
 end

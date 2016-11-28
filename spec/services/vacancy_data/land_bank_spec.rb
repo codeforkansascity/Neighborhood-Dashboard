@@ -98,10 +98,13 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
 
   let(:mocked_endpoint) { 'https://servercall.com' }
 
+  let(:metadata) { {'viewLastModified' => 1433307658} }
+
   before do
     allow(StaticData).to receive(:PARCEL_DATA).and_return(parcel_geometric_data)
     allow(Date).to receive('today').and_return(Date.new(2016, 05, 15))
     allow(SocrataClient).to receive(:get).and_return(parcel_responses)
+    allow(HTTParty).to receive(:get).with('https://data.kcmo.org/api/views/2ebw-sp7f/').and_return(double(response: double(body: metadata)))
   end
 
   subject { NeighborhoodServices::VacancyData::LandBank.new(neighborhood, vacant_filters) }
@@ -134,7 +137,9 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
             "parcel_number"=>"parcel-1", 
             "color"=>"#000000", 
             "disclosure_attributes" => [
-              "<b>Address:</b> 0 No Address",
+              "<h3 class='info-window-header'>Land Bank Data:</h3>&nbsp;<a href='#{NeighborhoodServices::VacancyData::LandBank::DATA_SOURCE_URI}'>Source</a>",
+              "Last Updated Date: N/A",
+              "<b>Address:</b>&nbsp;0 No Address",
               "<p>Foreclosure Year</p>"
             ]
           }

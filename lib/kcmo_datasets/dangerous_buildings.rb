@@ -16,6 +16,12 @@ module KcmoDatasets
       SocrataClient.get(DATASET, build_socrata_query)
     end
 
+    def metadata
+      @metadata ||= JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/rm2v-mbk5/').response.body)
+    rescue
+      {}
+    end
+
     private
 
     def build_socrata_query

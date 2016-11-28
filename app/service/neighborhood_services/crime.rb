@@ -47,7 +47,8 @@ class NeighborhoodServices::Crime
       coordinate['description'],
       coordinate['address'].try(:titleize),
       "Commited on #{crime_date.strftime("%m/%d/%Y")}",
-      "<a href=#{crime_datasource(crime_date)}>Data Source</a>"
+      "<a href=#{crime_datasource(crime_date)}>Data Source</a>",
+      "Last Updated: #{crime_metadata_last_updated(crime_date)}"
     ]
   rescue ArgumentError
     puts 'Invalid Date Format Provided'
@@ -69,5 +70,10 @@ class NeighborhoodServices::Crime
 
   def crime_datasource(crime_date)
     crime_date.year == 2015 ? KcmoDatasets::Crime::CRIME_SOURCE_2015_URI : KcmoDatasets::Crime::CRIME_SOURCE_2014_URI
+  end
+
+  def crime_metadata_last_updated(crime_date)
+    metadata = crime_date.year == 2015 ? @dataset.fetch_metadata_2015 : @dataset.fetch_metadata_2014
+    DateTime.strptime(metadata['viewLastModified'].to_s, '%s').strftime('%m/%d/%Y')
   end
 end

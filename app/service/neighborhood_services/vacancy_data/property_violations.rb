@@ -1,5 +1,6 @@
 class NeighborhoodServices::VacancyData::PropertyViolations
   DATA_SOURCE = 'nhtf-e75a'
+  DATA_SOURCE_URI = 'https://data.kcmo.org/Housing/Property-Violations/nhtf-e75a'
   POSSIBLE_FILTERS = ['all_property_violations', 'vacant_registry_failure', 'boarded_longterm']
 
   def initialize(neighborhood, property_violation_filters = {})
@@ -112,7 +113,18 @@ class NeighborhoodServices::VacancyData::PropertyViolations
 
   def all_disclosure_attributes(violation)
     disclosure_attributes = violation['disclosure_attributes'].try(&:uniq) || []
-    address = JSON.parse(violation["mapping_location"]["human_address"])["address"].titleize
-    ["<b>Address:</b> #{address}"] + disclosure_attributes
+    title = "<h3 class='info-window-header'>Property Violations:</h3>&nbsp;<a href='#{DATA_SOURCE_URI}'>Source</a>"
+    last_updated = "Last Updated Date: #{last_updated_date}"
+    address = "<b>Address:</b>&nbsp;#{JSON.parse(violation['mapping_location']['human_address'])['address'].titleize}"
+    [title, last_updated, address] + disclosure_attributes
+  end
+
+  private
+
+  def last_updated_date
+    metadata = JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/nhtf-e75a/').response.body)
+    DateTime.strptime(metadata['viewLastModified'].to_s, '%s').strftime('%m/%d/%Y')
+  rescue
+    'N/A'
   end
 end

@@ -58,11 +58,14 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenDat
     ]
   }
 
+  let(:metadata) { {'viewLastModified' => 1433307658} }
+
   before do
     allow(KcmoDatasets::ThreeElevenCases).to receive(:new).and_return(three_eleven_client_query)
     allow(three_eleven_client_query).to receive(:open_cases).and_return(three_eleven_client_query)
     allow(three_eleven_client_query).to receive(:vacant_called_in_violations).and_return(three_eleven_client_query)
     allow(three_eleven_client_query).to receive(:request_data).and_return(three_eleven_data)
+    allow(three_eleven_client_query).to receive(:metadata).and_return(metadata)
   end
 
   describe '#calculated_data' do

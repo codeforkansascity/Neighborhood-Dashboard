@@ -4,7 +4,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuild
   let(:neighborhood) { double(name: 'Neighborhood', address_source_uri: 'http://data.hax') }
   let(:dataset) { NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings.new(neighborhood) }
   let(:dangerous_building_data_query) { double }
-  let(:dangerous_building_data) {
+  let(:dangerous_building_data) do
     [
       {
         'address' => 'Address 1',
@@ -27,11 +27,14 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuild
         'statusofcase' => 'statusofcase'
       }
     ]
-  }
+  end
+
+  let(:metadata) { {'viewLastModified' => 1433307658} }
 
   before do
     allow(KcmoDatasets::DangerousBuildings).to receive(:new).and_return(dangerous_building_data_query)
     allow(dangerous_building_data_query).to receive(:request_data).and_return(dangerous_building_data)
+    allow(dangerous_building_data_query).to receive(:metadata).and_return(metadata)
   end
 
   describe '#calculated_data' do
@@ -52,7 +55,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuild
     end
 
     it 'adds the status onto the set of disclosure_attributes' do
-      expect(calculated_data['address 1'][:disclosure_attributes][1]).to eq('statusofcase')
+      expect(calculated_data['address 1'][:disclosure_attributes][2]).to eq('statusofcase')
     end
   end
 end

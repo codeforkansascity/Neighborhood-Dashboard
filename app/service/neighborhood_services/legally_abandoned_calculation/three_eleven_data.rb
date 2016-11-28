@@ -4,7 +4,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData
   end
 
   def calculated_data
-    three_eleven_data = KcmoDatasets::ThreeElevenCases.new(@neighborhood)
+    dataset = KcmoDatasets::ThreeElevenCases.new(@neighborhood)
+    three_eleven_data = dataset
                         .open_cases
                         .vacant_called_in_violations
                         .request_data
@@ -23,12 +24,19 @@ class NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData
             longitude: violation['address_with_geocode']['coordinates'][0].to_f,
             latitude: violation['address_with_geocode']['coordinates'][1].to_f,
             disclosure_attributes: [
-              "<h2 class='info-window-header'>311 Violations</h2>&nbsp;#{source_link}",
+              "<h2 class='info-window-header'>311 Violations:</h2>&nbsp;#{source_link}",
+              "Last Updated: #{last_updated_date(dataset.metadata)}",
               violation['request_type']
             ]
           }
         end
       end
     end
+  end
+
+  def last_updated_date(metadata)
+    DateTime.strptime(metadata['viewLastModified'].to_s, '%s').strftime('%m/%d/%Y')
+  rescue
+    'N/A'
   end
 end

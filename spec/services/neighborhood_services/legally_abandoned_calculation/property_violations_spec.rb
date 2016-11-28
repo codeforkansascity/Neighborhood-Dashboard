@@ -29,10 +29,13 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolat
     ]
   end
 
+  let(:metadata) { {'viewLastModified' => 1433307658} }
+
   before do
     allow(KcmoDatasets::PropertyViolations).to receive(:new).and_return(violations_query_object)
     allow(violations_query_object).to receive(:vacant_registry_failure).and_return(violations_query_object)
     allow(violations_query_object).to receive(:request_data).and_return(property_violations_data)
+    allow(violations_query_object).to receive(:metadata).and_return(metadata)
   end
 
   describe '#calculated_data' do

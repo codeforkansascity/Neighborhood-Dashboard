@@ -2,6 +2,7 @@ require 'socrata_client'
 
 class NeighborhoodServices::VacancyData::LandBank
   DATA_SOURCE = '2ebw-sp7f'
+  DATA_SOURCE_URI = 'https://data.kcmo.org/Property/Land-Bank-Data/2ebw-sp7f'
   POSSIBLE_FILTERS = ['foreclosed', 'demo_needed', 'all_vacant_filters']
 
   def initialize(neighborhood, vacant_filters = {})
@@ -139,9 +140,20 @@ class NeighborhoodServices::VacancyData::LandBank
     end
   end
 
-  def all_disclosure_attributes(parcel)
-    disclosure_attributes = parcel['disclosure_attributes'].try(&:uniq) || []
-    address = JSON.parse(parcel["location_1"]["human_address"])["address"].titleize
-    ["<b>Address:</b> #{address}"] + disclosure_attributes
+  def all_disclosure_attributes(violation)
+    disclosure_attributes = violation['disclosure_attributes'].try(&:uniq) || []
+    title = "<h3 class='info-window-header'>Land Bank Data:</h3>&nbsp;<a href='#{DATA_SOURCE_URI}'>Source</a>"
+    last_updated = "Last Updated Date: #{last_updated_date}"
+    address = "<b>Address:</b>&nbsp;#{JSON.parse(violation['location_1']['human_address'])['address'].titleize}"
+    [title, last_updated, address] + disclosure_attributes
+  end
+
+  private
+
+  def last_updated_date
+    metadata = JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/2ebw-sp7f/').response.body)
+    DateTime.strptime(metadata['viewLastModified'].to_s, '%s').strftime('%m/%d/%Y')
+  rescue
+    'N/A'
   end
 end

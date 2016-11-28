@@ -17,6 +17,18 @@ module KcmoDatasets
       @options = options
     end
 
+    def fetch_metadata_2014
+      @metadata_2014 ||= JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/nsn9-g8a4/').response.body)
+    rescue
+      {}
+    end
+
+    def fetch_metadata_2015
+      @metadata_2015 ||= JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/geta-wrqs/').response.body)
+    rescue
+      {}
+    end
+
     def query_data
       beginning_date = parse_date(@options[:start_data])
       end_date = parse_date(@options[:end_date])

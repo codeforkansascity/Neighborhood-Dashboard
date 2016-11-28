@@ -41,10 +41,13 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
     ]
   end
 
+  let(:metadata) { {'viewLastModified' => 1433307658} }
+
   before do
     allow(KcmoDatasets::PropertyViolations).to receive(:new).and_return(violation_query_object)
     allow(violation_query_object).to receive(:open_cases).and_return(violation_query_object)
     allow(violation_query_object).to receive(:request_data ).and_return(code_violation_data)
+    allow(violation_query_object).to receive(:metadata).and_return(metadata)
   end
 
   describe '#calculated_data' do
@@ -61,7 +64,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
       end
 
       it 'adds a message detailing the violation count' do
-        expect(calculated_data['address 1'][:disclosure_attributes][1]).to eq(
+        expect(calculated_data['address 1'][:disclosure_attributes][2]).to eq(
           'Description: 3 Years open'
         )
       end
@@ -78,7 +81,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
       end
 
       it 'adds a message detailing the violation count' do
-        expect(calculated_data['address 2'][:disclosure_attributes][1]).to eq(
+        expect(calculated_data['address 2'][:disclosure_attributes][2]).to eq(
           'Description: 2 Years open'
         )
       end
