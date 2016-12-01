@@ -41,14 +41,18 @@ class NeighborhoodServices::Crime
   end
 
   def all_disclosure_attributes(coordinate)
-    crime_date = DateTime.parse(coordinate['from_date'])
+    crime_date_text = begin
+                        "Committed on #{DateTime.parse(coordinate['from_date']).strftime('%m/%d/%Y')}"
+                      rescue
+                        "Committed in #{coordinate['dataset_year']}"
+                      end
 
     [
       coordinate['description'],
       coordinate['address'].try(:titleize),
-      "Commited on #{crime_date.strftime("%m/%d/%Y")}",
-      "<a href=#{crime_datasource(crime_date)}>Data Source</a>",
-      "Last Updated: #{crime_metadata_last_updated(crime_date)}"
+      crime_date_text,
+      "<a href=#{coordinate['source']}>Data Source</a>",
+      "Last Updated: #{coordinate['last_updated']}"
     ]
   rescue ArgumentError
     puts 'Invalid Date Format Provided'
@@ -66,14 +70,5 @@ class NeighborhoodServices::Crime
     else
       '#ffffff'
     end
-  end
-
-  def crime_datasource(crime_date)
-    crime_date.year == 2015 ? KcmoDatasets::Crime::CRIME_SOURCE_2015_URI : KcmoDatasets::Crime::CRIME_SOURCE_2014_URI
-  end
-
-  def crime_metadata_last_updated(crime_date)
-    metadata = crime_date.year == 2015 ? @dataset.fetch_metadata_2015 : @dataset.fetch_metadata_2014
-    DateTime.strptime(metadata['viewLastModified'].to_s, '%s').strftime('%m/%d/%Y')
   end
 end

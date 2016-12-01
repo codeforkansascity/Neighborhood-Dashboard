@@ -9,8 +9,8 @@ module KcmoDatasets
   API_DATASOURCE_2015 = 'geta-wrqs'
 
   class Crime
-    CRIME_SOURCE_2014_URI = 'https://data.kcmo.org/Crime/KCPD-Crime-Data-2014/yu5f-iqbp/data'
-    CRIME_SOURCE_2015_URI = 'https://data.kcmo.org/Crime/KCPD-Crime-Data-2015/kbzx-7ehe'
+    CRIME_SOURCE_2014_URI = 'https://data.kcmo.org/Crime/KCPD-Crime-Data-2014/yu5f-iqbp/'
+    CRIME_SOURCE_2015_URI = 'https://data.kcmo.org/Crime/KCPD-Crime-Data-2015/kbzx-7ehe/'
 
     def initialize(neighborhood, options)
       @neighborhood = neighborhood
@@ -37,15 +37,32 @@ module KcmoDatasets
 
       if beginning_date || end_date
         if beginning_date.try(&:year) == 2014 || end_date.try(&:year) == 2014
-          crime << query(API_DATASOURCE_2014)
+          crime << query(API_DATASOURCE_2014).each do |crime|
+            crime['dataset_year'] = 2014
+            crime['source'] = CRIME_SOURCE_2014_URI
+            crime['last_updated'] = fetch_metadata_2014['viewLastModified']
+          end
         end
 
         if beginning_date.try(&:year) == 2015 || end_date.try(&:year) == 2015
-          crime << query(API_DATASOURCE_2015)
+          crime << query(API_DATASOURCE_2015).each do
+            crime['dataset_year'] = 2014
+            crime['source'] = CRIME_SOURCE_2015_URI
+            crime['last_updated'] = fetch_metadata_2015['viewLastModified']
+          end
         end
       else
-        crime << query(API_DATASOURCE_2014)
-        crime << query(API_DATASOURCE_2015)
+        crime << query(API_DATASOURCE_2014).each do |crime|
+          crime['dataset_year'] = 2014
+          crime['source'] = CRIME_SOURCE_2014_URI
+          crime['last_updated'] = fetch_metadata_2014['viewLastModified']
+        end
+
+        crime << query(API_DATASOURCE_2015).each do |crime|
+          crime['dataset_year'] = 2015
+          crime['source'] = CRIME_SOURCE_2015_URI
+          crime['last_updated'] = fetch_metadata_2015['viewLastModified']
+        end
       end
 
       crime.flatten
