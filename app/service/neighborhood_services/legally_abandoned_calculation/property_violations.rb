@@ -17,7 +17,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations
         last_updated = "Last Updated: #{last_updated_date(dataset.metadata)}"
 
         hash[street_address.downcase] = {
-          points: 1,
+          points: 2,
           longitude: violation['mapping_location']['coordinates'][0].to_f,
           latitude: violation['mapping_location']['coordinates'][1].to_f,
           disclosure_attributes: [header, last_updated, violation['violation_description'].titleize]

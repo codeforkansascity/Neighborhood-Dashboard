@@ -47,7 +47,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolat
     end
 
     it 'assigns a point value of 1 to every item with an address' do
-      expect(calculated_data['address 1'][:points]).to eq(1)
+      expect(calculated_data['address 1'][:points]).to eq(2)
     end
 
     it 'adds in the latitude and longitude from the dataset' do

@@ -38,7 +38,10 @@ RSpec.describe KcmoDatasets::ThreeElevenCases do
     context 'when the dataset is looking for vacant_called_in' do
       let(:expected_request_types) {
         [
-          "'Animals / Pets-Rat Treatment-Vacant Property'", 
+          "'Animals / Pets-Rat Treatment-Vacant Home'",
+          "'Animals / Pets-Rat Treatment-Vacant Property'",
+          "'Cleaning vacant Land Trust Lots'",
+          "'Mowing / Weeds-Public Property-City Vacant Lot'",
           "'Nuisance Violations on Private Property Vacant Structure'",
           "'Vacant Structure Open to Entry'"
         ]

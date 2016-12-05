@@ -60,7 +60,10 @@ module KcmoDatasets
 
     def vacant_called_in_violations_query
       vacant_violations = [
-        "'Animals / Pets-Rat Treatment-Vacant Property'", 
+        "'Animals / Pets-Rat Treatment-Vacant Home'",
+        "'Animals / Pets-Rat Treatment-Vacant Property'",
+        "'Cleaning vacant Land Trust Lots'",
+        "'Mowing / Weeds-Public Property-City Vacant Lot'",
         "'Nuisance Violations on Private Property Vacant Structure'",
         "'Vacant Structure Open to Entry'"
       ]
