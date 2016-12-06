@@ -277,12 +277,12 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
     it 'combines all the disclosure attributes for a given address and strips out any duplicates' do
       test_address_one = vacant_indicators.select{ |address| address['properties']['address'] == 'address 4' }
       expect(test_address_one.first['properties']['disclosure_attributes']).to eq(
-        ['String 4', 'String 4 Additional']
+        ['address 4', 'String 4', 'String 4 Additional']
       )
 
       test_address_two = vacant_indicators.select{ |address| address['properties']['address'] == 'address 6' }
       expect(test_address_two.first['properties']['disclosure_attributes']).to eq(
-        ['String 6', 'String 6 Additional']
+        ['address 6', 'String 6', 'String 6 Additional']
       )
     end
 

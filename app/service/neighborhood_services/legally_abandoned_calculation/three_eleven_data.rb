@@ -25,7 +25,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData
             latitude: violation['address_with_geocode']['coordinates'][1].to_f,
             categories: [NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION],
             disclosure_attributes: [
-              "<h2 class='info-window-header'>311 Violations:</h2>&nbsp;#{source_link}",
+              "<h2 class='info-window-header'>311 Complaints:</h2>&nbsp;#{source_link}",
               "Last Updated: #{last_updated_date(dataset.metadata)}",
               violation['request_type']
             ]
