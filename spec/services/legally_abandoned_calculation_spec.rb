@@ -17,55 +17,90 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 1']
+        disclosure_attributes: ['String 1'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       },
       'address 2' => {
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 2']
+        disclosure_attributes: ['String 2'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       },
       'address 3' => {
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 3']
+        disclosure_attributes: ['String 3'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       },
       'address 4' => {
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 4']
+        disclosure_attributes: ['String 4'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       },
       'address 5' => {
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 5']
+        disclosure_attributes: ['String 5'],
+        categories: []
       },
       'address 6' => {
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 6']
+        disclosure_attributes: ['String 6'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       },
       'address 7' => {
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 7']
+        disclosure_attributes: ['String 7'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       },
       'address 8' => {
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 8']
+        disclosure_attributes: ['String 8'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       },
       'address 9' => {
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 9']
+        disclosure_attributes: ['String 9'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       }
     }
   end
@@ -76,13 +111,23 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 4 Additional']
+        disclosure_attributes: ['String 4 Additional'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       },
       'address 6' => {
         points: 2,
         longitude: -45,
         latitude: 90,
-        disclosure_attributes: ['String 6 Additional']
+        disclosure_attributes: ['String 6 Additional'],
+        categories: [
+          NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
+          NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
+        ]
       }
     }
   end
@@ -209,6 +254,13 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
     it 'only scores the three_eleven, vacant_registries, dangerous_buildings, and vacant_registry_failures with a max total of 2 points' do
       test_address = vacant_indicators.select{ |address| address['properties']['address'] == 'address 1' }
       expect(test_address.first['properties']['points']).to eq(2)
+    end
+
+    it 'only contains datapoints that belong to each scoring category' do
+      addresses = vacant_indicators.map{|hash| hash['properties']['address']}
+
+      expect(addresses).to include('address 1', 'address 4', 'address 6', 'address 9')
+      expect(addresses).to_not include('address 2', 'address 3', 'address 5', 'address 7', 'address 8')
     end
 
     it 'adds up all the points for a given address' do

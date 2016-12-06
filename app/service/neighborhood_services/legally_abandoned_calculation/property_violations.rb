@@ -20,6 +20,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations
           points: 2,
           longitude: violation['mapping_location']['coordinates'][0].to_f,
           latitude: violation['mapping_location']['coordinates'][1].to_f,
+          categories: [NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION],
           disclosure_attributes: [header, last_updated, violation['violation_description'].titleize]
         }
       end

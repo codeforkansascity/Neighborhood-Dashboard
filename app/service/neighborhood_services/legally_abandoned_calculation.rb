@@ -3,6 +3,10 @@ require 'kcmo_datasets/property_violations'
 require 'kcmo_datasets/dangerous_buildings'
 
 class NeighborhoodServices::LegallyAbandonedCalculation
+  CODE_COUNT_VIOLATION = 'code count violation'
+  TAX_DELINQUENT_VIOLATION = 'tax delinquent violation'
+  VACANT_RELATED_VIOLATION = 'vacant count violation'
+
   def initialize(neighborhood)
     @neighborhood = neighborhood
   end
@@ -26,6 +30,10 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     addresses.each do |(k,v)|
       v[:disclosure_attributes].uniq!
     end
+
+    addresses = addresses.select { |address, value|
+      value[:categories].uniq.size == 3
+    }
 
     attach_geometric_data(addresses)
       .map { |(address, value)|
@@ -87,6 +95,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
       if combined_dataset_dup[k].present?
         combined_dataset_dup[k][:points] += v[:points]
         combined_dataset_dup[k][:disclosure_attributes] += v[:disclosure_attributes]
+        combined_dataset_dup[k][:categories] += v[:categories]
       else
         combined_dataset_dup[k] = v.dup
       end

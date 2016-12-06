@@ -16,7 +16,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistries
         points: 2,
         longitude: vacant_lot['longitude'],
         latitude: vacant_lot['latitude'],
-        disclosure_attributes: [header, display]
+        disclosure_attributes: [header, display],
+        categories: [NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION]
       }
     end
   end

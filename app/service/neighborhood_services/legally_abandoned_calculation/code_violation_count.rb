@@ -28,6 +28,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
             points: points,
             longitude: address['mapping_location']['coordinates'][0].to_f,
             latitude: address['mapping_location']['coordinates'][1].to_f,
+            categories: [NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION],
             disclosure_attributes: [message]
           }
         end

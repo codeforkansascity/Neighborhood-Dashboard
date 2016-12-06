@@ -16,6 +16,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings
           points: 2,
           longitude: dangerous_building['location']['coordinates'][0].to_f,
           latitude: dangerous_building['location']['coordinates'][1].to_f,
+          categories: [NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION],
           disclosure_attributes: [
             "<h2 class='info-window-header'>Dangerous Building:</h2>&nbsp;#{source_link}",
             "Last Updated: #{last_updated_date(dataset.metadata)}",
