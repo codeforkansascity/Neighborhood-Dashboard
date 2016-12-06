@@ -3,6 +3,10 @@ require 'kcmo_datasets/property_violations'
 require 'kcmo_datasets/dangerous_buildings'
 
 class NeighborhoodServices::LegallyAbandonedCalculation
+  CODE_COUNT_VIOLATION = 'code count violation'
+  TAX_DELINQUENT_VIOLATION = 'tax delinquent violation'
+  VACANT_RELATED_VIOLATION = 'vacant count violation'
+
   def initialize(neighborhood)
     @neighborhood = neighborhood
   end
@@ -27,6 +31,12 @@ class NeighborhoodServices::LegallyAbandonedCalculation
       v[:disclosure_attributes].uniq!
     end
 
+    addresses = addresses.select { |address, value|
+      value[:categories].include?(NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION) &&
+      value[:categories].include?(NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION) &&
+      value[:categories].include?(NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION)
+    }
+
     attach_geometric_data(addresses)
       .map { |(address, value)|
         {
@@ -35,7 +45,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
           "properties" => {
             "marker_style" => value[:geometry]["type"] == 'Point' ? 'Circle' : nil,
             "color" => land_bank_color(value[:points]),
-            "disclosure_attributes" => value[:disclosure_attributes],
+            "disclosure_attributes" => ['<h3 class="info-window-header">Address</h3>', address.titleize] + value[:disclosure_attributes],
             "points" => value[:points],
             "address" => address
           }
@@ -48,11 +58,9 @@ class NeighborhoodServices::LegallyAbandonedCalculation
   def land_bank_color(points)
     case points
     when 6 then '#000'
-    when 5 then '#222'
-    when 4 then '#444'
-    when 3 then '#666'
-    when 2 then '#888'
-    when 1 then '#AAA'
+    when 5 then '#444'
+    when 4 then '#888'
+    when 3 then '#CCC'
     end
   end
 
@@ -87,6 +95,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
       if combined_dataset_dup[k].present?
         combined_dataset_dup[k][:points] += v[:points]
         combined_dataset_dup[k][:disclosure_attributes] += v[:disclosure_attributes]
+        combined_dataset_dup[k][:categories] += v[:categories]
       else
         combined_dataset_dup[k] = v.dup
       end

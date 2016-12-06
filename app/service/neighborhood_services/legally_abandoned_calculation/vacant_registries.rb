@@ -10,13 +10,14 @@ class NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistries
 
     vacant_registries_data.each_with_object({}) do |vacant_lot, points_hash|
       display = "Registration Type: #{vacant_lot['registration_type']}<br/>Last Verified: #{vacant_lot['last_verified']}"
-      header = "<h2 class='info-window-header'>Registered Vacant:</h2>&nbsp;<a href='#{SOURCE_URI}'>Source</a>"
+      header = "<h2 class='info-window-header'>Registered Vacant</h2>&nbsp;<a href='#{SOURCE_URI}'><small>(Source)</small></a>"
   
       points_hash[vacant_lot['property_address'].downcase] = {
         points: 2,
         longitude: vacant_lot['longitude'],
         latitude: vacant_lot['latitude'],
-        disclosure_attributes: [header, display]
+        disclosure_attributes: [header, display],
+        categories: [NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION]
       }
     end
   end
