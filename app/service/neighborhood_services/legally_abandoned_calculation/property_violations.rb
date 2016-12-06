@@ -13,7 +13,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations
       street_address = violation['address']
 
       if street_address.present?
-        header = "<h2 class='info-window-header'>Property Violations:</h2>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'>Source</a>"
+        header = "<h2 class='info-window-header'>Property Violations</h2>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'><small>(Source)</small></a>"
         last_updated = "Last Updated: #{last_updated_date(dataset.metadata)}"
 
         hash[street_address.downcase] = {

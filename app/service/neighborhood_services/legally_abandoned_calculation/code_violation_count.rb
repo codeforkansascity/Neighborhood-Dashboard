@@ -21,7 +21,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
                    0
                  end
 
-        header = "<h2 class='info-window-header'>Code Violation Count:</h2>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'>Source</a>"
+        header = "<h2 class='info-window-header'>Code Violation Count</h2>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'><small>(Source)</small></a>"
         message = "#{current_violation_count} Code Violations"
 
         if points > 0

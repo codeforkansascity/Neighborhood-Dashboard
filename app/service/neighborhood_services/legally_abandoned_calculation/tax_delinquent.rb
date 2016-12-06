@@ -36,7 +36,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
             latitude: taxed_address['census_latitude'].to_f,
             categories: [NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION],
             disclosure_attributes: [
-              "<h2 class='info-window-header'>Tax Delinquency:</h2>&nbsp;<a href='#{@neighborhood.address_source_uri}'>Source</a>",
+              "<h2 class='info-window-header'>Tax Delinquency</h2>&nbsp;<a href='#{@neighborhood.address_source_uri}'><small>(Source)</small></a>",
               "#{consecutive_years} year(s) Tax Delinquent"
             ]
           }

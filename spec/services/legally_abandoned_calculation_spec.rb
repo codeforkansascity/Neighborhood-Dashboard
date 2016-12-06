@@ -277,12 +277,12 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
     it 'combines all the disclosure attributes for a given address and strips out any duplicates' do
       test_address_one = vacant_indicators.select{ |address| address['properties']['address'] == 'address 4' }
       expect(test_address_one.first['properties']['disclosure_attributes']).to eq(
-        ['address 4', 'String 4', 'String 4 Additional']
+        ['<h3 class="info-window-header">Address</h3>', 'Address 4', 'String 4', 'String 4 Additional']
       )
 
       test_address_two = vacant_indicators.select{ |address| address['properties']['address'] == 'address 6' }
       expect(test_address_two.first['properties']['disclosure_attributes']).to eq(
-        ['address 6', 'String 6', 'String 6 Additional']
+        ['<h3 class="info-window-header">Address</h3>', 'Address 6', 'String 6', 'String 6 Additional']
       )
     end
 
@@ -291,10 +291,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
       expect(test_address_one.first['properties']['color']).to eq('#000')
 
       test_address_two = vacant_indicators.select{ |address| address['properties']['address'] == 'address 6' }
-      expect(test_address_two.first['properties']['color']).to eq('#444')
-
-      test_address_three = vacant_indicators.select{ |address| address['properties']['address'] == 'address 1' }
-      expect(test_address_three.first['properties']['color']).to eq('#888')
+      expect(test_address_two.first['properties']['color']).to eq('#888')
     end
 
     it 'converts any parcels without geometric coordinates to a point' do

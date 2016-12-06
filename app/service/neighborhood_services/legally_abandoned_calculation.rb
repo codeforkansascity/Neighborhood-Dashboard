@@ -45,7 +45,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
           "properties" => {
             "marker_style" => value[:geometry]["type"] == 'Point' ? 'Circle' : nil,
             "color" => land_bank_color(value[:points]),
-            "disclosure_attributes" => [address] + value[:disclosure_attributes],
+            "disclosure_attributes" => ['<h3 class="info-window-header">Address</h3>', address.titleize] + value[:disclosure_attributes],
             "points" => value[:points],
             "address" => address
           }
@@ -58,11 +58,9 @@ class NeighborhoodServices::LegallyAbandonedCalculation
   def land_bank_color(points)
     case points
     when 6 then '#000'
-    when 5 then '#222'
-    when 4 then '#444'
-    when 3 then '#666'
-    when 2 then '#888'
-    when 1 then '#AAA'
+    when 5 then '#444'
+    when 4 then '#888'
+    when 3 then '#CCC'
     end
   end
 
