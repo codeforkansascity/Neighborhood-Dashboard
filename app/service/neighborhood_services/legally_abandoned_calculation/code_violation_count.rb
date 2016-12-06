@@ -21,7 +21,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
                    0
                  end
 
-        message = "#{current_violation_count} Property Violations"
+        header = "<h2 class='info-window-header'>Code Violation Count:</h2>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'>Source</a>"
+        message = "#{current_violation_count} Code Violations"
 
         if points > 0
           addresses[mapping_address.downcase] = {
@@ -29,7 +30,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
             longitude: address['mapping_location']['coordinates'][0].to_f,
             latitude: address['mapping_location']['coordinates'][1].to_f,
             categories: [NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION],
-            disclosure_attributes: [message]
+            disclosure_attributes: [header, message]
           }
         end
       end

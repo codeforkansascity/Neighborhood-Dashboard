@@ -55,7 +55,10 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
       end
 
       it 'adds a message detailing the violation count' do
-        expect(calculated_data['address 1'][:disclosure_attributes]).to eq(['9 Property Violations'])
+        expect(calculated_data['address 1'][:disclosure_attributes]).to eq([
+          "<h2 class='info-window-header'>Code Violation Count:</h2>&nbsp;<a href='https://data.kcmo.org/Housing/Property-Violations/nhtf-e75a/data'>Source</a>",
+           "9 Code Violations"
+        ])
       end
     end
 
@@ -70,7 +73,10 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
       end
 
       it 'adds a message detailing the violation count' do
-        expect(calculated_data['address 2'][:disclosure_attributes]).to eq(['3 Property Violations'])
+        expect(calculated_data['address 2'][:disclosure_attributes]).to eq([
+          "<h2 class='info-window-header'>Code Violation Count:</h2>&nbsp;<a href='https://data.kcmo.org/Housing/Property-Violations/nhtf-e75a/data'>Source</a>",
+          "3 Code Violations"
+        ])
       end
     end
 
@@ -85,7 +91,10 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationC
       end
 
       it 'adds a message detailing the violation count' do
-        expect(calculated_data['address 3'][:disclosure_attributes]).to eq(['2 Property Violations'])
+        expect(calculated_data['address 3'][:disclosure_attributes]).to eq([
+          "<h2 class='info-window-header'>Code Violation Count:</h2>&nbsp;<a href='https://data.kcmo.org/Housing/Property-Violations/nhtf-e75a/data'>Source</a>",
+          "2 Code Violations"
+        ])
       end
     end
 

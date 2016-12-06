@@ -32,7 +32,9 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     end
 
     addresses = addresses.select { |address, value|
-      value[:categories].uniq.size == 3
+      value[:categories].include?(NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION) &&
+      value[:categories].include?(NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION) &&
+      value[:categories].include?(NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION)
     }
 
     attach_geometric_data(addresses)
