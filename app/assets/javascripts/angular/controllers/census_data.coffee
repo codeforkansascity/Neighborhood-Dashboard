@@ -9,5 +9,7 @@ angular.module('neighborhoodstat').controller("CensusDataCtrl", [
         .then(
           (response) ->
             $scope.censusDataStatistics = response.data
+            console.log response.data.average_city_totals
+            $scope.averageCensusStatistics = response.data.average_city_totals
         )
 ])
