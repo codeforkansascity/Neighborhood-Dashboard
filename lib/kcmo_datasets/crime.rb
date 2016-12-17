@@ -8,9 +8,13 @@ module KcmoDatasets
   REGULAR_DATASOURCE_2015 = 'kbzx-7ehe'
   API_DATASOURCE_2015 = 'geta-wrqs'
 
+  REGULAR_DATASOURCE_2016 = 'wbz8-pdv7'
+  API_DATASOURCE_2016 = 'c6e8-258d'
+
   class Crime
     CRIME_SOURCE_2014_URI = 'https://data.kcmo.org/Crime/KCPD-Crime-Data-2014/yu5f-iqbp/'
     CRIME_SOURCE_2015_URI = 'https://data.kcmo.org/Crime/KCPD-Crime-Data-2015/kbzx-7ehe/'
+    CRIME_SOURCE_2016_URI = 'https://data.kcmo.org/Crime/KCPD-Crime-Data-2016/wbz8-pdv7/'
 
     def initialize(neighborhood, options)
       @neighborhood = neighborhood
@@ -25,6 +29,12 @@ module KcmoDatasets
 
     def fetch_metadata_2015
       @metadata_2015 ||= JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/geta-wrqs/').response.body)
+    rescue
+      {}
+    end
+
+    def fetch_metadata_2016
+      @metadata_2015 ||= JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/c6e8-258d/').response.body)
     rescue
       {}
     end
@@ -46,9 +56,17 @@ module KcmoDatasets
 
         if beginning_date.try(&:year) == 2015 || end_date.try(&:year) == 2015
           crime << query(API_DATASOURCE_2015).each do
-            crime['dataset_year'] = 2014
+            crime['dataset_year'] = 2015
             crime['source'] = CRIME_SOURCE_2015_URI
             crime['last_updated'] = fetch_metadata_2015['viewLastModified']
+          end
+        end
+
+        if beginning_date.try(&:year) == 2016 || end_date.try(&:year) == 2016
+          crime << query(API_DATASOURCE_2016).each do |crime|
+            crime['dataset_year'] = 2016
+            crime['source'] = CRIME_SOURCE_2016_URI
+            crime['last_updated'] = fetch_metadata_2016['viewLastModified']
           end
         end
       else
@@ -62,6 +80,12 @@ module KcmoDatasets
           crime['dataset_year'] = 2015
           crime['source'] = CRIME_SOURCE_2015_URI
           crime['last_updated'] = fetch_metadata_2015['viewLastModified']
+        end
+
+        crime << query(API_DATASOURCE_2016).each do |crime|
+          crime['dataset_year'] = 2016
+          crime['source'] = CRIME_SOURCE_2016_URI
+          crime['last_updated'] = fetch_metadata_2016['viewLastModified']
         end
       end
 

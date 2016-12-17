@@ -42,7 +42,7 @@ class NeighborhoodServices::Crime
 
   def all_disclosure_attributes(coordinate)
     crime_date_text = begin
-                        "Committed on #{DateTime.parse(coordinate['from_date']).strftime('%m/%d/%Y')}"
+                        "Committed on #{parse_date!(coordinate['from_date'])}"
                       rescue
                         "Committed in #{coordinate['dataset_year']}"
                       end
@@ -52,7 +52,7 @@ class NeighborhoodServices::Crime
       coordinate['address'].try(:titleize),
       crime_date_text,
       "<a href=#{coordinate['source']}>Data Source</a>",
-      "Last Updated: #{coordinate['last_updated']}"
+      "Last Updated: #{parse_date_timestamp(coordinate['last_updated'])}"
     ]
   rescue ArgumentError
     puts 'Invalid Date Format Provided'
@@ -70,5 +70,15 @@ class NeighborhoodServices::Crime
     else
       '#ffffff'
     end
+  end
+
+  def parse_date_timestamp(date)
+    DateTime.strptime(date.to_s, '%s').strftime('%m/%d/%Y')
+  rescue
+    'N/A'
+  end
+
+  def parse_date!(date)
+    DateTime.parse(date).strftime('%m/%d/%Y')
   end
 end
