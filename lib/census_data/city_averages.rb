@@ -5,11 +5,18 @@ module CensusData
     def initialize
       census_data = StaticData.CENSUS_DATA().values
       hood_count = census_data.length
+      
+      census_years = census_data.first.keys
 
-      neighborhood_keys = census_data.first.keys
+      @average_totals = census_years.each_with_object({}) do |year, hash|
+        census_keys = census_data.first[year].keys
+        hash[year] = {}
 
-      @average_totals = neighborhood_keys.each_with_object({}) do |key, hash|
-        hash[key] = (census_data.sum { |hood| hood[key].to_f }).to_i
+        census_keys.each do |current_key|
+          hash[year][current_key] = (census_data.sum { |hood| hood[year][current_key].to_f }).to_i
+        end
+
+        hash
       end
     end
   end
