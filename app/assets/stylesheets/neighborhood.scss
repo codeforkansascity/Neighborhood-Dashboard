@@ -6,6 +6,19 @@
   width: 100%;
 }
 
+.neighborhood-title {
+  font-size: 1em;
+  text-align: center;
+  margin: 0;
+  padding: 1em;
+  background-color: #B7DEE5;
+
+  @media (max-width: 768px) {
+    text-align: left;
+
+  }
+}
+
 .neighborhood-nav {
   width: 100%;
   background-color: #fff;

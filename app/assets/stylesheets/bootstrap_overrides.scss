@@ -5,12 +5,18 @@ $navbar-default-brand-color: #000;
 $navbar-default-link-color: #000;
 $navbar-inverse-color: #ffffff;
 
-.navbar .navbar-brand {
-  font-weight: bold;
-  font-size: 2em;
+.navbar {
+  .navbar-right {
+    margin-right: 10px;
+  }
 
-  .logo-prefix {
-    color: #2A8FFB;
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 2em;
+
+    .logo-prefix {
+      color: #2A8FFB;
+    }
   }
 }
 
