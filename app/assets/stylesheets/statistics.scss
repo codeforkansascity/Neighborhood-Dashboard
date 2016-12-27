@@ -9,10 +9,12 @@
 
   .title-row {
     th {
+      text-align: center;
       background-color: #A6CDD4;
       padding: 10px;
       border-top: #000 solid 1px;
       border-bottom: #000 solid 1px;
+      border-right: #000 solid 1px;
 
       &:first-child {
         border: none;
@@ -47,6 +49,10 @@
 
   .expandable-row {
     border-bottom: #000 solid 1px;
+
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
 
     th {
       padding-left: 1em;
