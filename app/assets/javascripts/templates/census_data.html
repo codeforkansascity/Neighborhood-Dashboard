@@ -338,7 +338,7 @@
         <tr class="expandable-trigger">
           <th colspan="">
             <span class="btn btn-default glyphicon glyphicon-plus"></span>
-            <strong>Housing/Income</strong>
+            <strong>Housing</strong>
           </th>
           <td>
             {{censusDataStatistics['2000'].housing_units | number: 0}}
@@ -867,6 +867,129 @@
           <td></td>
           <td>{{(100 * averageCensusStatistics['2010'].housing_units_built_2000_2009 / censusDataStatistics.total_housing_units['2010']) | number: 2}}%</td>
           <td></td>
+        </tr>
+      </tbody>
+      <tbody class="expandable-row">
+        <tr class="expandable-trigger">
+          <th colspan="">
+            <span class="btn btn-default glyphicon glyphicon-plus"></span>
+            <strong>Employment/Income</strong>
+          </th>
+          <td></td>
+          <td></td>
+          <td></td> 
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><strong>Employment</strong></th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Population in Labor Force and Employed</th>
+          <td>
+            {{censusDataStatistics.working_force_data['2000'].employed | number: 2}}
+          </td>
+          <td>
+            {{censusDataStatistics.working_force_data['2010'].employed | number: 2}}
+          </td>
+          <td>
+            {{100 * (censusDataStatistics.working_force_data['2010'].employed / censusDataStatistics['working_force_data']['2000']['employed']) - 100 | number: 2}}%
+          </td>
+          <td>
+            {{100 * censusDataStatistics.working_force_data['2000'].employed / censusDataStatistics['working_force_data']['2000']['total'] | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.working_force_data['2010'].employed / censusDataStatistics['working_force_data']['2010']['total']) | number: 2}}%
+          </td>
+          <td>
+            {{100 * (averageCensusStatistics['2000'].work_force_totals.employed / averageCensusStatistics['2000'].work_force_totals.total)| number: 2}}%
+          </td>
+          <td>
+            {{100 * (averageCensusStatistics['2010'].work_force_totals.employed / averageCensusStatistics['2010'].work_force_totals.total)| number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>Population in Labor Force But Unemployed</th>
+          <td>
+            {{censusDataStatistics.working_force_data['2000'].unemployed | number: 2}}
+          </td>
+          <td>
+            {{censusDataStatistics.working_force_data['2010'].unemployed | number: 2}}
+          </td>
+          <td>
+            {{100 * (censusDataStatistics.working_force_data['2010'].unemployed / censusDataStatistics['working_force_data']['2000'].unemployed) - 100 | number: 2}}%
+          </td>
+          <td>
+            {{100 * censusDataStatistics.working_force_data['2000'].unemployed / censusDataStatistics['working_force_data']['2000']['total'] | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.working_force_data['2010'].unemployed / censusDataStatistics['working_force_data']['2010']['total']) | number: 2}}%
+          </td>
+          <td>
+            {{100 * (averageCensusStatistics['2000'].work_force_totals.unemployed / averageCensusStatistics['2000'].work_force_totals.total)| number: 2}}%
+          </td>
+          <td>
+            {{100 * (averageCensusStatistics['2010'].work_force_totals.unemployed / averageCensusStatistics['2010'].work_force_totals.total)| number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th>Population Not in Workforce</th>
+          <td>
+            {{censusDataStatistics.working_force_data['2000'].not_in_workforce | number: 2}}
+          </td>
+          <td>
+            {{censusDataStatistics.working_force_data['2010'].not_in_workforce | number: 2}}
+          </td>
+          <td>
+            {{100 * (censusDataStatistics.working_force_data['2010'].not_in_workforce / censusDataStatistics['working_force_data']['2000'].not_in_workforce) - 100 | number: 2}}%
+          </td>
+          <td>
+            {{100 * censusDataStatistics.working_force_data['2000'].not_in_workforce / censusDataStatistics['working_force_data']['2000']['total'] | number: 2}}%
+          </td>
+          <td>
+            {{(100 * censusDataStatistics.working_force_data['2010'].not_in_workforce / censusDataStatistics['working_force_data']['2010']['total']) | number: 2}}%
+          </td>
+          <td>
+            {{100 * (averageCensusStatistics['2000'].work_force_totals.not_in_workforce / averageCensusStatistics['2000'].work_force_totals.total)| number: 2}}%
+          </td>
+          <td>
+            {{100 * (averageCensusStatistics['2010'].work_force_totals.not_in_workforce / averageCensusStatistics['2010'].work_force_totals.total)| number: 2}}%
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Househole Income</strong></th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr ng-repeat="n in housingIncomeKeys track by $index">
+          <th>{{n.title}}</th>
+          <td>
+            {{censusDataStatistics['2000'][n.key] | number: 2}}
+          </td>
+          <td>
+            {{censusDataStatistics['2010'][n.key] | number: 2}}
+          </td>
+          <td>
+            {{(100 * censusDataStatistics['2010'][n.key] / censusDataStatistics['2000'][n.key]) - 100 | number: 2}}%
+          </td>
+          <td>{{(100 * censusDataStatistics['2000'][n.key] / censusDataStatistics['2000'].housing_units) | number: 2}}%</td>
+          <td>{{(100 * censusDataStatistics['2010'][n.key] / censusDataStatistics['2010'].housing_units) | number: 2}}%</td>
+          <td>{{(100 * averageCensusStatistics['2000'][n.key] / censusDataStatistics.total_housing_units['2000']) | number: 2}}%</td>
+          <td>{{(100 * averageCensusStatistics['2010'][n.key] / censusDataStatistics.total_housing_units['2010']) | number: 2}}%</td>
         </tr>
       </tbody>
     </table>
