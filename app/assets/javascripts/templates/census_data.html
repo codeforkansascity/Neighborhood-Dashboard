@@ -431,7 +431,7 @@
             {{censusDataStatistics['2010'].vacant_housing_units | number: 0}}
           </td>
           <td>
-            {{(100 * censusDataStatistics['2010'].vacant_housing_units / censusDataStatistics['2010'].vacant_housing_units) - 100 | number: 2}}%
+            {{(100 * censusDataStatistics['2010'].vacant_housing_units / censusDataStatistics['2000'].vacant_housing_units) - 100 | number: 2}}%
           </td>
           <td>
             {{(100 * censusDataStatistics['2000'].vacant_housing_units / censusDataStatistics['2000'].housing_units) | number: 2}}%
@@ -455,7 +455,7 @@
             {{censusDataStatistics['2010'].vacant_other | number: 0}}
           </td>
           <td>
-            {{(100 * censusDataStatistics['2010'].vacant_other / censusDataStatistics['2010'].vacant_other) - 100 | number: 2}}%
+            {{(100 * censusDataStatistics['2010'].vacant_other / censusDataStatistics['2000'].vacant_other) - 100 | number: 2}}%
           </td>
           <td>
             {{(100 * censusDataStatistics['2000'].vacant_other / censusDataStatistics['2000'].housing_units) | number: 2}}%
@@ -699,7 +699,7 @@
           <td>{{censusDataStatistics['2000'].female_householder_households__no_husband_present__with_own_children_present | number: 0}}</td>
           <td>{{censusDataStatistics['2010'].female_householder_households__no_husband_present__with_own_children_present | number: 0}}</td>
           <td>
-            {{(100 * censusDataStatistics['2010'].married_couple_households_without_own_children_present / censusDataStatistics['2000'].married_couple_households_without_own_children_present) - 100 | number: 2}}%
+            {{(100 * censusDataStatistics['2010'].female_householder_households__no_husband_present__with_own_children_present / censusDataStatistics['2000'].female_householder_households__no_husband_present__with_own_children_present) - 100 | number: 2}}%
           </td>
           <td>{{(100 * censusDataStatistics['2000'].female_householder_households__no_husband_present__with_own_children_present / censusDataStatistics['2000'].housing_units) | number: 2}}%</td>
           <td>{{(100 * censusDataStatistics['2010'].female_householder_households__no_husband_present__with_own_children_present / censusDataStatistics['2010'].housing_units) | number: 2}}%</td>
@@ -733,8 +733,9 @@
         <tr>
           <th>Overcrowding Housing Units</th>
           <td>{{censusDataStatistics['2000'].overcrowded_housing_units | number: 0}}</td>
-          <td>{{censusDataStatistics['2010'].overcrowded_housing_units | number: 0}}</td>
-          <td>{{(100 * censusDataStatistics['2000'].overcrowded_housing_units / censusDataStatistics['2000'].housing_units) | number: 2}}%</td>
+          <td>{{censusDataStatistics['2010'].overcrowded_housing_units | number: 0}}
+          </td>
+          <td>{{(100 * censusDataStatistics['2010'].overcrowded_housing_units / censusDataStatistics['2000'].overcrowded_housing_units) - 100 | number: 2}}%</td>
           <td>{{(100 * censusDataStatistics['2010'].overcrowded_housing_units / censusDataStatistics['2010'].housing_units) | number: 2}}%</td>
           <td>{{(100 * averageCensusStatistics['2000'].overcrowded_housing_units / censusDataStatistics.total_housing_units['2000']) | number: 2}}%</td>
           <td>{{(100 * averageCensusStatistics['2010'].overcrowded_housing_units / censusDataStatistics.total_housing_units['2010']) | number: 2}}%</td>
@@ -778,9 +779,10 @@
           <th>Housing Units Built Before 1940</th>
           <td>{{censusDataStatistics['2000'].housing_units_built_before_1940 | number: 0}}</td>
           <td>{{censusDataStatistics['2010'].housing_units_built_before_1940 | number: 0}}</td>
-          <td>{{(100 * censusDataStatistics['2000'].housing_units_built_before_1940 / censusDataStatistics['2000'].housing_units) | number: 2}}%</td>
           <td>
             {{(100 * censusDataStatistics['2010'].housing_units_built_before_1940 / censusDataStatistics['2000'].housing_units_built_before_1940) - 100 | number: 2}}%
+          </td>
+          <td>{{(100 * censusDataStatistics['2000'].housing_units_built_before_1940 / censusDataStatistics['2000'].housing_units) | number: 2}}%
           </td>
           <td>{{(100 * censusDataStatistics['2010'].housing_units_built_before_1940 / censusDataStatistics['2010'].housing_units) | number: 2}}%</td>
           <td>{{(100 * averageCensusStatistics['2000'].housing_units_built_before_1940 / censusDataStatistics.total_housing_units['2000']) | number: 2}}%</td>
@@ -851,7 +853,7 @@
           <td>{{censusDataStatistics['2000'].housing_units_built_1990_1999 | number: 0}}</td>
           <td>{{censusDataStatistics['2010'].housing_units_built_1990_1999 | number: 0}}</td>
           <td>
-            {{(100 * censusDataStatistics['2010'].housing_units_built_1990_1999 / censusDataStatistics['2010'].housing_units_built_1990_1999) - 100 | number: 2}}%
+            {{(100 * censusDataStatistics['2010'].housing_units_built_1990_1999 / censusDataStatistics['2000'].housing_units_built_1990_1999) - 100 | number: 2}}%
           </td>
           <td>{{(100 * censusDataStatistics['2000'].housing_units_built_1990_1999 / censusDataStatistics['2000'].housing_units) | number: 2}}%</td>
           <td>{{(100 * censusDataStatistics['2010'].housing_units_built_1990_1999 / censusDataStatistics['2010'].housing_units) | number: 2}}%</td>
