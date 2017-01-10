@@ -34,7 +34,7 @@ module KcmoDatasets
     end
 
     def fetch_metadata_2016
-      @metadata_2015 ||= JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/c6e8-258d/').response.body)
+      @metadata_2016 ||= JSON.parse(HTTParty.get('https://data.kcmo.org/api/views/c6e8-258d/').response.body)
     rescue
       {}
     end
@@ -50,7 +50,7 @@ module KcmoDatasets
           crime << query(API_DATASOURCE_2014).each do |crime|
             crime['dataset_year'] = 2014
             crime['source'] = CRIME_SOURCE_2014_URI
-            crime['last_updated'] = fetch_metadata_2014['viewLastModified']
+            crime['last_updated'] = fetch_metadata_2014['rowsUpdatedAt']
           end
         end
 
@@ -58,7 +58,7 @@ module KcmoDatasets
           crime << query(API_DATASOURCE_2015).each do
             crime['dataset_year'] = 2015
             crime['source'] = CRIME_SOURCE_2015_URI
-            crime['last_updated'] = fetch_metadata_2015['viewLastModified']
+            crime['last_updated'] = fetch_metadata_2015['rowsUpdatedAt']
           end
         end
 
@@ -66,26 +66,26 @@ module KcmoDatasets
           crime << query(API_DATASOURCE_2016).each do |crime|
             crime['dataset_year'] = 2016
             crime['source'] = CRIME_SOURCE_2016_URI
-            crime['last_updated'] = fetch_metadata_2016['viewLastModified']
+            crime['last_updated'] = fetch_metadata_2016['rowsUpdatedAt']
           end
         end
       else
         crime << query(API_DATASOURCE_2014).each do |crime|
           crime['dataset_year'] = 2014
           crime['source'] = CRIME_SOURCE_2014_URI
-          crime['last_updated'] = fetch_metadata_2014['viewLastModified']
+          crime['last_updated'] = fetch_metadata_2014['rowsUpdatedAt']
         end
 
         crime << query(API_DATASOURCE_2015).each do |crime|
           crime['dataset_year'] = 2015
           crime['source'] = CRIME_SOURCE_2015_URI
-          crime['last_updated'] = fetch_metadata_2015['viewLastModified']
+          crime['last_updated'] = fetch_metadata_2015['rowsUpdatedAt']
         end
 
         crime << query(API_DATASOURCE_2016).each do |crime|
           crime['dataset_year'] = 2016
           crime['source'] = CRIME_SOURCE_2016_URI
-          crime['last_updated'] = fetch_metadata_2016['viewLastModified']
+          crime['last_updated'] = fetch_metadata_2016['rowsUpdatedAt']
         end
       end
 
@@ -95,7 +95,7 @@ module KcmoDatasets
     def grouped_totals
       query = "SELECT ibrs, count(ibrs) WHERE #{@neighborhood.within_polygon_query('location_1')} GROUP BY ibrs"
 
-      crimes = SocrataClient.get(API_DATASOURCE_2015, query)
+      crimes = SocrataClient.get(API_DATASOURCE_2016, query)
 
       crime_counts = crimes.inject({}) {|crime_hash, crime|
         crime_hash.merge(crime['ibrs'] => crime['count_ibrs'])
