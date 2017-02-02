@@ -7,9 +7,8 @@ angular
       '$stateParams',
       '$location',
       '$http',
-      'IMAGES',
       'Flash',
-      ($scope, $resource, $stateParams, $location, $http, IMAGES, Flash)->
+      ($scope, $resource, $stateParams, $location, $http, Flash)->
         Neighborhood = $resource(
           '/api/neighborhood/:neighborhoodId',
           {neighborhoodId: "@id", format: 'json'},
@@ -20,7 +19,6 @@ angular
           }
         )
 
-        $scope.IMAGES = IMAGES;
         $scope.showSearch = false;
 
         $scope.neighborhoodSearch = (search) ->
