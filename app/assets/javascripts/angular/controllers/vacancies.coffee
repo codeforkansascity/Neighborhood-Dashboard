@@ -29,6 +29,7 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
             (response) ->
               clearData()
               removeLegend()
+              drawLegend()
               geoJSONData = StackedMarkerMapper.createStackedMarkerDataSet(response.data)
 
               $scope.neighborhood.vacantDataMarkers =
@@ -43,6 +44,39 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
         clearData()
         removeLegend()
         $scope.activateFilters = false
+
+    drawLegend= ()->
+        # Don't draw the legend if it already exist
+        return if $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].b &&
+                  $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].b[0]
+
+        legendMarkup =
+          $("<nav class='legend clearfix'>" +
+            '<ul>' +
+              '<li>' +
+                '<span class="legend-element" style="background-color: #CCC;"></span>Low Indication of Vacancy' +
+              '</li>' +
+              '<li>' +
+                '<span class="legend-element" style="background-color: #888;"></span>Medium Indication of Vacancy' +
+              '</li>' +
+              '<li>' +
+                '<span class="legend-element" style="background-color: #444;"></span>High Indication of Vacancy' +
+              '</li>' +
+              '<li>' +
+                '<span class="legend-element" style="border: #000 solid 1px; background-color: #000;"></span>Very High Indication of Vacancy' +
+              '</li>' +
+            '</ul>' +
+            '<ul>' +
+              '<li>' +
+              'Circle - Vacant Building' +
+              '</li>' +
+              '<li>' +
+              'Polygon - Vacant Lot' +
+              '</li>' +
+            '</ul>' +
+          '</nav>');
+
+        $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legendMarkup.get(0))
 
     removeLegend= ()->
       # We only want to remove the legend if it exists
