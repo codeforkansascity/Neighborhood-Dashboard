@@ -1,6 +1,5 @@
 angular
   .module('neighborhoodstat')
-  .constant('IMAGES', imagePaths)
   .controller("NeighborhoodCtrl",
     [
       '$scope',
