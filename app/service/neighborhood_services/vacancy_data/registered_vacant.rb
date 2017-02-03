@@ -39,7 +39,8 @@ class NeighborhoodServices::VacancyData::RegisteredVacant
             'color' => '#ffffff',
             'disclosure_attributes' => [
               "<h2 class='info-window-header'>Registered Vacant</h2>",
-              "Registration Type: #{vacant_lot['registration_type']}<br/>Last Verified: #{vacant_lot['last_verified']}"
+              "Registration Type: #{vacant_lot['registration_type']}<br/>Last Verified: #{vacant_lot['last_verified']}",
+              "Owned by #{vacant_lot['contact_person']}<br/>#{vacant_lot['contact_phone']}"
             ]
           }
         }
