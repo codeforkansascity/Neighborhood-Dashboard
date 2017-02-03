@@ -10,6 +10,10 @@ angular
       DANGEROUS_BUILDING: 'dangerous_building'
     },
     VACANT_INDICATOR: {
+      TAX_DELINQUENT: 'tax_delinquent',
+      DANGEROUS_BUILDING: 'dangerous_building',
+      BOARDED_LONGTERM: 'boarded_longterm',
+      VACANT_REGISTRY_FAILURE: 'vacant_registry_failure',
       OPEN_THREE_ELEVEN: 'open',
       VACANT_STRUCTURE: 'vacant_structure',
       ALL_PROPERTY_VIOLATIONS: 'all_property_violations',

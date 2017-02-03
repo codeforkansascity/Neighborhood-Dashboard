@@ -52,12 +52,8 @@
             <span class="fa fa-info-circle pull-right tooltipster" aria-hidden="true" title="Because there is not a fully complete list of vacant properties and no easy way to create one - anyone interested in determining whether a property is vacant must instead look to indicators of vacancy Note that interpreting indicatiors is not 100% accurate and even when a property appears vacant, it may still be occupied."></span>
           </h2>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.VACANT_STRUCTURE" />
-            Vacant Structure (KCMO 311)
-          </label>
-          <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.OPEN_THREE_ELEVEN" />
-            311 Open Cases (KCMO 311)
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_VACANT_LOTS" />
+            Vacant Lot - Land Bank Property (City of KCMO)
           </label>
           <label>
             <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.DEMO_NEEDED" />
@@ -68,8 +64,28 @@
             Registered Vacant (City of KCMO)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_VACANT_LOTS" />
-            Vacant Lot - Land Bank Property (City of KCMO)
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.VACANT_REGISTRY_FAILURE" />
+            Failure to Register as Vacant (City of KCMO)
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.VACANT_STRUCTURE" />
+            Vacant Structure (KCMO 311)
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.OPEN_THREE_ELEVEN" />
+            311 Open Cases (KCMO 311)
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.DANGEROUS_BUILDING" />
+            KCMO Dangerous Buildings (City of KCMO)
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.BOARDED_LONGTERM" />
+            Vacant and Boarded (City of KCMO)
+          </label>
+          <label>
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.TAX_DELINQUENT" />
+            Tax Delinquent (Jackson County)
           </label>
           <label>
             <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS" />
