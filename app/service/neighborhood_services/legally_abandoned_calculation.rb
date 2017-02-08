@@ -39,13 +39,17 @@ class NeighborhoodServices::LegallyAbandonedCalculation
 
     attach_geometric_data(addresses)
       .map { |(address, value)|
+        full_address = "#{address.titleize}<br/>#{value[:city].try(&:titleize)} #{value[:state]}, #{value[:zip]}"
+
         {
           "type" => "Feature",
           "geometry" => value[:geometry],
           "properties" => {
             "marker_style" => value[:geometry]["type"] == 'Point' ? 'Circle' : nil,
             "color" => land_bank_color(value[:points]),
-            "disclosure_attributes" => ['<h3 class="info-window-header">Address</h3>', address.titleize] + value[:disclosure_attributes],
+            "disclosure_attributes" => 
+              ['<h3 class="info-window-header">Address</h3>', "<address>#{full_address}</address>"] + 
+              value[:disclosure_attributes],
             "points" => value[:points],
             "address" => address
           }
@@ -96,9 +100,24 @@ class NeighborhoodServices::LegallyAbandonedCalculation
         combined_dataset_dup[k][:points] += v[:points]
         combined_dataset_dup[k][:disclosure_attributes] += v[:disclosure_attributes]
         combined_dataset_dup[k][:categories] += v[:categories]
+
+        if v[:zip].present?
+          combined_dataset_dup[k][:zip] = v[:zip]
+        end
+
+        if v[:state].present?
+          combined_dataset_dup[k][:state] = v[:state]
+        end
+
+        if v[:city].present?
+          combined_dataset_dup[k][:city] = v[:city]
+        end
+
       else
         combined_dataset_dup[k] = v.dup
       end
+
+      
     end
 
     combined_dataset_dup

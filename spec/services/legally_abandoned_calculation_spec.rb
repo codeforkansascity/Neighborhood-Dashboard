@@ -18,6 +18,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 1'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
           NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
@@ -29,6 +32,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 2'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
           NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
@@ -39,6 +45,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 3'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
         ]
@@ -48,6 +57,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 4'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
           NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
@@ -59,6 +71,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 5'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: []
       },
       'address 6' => {
@@ -66,6 +81,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 6'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
           NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
@@ -77,6 +95,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 7'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
         ]
@@ -86,6 +107,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 8'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
           NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION
@@ -96,6 +120,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 9'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
           NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
@@ -112,6 +139,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 4 Additional'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
           NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
@@ -123,6 +153,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
         longitude: -45,
         latitude: 90,
         disclosure_attributes: ['String 6 Additional'],
+        city: 'City',
+        state: 'State',
+        zip: 'Zip',
         categories: [
           NeighborhoodServices::LegallyAbandonedCalculation::CODE_COUNT_VIOLATION,
           NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION,
@@ -277,12 +310,12 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
     it 'combines all the disclosure attributes for a given address and strips out any duplicates' do
       test_address_one = vacant_indicators.select{ |address| address['properties']['address'] == 'address 4' }
       expect(test_address_one.first['properties']['disclosure_attributes']).to eq(
-        ['<h3 class="info-window-header">Address</h3>', 'Address 4', 'String 4', 'String 4 Additional']
+        ['<h3 class="info-window-header">Address</h3>', '<address>Address 4<br/>City State, Zip</address>', 'String 4', 'String 4 Additional']
       )
 
       test_address_two = vacant_indicators.select{ |address| address['properties']['address'] == 'address 6' }
       expect(test_address_two.first['properties']['disclosure_attributes']).to eq(
-        ['<h3 class="info-window-header">Address</h3>', 'Address 6', 'String 6', 'String 6 Additional']
+        ['<h3 class="info-window-header">Address</h3>', '<address>Address 6<br/>City State, Zip</address>', 'String 6', 'String 6 Additional']
       )
     end
 
