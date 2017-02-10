@@ -38,6 +38,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
             zip: taxed_address['zip'],
             city: taxed_address['city'],
             state: taxed_address['state'],
+            owner: taxed_address['county_owner'].try(&:titleize),
             disclosure_attributes: [
               "<h2 class='info-window-header'>Tax Delinquency</h2>&nbsp;<a href='#{@neighborhood.address_source_uri}'><small>(Source)</small></a>",
               "#{consecutive_years} year(s) Tax Delinquent"

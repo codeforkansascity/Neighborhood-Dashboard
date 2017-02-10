@@ -47,8 +47,13 @@ class NeighborhoodServices::LegallyAbandonedCalculation
           "properties" => {
             "marker_style" => value[:geometry]["type"] == 'Point' ? 'Circle' : nil,
             "color" => land_bank_color(value[:points]),
-            "disclosure_attributes" => 
-              ['<h3 class="info-window-header">Address</h3>', "<address>#{full_address}</address>"] + 
+            "disclosure_attributes" =>
+              [
+                '<h3 class="info-window-header">Address</h3>',
+                "<address>#{full_address}</address>",
+                '<h3 class="info-window-header">Owner</h3>',
+                value[:owner] || 'Not Available'
+              ] +
               value[:disclosure_attributes],
             "points" => value[:points],
             "address" => address
@@ -111,6 +116,10 @@ class NeighborhoodServices::LegallyAbandonedCalculation
 
         if v[:city].present?
           combined_dataset_dup[k][:city] = v[:city]
+        end
+
+        if v[:owner].present?
+          combined_dataset_dup[k][:owner] = v[:owner]
         end
 
       else
