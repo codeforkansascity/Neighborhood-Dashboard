@@ -45,6 +45,18 @@ angular.module('neighborhoodstat').controller("VacanciesCtrl", [
         removeLegend()
         $scope.activateFilters = false
 
+    $scope.disabledLegallyAbandoned= () ->
+      if $scope.vacantFilters
+        for k, v of $scope.vacantFilters.codes.VACANT_INDICATOR
+          if v
+            return true
+
+      return false
+
+    $scope.disabledVacantFilters= () ->
+      return $scope.vacantFilters &&
+             $scope.vacantFilters.codes.LEGALLY_ABANDONED.ALL_ABANDONED
+
     drawLegend= ()->
         # Don't draw the legend if it already exist
         return if $scope.neighborhood.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].b &&

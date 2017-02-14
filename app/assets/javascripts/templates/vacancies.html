@@ -5,6 +5,7 @@
     </button>
     <span class="pull-right" ng-show="isQueryingFilters"><i class="fa fa-refresh fa-large fa-spin"></i></span>
     <div ng-show="activateFilters && !isQueryingFilters" class="map-filters">
+      <p>Only one category of data can be displayed at once. Selecting data in one category will disable the other column.</p>
       <div class="row">
         <div class="col-md-6">
           <h2>
@@ -12,7 +13,7 @@
             <span class="fa fa-info-circle pull-right tooltipster" aria-hidden="true" title="Under the Missouri Abandoned Housing Act, a lawsuit maybe filed on properties that are legally abandoned allowing new owners to purchase the property. To be considered legally abandoned, a property must be vacant for at least 6 months, tax delinquent, and have open code violations."></span>
           </h2>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.ALL_ABANDONED"/>
+            <input type="checkbox" ng-model="vacantFilters.codes.LEGALLY_ABANDONED.ALL_ABANDONED" ng-disabled="disabledLegallyAbandoned()"/>
             View all Legally Abandoned Projects
           </label>
           <h4>Tax Delinquency (Jackson County)</h4>
@@ -52,47 +53,47 @@
             <span class="fa fa-info-circle pull-right tooltipster" aria-hidden="true" title="Because there is not a fully complete list of vacant properties and no easy way to create one - anyone interested in determining whether a property is vacant must instead look to indicators of vacancy Note that interpreting indicatiors is not 100% accurate and even when a property appears vacant, it may still be occupied."></span>
           </h2>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_VACANT_LOTS" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_VACANT_LOTS" ng-disabled="disabledVacantFilters()" />
             Vacant Lot - Land Bank Property (City of KCMO)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.DEMO_NEEDED" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.DEMO_NEEDED" ng-disabled="disabledVacantFilters()"/>
             Demo Needed - Land Bank Property (KCMO Land Bank Property)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.REGISTERED_VACANT" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.REGISTERED_VACANT" ng-disabled="disabledVacantFilters()"/>
             Registered Vacant (City of KCMO)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.VACANT_REGISTRY_FAILURE" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.VACANT_REGISTRY_FAILURE" ng-disabled="disabledVacantFilters()" />
             Failure to Register as Vacant (City of KCMO)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.VACANT_STRUCTURE" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.VACANT_STRUCTURE" ng-disabled="disabledVacantFilters()"/>
             Vacant Structure (KCMO 311)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.OPEN_THREE_ELEVEN" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.OPEN_THREE_ELEVEN" ng-disabled="disabledVacantFilters()"/>
             311 Open Cases (KCMO 311)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.DANGEROUS_BUILDING" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.DANGEROUS_BUILDING" ng-disabled="disabledVacantFilters()"/>
             KCMO Dangerous Buildings (City of KCMO)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.BOARDED_LONGTERM" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.BOARDED_LONGTERM" ng-disabled="disabledVacantFilters()"/>
             Vacant and Boarded (City of KCMO)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.TAX_DELINQUENT" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.TAX_DELINQUENT" ng-disabled="disabledVacantFilters()"/>
             Tax Delinquent (Jackson County)
           </label>
           <label>
-            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS" />
+            <input type="checkbox" ng-model="vacantFilters.codes.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS" ng-disabled="disabledVacantFilters()" />
             All Property Violations (KCMO 311)
           </label>
           <div class="form-group">
-            <input type="date" name="start_date" class="form-control" ng-model="vacantFilters.startDate"/>
+            <input type="date" name="start_date" class="form-control" ng-model="vacantFilters.startDate" />
             <label>Start Date</label>
           </div>
           <div class="form-group">
