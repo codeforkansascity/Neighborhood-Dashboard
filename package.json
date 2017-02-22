@@ -1,10 +1,10 @@
 {
-  "name": "Neighborhood-Dashboard",
+  "name": "neighborhood-dashboard",
   "version": "1.0.0",
   "description": "We're working to help neighborhoods help themselves by giving them easy access to useful data to allow them to identify and track problem areas in their neighborhood.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codeforkansascity/Neighborhood-Dashboard.git"
+    "url": "git+https://github.com/codeforkansascity/Neighborhood-Dashboard.git"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +13,23 @@
   },
   "homepage": "https://github.com/codeforkansascity/Neighborhood-Dashboard",
   "dependencies": {
-    "bower": "^1.7.2"
+    "bower": "^1.7.2",
+    "jsx-loader": "^0.13.2",
+    "react": "^15.0.1",
+    "react-mount": "^0.1.3",
+    "react-redux": "^5.0.2",
+    "react-tools": "^0.13.3",
+    "redux": "^3.6.0",
+    "webpack": "^2.2.1"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "react-hot-loader": "^1.3.1",
+    "webpack-dev-server": "^2.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack",
+    "webpack-dev-server": "webpack-dev-server"
   }
 }
