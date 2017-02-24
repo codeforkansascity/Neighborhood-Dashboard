@@ -30,7 +30,7 @@ module NeighborhoodDashboard
     # config.i18n.default_locale = :de
 
     # Add the webpack to the assets
-    config.assets.paths << Rails.root.join('tmp', 'js')
+    config.assets.paths << Rails.root.join('tmp', 'assets', 'js')
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true

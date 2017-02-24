@@ -17,4 +17,4 @@
 //= require bootstrap-sprockets
 //= require bootstrap/popover
 //= require tooltipster
-//= require bundle
+//= require app_bundle
