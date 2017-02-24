@@ -15,7 +15,7 @@ module.exports = {
 
   output: {
     filename: "app_bundle.js",
-    path: __dirname + '/tmp/assets/js',
+    path: __dirname + '/app/assets/javascripts',
     pathinfo: true,
     publicPath: 'http://localhost:9000/assets/'
   },

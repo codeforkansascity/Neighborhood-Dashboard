@@ -6,7 +6,7 @@ module.exports = {
 
   output: {
     filename: "app_bundle.js",
-    path:__dirname + '/tmp/assets/js'
+    path:__dirname + '/app/assets/javascripts'
   },
   resolve: {
     extensions: ['.webpack.js', '.web.js', '.js', '.jsx']
