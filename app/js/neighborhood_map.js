@@ -3,36 +3,56 @@ import { render } from 'react-dom'
 import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-google-maps'
 import axios from 'axios'
 
-const MyApp = withGoogleMap(props => (
-  <GoogleMap
-    ref={props.onMapLoad}
-    defaultZoom={14 }
-    defaultCenter={{ lat: 39.0997, lng: -94.5786 }}
-    onClick={props.onMapClick}>
-    {props.markers.map((marker, index) => (
-      <Marker
-        {...marker}
-        onRightClick={() => props.onMarkerRightClick(index)}
-      />
-    ))}
-    {props.polygons.map((polygon, index) => (
-      <Polygon
-        {...polygon}
-        key={'neighborhood-' + polygon['objectid']}
-        onMouseOver={() => props.onMarkerClick(polygon)}>
-        <InfoWindow position={props.polygons[0]['paths'][0]} onCloseClick={() => props.onMarkerClose(polygon)}>
-          <div>{props.polygons[0]['objectid']}</div>
-        </InfoWindow>
-      </Polygon>
-    ))}
-    {props.selectedElement && (
-        <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.onMarkerClose(props.polygons[0])}>
-          <div>{props.selectedElement.windowContent}</div>
-        </InfoWindow>
-      )
-    }
-  </GoogleMap>
-));
+const MyApp = withGoogleMap(props => {
+  return(
+    <div>
+      <GoogleMap
+        ref={props.onMapLoad}
+        defaultZoom={14 }
+        defaultCenter={{ lat: 39.0997, lng: -94.5786 }}
+        onClick={props.onMapClick}>
+        {props.markers.map((marker, index) => (
+          <Marker
+            {...marker}
+            onRightClick={() => props.onMarkerRightClick(index)}
+          />
+        ))}
+        {props.polygons.map((polygon, index) => {
+          var onMouseClick, onMouseOver;
+
+          if('ontouchstart' in document.documentElement) {
+            onMouseClick = () => props.onMarkerClick(polygon)
+            onMouseOver = null
+          }
+          else {
+            onMouseOver = () => props.onMarkerClick(polygon)
+            onMouseClick = null
+          }
+
+          return(
+            <Polygon
+              {...polygon}
+              key={'neighborhood-' + polygon['objectid']}
+              onMouseClick={onMouseClick}
+              onMouseOver={onMouseOver}>
+              <InfoWindow position={props.polygons[0]['paths'][0]} onCloseClick={() => props.onMarkerClose(polygon)}>
+                <div>{props.polygons[0]['objectid']}</div>
+            </InfoWindow>
+          </Polygon>
+          )}
+        )}
+        {props.selectedElement && (
+            <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.onMarkerClose(props.polygons[0])}>
+              <div>{props.selectedElement.windowContent}</div>
+            </InfoWindow>
+          )
+        }
+      </GoogleMap>
+      {props.children}
+    </div>
+    );
+  }
+);
 
 MyApp.defaultProps = {
   name: 'asd',
@@ -73,7 +93,6 @@ class NeighborhoodMap extends React.Component {
 
 
 
-        console.log(polygons)
         _this.setState({polygons: polygons});
       })
       .then(function(error) {
@@ -134,17 +153,19 @@ class NeighborhoodMap extends React.Component {
 
   render() {
     return(
-      <MyApp 
-      containerElement= { <div style={{height: '100%', width: '100%'}} /> }
-      mapElement={ <div style={{height: '100%', width: '100%'}} /> }
-      onMapLoad={function() {} }
-      onMapClick={function() {} }
-      onMarkerRightClick={function() {}}
-      onMarkerClick={this.handleMarkerClick.bind(this)}
-      onMarkerClose={this.handleMarkerClose.bind(this)}
-      polygons={this.state.polygons}
-      selectedElement={this.state.selectedElement}
-      getInfoWindowPosition={this.getInfoWindowPosition.bind(this)} />
+        <MyApp 
+        containerElement= { <div style={{height: '100%', width: '100%'}} /> }
+        mapElement={ <div style={{height: '100%', width: '100%'}} /> }
+        onMapLoad={function() {} }
+        onMapClick={function() {} }
+        onMarkerRightClick={function() {}}
+        onMarkerClick={this.handleMarkerClick.bind(this)}
+        onMarkerClose={this.handleMarkerClose.bind(this)}
+        polygons={this.state.polygons}
+        selectedElement={this.state.selectedElement}
+        getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
+        children={this.props.children} />
+       
     );
   }
 }
