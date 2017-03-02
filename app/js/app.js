@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import MyApp from './my_app';
+import NeighborhoodMap from './Neighborhood_map';
 
-
-render(<MyApp name={"Jake Man!"} />, document.getElementById('root'));
+render(
+  <NeighborhoodMap />,
+  document.getElementById('root')
+);

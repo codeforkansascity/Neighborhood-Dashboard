@@ -1,18 +1,48 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { withGoogleMap, GoogleMap } from 'react-google-maps'
 
-class MyApp extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return <p>Hello {this.props.name}!</p>;
-  }
-}
+const MyApp = withGoogleMap(props => (
+  <GoogleMap
+    ref={props.onMapLoad}
+    defaultZoom={14 }
+    defaultCenter={{ lat: 39.0997, lng: -94.5786 }}
+    onClick={props.onMapClick}>
+    {props.markers.map((marker, index) => (
+      <Marker
+        {...marker}
+        onRightClick={() => props.onMarkerRightClick(index)}
+      />
+    ))}
+  </GoogleMap>
+));
 
 MyApp.defaultProps = {
-  name: 'asd'
+  name: 'asd',
+  markers: [],
+  onMapLoad: function() {}
 };
 
-export default MyApp;
+class NeighborhoodMap extends React.component {
+  componentDidMount: function() {
+    axios.get('https://data.kcmo.org/api/geospatial/q45j-ejyk?method=export&format=GeoJSON')
+      .then(function(response) {
+        console.log(response);
+      })
+      .then(function(error) {
+        console.log(error);
+      });
+  },
+
+  render(
+    <MyApp 
+      containerElement= { <div style={{height: '100%', width: '100%'}} /> }
+      mapElement={ <div style={{height: '100%', width: '100%'}} /> }
+      onMapLoad={function() {} }
+      onMapClick={function() {} }
+      onMarkerRightClick={function() {}}
+    />
+  )
+}
+
+export default NeighborhoodMap;

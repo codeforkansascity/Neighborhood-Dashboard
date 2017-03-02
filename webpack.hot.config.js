@@ -17,7 +17,7 @@ module.exports = {
     filename: "app_bundle.js",
     path: __dirname + '/app/assets/javascripts',
     pathinfo: true,
-    publicPath: 'http://localhost:9000/assets/'
+    publicPath: 'http://localhost:9000/'
   },
   resolve: {
     extensions: ['.webpack.js', '.web.js', '.js', '.jsx']
