@@ -4,6 +4,9 @@ import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-goo
 import axios from 'axios'
 
 const MyApp = withGoogleMap(props => {
+  console.log('Props');
+  console.log(props);
+
   return(
     <div>
       <GoogleMap
@@ -35,14 +38,11 @@ const MyApp = withGoogleMap(props => {
               key={'neighborhood-' + polygon['objectid']}
               onMouseClick={onMouseClick}
               onMouseOver={onMouseOver}>
-              <InfoWindow position={props.polygons[0]['paths'][0]} onCloseClick={() => props.onMarkerClose(polygon)}>
-                <div>{props.polygons[0]['objectid']}</div>
-            </InfoWindow>
-          </Polygon>
+            </Polygon>
           )}
         )}
         {props.selectedElement && (
-            <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.onMarkerClose(props.polygons[0])}>
+            <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.onMarkerClose()}>
               <div>{props.selectedElement.windowContent}</div>
             </InfoWindow>
           )
@@ -62,10 +62,8 @@ MyApp.defaultProps = {
 };
 
 class NeighborhoodMap extends React.Component {
-
   constructor(props) {
     super(props)
-    this.state = {polygons: [], selectedMarker: null}
   }
 
   componentDidMount() {
@@ -73,46 +71,10 @@ class NeighborhoodMap extends React.Component {
 
     axios.get('https://data.kcmo.org/api/geospatial/q45j-ejyk?method=export&format=GeoJSON')
       .then(function(response) {
-        var validNeighborhoods = response["data"]["features"].filter((neighborhood) => {
-          return neighborhood['properties']['nbhname'];
-        });
-
-        var polygons = validNeighborhoods.map(function(neighborhood) {
-          var paths = neighborhood["geometry"]["coordinates"][0][0].map (function(coordinates) {
-            return {lng: coordinates[0], lat: coordinates[1]}
-          });
-
-          return {
-            type: 'polygon',
-            paths: paths,
-            objectid: neighborhood['properties']['objectid'], 
-            showInfo: true,
-            windowContent: <div><p>{neighborhood.properties.nbhname}</p><a className={'btn btn-primary'}>Go to Neighborhood</a></div>
-          };
-        })
-
-
-
-        _this.setState({polygons: polygons});
+        _this.props.loadOverview(response)
       })
       .then(function(error) {
       });
-  }
-
-  // Toggle to 'true' to show InfoWindow and re-renders component
-  handleMarkerClick(targetMarker) {
-    this.setState({
-      polygons: this.state.polygons.map(marker => {
-        if (marker === targetMarker) {
-          return {
-            ...marker,
-            showInfo: true
-          };
-        }
-        return marker;
-      }),
-      selectedElement: targetMarker
-    });
   }
 
   handleMarkerClose(targetMarker) {
@@ -159,10 +121,10 @@ class NeighborhoodMap extends React.Component {
         onMapLoad={function() {} }
         onMapClick={function() {} }
         onMarkerRightClick={function() {}}
-        onMarkerClick={this.handleMarkerClick.bind(this)}
-        onMarkerClose={this.handleMarkerClose.bind(this)}
-        polygons={this.state.polygons}
-        selectedElement={this.state.selectedElement}
+        onMarkerClick={this.props.currentNeighborhoodChoice.bind(this)}
+        onMarkerClose={this.props.closeNeighborhoodLink.bind(this)}
+        polygons={this.props.polygons || []}
+        selectedElement={this.props.selectedElement}
         getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
         children={this.props.children} />
        
