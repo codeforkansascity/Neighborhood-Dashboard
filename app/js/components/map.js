@@ -7,25 +7,20 @@ const MyApp = withGoogleMap(props => {
   return(
     <div>
       <GoogleMap
-        ref={props.onMapLoad}
-        defaultZoom={14 }
-        defaultCenter={{ lat: 39.0997, lng: -94.5786 }}
-        onClick={props.onMapClick}>
+        defaultZoom={props.zoom}
+        defaultCenter={props.position}>
         {props.markers.map((marker, index) => (
-          <Marker
-            {...marker}
-            onRightClick={() => props.onMarkerRightClick(index)}
-          />
+          <Marker {...marker} />
         ))}
         {props.polygons.map((polygon, index) => {
           var onMouseClick, onMouseOver;
 
           if('ontouchstart' in document.documentElement) {
-            onMouseClick = () => props.onMarkerClick(polygon)
+            onMouseClick = () => props.updateSelectedElement(polygon)
             onMouseOver = null
           }
           else {
-            onMouseOver = () => props.onMarkerClick(polygon)
+            onMouseOver = () => props.updateSelectedElement(polygon)
             onMouseClick = null
           }
 
@@ -39,7 +34,7 @@ const MyApp = withGoogleMap(props => {
           )}
         )}
         {props.selectedElement && props.selectedElement.windowContent && (
-            <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.onMarkerClose()}>
+            <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.updateSelectedElement(null)}>
               <div>{props.selectedElement.windowContent}</div>
             </InfoWindow>
           )
@@ -54,30 +49,17 @@ const MyApp = withGoogleMap(props => {
 );
 
 MyApp.defaultProps = {
-  name: 'asd',
   markers: [],
+  legend: null,
   polygons: [],
-  onMapLoad: function() {}
+  position: {lat: 39.0997, lng: -94.5786},
+  zoom: 14,
+  selectedElement: null
 };
 
-class NeighborhoodMap extends React.Component {
+class Map extends React.Component {
   constructor(props) {
     super(props)
-  }
-
-  handleMarkerClose(targetMarker) {
-    this.setState({
-      polygons: this.state.polygons.map(marker => {
-        if (marker === targetMarker) {
-          return {
-            ...marker,
-            showInfo: false,
-          };
-        }
-        return marker;
-      }),
-      selectedElement: null
-    });
   }
 
   getInfoWindowPosition(element) {
@@ -102,6 +84,7 @@ class NeighborhoodMap extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return(
         <MyApp 
           containerElement= { <div style={{height: '100%', width: '100%'}} /> }
@@ -109,14 +92,13 @@ class NeighborhoodMap extends React.Component {
           onMapLoad={function() {} }
           onMapClick={function() {} }
           onMarkerRightClick={function() {}}
-          onMarkerClick={this.props.currentNeighborhoodChoice.bind(this)}
-          onMarkerClose={this.props.closeNeighborhoodLink.bind(this)}
           polygons={this.props.polygons || []}
           selectedElement={this.props.selectedElement}
           getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
+          updateSelectedElement={this.props.updateSelectedElement}
           children={this.props.children} />
     );
   }
 }
 
-export default NeighborhoodMap;
+export default Map;

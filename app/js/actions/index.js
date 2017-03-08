@@ -1,3 +1,17 @@
+export const updateMap = (mapData) => {
+  return({
+    type: 'UPDATE_MAP',
+    mapData
+  })
+}
+
+export const updateSelectedElement = (element) => {
+  return({
+    type: 'UPDATE_SELECTED_ELEMENT',
+    element
+  })
+}
+
 export const getNeighborhood = (neighborhood) => {
   return({
     type: 'GET_NEIGHBORHOOD',

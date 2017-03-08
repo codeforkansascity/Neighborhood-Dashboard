@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import axios from 'axios';
 
 const CRIME_CODES = {
   ARSON: '200',
@@ -146,11 +147,25 @@ const CrimeCodeGroups = (code) => {
 class Crime extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {filters: []}
+    console.log(props)
+    this.state = {
+      filters: [],
+      filtersViewable: false
+    }
+    
     this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.toggleFilters = this.toggleFilters.bind(this);
+    this.queryDataset = this.queryDataset.bind(this);
   }
   componentDidMount() {
     this.props.loadDataSets(this.props.routeParams.neighborhoodId);
+  }
+
+  toggleFilters() {
+    this.setState({
+      ...this.state,
+      filtersViewable: !this.state.filtersViewable
+    });
   }
 
   handleFilterChange(event) {
@@ -280,10 +295,57 @@ class Crime extends React.Component {
       <div>
         <div className="map-filter-actions pull-right">
           <button className="btn btn-primary" type="button">Reset</button>
-          <button className="btn btn-primary">Done</button>
+          <button className="btn btn-primary" onClick={this.queryDataset}>Done</button>
         </div>
       </div>
     );
+  }
+
+  queryDataset() {
+    var _this = this;
+
+    this.setState({
+      ...this.state,
+      loading: true,
+      filtersViewable: false
+    });
+
+    axios.get('/api/neighborhood/' + this.props.routeParams.neighborhoodId + '/crime?crime_codes[]=' + this.state.filters.join('&crime_codes[]='))
+      .then(function(response) {
+        _this.setState({
+          ..._this.state,
+          loading: false
+        });
+      })
+      .then(function(error) {
+      })
+  }
+
+  filtersTooltip() {
+    return(
+      <div className="map-filters">
+        {this.personCrimes()}
+        {this.propertyCrimes()}
+        {this.societyCrimes()}
+        {this.filtersFooter()}
+      </div>
+    );
+  }
+
+  loadingIndicator() {
+    return (
+      <span className="pull-right">
+        <i className="fa fa-refresh fa-large fa-spin"></i>
+      </span>
+    );
+  }
+
+  filtersActivationButton() {
+    return (
+      <button className="btn btn btn-success pull-right" type="button" onClick={this.toggleFilters}>
+        Filters
+      </button>
+    )
   }
 
   render() {
@@ -308,20 +370,10 @@ class Crime extends React.Component {
               <input type="date" name="end_date" className="form-control"/>
               <label>End Date</label>
             </div>
-            <span className="pull-right">
-              <i className="fa fa-refresh fa-large fa-spin"></i>
-            </span>
-            <button className="btn btn btn-success pull-right" type="button">
-              Filters
-            </button>
+            {this.state.loading ? this.loadingIndicator() : this.filtersActivationButton()}
           </form>
         </div>
-        <div className="map-filters">
-          {this.personCrimes()}
-          {this.propertyCrimes()}
-          {this.societyCrimes()}
-          {this.filtersFooter()}
-        </div>
+        {this.state.filtersViewable && this.filtersTooltip()}
       </div>
     )
   }

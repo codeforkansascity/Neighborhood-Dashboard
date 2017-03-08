@@ -13,8 +13,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
   return {
     loadDataSets: (neighborhoodId) => {
-      console.log('Loading datasets');
-      console.log(this);
       dispatch(neighborhoodReset(neighborhoodId))
     }
   }
