@@ -4,9 +4,6 @@ import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-goo
 import axios from 'axios'
 
 const MyApp = withGoogleMap(props => {
-  console.log('Props');
-  console.log(props);
-
   return(
     <div>
       <GoogleMap
@@ -41,14 +38,16 @@ const MyApp = withGoogleMap(props => {
             </Polygon>
           )}
         )}
-        {props.selectedElement && (
+        {props.selectedElement && props.selectedElement.windowContent && (
             <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.onMarkerClose()}>
               <div>{props.selectedElement.windowContent}</div>
             </InfoWindow>
           )
         }
       </GoogleMap>
-      {props.children}
+      <div className="neighborhood-content">
+        {props.children}
+      </div>
     </div>
     );
   }
@@ -64,17 +63,6 @@ MyApp.defaultProps = {
 class NeighborhoodMap extends React.Component {
   constructor(props) {
     super(props)
-  }
-
-  componentDidMount() {
-    var _this = this;
-
-    axios.get('https://data.kcmo.org/api/geospatial/q45j-ejyk?method=export&format=GeoJSON')
-      .then(function(response) {
-        _this.props.loadOverview(response)
-      })
-      .then(function(error) {
-      });
   }
 
   handleMarkerClose(targetMarker) {
@@ -116,18 +104,17 @@ class NeighborhoodMap extends React.Component {
   render() {
     return(
         <MyApp 
-        containerElement= { <div style={{height: '100%', width: '100%'}} /> }
-        mapElement={ <div style={{height: '100%', width: '100%'}} /> }
-        onMapLoad={function() {} }
-        onMapClick={function() {} }
-        onMarkerRightClick={function() {}}
-        onMarkerClick={this.props.currentNeighborhoodChoice.bind(this)}
-        onMarkerClose={this.props.closeNeighborhoodLink.bind(this)}
-        polygons={this.props.polygons || []}
-        selectedElement={this.props.selectedElement}
-        getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
-        children={this.props.children} />
-       
+          containerElement= { <div style={{height: '100%', width: '100%'}} /> }
+          mapElement={ <div style={{height: '100%', width: '100%'}} /> }
+          onMapLoad={function() {} }
+          onMapClick={function() {} }
+          onMarkerRightClick={function() {}}
+          onMarkerClick={this.props.currentNeighborhoodChoice.bind(this)}
+          onMarkerClose={this.props.closeNeighborhoodLink.bind(this)}
+          polygons={this.props.polygons || []}
+          selectedElement={this.props.selectedElement}
+          getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
+          children={this.props.children} />
     );
   }
 }

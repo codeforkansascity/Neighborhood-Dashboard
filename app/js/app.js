@@ -1,11 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import NeighborhoodMapContainer from './containers/neighborhood_map_container';
-import Crime from './crime';
+import CrimeContainer from './containers/crime_container';
+import CityOverviewContainer from './containers/city_overview_container';
 import reducer from './reducers';
 
 const store = createStore(reducer)
@@ -14,7 +15,8 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={NeighborhoodMapContainer}>
-        <Route path="neighborhood/:neighborhoodId/crime" component={Crime}/>
+        <IndexRoute component={CityOverviewContainer}/>
+        <Route path="neighborhood/:neighborhoodId/crime" component={CrimeContainer}/>
       </Route>
     </Router>
   </Provider>,

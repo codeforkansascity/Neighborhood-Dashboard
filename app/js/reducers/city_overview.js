@@ -1,10 +1,32 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { browserHistory } from 'react-router';
+
+const pushState = (state) => {
+  browserHistory.push(state);
+}
 
 const cityOverview = (state = {}, action) => {
-  console.log(action.type)
-  console.log(action.neighborhood)
   switch (action.type) {
+    case 'NEIGHBORHOOD_RESET':
+      var neighborhood = state.neighborhoods.find(function(hood) {
+        return hood.properties.objectid == action.neighborhoodId
+      });
+
+      var polygon = {
+        type: 'polygon',
+        paths: neighborhood["geometry"]["coordinates"][0][0].map (function(coordinates) {
+          return {lng: coordinates[0], lat: coordinates[1]}
+        }),
+        objectid: neighborhood.properties.objectid
+      }
+
+      return {
+        ...state,
+        neighborhood: neighborhood,
+        polygons: [polygon],
+        selectedElement: null
+      }
     case 'NEIGHBORHOOD_HOVER':
       return {
         ...state,
@@ -30,9 +52,16 @@ const cityOverview = (state = {}, action) => {
           type: 'polygon',
           paths: paths,
           objectid: neighborhood['properties']['objectid'], 
-          windowContent: <div><p>{neighborhood.properties.nbhname}</p><a className={'btn btn-primary'}>Go to Neighborhood</a></div>
+          windowContent: 
+            <div>
+              <p>{neighborhood.properties.nbhname}</p>
+              <a className={'btn btn-primary'} onClick={() => {pushState('/neighborhood/' + neighborhood.properties.objectid + '/crime')}}>Go to Neighborhood</a>
+            </div>
         };
       });
+
+      console.log('Loaded Neighborhoods');
+      console.log(validNeighborhoods);
 
       return {
         ...state,

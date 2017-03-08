@@ -3,8 +3,11 @@ const selectedNeighborhood = (state = {}, action) => {
     case 'SWITCH_NEIGHBORHOOD':
       return {
         ...state,
+        swapNeighborhood: true,
         neighborhood: action.neighborhood,
-        datasets: []
+        datasets: [],
+        neighborhoods: [],
+        polygons: [],
       }
     default:
       return state

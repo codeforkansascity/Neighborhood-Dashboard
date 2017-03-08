@@ -1,5 +1,5 @@
 import { connect, Connector } from 'react-redux';
-import NeighborhoodMap from '../components/neighborhood_map';
+import CityOverview from '../components/city_overview';
 import { cityOverview, neighborhoodHover, closeNeighborhoodLink } from '../actions'
 
 type OwnProps = {
@@ -7,7 +7,7 @@ type OwnProps = {
 }
 
 const mapStateToProps = (state) => {
-  var currentState = state.cityOverview;
+  var currentState = state.selectedNeighborhood ? state.selectedNeighborhood : state.cityOverview;
 
   return ({
     neighborhood: currentState.neighborhood,
@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
     coordinates: currentState.neighborhoods,
     polygons: currentState.polygons,
     selectedElement: currentState.selectedElement
-  });
+  })
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
@@ -37,4 +37,4 @@ const connector: Connector<OwnProps, Props> = connect(
   mapDispatchToProps
 )
 
-export default connector(NeighborhoodMap)
+export default connector(CityOverview)
