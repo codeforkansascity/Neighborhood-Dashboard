@@ -1,9 +1,15 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { browserHistory } from 'react-router';
 
 class PrimaryNavigation extends React.Component {
   constructor(props) {
     super(props)
+  }
+
+  homeRedirect(e) {
+    e.preventDefault();
+    browserHistory.push('/')
   }
 
   render() {
@@ -16,7 +22,7 @@ class PrimaryNavigation extends React.Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
           </button>
-          <a href="/" className="navbar-brand"><span className="logo-prefix">KC</span>NeighborhoodStat</a>
+          <a href="/" onClick={this.homeRedirect} className="navbar-brand"><span className="logo-prefix">KC</span>NeighborhoodStat</a>
         </div>
         <nav id="primary-nav" className="collapse navbar-collapse">
           <ul className="nav navbar-nav navbar-right">

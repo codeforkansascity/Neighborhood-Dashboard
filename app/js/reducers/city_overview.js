@@ -1,10 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { browserHistory } from 'react-router';
-
-const pushState = (state) => {
-  browserHistory.push(state);
-}
 
 const cityOverview = (state = {}, action) => {
   switch (action.type) {

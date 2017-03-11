@@ -9,7 +9,9 @@ const pushState = (state) => {
 const map = (state = {}, action) => {
   switch(action.type) {
     case 'CITY_OVERVIEW':
-      var polygons = state.neighborhoods.map(function(neighborhood) {
+      var neighborhoods = state.neighborhoods || [];
+
+      var polygons = neighborhoods.map(function(neighborhood) {
         return {
           type: 'polygon',
           paths: neighborhood["geometry"]["coordinates"][0][0].map (function(coordinates) {
@@ -26,7 +28,6 @@ const map = (state = {}, action) => {
 
       return {
         ...state,
-        neighborhood: neighborhood,
         polygons: polygons,
         selectedElement: null
       }
