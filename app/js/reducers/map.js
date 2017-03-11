@@ -41,14 +41,16 @@ const map = (state = {}, action) => {
         neighborhoods: validNeighborhoods
       }
     case 'NEIGHBORHOOD_RESET':
-      var neighborhood = state.polygons.find(function(hood) {
+      var polygons = state.polygons || [];
+
+      var neighborhood = polygons.find(function(hood) {
         return hood.objectid == action.neighborhoodId
       });
 
       return {
         ...state,
         neighborhood: neighborhood,
-        polygons: [neighborhood],
+        polygons: neighborhood ? [neighborhood] : [],
         selectedElement: null
       }
     case 'UPDATE_MAP':
