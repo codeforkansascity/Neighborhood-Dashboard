@@ -41,17 +41,35 @@ const map = (state = {}, action) => {
         neighborhoods: validNeighborhoods
       }
     case 'NEIGHBORHOOD_RESET':
-      var polygons = state.polygons || [];
+      var neighborhoods = state.neighborhoods || [];
 
-      var neighborhood = polygons.find(function(hood) {
-        return hood.objectid == action.neighborhoodId
+      var neighborhood = neighborhoods.find(function(hood) {
+        return hood.properties.objectid == action.neighborhoodId
       });
 
-      return {
-        ...state,
-        neighborhood: neighborhood,
-        polygons: neighborhood ? [neighborhood] : [],
-        selectedElement: null
+      if (neighborhood) {
+        var neighborhoodPolygon = {
+          type: 'polygon',
+          paths: neighborhood["geometry"]["coordinates"][0][0].map (function(coordinates) {
+            return {lng: coordinates[0], lat: coordinates[1]}
+          }),
+          objectid: neighborhood.properties.objectid
+        };
+
+        return {
+          ...state,
+          neighborhood: neighborhood,
+          polygons: [neighborhoodPolygon],
+          selectedElement: null
+        }
+      }
+      else {
+        return {
+          ...state,
+          neighborhood: null,
+          polygons: [],
+          selectedElement: null
+        }
       }
     case 'UPDATE_MAP':
       var mapData = action.mapData;

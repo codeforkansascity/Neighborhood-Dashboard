@@ -163,6 +163,10 @@ class Crime extends React.Component {
     this.props.loadDataSets(this.props.routeParams.neighborhoodId);
   }
 
+  componentWillUpdate(nextProps, State) {
+    this.props.loadDataSets(this.props.routeParams.neighborhoodId);
+  }
+
   toggleFilters() {
     this.setState({
       ...this.state,

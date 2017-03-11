@@ -4,9 +4,6 @@ import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-goo
 import axios from 'axios'
 
 const MyApp = withGoogleMap(props => {
-  console.log('Selected Neighborhood');
-  console.log(props.selectedElement);
-
   return(
     <div>
       <GoogleMap

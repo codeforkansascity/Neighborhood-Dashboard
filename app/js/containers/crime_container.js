@@ -21,12 +21,7 @@ const mapStateToProps = (state) => {
   var currentState = state.map;
 
   return ({
-    markers: currentState.markers,
-    legend: currentState.legend,
-    polygons: currentState.polygons,
-    position: currentState.center,
-    selectedElement: currentState.selectedElement,
-    neighborhoods: state.neighborhoods
+    neighborhoods: currentState.neighborhoods
   });
 }
 
@@ -39,7 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
 }
 
 const connector: Connector<OwnProps, Props> = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )
 
