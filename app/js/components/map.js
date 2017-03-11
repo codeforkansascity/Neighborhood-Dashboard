@@ -4,31 +4,35 @@ import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-goo
 import axios from 'axios'
 
 const MyApp = withGoogleMap(props => {
+  console.log('Selected Neighborhood');
+  console.log(props.selectedElement);
+
   return(
     <div>
       <GoogleMap
         defaultZoom={props.zoom}
         defaultCenter={props.position}>
         {props.markers.map((marker, index) => (
-          <Marker {...marker} />
+          <Marker {...marker} 
+           onClick={() => props.updateSelectedElement(marker)}/>
         ))}
         {props.polygons.map((polygon, index) => {
           var onMouseClick, onMouseOver;
 
-          if('ontouchstart' in document.documentElement) {
+          if(polygon.forceClick || 'ontouchstart' in document.documentElement) {
             onMouseClick = () => props.updateSelectedElement(polygon)
-            onMouseOver = null
+            onMouseOver = () => {}
           }
           else {
             onMouseOver = () => props.updateSelectedElement(polygon)
-            onMouseClick = null
+            onMouseClick = () => {}
           }
 
           return(
             <Polygon
               {...polygon}
               key={'neighborhood-' + polygon['objectid']}
-              onMouseClick={onMouseClick}
+              onClick={onMouseClick}
               onMouseOver={onMouseOver}>
             </Polygon>
           )}
@@ -83,8 +87,19 @@ class Map extends React.Component {
     }
   }
 
+  componentDidMount() {
+    var _this = this;
+
+    axios.get('https://data.kcmo.org/api/geospatial/q45j-ejyk?method=export&format=GeoJSON')
+      .then(function(response) {
+        _this.props.loadNeighborhoods(response.data);
+      })
+      .then(function(error) {
+        console.log(error);
+      });
+  }
+
   render() {
-    console.log(this.props);
     return(
         <MyApp 
           containerElement= { <div style={{height: '100%', width: '100%'}} /> }

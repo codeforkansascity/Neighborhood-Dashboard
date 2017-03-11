@@ -8,16 +8,8 @@ class CityOverview extends React.Component {
     super(props)
   }
 
-  componentDidMount() {
-    var _this = this;
-
-    axios.get('https://data.kcmo.org/api/geospatial/q45j-ejyk?method=export&format=GeoJSON')
-      .then(function(response) {
-        _this.props.loadOverview(response);
-      })
-      .then(function(error) {
-        console.log(error);
-      });
+  componentWillUpdate(nextProps, State) {
+    this.props.loadOverview();
   }
 
   render() {

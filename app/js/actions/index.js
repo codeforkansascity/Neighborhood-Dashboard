@@ -5,6 +5,13 @@ export const updateMap = (mapData) => {
   })
 }
 
+export const fetchNeighborhoods = (data) => {
+  return({
+    type: 'FETCH_NEIGHBORHOODS',
+    data
+  })
+}
+
 export const updateSelectedElement = (element) => {
   return({
     type: 'UPDATE_SELECTED_ELEMENT',
@@ -40,7 +47,7 @@ export const closeNeighborhoodLink = () => {
 
 export const cityOverview = (response) => {
   return ({
-    type: 'HOMEPAGE_OVERVIEW',
+    type: 'CITY_OVERVIEW',
     response
   })
 }

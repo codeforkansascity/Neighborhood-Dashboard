@@ -8,9 +8,9 @@ const pushState = (state) => {
 
 const cityOverview = (state = {}, action) => {
   switch (action.type) {
-    case 'NEIGHBORHOOD_RESET':
-      var neighborhood = state.neighborhoods.find(function(hood) {
-        return hood.properties.objectid == action.neighborhoodId
+    case 'NEIGHBORHOOD_OVERVIEW':
+      var neighborhood = state.polygons.find(function(hood) {
+        return hood.objectid == action.neighborhoodId
       });
 
       var polygon = {
@@ -39,6 +39,13 @@ const cityOverview = (state = {}, action) => {
       }
     case 'HOMEPAGE_OVERVIEW':
       var response = action.response;
+
+      if (!response) {
+        return {
+          ...state
+        }
+      }
+
       var validNeighborhoods = response["data"]["features"].filter((neighborhood) => {
         return neighborhood['properties']['nbhname'];
       });
@@ -59,9 +66,6 @@ const cityOverview = (state = {}, action) => {
             </div>
         };
       });
-
-      console.log('Loaded Neighborhoods');
-      console.log(validNeighborhoods);
 
       return {
         ...state,

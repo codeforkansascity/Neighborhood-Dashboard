@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 
+
 const CRIME_CODES = {
   ARSON: '200',
   ASSAULT: '13',
@@ -147,7 +148,7 @@ const CrimeCodeGroups = (code) => {
 class Crime extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props)
+
     this.state = {
       filters: [],
       filtersViewable: false
@@ -157,6 +158,7 @@ class Crime extends React.Component {
     this.toggleFilters = this.toggleFilters.bind(this);
     this.queryDataset = this.queryDataset.bind(this);
   }
+
   componentDidMount() {
     this.props.loadDataSets(this.props.routeParams.neighborhoodId);
   }
@@ -181,8 +183,6 @@ class Crime extends React.Component {
         currentFilters.splice(filterIndex, 1);
       }
     });
-
-    console.log(this.state.filters);
   }
 
   filterInputs(groups, crimeObject) {
@@ -316,6 +316,8 @@ class Crime extends React.Component {
           ..._this.state,
           loading: false
         });
+
+        _this.updateMap(response);
       })
       .then(function(error) {
       })
