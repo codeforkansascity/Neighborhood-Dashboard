@@ -3,6 +3,8 @@ import { render } from 'react-dom'
 import { browserHistory } from 'react-router';
 import Modal from 'react-modal';
 
+import NeighborhoodSearch from './neighborhood_search';
+
 class PrimaryNavigation extends React.Component {
   constructor(props) {
     super(props)
@@ -65,7 +67,7 @@ class PrimaryNavigation extends React.Component {
             <div className="modal-body">
               <p className="form-group">
                 <label for="neighborhood-search">Find Neighborhood</label>
-                <select id="neighborhood-search" name="search_neighborhood" className="form-control" placeholder="Enter neighborhood name"></select>
+                <NeighborhoodSearch />
               </p>
               <p className="form-group">
                 <label for="neighborhood-address">Or</label>
