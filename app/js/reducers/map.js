@@ -4,7 +4,21 @@ import { browserHistory } from 'react-router';
 
 const pushState = (state) => {
   browserHistory.push(state);
-} 
+}
+
+const calculatePolygonCenter = (paths) => {
+  var latitude = 0,
+      longtitude = 0,
+      coordinatesSize = 0;
+
+  paths.forEach ((coord) => {
+    coordinatesSize += 1
+    latitude += coord.lat;
+    longtitude += coord.lng;
+  });
+
+  return {lat: (latitude / coordinatesSize) + 0.006, lng: longtitude / coordinatesSize}
+}
 
 const map = (state = {}, action) => {
   switch(action.type) {
@@ -61,6 +75,7 @@ const map = (state = {}, action) => {
           ...state,
           neighborhood: neighborhood,
           polygons: [neighborhoodPolygon],
+          center: calculatePolygonCenter(neighborhoodPolygon.paths),
           selectedElement: null
         }
       }

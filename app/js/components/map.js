@@ -4,11 +4,15 @@ import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-goo
 import axios from 'axios'
 
 const MyApp = withGoogleMap(props => {
+  console.log('Mapping Center in MyApp');
+  console.log(props.center)
+
   return(
     <div>
       <GoogleMap
         defaultZoom={props.zoom}
-        defaultCenter={props.position}>
+        center={props.center}
+        defaultCenter={{lat: 39.0997, lng: -94.5786}}>
         {props.markers.map((marker, index) => (
           <Marker {...marker} 
            onClick={() => props.updateSelectedElement(marker)}/>
@@ -53,7 +57,7 @@ MyApp.defaultProps = {
   markers: [],
   legend: null,
   polygons: [],
-  position: {lat: 39.0997, lng: -94.5786},
+  center: {lat: 39.0997, lng: -94.5786},
   zoom: 14,
   selectedElement: null
 };
@@ -108,6 +112,7 @@ class Map extends React.Component {
           selectedElement={this.props.selectedElement}
           getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
           updateSelectedElement={this.props.updateSelectedElement}
+          center={this.props.center}
           children={this.props.children} />
     );
   }
