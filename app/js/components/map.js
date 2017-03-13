@@ -18,15 +18,16 @@ const MyApp = withGoogleMap(props => {
            onClick={() => props.updateSelectedElement(marker)}/>
         ))}
         {props.polygons.map((polygon, index) => {
-          var onMouseClick, onMouseOver;
+          var onMouseClick = () => {},
+              onMouseOver = () => {};
 
-          if(polygon.forceClick || 'ontouchstart' in document.documentElement) {
-            onMouseClick = () => props.updateSelectedElement(polygon)
-            onMouseOver = () => {}
-          }
-          else {
-            onMouseOver = () => props.updateSelectedElement(polygon)
-            onMouseClick = () => {}
+          if(polygon.selectablePolygon) {
+            if(polygon.forceClick || 'ontouchstart' in document.documentElement) {
+              onMouseClick = () => props.updateSelectedElement(polygon)
+            }
+            else {
+              onMouseOver = () => props.updateSelectedElement(polygon)
+            }
           }
 
           return(

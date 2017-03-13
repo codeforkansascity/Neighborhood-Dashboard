@@ -8,8 +8,6 @@ type OwnProps = {
 
 const mapStateToProps = (state) => {
   var currentState = state.map;
-  console.log('Mapping Center');
-  console.log(currentState.center);
 
   return ({
     markers: currentState.markers,

@@ -32,6 +32,7 @@ const map = (state = {}, action) => {
             return {lng: coordinates[0], lat: coordinates[1]}
           }),
           objectid: neighborhood.properties.objectid,
+          selectablePolygon: true,
           windowContent: 
             <div>
               <p>{neighborhood.properties.nbhname}</p>

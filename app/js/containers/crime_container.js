@@ -2,26 +2,9 @@ import { connect, Connector } from 'react-redux';
 import Crime from '../components/crime';
 import { neighborhoodReset, updateMap } from '../actions'
 
-const formattedCrimeData = (data) => {
-  markers = data.map(function(marker) {
-    return {
-      position: {
-        lng: marker.geometry.coordinates[1],
-        lat: marker.geometry.coordinates[0]
-      }
-    }
-  })
-
-  return {
-    markers: markers
-  }
-}
-
 const mapStateToProps = (state) => {
-  var currentState = state.map;
-
   return ({
-    neighborhoods: currentState.neighborhoods
+    neighborhoods: state.map.neighborhoods
   });
 }
 

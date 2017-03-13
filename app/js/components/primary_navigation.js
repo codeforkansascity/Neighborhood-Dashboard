@@ -8,32 +8,24 @@ import NeighborhoodSearch from './neighborhood_search';
 class PrimaryNavigation extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      modalIsOpen: false
-    };
+    this.state = {modalIsOpen: false};
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
   componentWillReceiveProps() {
-    this.setState({
-      modalIsOpen: false
-    })
+    this.setState({modalIsOpen: false});
   }
 
   openModal(e) {
     e.preventDefault();
-    this.setState({
-      modalIsOpen: true
-    });
+    this.setState({modalIsOpen: true});
   }
 
   closeModal(e) {
     e.preventDefault();
-    this.setState({
-      modalIsOpen: false
-    });
+    this.setState({modalIsOpen: false});
   }
 
   homeRedirect(e) {
