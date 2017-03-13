@@ -16,6 +16,12 @@ class PrimaryNavigation extends React.Component {
     this.closeModal = this.closeModal.bind(this);
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      modalIsOpen: false
+    })
+  }
+
   openModal(e) {
     e.preventDefault();
     this.setState({
@@ -39,6 +45,7 @@ class PrimaryNavigation extends React.Component {
     return(
       <div>
         <Modal
+          contentLabel="neighborhood-search"
           isOpen={this.state.modalIsOpen}
           style={
             {

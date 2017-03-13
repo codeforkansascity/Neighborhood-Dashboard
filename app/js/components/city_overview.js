@@ -9,12 +9,10 @@ class CityOverview extends React.Component {
   }
 
   componentDidMount(nextProps, State) {
-    console.log('Did Mount');
     this.props.loadOverview();
   }
 
   componentWillUpdate(nextProps, State) {
-    console.log('Will Update');
     this.props.loadOverview();
   }
 
