@@ -15,7 +15,7 @@ const MyApp = withGoogleMap(props => {
         defaultCenter={{lat: 39.0997, lng: -94.5786}}>
         {props.markers.map((marker, index) => (
           <Marker {...marker} 
-           onClick={() => props.updateSelectedElement(marker)}/>
+           onClick={(e) => {props.updateSelectedElement(marker)}}/>
         ))}
         {props.polygons.map((polygon, index) => {
           var onMouseClick = () => {},
@@ -71,6 +71,7 @@ class Map extends React.Component {
   getInfoWindowPosition(element) {
     switch(element.type) {
       case 'marker':
+        console.log('Getting the marker position');
         return element.position;
       case 'polygon':
         var latitude = 0,
@@ -109,6 +110,7 @@ class Map extends React.Component {
           onMapLoad={function() {} }
           onMapClick={function() {} }
           onMarkerRightClick={function() {}}
+          markers={this.props.markers || []}
           polygons={this.props.polygons || []}
           selectedElement={this.props.selectedElement}
           getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}

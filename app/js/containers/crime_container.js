@@ -12,6 +12,9 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
   return {
     loadDataSets: (neighborhoodId) => {
       dispatch(neighborhoodReset(neighborhoodId))
+    },
+    updateMap:(mapData) => {
+      dispatch(updateMap(mapData))
     }
   }
 }

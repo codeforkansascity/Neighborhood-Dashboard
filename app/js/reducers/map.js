@@ -91,13 +91,10 @@ const map = (state = {}, action) => {
     case 'UPDATE_MAP':
       var mapData = action.mapData;
 
+
       return {
         ... state,
-        markers: mapData.markers,
-        legend: mapData.legend,
-        polygons: mapData.polygons,
-        center: mapData.center,
-        selectedElement: mapData.selectedElement
+        ... mapData
       };
     case 'UPDATE_SELECTED_ELEMENT':
       return {
