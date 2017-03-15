@@ -1,12 +1,12 @@
 import { connect, Connector } from 'react-redux';
 import Crime from '../components/crime';
-import { neighborhoodReset, updateMap } from '../actions'
+import { neighborhoodReset, updateMap, updateLegend } from '../actions'
 
 const mapStateToProps = (state) => {
-  debugger;
   return ({
     neighborhoods: state.map.neighborhoods,
-    map: state.map.map
+    map: state.map.map,
+    legend: state.map.legend
   });
 }
 
@@ -17,6 +17,9 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
     },
     updateMap:(mapData) => {
       dispatch(updateMap(mapData))
+    },
+    updateLegend: () => {
+      dispatch(updateLegend('<ul><li><span class="legend-element" style="background: #626AB2;"></span>Persons</li></ul>'));
     }
   }
 }

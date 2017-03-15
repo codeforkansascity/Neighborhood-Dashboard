@@ -7,30 +7,23 @@ type OwnProps = {
 }
 
 const mapStateToProps = (state) => {
-  var currentState = state.map;
-
   return ({
-    map: currentState.map
+    map: state.map.map,
+    legend: state.Legend.legend
   });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
   return {
-    updateSelectedElement: (element) => {
-      dispatch(updateSelectedElement(element));
+    loadDataSets: (neighborhoodId) => {
+      dispatch(neighborhoodReset(neighborhoodId))
     },
-    loadNeighborhoods: (data) => {
-      dispatch(fetchNeighborhoods(data))
-    },
-    addMap: (map) => {
-      dispatch(addMap(map))
+    updateMap:(mapData) => {
+      dispatch(updateMap(mapData))
     }
   }
 }
 
-const connector: Connector<OwnProps, Props> = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)
+const connector: Connector<OwnProps, Props> = connect(mapStateToProps, mapDispatchToProps)
 
 export default connector(Legend)

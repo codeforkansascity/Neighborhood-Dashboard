@@ -11,7 +11,6 @@ const mapStateToProps = (state) => {
 
   return ({
     markers: currentState.markers,
-    legend: currentState.legend,
     polygons: currentState.polygons || [],
     center: currentState.center,
     selectedElement: currentState.selectedElement,

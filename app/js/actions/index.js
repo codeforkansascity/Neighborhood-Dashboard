@@ -61,6 +61,13 @@ export const cityOverview = (response) => {
 export const neighborhoodReset = (neighborhoodId) => {
   return({
     type: 'NEIGHBORHOOD_RESET',
-    neighborhoodId: neighborhoodId
+    neighborhoodId
+  })
+}
+
+export const updateLegend = (legend) => {
+  return({
+    type: 'UPDATE_LEGEND',
+    legend
   })
 }
