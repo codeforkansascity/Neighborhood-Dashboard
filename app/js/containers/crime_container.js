@@ -3,8 +3,10 @@ import Crime from '../components/crime';
 import { neighborhoodReset, updateMap } from '../actions'
 
 const mapStateToProps = (state) => {
+  debugger;
   return ({
-    neighborhoods: state.map.neighborhoods
+    neighborhoods: state.map.neighborhoods,
+    map: state.map.map
   });
 }
 

@@ -5,6 +5,12 @@ export const updateMap = (mapData) => {
   })
 }
 
+export const addMap = (map) => {
+  return({
+    type: 'ADD_MAP',
+    map
+  })
+}
 export const fetchNeighborhoods = (data) => {
   return({
     type: 'FETCH_NEIGHBORHOODS',

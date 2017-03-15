@@ -22,6 +22,11 @@ const calculatePolygonCenter = (paths) => {
 
 const map = (state = {}, action) => {
   switch(action.type) {
+    case 'ADD_MAP':
+      return {
+        ... state,
+        map: action.map
+      }
     case 'CITY_OVERVIEW':
       var neighborhoods = state.neighborhoods || [];
 

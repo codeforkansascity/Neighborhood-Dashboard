@@ -1,5 +1,5 @@
 import { connect, Connector } from 'react-redux';
-import Map from '../components/map';
+import Legend from '../components/legend';
 import { updateMap, updateSelectedElement, fetchNeighborhoods, addMap } from '../actions'
 
 type OwnProps = {
@@ -10,12 +10,6 @@ const mapStateToProps = (state) => {
   var currentState = state.map;
 
   return ({
-    markers: currentState.markers,
-    legend: currentState.legend,
-    polygons: currentState.polygons || [],
-    center: currentState.center,
-    selectedElement: currentState.selectedElement,
-    neighborhoods: currentState.neighborhoods,
     map: currentState.map
   });
 }
@@ -39,4 +33,4 @@ const connector: Connector<OwnProps, Props> = connect(
   mapDispatchToProps
 )
 
-export default connector(Map)
+export default connector(Legend)
