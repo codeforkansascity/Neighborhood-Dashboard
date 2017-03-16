@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
     updateMap:(mapData) => {
       dispatch(updateMap(mapData))
     },
-    updateLegend: () => {
-      dispatch(updateLegend('<ul><li><span class="legend-element" style="background: #626AB2;"></span>Persons</li></ul>'));
+    updateLegend: (legend) => {
+      dispatch(updateLegend(legend));
     }
   }
 }

@@ -22,6 +22,7 @@ class Legend extends React.Component {
       }
     } else if(this.state.legend) {
       this.state.legend.innerHTML = null;
+      this.state.legend.className = ''; 
     }
   }
 

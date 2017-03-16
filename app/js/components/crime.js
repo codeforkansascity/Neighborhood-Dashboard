@@ -188,22 +188,18 @@ class Crime extends React.Component {
 
   componentDidMount() {
     this.props.loadDataSets(this.props.routeParams.neighborhoodId);
-    this.props.updateLegend();
   }
 
   componentWillUpdate(nextProps, State) {
     this.props.loadDataSets(this.props.routeParams.neighborhoodId);
-    this.props.updateLegend();
   }
 
   componentDidUpdate() {
     this.props.loadDataSets(this.props.routeParams.neighborhoodId);
-    this.props.updateLegend();
   }
 
   componentWillReceiveProps() {
     this.props.loadDataSets(this.props.routeParams.neighborhoodId);
-    this.props.updateLegend();
   }
 
   toggleFilters() {
@@ -355,12 +351,21 @@ class Crime extends React.Component {
 
     axios.get('/api/neighborhood/' + this.props.routeParams.neighborhoodId + '/crime?crime_codes[]=' + this.state.filters.join('&crime_codes[]='))
       .then(function(response) {
+        var legend = 
+        `<ul>
+          <li><span class="legend-element" style="background-color: #626AB2;"></span>Person</li>
+          <li><span class="legend-element" style="background-color: #313945;"></span>Property</li>
+          <li><span class="legend-element" style="background-color: #6B7D96;"></span>Society</li>
+          <li><span class="legend-element" style="border: #000 solid 1px; background-color: #FFFFFF;"></span>Uncategorized</li>
+        </ul>`
+
         _this.setState({
           ..._this.state,
           loading: false
         });
 
         _this.props.updateMap(formatResponse(response));
+        _this.props.updateLegend(legend);
       })
       .then(function(error) {
       })

@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
       dispatch(cityOverview())
     },
     updateLegend: () => {
-      dispatch(updateLegend('<ul><li><span class="legend-element" style="background: #000;"></span>Property</li></ul>'))
+      dispatch(updateLegend(null))
     }
   }
 }
