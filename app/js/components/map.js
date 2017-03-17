@@ -52,9 +52,7 @@ const MyApp = withGoogleMap(props => {
           )
         }
       </GoogleMap>
-      <div className="neighborhood-content">
-        {props.children}
-      </div>
+      {props.children}
     </div>
     );
   }

@@ -55,6 +55,7 @@ const map = (state = {}, action) => {
         selectedElement: null
       }
     case 'FETCH_NEIGHBORHOODS':
+      console.log('Fetched Neighborhoods');
       var data = action.data;
       var validNeighborhoods = data["features"].filter((neighborhood) => {
         return neighborhood['properties']['nbhname'];
@@ -77,7 +78,8 @@ const map = (state = {}, action) => {
           paths: neighborhood["geometry"]["coordinates"][0][0].map (function(coordinates) {
             return {lng: coordinates[0], lat: coordinates[1]}
           }),
-          objectid: neighborhood.properties.objectid
+          objectid: neighborhood.properties.objectid,
+          name: neighborhood["properties"]["nbhname"]
         };
 
         return {

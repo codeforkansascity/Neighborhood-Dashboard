@@ -362,7 +362,8 @@ class Crime extends React.Component {
     this.toggleReport = this.toggleReport.bind(this);
 
     var _this = this;
-    axios.get('/api/neighborhood/' + this.props.routeParams.neighborhoodId + '/crime/grouped_totals')
+
+    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/crime/grouped_totals')
       .then(function(response) {
         _this.setState({
           ... _this.state,
@@ -372,22 +373,6 @@ class Crime extends React.Component {
       .then(function(error) {
         console.log(error);
       });
-  }
-
-  componentDidMount() {
-    this.props.loadDataSets(this.props.routeParams.neighborhoodId);
-  }
-
-  componentWillUpdate(nextProps, State) {
-    this.props.loadDataSets(this.props.routeParams.neighborhoodId);
-  }
-
-  componentDidUpdate() {
-    this.props.loadDataSets(this.props.routeParams.neighborhoodId);
-  }
-
-  componentWillReceiveProps() {
-    this.props.loadDataSets(this.props.routeParams.neighborhoodId);
   }
 
   toggleFilters() {
@@ -537,7 +522,7 @@ class Crime extends React.Component {
       filtersViewable: false
     });
 
-    axios.get('/api/neighborhood/' + this.props.routeParams.neighborhoodId + '/crime?crime_codes[]=' + this.state.filters.join('&crime_codes[]='))
+    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/crime?crime_codes[]=' + this.state.filters.join('&crime_codes[]='))
       .then(function(response) {
         var legend = 
         `<ul>
