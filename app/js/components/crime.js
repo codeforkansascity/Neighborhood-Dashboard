@@ -359,6 +359,7 @@ class Crime extends React.Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.toggleFilters = this.toggleFilters.bind(this);
     this.queryDataset = this.queryDataset.bind(this);
+    this.toggleReport = this.toggleReport.bind(this);
 
     var _this = this;
     axios.get('/api/neighborhood/' + this.props.routeParams.neighborhoodId + '/crime/grouped_totals')
@@ -561,6 +562,15 @@ class Crime extends React.Component {
       })
   }
 
+  toggleReport() {
+    console.log('Viewing Report');
+
+    this.setState({
+      ... this.state,
+      viewingReport: !this.state.viewingReport
+    })
+  }
+
   filtersTooltip() {
     return(
       <div className="map-filters">
@@ -588,15 +598,25 @@ class Crime extends React.Component {
     )
   }
 
+
+
+  renderingReport() {
+    if(!this.state.reportInformation) {
+      return null;
+    } else if (this.state.viewingReport) {
+      return <a role="tab" onClick={this.toggleReport}>Close Report</a>
+    } else {
+      return <a role="tab" onClick={this.toggleReport}>Open Report</a>
+    }
+  }
+
   render() {
     return (
       <div>
         <nav className={"navbar sub-data-nav"}>
           <ul id="neighborhood-sub-tabs" className={"navbar-nav nav"}>
             <li role="presentation">
-              <a role="tab">
-                Open Report
-              </a>
+              {this.renderingReport()}
             </li>
           </ul>
         </nav>
@@ -614,7 +634,7 @@ class Crime extends React.Component {
           </form>
         </div>
         {this.state.filtersViewable && this.filtersTooltip()}
-        {this.state.reportInformation && 
+        {this.state.viewingReport && 
           <div className='statistics-panel'>
             <CrimeStatisticsTable data={this.state.reportInformation}/>
           </div>
