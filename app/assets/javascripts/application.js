@@ -18,4 +18,5 @@
 //= require bootstrap/popover
 //= require tooltipster
 //= require statistics-table
+//= require neighborhood
 //= require app_bundle

@@ -19,6 +19,10 @@ const MyApp = withGoogleMap(props => {
           <Marker {...marker} 
            onClick={(e) => {props.updateSelectedElement(marker)}}/>
         ))}
+        {
+          props.neighborhoodPolygon && 
+          <Polygon {...props.neighborhoodPolygon} />
+        }
         {props.polygons.map((polygon, index) => {
           var onMouseClick = () => {},
               onMouseOver = () => {};
@@ -122,6 +126,7 @@ class Map extends React.Component {
           selectedElement={this.props.selectedElement}
           getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
           updateSelectedElement={this.props.updateSelectedElement}
+          neighborhoodPolygon={this.props.neighborhoodPolygon}
           center={this.props.center}
           children={this.props.children} />
     );

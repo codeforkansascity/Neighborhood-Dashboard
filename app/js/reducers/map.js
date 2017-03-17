@@ -28,6 +28,7 @@ const map = (state = {}, action) => {
         map: action.map
       }
     case 'CITY_OVERVIEW':
+      console.log('City Overview');
       var neighborhoods = state.neighborhoods || [];
 
       var polygons = neighborhoods.map(function(neighborhood) {
@@ -49,6 +50,8 @@ const map = (state = {}, action) => {
       return {
         ...state,
         polygons: polygons,
+        markers: [],
+        neighborhoodPolygon: null,
         selectedElement: null
       }
     case 'FETCH_NEIGHBORHOODS':
@@ -80,7 +83,8 @@ const map = (state = {}, action) => {
         return {
           ...state,
           neighborhood: neighborhood,
-          polygons: [neighborhoodPolygon],
+          neighborhoodPolygon: neighborhoodPolygon,
+          polygons: [],
           center: calculatePolygonCenter(neighborhoodPolygon.paths),
           selectedElement: null
         }
@@ -95,8 +99,6 @@ const map = (state = {}, action) => {
       }
     case 'UPDATE_MAP':
       var mapData = action.mapData;
-
-
       return {
         ... state,
         ... mapData

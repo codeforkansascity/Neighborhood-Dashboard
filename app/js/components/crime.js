@@ -368,8 +368,6 @@ class Crime extends React.Component {
           ... _this.state,
           reportInformation: response.data
         })
-
-        console.log(response.data);
       })
       .then(function(error) {
         console.log(error);
