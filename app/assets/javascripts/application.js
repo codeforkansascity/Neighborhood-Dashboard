@@ -17,4 +17,5 @@
 //= require bootstrap-sprockets
 //= require bootstrap/popover
 //= require tooltipster
+//= require statistics-table
 //= require app_bundle
