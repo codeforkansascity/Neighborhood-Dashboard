@@ -563,8 +563,6 @@ class Crime extends React.Component {
   }
 
   toggleReport() {
-    console.log('Viewing Report');
-
     this.setState({
       ... this.state,
       viewingReport: !this.state.viewingReport
@@ -572,8 +570,14 @@ class Crime extends React.Component {
   }
 
   filtersTooltip() {
+    var className = 'map-filters';
+
+    if(!this.state.filtersViewable) {
+      className += ' hide'
+    }
+
     return(
-      <div className="map-filters">
+      <div className={className}>
         {this.personCrimes()}
         {this.propertyCrimes()}
         {this.societyCrimes()}
@@ -597,8 +601,6 @@ class Crime extends React.Component {
       </button>
     )
   }
-
-
 
   renderingReport() {
     if(!this.state.reportInformation) {
@@ -633,7 +635,7 @@ class Crime extends React.Component {
             {this.state.loading ? this.loadingIndicator() : this.filtersActivationButton()}
           </form>
         </div>
-        {this.state.filtersViewable && this.filtersTooltip()}
+        {this.filtersTooltip()}
         {this.state.viewingReport && 
           <div className='statistics-panel'>
             <CrimeStatisticsTable data={this.state.reportInformation}/>
