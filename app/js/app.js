@@ -5,11 +5,12 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import Application from './components/application';
-import Vacancy from './components/vacancy';
 import Demographics from './components/demographics';
+
 import NeighborhoodContainer from './containers/neighborhood_container';
 import MapContainer from './containers/map_container';
 import CrimeContainer from './containers/crime_container';
+import VacancyContainer from './containers/vacancy_container';
 import CityOverviewContainer from './containers/city_overview_container';
 import reducer from './reducers';
 
@@ -23,7 +24,7 @@ render(
         <Route path="/neighborhood/:neighborhoodId/" component={NeighborhoodContainer}>
           <IndexRedirect to="crime"/>
           <Route path="crime" component={CrimeContainer}/>
-          <Route path="vacancy" component={Vacancy}/>
+          <Route path="vacancy" component={VacancyContainer}/>
           <Route path="demographics" component={Demographics}/>
         </Route>
       </Route>

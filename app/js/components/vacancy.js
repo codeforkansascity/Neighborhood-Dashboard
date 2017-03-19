@@ -1,5 +1,78 @@
-import { default as React, PropTypes } from 'react'
-import { render } from 'react-dom'
+import { default as React, PropTypes } from 'react';
+import { render } from 'react-dom';
+import axios from 'axios';
+
+const formatResponse = (response) => {
+  var markers = response.data
+    .filter(function(dataPoint) {
+      return dataPoint.geometry.type === 'Point';
+    })
+    .map(function(dataPoint) {
+      return(
+        {
+          type: 'marker',
+          position: {
+            lat: dataPoint.geometry.coordinates[1],
+            lng: dataPoint.geometry.coordinates[0]
+          },
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 5,
+            fillColor: dataPoint.properties.color,
+            fillOpacity: 0.9,
+            strokeWeight: 0
+          },
+          defaultAnimation: 2,
+          windowContent: dataPoint.properties.disclosure_attributes.map(
+            (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
+          )
+        }
+      )
+    });
+
+  var polygons = response.data
+    .filter(function(dataPoint) {
+      return dataPoint.geometry.type === 'Polygon';
+    })
+    .map(function(dataPoint) {
+      return (
+        {
+          type: 'polygon',
+          paths: dataPoint.geometry.coordinates,
+          selectablePolygon: true,
+          windowContent: dataPoint.properties.disclosure_attributes.map(
+            (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
+          )
+        }
+      )
+    });
+
+  return {markers: markers, polygons: polygons};
+}
+
+const VACANCY_CODES = {
+  LEGALLY_ABANDONED: {
+    ALL_ABANDONED: 'all_abandoned',
+    ONE_THREE_YEARS: 'one_three_years_violation_length',
+    THREE_YEARS_PLUS: 'three_years_plus_violation_length',
+    BOARDED_LONGTERM: 'boarded_longterm',
+    VACANT_REGISTRY_FAILURE: 'vacant_registry_failure',
+    DANGEROUS_BUILDING: 'dangerous_building'
+  },
+  VACANT_INDICATOR: {
+    TAX_DELINQUENT: 'tax_delinquent',
+    DANGEROUS_BUILDING: 'dangerous_building',
+    BOARDED_LONGTERM: 'boarded_longterm',
+    VACANT_REGISTRY_FAILURE: 'vacant_registry_failure',
+    OPEN_THREE_ELEVEN: 'open',
+    VACANT_STRUCTURE: 'vacant_structure',
+    ALL_PROPERTY_VIOLATIONS: 'all_property_violations',
+    REGISTERED_VACANT: 'registered_vacant',
+    ALL_VACANT_LOTS: 'all_vacant_filters',
+    DEMO_NEEDED: 'demo_needed',
+    FORECLOSED: 'foreclosed'
+  }
+}
 
 class Vacancy extends React.Component {
   constructor(props) {
@@ -11,9 +84,54 @@ class Vacancy extends React.Component {
     }
 
     this.toggleFilters = this.toggleFilters.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.queryDataset = this.queryDataset.bind(this);
   }
 
-  componentDidUpdate() {}
+  handleFilterChange(event) {
+    var currentFilters = this.state.filters,
+        vacancyCode = event.currentTarget.value,
+        filterIsActive = event.currentTarget.checked;
+
+    if(filterIsActive) {
+      currentFilters.push(vacancyCode);
+    } else {
+      var filterIndex = currentFilters.indexOf(vacancyCode);
+      currentFilters.splice(filterIndex, 1);
+    }
+  }
+
+  queryDataset() {
+    var _this = this;
+
+    this.setState({
+      ...this.state,
+      loading: true,
+      filtersViewable: false
+    });
+
+    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/vacancy?filters[]=' + this.state.filters.join('&filters[]='))
+      .then(function(response) {
+        var legend = 
+        `<ul>
+          <li><span class="legend-element" style="background-color: #626AB2;"></span>Person</li>
+          <li><span class="legend-element" style="background-color: #313945;"></span>Property</li>
+          <li><span class="legend-element" style="background-color: #6B7D96;"></span>Society</li>
+          <li><span class="legend-element" style="border: #000 solid 1px; background-color: #FFFFFF;"></span>Uncategorized</li>
+        </ul>`
+
+        _this.setState({
+          ..._this.state,
+          loading: false
+        });
+
+        _this.props.updateMap(formatResponse(response));
+        _this.props.updateLegend(legend);
+      })
+      .then(function(error) {
+        console.log(error);
+      })
+  }
 
   toggleFilters() {
     this.setState({
@@ -39,7 +157,7 @@ class Vacancy extends React.Component {
               <span className="fa fa-info-circle pull-right tooltipster" aria-hidden="true" title="Under the Missouri Abandoned Housing Act, a lawsuit maybe filed on properties that are legally abandoned allowing new owners to purchase the property. To be considered legally abandoned, a property must be vacant for at least 6 months, tax delinquent, and have open code violations."></span>
             </h2>
             <label>
-              <input type="checkbox"/>
+              <input type="checkbox" value={VACANCY_CODES.LEGALLY_ABANDONED.ALL_ABANDONED} onChange={this.handleFilterChange}/>
               View all Legally Abandoned Projects
             </label>
             <h4>Tax Delinquency (Jackson County)</h4>
@@ -131,17 +249,33 @@ class Vacancy extends React.Component {
         <div>
           <div className="map-filter-actions pull-right">
             <button className="btn btn-primary" type="button">Reset</button>
-            <button className="btn btn-primary">Done</button>
+            <button className="btn btn-primary" onClick={this.queryDataset}>Done</button>
           </div>
         </div>
       </div>
     )
   }
 
+  filtersActivationButton() {
+    return (
+      <button className="btn btn btn-success pull-right" type="button" onClick={this.toggleFilters}>
+        Filters
+      </button>
+    )
+  }
+
+  loadingIndicator() {
+    return (
+      <span className="pull-right">
+        <i className="fa fa-refresh fa-large fa-spin"></i>
+      </span>
+    );
+  }
+
   render() {
     return (
       <div className="toolbar">
-        <form className="form-inline">
+        <form className="form-inline" onSubmit={(e) => e.preventDefault()}>
           <div className="form-group">
             <input type="date" name="start_date" className="form-control"/>
             <label>Start Date</label>
@@ -150,9 +284,7 @@ class Vacancy extends React.Component {
             <input type="date" name="end_date" className="form-control"/>
             <label>End Date</label>
           </div>
-          <button className="btn btn btn-success pull-right" type="button" onClick={this.toggleFilters}>
-            Filters
-          </button>
+            {this.state.loading ? this.loadingIndicator() : this.filtersActivationButton()}
           {this.mapFilters()}
         </form>
       </div>
