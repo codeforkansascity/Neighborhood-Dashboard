@@ -2,26 +2,7 @@ import { default as React, PropTypes } from 'react'
 import { render } from 'react-dom'
 import axios from 'axios';
 
-class Demographics extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {}
-
-    var _this = this;
-
-    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/census_data')
-      .then(function(response) {
-        _this.setState({
-          ... _this.state,
-          data: response.data
-        })
-      })
-      .then(function(error) {
-        console.log(error);
-      });
-  }
-
-  outputCategoryRowHeader(title) {
+const outputCategoryRowHeader = (title) => {
     return (
       <tr>
         <th><strong>{title}</strong></th>
@@ -34,6 +15,12 @@ class Demographics extends React.Component {
         <td></td>
       </tr>
     )
+  }
+
+
+class HousingDemographics extends React.Component {
+  constructor(props) {
+    super(props)
   }
 
   outputHousingMeanRents(data, censusDataStatistics, averageCensusStatistics) {
@@ -57,7 +44,7 @@ class Demographics extends React.Component {
         <td></td>
         <td></td>
       </tr>
-  )
+    )
   } 
 
   outputHousingCategoryRow(data, censusDataStatistics, averageCensusStatistics) {
@@ -114,35 +101,6 @@ class Demographics extends React.Component {
     );
   }
 
-  outputPopulationCategoryRow(data, censusDataStatistics, averageCensusStatistics) {
-    return (
-      <tr>
-        <th>{data.title}</th>
-        <td>
-          {Number(censusDataStatistics['2000'][data.key].toFixed(0)).toLocaleString()}
-        </td>
-        <td>
-          {Number(censusDataStatistics['2010'][data.key].toFixed(0)).toLocaleString()}
-        </td>
-        <td>
-          {Number(((100 * censusDataStatistics['2010'][data.key] / censusDataStatistics['2000'][data.key]) - 100).toFixed(2)).toLocaleString()}%
-        </td>
-        <td>
-          {Number((100 * censusDataStatistics['2000'][data.key] / censusDataStatistics['2000'].population).toFixed(2)).toLocaleString()}%
-        </td>
-        <td>
-          {Number((100 * censusDataStatistics['2010'][data.key] / censusDataStatistics['2010'].population).toFixed(2)).toLocaleString()}%
-        </td>
-        <td>
-          {Number((100 * averageCensusStatistics['2000'][data.key] / censusDataStatistics.total_city_population['2000']).toFixed(2)).toLocaleString()}%
-        </td>
-        <td>
-          {Number((100 * averageCensusStatistics['2010'][data.key] / censusDataStatistics.total_city_population['2010']).toFixed(2)).toLocaleString()}%
-        </td>
-      </tr>
-    );
-  }
-
   outputHousingDataHeaderRow(data, censusDataStatistics, averageCensusStatistics) {
     return (
       <tr>
@@ -160,65 +118,9 @@ class Demographics extends React.Component {
     )
   }
 
-  outputPopulationData() {
-    var censusDataStatistics = this.state.data;
-    var averageCensusStatistics = this.state.data.average_city_totals;
-
-    var colummsCategories = [
-      {title: 'Gender', dataSets: [{key: 'male', title: 'Male'}, {key: 'female', title: 'Female'}]},
-      {title: 'Age', dataSets: [{key: 'school_age', title: 'School Age (5-19)'}, {key: 'elderly', title: 'Older Adults'}]},
-      {
-        title: 'Race', 
-        dataSets: [
-          {key: 'white', title: 'White'},
-          {key: 'black', title: 'Black'},
-          {key: 'native_american', title: 'Native American Asian/Pacific Islander'},
-          {key: 'other_race', title: 'Other race'},
-          {key: 'multiracial', title: 'Multiracial'},
-          {key: 'hispanic', title: 'All Hispanic'}
-        ]
-      }
-    ]
-
-    var dataRows = []
-
-    colummsCategories.forEach((data) => {
-      dataRows.push(this.outputCategoryRowHeader(data.title));
-
-      data.dataSets.forEach((data) => {
-        dataRows.push(this.outputPopulationCategoryRow(data, censusDataStatistics, averageCensusStatistics))
-      });
-    });
-
-    return (
-      <tbody className="expandable-row">
-        <tr className="expandable-trigger">
-          <th colSpan="">
-            <span className="btn btn-default glyphicon glyphicon-plus"></span>
-            <strong>Population</strong>
-          </th>
-          <td>
-            {Number(censusDataStatistics['2000'].population.toFixed(0)).toLocaleString()}
-          </td>
-          <td>
-            {Number(censusDataStatistics['2010'].population.toFixed(0)).toLocaleString()}
-          </td>
-          <td>
-            {Number(((100 * censusDataStatistics['2010'].population / censusDataStatistics['2000'].population) - 100).toFixed(2)).toLocaleString()}%
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        {dataRows}
-      </tbody>
-    )
-  }
-
-  outputHousingData() {
-    var censusDataStatistics = this.state.data;
-    var averageCensusStatistics = this.state.data.average_city_totals;
+  render() {
+    var censusDataStatistics = this.props.data;
+    var averageCensusStatistics = this.props.data.average_city_totals;
 
     var colummsCategories = [
       {
@@ -291,7 +193,7 @@ class Demographics extends React.Component {
       if(data.type == 'data_row') {
         dataRows.push(this.outputHousingDataHeaderRow(data, censusDataStatistics, averageCensusStatistics))
       } else {
-        dataRows.push(this.outputCategoryRowHeader(data.title));
+        dataRows.push(outputCategoryRowHeader(data.title));
 
         data.dataSets.forEach((data) => {
           if (data.key == 'housing_units_built_2000_2009') {
@@ -330,6 +232,253 @@ class Demographics extends React.Component {
         {dataRows}
       </tbody>
     )
+  }
+}
+
+class PopulationDemographics extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  outputPopulationCategoryRow(data, censusDataStatistics, averageCensusStatistics) {
+    return (
+      <tr>
+        <th>{data.title}</th>
+        <td>
+          {Number(censusDataStatistics['2000'][data.key].toFixed(0)).toLocaleString()}
+        </td>
+        <td>
+          {Number(censusDataStatistics['2010'][data.key].toFixed(0)).toLocaleString()}
+        </td>
+        <td>
+          {Number(((100 * censusDataStatistics['2010'][data.key] / censusDataStatistics['2000'][data.key]) - 100).toFixed(2)).toLocaleString()}%
+        </td>
+        <td>
+          {Number((100 * censusDataStatistics['2000'][data.key] / censusDataStatistics['2000'].population).toFixed(2)).toLocaleString()}%
+        </td>
+        <td>
+          {Number((100 * censusDataStatistics['2010'][data.key] / censusDataStatistics['2010'].population).toFixed(2)).toLocaleString()}%
+        </td>
+        <td>
+          {Number((100 * averageCensusStatistics['2000'][data.key] / censusDataStatistics.total_city_population['2000']).toFixed(2)).toLocaleString()}%
+        </td>
+        <td>
+          {Number((100 * averageCensusStatistics['2010'][data.key] / censusDataStatistics.total_city_population['2010']).toFixed(2)).toLocaleString()}%
+        </td>
+      </tr>
+    );
+  }
+
+  render() {
+    var censusDataStatistics = this.props.data;
+    var averageCensusStatistics = this.props.data.average_city_totals;
+
+    var colummsCategories = [
+      {title: 'Gender', dataSets: [{key: 'male', title: 'Male'}, {key: 'female', title: 'Female'}]},
+      {title: 'Age', dataSets: [{key: 'school_age', title: 'School Age (5-19)'}, {key: 'elderly', title: 'Older Adults'}]},
+      {
+        title: 'Race', 
+        dataSets: [
+          {key: 'white', title: 'White'},
+          {key: 'black', title: 'Black'},
+          {key: 'native_american', title: 'Native American Asian/Pacific Islander'},
+          {key: 'other_race', title: 'Other race'},
+          {key: 'multiracial', title: 'Multiracial'},
+          {key: 'hispanic', title: 'All Hispanic'}
+        ]
+      }
+    ]
+
+    var dataRows = []
+
+    colummsCategories.forEach((data) => {
+      dataRows.push(outputCategoryRowHeader(data.title));
+
+      data.dataSets.forEach((data) => {
+        dataRows.push(this.outputPopulationCategoryRow(data, censusDataStatistics, averageCensusStatistics))
+      });
+    });
+
+    return (
+      <tbody className="expandable-row">
+        <tr className="expandable-trigger">
+          <th colSpan="">
+            <span className="btn btn-default glyphicon glyphicon-plus"></span>
+            <strong>Population</strong>
+          </th>
+          <td>
+            {Number(censusDataStatistics['2000'].population.toFixed(0)).toLocaleString()}
+          </td>
+          <td>
+            {Number(censusDataStatistics['2010'].population.toFixed(0)).toLocaleString()}
+          </td>
+          <td>
+            {Number(((100 * censusDataStatistics['2010'].population / censusDataStatistics['2000'].population) - 100).toFixed(2)).toLocaleString()}%
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        {dataRows}
+      </tbody>
+    )
+  }
+}
+
+class EmploymentDemographics extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  outputEmploymentCategoryRow(data, censusDataStatistics, averageCensusStatistics) {
+    return (
+      <tr>
+        <th>{data.title}</th>
+        <td>
+          {Number(censusDataStatistics.working_force_data['2000'][data.key].toFixed(0)).toLocaleString()}
+        </td>
+        <td>
+          {Number(censusDataStatistics.working_force_data['2010'][data.key].toFixed(0)).toLocaleString()}
+        </td>
+        <td>
+          {Number(((100 * censusDataStatistics.working_force_data['2010'][data.key] / censusDataStatistics.working_force_data['2000'][data.key]) - 100).toFixed(2)).toLocaleString()}%
+        </td>
+        <td>
+          {Number((100 * censusDataStatistics.working_force_data['2000'][data.key] / censusDataStatistics['working_force_data']['2000']['employed']).toFixed(2)).toLocaleString()}%
+        </td>
+        <td>
+          {Number((100 * censusDataStatistics.working_force_data['2010'][data.key] / censusDataStatistics['working_force_data']['2000']['total']).toFixed(2)).toLocaleString()}%
+        </td>
+        <td>
+          {Number((100 * averageCensusStatistics['2010'].work_force_totals[data.key] / averageCensusStatistics['2000'].work_force_totals.total).toFixed(2)).toLocaleString()}%
+        </td>
+        <td>
+          {Number((100 * averageCensusStatistics['2010'].work_force_totals[data.key] / averageCensusStatistics['2000'].work_force_totals.total).toFixed(2)).toLocaleString()}%
+        </td>
+      </tr>
+    );
+  }
+
+  outputHousingCategoryRow(data, censusDataStatistics, averageCensusStatistics) {
+    return (
+      <tr>
+        <th>{data.title}</th>
+        <td>
+          {Number(censusDataStatistics['2000'][data.key].toFixed(0)).toLocaleString()}
+        </td>
+        <td>
+          {Number(censusDataStatistics['2010'][data.key].toFixed(0)).toLocaleString()}
+        </td>
+        <td>
+          {Number(((100 * censusDataStatistics['2010'][data.key] / censusDataStatistics['2000'][data.key]) - 100).toFixed(2)).toLocaleString()}%
+        </td>
+        <td>
+          {Number(((100 * censusDataStatistics['2000'][data.key] / censusDataStatistics['2000'].housing_units).toFixed(2))).toLocaleString()}%
+        </td>
+        <td>
+          {Number(((100 * censusDataStatistics['2010'][data.key] / censusDataStatistics['2010'].housing_units).toFixed(2))).toLocaleString()}%
+        </td>
+        <td>
+          {Number(((100 * averageCensusStatistics['2000'][data.key] / censusDataStatistics.total_housing_units['2000']).toFixed(2))).toLocaleString()}%
+        </td>
+        <td>
+          {Number(((100 * averageCensusStatistics['2010'][data.key] / censusDataStatistics.total_housing_units['2010']).toFixed(2))).toLocaleString()}%
+        </td>
+      </tr>
+    );
+  }
+
+  render() {
+    var censusDataStatistics = this.props.data;
+    var averageCensusStatistics = this.props.data.average_city_totals;
+
+    var colummsCategories = [
+      {
+        title: 'Employment', 
+        dataSets: [
+          {key: 'employed', title: 'Population in Labor Force and Employed'}, 
+          {key: 'unemployed', title: 'Population in Labor Force Bun Unemployed'}, 
+          {key: 'not_in_workforce', title: 'Population Not in Workforce'}, 
+        ]
+      },
+      {
+        title: 'Household Income', 
+        dataSets: [
+          {key: 'households_with_income_less_than_$10_000', title: 'Households With Income Less Than $10,000'},
+          {key: 'households_with_income_$10_000_$19_999', title: 'Households With Income $10,000 - $19,999'},
+          {key: 'households_with_income_$20_000_$29_999', title: 'Households With Income $20,000 - $29,999'},
+          {key: 'households_with_income_$30_000_$39_999', title: 'Households With Income $30,000 - $39,999'},
+          {key: 'households_with_income_$40_000_$49_999', title: 'Households With Income $40,000 - $49,999'},
+          {key: 'households_with_income_$50_000_$59_999', title: 'Households With Income $50,000 - $59,999'},
+          {key: 'households_with_income_$60_000_$74_999', title: 'Households With Income $60,000 - $74,999'},
+          {key: 'households_with_income_$75_000_$99_999', title: 'Households With Income $75,000 - $99,999'},
+          {key: 'households_with_income_$100_000_$124_999', title: 'Households With Income $100,000 - $124,999'},
+          {key: 'households_with_income_$125_000_$149_999', title: 'Households With Income $125,000 - $149,999'},
+          {key: 'households_with_income_$150_000_$199_999', title: 'Households With Income $150,000 - $199,999'},
+          {key: 'households_with_income_$200_000_or_more', title: 'Households With Income $200,000 or More'},
+          {key:'households_with_income_from_interest__dividends_or_rent', title: 'Households With Income From Interest or Dividends'},
+          {key:'households_with_income_from_public_assistance', title: 'Households With Income From Public Assistance'},
+          {key:'households_with_income_from_social_security', title: 'Households With Income From Social Security'}
+        ]
+      }
+    ]
+
+    var dataRows = []
+
+    colummsCategories.forEach((dataCategory) => {
+      dataRows.push(outputCategoryRowHeader(dataCategory.title));
+
+      dataCategory.dataSets.forEach((data) => {
+        if(dataCategory.title === 'Employment') {
+          dataRows.push(this.outputEmploymentCategoryRow(data, censusDataStatistics, averageCensusStatistics))
+        } else {
+          dataRows.push(this.outputHousingCategoryRow(data, censusDataStatistics, averageCensusStatistics))
+        }
+      });
+    });
+
+    return (
+      <tbody className="expandable-row">
+        <tr className="expandable-trigger">
+          <th colSpan="">
+            <span className="btn btn-default glyphicon glyphicon-plus"></span>
+            <strong>Employment/Income</strong>
+          </th>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        {dataRows}
+      </tbody>
+    )
+  }
+}
+
+class Demographics extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+
+    var _this = this;
+
+    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/census_data')
+      .then(function(response) {
+        _this.setState({
+          ... _this.state,
+          data: response.data
+        })
+      })
+      .then(function(error) {
+        console.log(error);
+      });
   }
 
   render() {
@@ -378,8 +527,9 @@ class Demographics extends React.Component {
                 </th>
               </tr>
             </thead>
-            {this.outputPopulationData()}
-            {this.outputHousingData()}
+            <PopulationDemographics data={this.state.data} />
+            <HousingDemographics data={this.state.data} />
+            <EmploymentDemographics data={this.state.data} />
           </table>
         </div>
       )
