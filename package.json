@@ -1,10 +1,10 @@
 {
-  "name": "Neighborhood-Dashboard",
+  "name": "neighborhood-dashboard",
   "version": "1.0.0",
   "description": "We're working to help neighborhoods help themselves by giving them easy access to useful data to allow them to identify and track problem areas in their neighborhood.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codeforkansascity/Neighborhood-Dashboard.git"
+    "url": "git+https://github.com/codeforkansascity/Neighborhood-Dashboard.git"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +13,36 @@
   },
   "homepage": "https://github.com/codeforkansascity/Neighborhood-Dashboard",
   "dependencies": {
-    "bower": "^1.7.2"
+    "axios": "^0.15.3",
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "bower": "^1.7.2",
+    "jquery": "^2.1.4",
+    "jsx-loader": "^0.13.2",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-google-maps": "^6.0.0",
+    "react-modal": "^1.7.2",
+    "react-redux": "^5.0.2",
+    "react-router": "^3.0.2",
+    "react-select2-wrapper": "^1.0.4-beta3",
+    "react-tools": "^0.13.3",
+    "react-tooltip": "^3.2.9",
+    "redux": "^3.6.0",
+    "webpack": "^2.2.1"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "babel-preset-stage-2": "^6.22.0",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "webpack-dev-server": "^2.4.1",
+    "webpack-hot-middleware": "^2.17.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack",
+    "webpack-dev-server": "webpack && webpack-dev-server --config webpack.hot.config.js --hot --progress --inline"
   }
 }

@@ -49,10 +49,19 @@ Ideally, data with a specific location would be displayed on the page’s neighb
 ### Introduction for Developers
 Thank you for assisting with this project! We can always use more coders to assist with what we are doing!
 
-Our Application is built with Ruby on Rails as the backend, and AngularJS on the Frontend. If you are new to these concepts, these tutorials will be of great assistance.
+Our Application is built with Ruby on Rails as the backend, and React on the Frontend. In order to run theses, you need to have Ruby, Rails, and NodeJS installed on your device. There articles can assist. (Make sure you use node version 6.2.2)
+
+NodeJS - https://nodejs.org/en/download/package-manager/
+Rails - http://installrails.com/
+
+If you are not using windows, I recommend installing the node version manager as well
+
+NVM - https://github.com/creationix/nvm
+
+If you are new to these concepts, these tutorials will be of great assistance.
 
 1. [Ruby on Rails Tutorial](https://www.railstutorial.org/book) (Chapters 1-6 should be sufficient)
-2. [Angular Rails Tutorial](http://angular-rails.com/) (Entire book is recommended)
+2. [React Tutorial](https://facebook.github.io/react/tutorial/tutorial.html) (A few examples should be suffice)
 
 In addition, if you need assistance with git, I highly recommend going through this code school class.
 
@@ -66,12 +75,20 @@ Once you have checkout out this application, run the following command to setup 
 
     bundle exec rake db:create db:migrate db:seed
 
-After your database is ready, run the following script to import the required frontend scripts
+After your database is ready, you now need to install the node modules.
 
-    bundle exec rake bower:install
+    sudo npm install
+
+From here, what's left is running the following command to compile the react code.
+
+    sudo npm run webpack
 
 Finally, run the following command to start the server
 
     rails server
+
+When this command is kicked off, a webpack dev server should be running that continually rebuilds your React code. Essentially, if you change and of the code inside app/js, the application should refresh itself. If you don't see that occur, run the following command to manually recompile the React code.
+
+    sudo npm run webpack
 
 That's all you need! Now head to <http://localhost:3000> to view the application!

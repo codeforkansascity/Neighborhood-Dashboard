@@ -7,8 +7,6 @@ gem 'rails', '4.2.1'
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 # Use Bootstrap for styling the application
@@ -30,11 +28,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'geocoder'
 # Use the httparty gem for doing rest calls with
 gem 'httparty'
-
-# Angular Rails Dependencies
-gem 'angular-rails-templates'
-gem 'bower-rails'
-gem 'execjs'
 
 gem 'fuzzily', '~> 0.3.3'
 gem 'select2-rails', '~> 4.0.3'

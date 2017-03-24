@@ -1,8 +1,32 @@
 #!/usr/bin/env ruby
+require 'socket'
+
 begin
   load File.expand_path("../spring", __FILE__)
 rescue LoadError
 end
+
+def find_argument(*arguments, &block)
+  index = ARGV.find_index { |element| arguments.include?(element) }
+  yield(index) if index && block_given?
+  index
+end
+
+# Returns the index of the first argument in the command line argument list (ARGV array) which equals one of the
+# given method arguments; otherwise, returns nil.
+# If a block is provided, yields the block if at least one of the arguments expected is found.
+# Also deletes the argument found.
+def find_argument!(*arguments, &block)
+  index = find_argument(*arguments, &block)
+  ARGV.delete_at(index) if index
+  index
+end
+
+find_argument('s', 'server') do |index|
+  ENV['WEBPACK_DEV_SERVER'] ||= 'true'
+end
+
+
 APP_PATH = File.expand_path('../../config/application', __FILE__)
 require_relative '../config/boot'
 require 'rails/commands'

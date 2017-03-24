@@ -27,7 +27,7 @@ if Neighborhood.count <= 0
         }
       end
 
-      Neighborhood.create(id: neighborhood['properties']['nbhid'], name: neighborhood['properties']['nbhname'], coordinates: coordinates)
+      Neighborhood.create(id: neighborhood['properties']['objectid'], name: neighborhood['properties']['nbhname'], coordinates: coordinates)
     end
 
     current_neighborhood_count += 1

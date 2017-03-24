@@ -10,6 +10,11 @@ body {
   padding-top: 50px;
 }
 
+.application-wrapper {
+  height: 100%;
+  position: relative;
+}
+
 /* Glyphicon class helpers */
 .spin {
   -webkit-animation: spin 2s infinite linear;
