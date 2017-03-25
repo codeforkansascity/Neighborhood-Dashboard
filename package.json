@@ -21,7 +21,10 @@
     "bower": "^1.7.2",
     "jquery": "^2.1.4",
     "jsx-loader": "^0.13.2",
+    "modernizr-webpack-plugin": "^1.0.5",
+    "moment": "^2.18.1",
     "react": "^15.4.2",
+    "react-datetime": "^2.8.8",
     "react-dom": "^15.4.2",
     "react-google-maps": "^6.0.0",
     "react-modal": "^1.7.2",
@@ -31,12 +34,15 @@
     "react-tools": "^0.13.3",
     "react-tooltip": "^3.2.9",
     "redux": "^3.6.0",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.0"
   },
   "main": "index.js",
   "devDependencies": {
     "babel-preset-stage-2": "^6.22.0",
+    "css-loader": "^0.27.3",
+    "extract-text-webpack-plugin": "^2.1.0",
     "react-hot-loader": "^3.0.0-beta.6",
+    "style-loader": "^0.16.0",
     "webpack-dev-server": "^2.4.1",
     "webpack-hot-middleware": "^2.17.0"
   },

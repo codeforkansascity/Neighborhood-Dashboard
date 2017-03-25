@@ -263,14 +263,6 @@ class Vacancy extends React.Component {
               <input type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS} onChange={this.handleFilterChange} />&nbsp;
               All Property Violations (KCMO 311)
             </label>
-            <div className="form-group">
-              <input type="date" name="start_date" className="form-control" />
-              <label>Start Date</label>
-            </div>
-            <div className="form-group">
-              <input type="date" name="end_date" className="form-control" />
-              <label>End Date</label>
-            </div>
           </div>
         </div>
         <div>

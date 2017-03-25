@@ -1,6 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
+import Datetime from 'react-datetime';
+import '../modernizr-bundle';
+import 'react-datetime/css/react-datetime.css';
 
 const formatResponse = (response) => {
   var markers = response.data.map(function(dataPoint) {
@@ -373,6 +376,9 @@ class Crime extends React.Component {
       .then(function(error) {
         console.log(error);
       });
+
+    this.updateStartDate = this.updateStartDate.bind(this);
+    this.updateEndDate = this.updateEndDate.bind(this);
   }
 
   toggleFilters() {
@@ -522,7 +528,11 @@ class Crime extends React.Component {
       filtersViewable: false
     });
 
-    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/crime?crime_codes[]=' + this.state.filters.join('&crime_codes[]='))
+    var queryString = 'crime_codes[]=' + this.state.filters.join('&crime_codes[]=')
+       + '&start_date=' + this.state.startDate 
+       + '&end_date=' + this.state.endDate;
+
+    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/crime?' + queryString)
       .then(function(response) {
         var legend = 
         `<ul>
@@ -595,6 +605,44 @@ class Crime extends React.Component {
     }
   }
 
+  updateStartDate(e) {
+    var date;
+
+    if(e._isAMomentObject) {
+      date = e.format();
+    } else {
+      date = e.currentTarget.value;
+    }
+
+    this.setState({
+      ... this.state,
+      startDate: date
+    })
+  }
+
+  updateEndDate(e) {
+    var date;
+
+    if(e._isAMomentObject) {
+      date = e.format();
+    } else {
+      date = e.currentTarget.value;
+    }
+
+    this.setState({
+      ... this.state,
+      endDate: date
+    })  
+  }
+
+  outputDatetimePicker(onChangeFunction) {
+    if(Modernizr.inputtypes.date) {
+      return <input type="date" className="form-control" onChange={onChangeFunction}/>
+    } else {
+      return <Datetime inputProps={{placeholder: 'mm/dd/yyyy'}} timeFormat={false} input={true} onChange={onChangeFunction}/>
+    }
+  }
+
   render() {
     return (
       <div>
@@ -608,11 +656,11 @@ class Crime extends React.Component {
         <div className="toolbar">
           <form className="form-inline">
             <div className="form-group">
-              <input type="date" name="start_date" className="form-control"/>
+              {this.outputDatetimePicker(this.updateStartDate)}
               <label>Start Date</label>
             </div>
             <div className="form-group">
-              <input type="date" name="end_date" className="form-control"/>
+              {this.outputDatetimePicker(this.updateEndDate)}
               <label>End Date</label>
             </div>
             {this.state.loading ? this.loadingIndicator() : this.filtersActivationButton()}

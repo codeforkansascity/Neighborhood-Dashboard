@@ -40,7 +40,7 @@ module KcmoDatasets
     end
 
     def query_data
-      beginning_date = parse_date(@options[:start_data])
+      beginning_date = parse_date(@options[:start_date])
       end_date = parse_date(@options[:end_date])
 
       crime = []
@@ -113,12 +113,16 @@ module KcmoDatasets
     def build_socrata_query
       query = "SELECT * WHERE #{@neighborhood.within_polygon_query('location_1')}"
 
-      beginning_date = parse_date(@options[:start_data])
+      beginning_date = parse_date(@options[:start_date])
       end_date = parse_date(@options[:end_date])
       crime_codes = @options[:crime_codes] || []
 
-      if beginning_date && end_date
-        query += " AND #{filter_dates(start_date, end_date)}"
+      if beginning_date
+        query += " AND from_date >= '#{beginning_date.iso8601[0...-6]}'"
+      end
+
+      if end_date
+        query += " AND from_date <= '#{end_date.iso8601[0...-6]}'"
       end
 
       if crime_codes.present?
@@ -126,10 +130,6 @@ module KcmoDatasets
       end
 
       query
-    end
-
-    def filter_dates(start_date, end_date)
-      "from_date between '#{start_date.iso8601[0...-6]}' and '#{end_date.iso8601[0...-6]}'"
     end
 
     def process_crime_filters(crime_codes)
