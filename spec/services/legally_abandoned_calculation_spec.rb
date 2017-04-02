@@ -8,7 +8,6 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
   let(:tax_delinquent_datasets) { double }
   let(:code_violation_count) { double }
   let(:three_eleven_data) { double }
-  let(:vacant_registries) { double }
   let(:dangerous_buildings) { double }
 
   let(:mock_addresses) do
@@ -246,11 +245,6 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
       }
     )
 
-    allow(NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistries).to receive(:new).and_return(vacant_registries)
-    allow(vacant_registries).to receive(:calculated_data).and_return(
-      {'address 1' => mock_addresses['address 1'], 'address 2' => mock_addresses['address 2'], 'address 3' => mock_addresses['address 3']}
-    )
-
     allow(NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings).to receive(:new).and_return(dangerous_buildings)
     allow(dangerous_buildings).to receive(:calculated_data).and_return(
       {'address 1' => mock_addresses['address 1'], 'address 2' => mock_addresses['address 2'], 'address 3' => mock_addresses['address 3']}
@@ -285,7 +279,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
   describe '#vacant_indicators' do
     let(:vacant_indicators) { dataset.vacant_indicators }
 
-    it 'only scores the three_eleven, vacant_registries, dangerous_buildings, and vacant_registry_failures with a max total of 2 points' do
+    it 'only scores the three_eleven, dangerous_buildings, and vacant_registry_failures with a max total of 2 points' do
       test_address = vacant_indicators.select{ |address| address['properties']['address'] == 'address 1' }
       expect(test_address.first['properties']['points']).to eq(2)
     end

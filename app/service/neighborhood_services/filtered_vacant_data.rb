@@ -11,7 +11,6 @@ class NeighborhoodServices::FilteredVacantData
     filters_copy = filters.dup || {}
 
     if filters_copy['filters'].include?('all_property_violations')
-      filters_copy['filters'] += NeighborhoodServices::VacancyData::RegisteredVacant::POSSIBLE_FILTERS
       filters_copy['filters'] += NeighborhoodServices::VacancyData::TaxDelinquent::POSSIBLE_FILTERS
       filters_copy['filters'] += NeighborhoodServices::VacancyData::DangerousBuildings::POSSIBLE_FILTERS
       filters_copy['filters'] += NeighborhoodServices::VacancyData::LandBank::POSSIBLE_FILTERS
@@ -20,7 +19,6 @@ class NeighborhoodServices::FilteredVacantData
     end
 
     data =
-      NeighborhoodServices::VacancyData::RegisteredVacant.new(neighborhood, filters_copy).data + 
       NeighborhoodServices::VacancyData::TaxDelinquent.new(neighborhood, filters_copy).data + 
       NeighborhoodServices::VacancyData::DangerousBuildings.new(neighborhood, filters_copy).data +
       NeighborhoodServices::VacancyData::LandBank.new(neighborhood, filters_copy).data + 

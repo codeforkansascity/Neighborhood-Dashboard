@@ -13,7 +13,6 @@ class NeighborhoodServices::LegallyAbandonedCalculation
 
   def vacant_indicators
     addresses = merge_dataset(three_eleven_data, {})
-    addresses = merge_dataset(vacant_registries, addresses)
     addresses = merge_dataset(dangerous_buildings, addresses)
     addresses = merge_dataset(vacant_registry_failures, addresses)
 
@@ -87,10 +86,6 @@ class NeighborhoodServices::LegallyAbandonedCalculation
 
   def three_eleven_data
     NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData.new(@neighborhood).calculated_data
-  end
-
-  def vacant_registries
-    NeighborhoodServices::LegallyAbandonedCalculation::VacantRegistries.new(@neighborhood).calculated_data
   end
 
   def dangerous_buildings

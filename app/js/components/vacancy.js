@@ -84,7 +84,6 @@ const VACANCY_CODES = {
     OPEN_THREE_ELEVEN: 'open',
     VACANT_STRUCTURE: 'vacant_structure',
     ALL_PROPERTY_VIOLATIONS: 'all_property_violations',
-    REGISTERED_VACANT: 'registered_vacant',
     ALL_VACANT_LOTS: 'all_vacant_filters',
     DEMO_NEEDED: 'demo_needed',
     FORECLOSED: 'foreclosed'
@@ -206,9 +205,6 @@ class Vacancy extends React.Component {
               Vacant Structure Called In (KCMO 311)
             </p>
             <p>
-              Registered As Vacant (City of KCMO)
-            </p>
-            <p>
               Dangerous Building (City of KCMO)
             </p>
             <p>
@@ -230,10 +226,6 @@ class Vacancy extends React.Component {
             <label>
               <input type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.DEMO_NEEDED} onChange={this.handleFilterChange} />&nbsp;
               Demo Needed - Land Bank Property (KCMO Land Bank Property)
-            </label>
-            <label>
-              <input type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.REGISTERED_VACANT} onChange={this.handleFilterChange} />&nbsp;
-              Registered Vacant (City of KCMO)
             </label>
             <label>
               <input type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.VACANT_REGISTRY_FAILURE} onChange={this.handleFilterChange} />&nbsp;
