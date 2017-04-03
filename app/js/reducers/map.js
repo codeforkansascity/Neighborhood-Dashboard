@@ -28,7 +28,6 @@ const map = (state = {}, action) => {
         map: action.map
       }
     case 'CITY_OVERVIEW':
-      console.log('City Overview');
       var neighborhoods = state.neighborhoods || [];
 
       var polygons = neighborhoods.map(function(neighborhood) {
