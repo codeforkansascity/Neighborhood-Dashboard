@@ -2,57 +2,55 @@ import React from 'react'
 import { render } from 'react-dom'
 import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-google-maps'
 import axios from 'axios'
-import { uploadMapContext } from '../actions'
 
+import { uploadMapContext } from '../actions'
 import LegendContainer from '../containers/legend_container'
+import CodeForKcLogo from '../images/code_for_kc.png'
 
 const MyApp = withGoogleMap(props => {
   return(
-    <div>
-      <GoogleMap
-        ref={props.onMapLoad}
-        defaultZoom={props.zoom}
-        center={props.center}
-        defaultCenter={{lat: 39.0997, lng: -94.5786}}>
-        <LegendContainer />
-        {props.markers.map((marker, index) => (
-          <Marker {...marker} 
-           onClick={(e) => {props.updateSelectedElement(marker)}}/>
-        ))}
-        {
-          props.neighborhoodPolygon && 
-          <Polygon {...props.neighborhoodPolygon} />
-        }
-        {props.polygons.map((polygon, index) => {
-          var onMouseClick = () => {},
-              onMouseOver = () => {};
+    <GoogleMap
+      ref={props.onMapLoad}
+      defaultZoom={props.zoom}
+      center={props.center}
+      defaultCenter={{lat: 39.0997, lng: -94.5786}}>
+      <LegendContainer />
+      {props.markers.map((marker, index) => (
+        <Marker {...marker} 
+         onClick={(e) => {props.updateSelectedElement(marker)}}/>
+      ))}
+      {
+        props.neighborhoodPolygon && 
+        <Polygon {...props.neighborhoodPolygon} />
+      }
+      {props.polygons.map((polygon, index) => {
+        var onMouseClick = () => {},
+            onMouseOver = () => {};
 
-          if(polygon.selectablePolygon) {
-            if(polygon.forceClick || 'ontouchstart' in document.documentElement) {
-              onMouseClick = () => props.updateSelectedElement(polygon)
-            }
-            else {
-              onMouseOver = () => props.updateSelectedElement(polygon)
-            }
+        if(polygon.selectablePolygon) {
+          if(polygon.forceClick || 'ontouchstart' in document.documentElement) {
+            onMouseClick = () => props.updateSelectedElement(polygon)
           }
-
-          return(
-            <Polygon
-              {...polygon}  
-              onClick={onMouseClick}
-              onMouseOver={onMouseOver}>
-            </Polygon>
-          )}
-        )}
-        {props.selectedElement && props.selectedElement.windowContent && (
-            <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.updateSelectedElement(null)}>
-              <div>{props.selectedElement.windowContent}</div>
-            </InfoWindow>
-          )
+          else {
+            onMouseOver = () => props.updateSelectedElement(polygon)
+          }
         }
-      </GoogleMap>
-      {props.children}
-    </div>
+
+        return(
+          <Polygon
+            {...polygon}  
+            onClick={onMouseClick}
+            onMouseOver={onMouseOver}>
+          </Polygon>
+        )}
+      )}
+      {props.selectedElement && props.selectedElement.windowContent && (
+          <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.updateSelectedElement(null)}>
+            <div>{props.selectedElement.windowContent}</div>
+          </InfoWindow>
+        )
+      }
+    </GoogleMap>
     );
   }
 );
@@ -112,20 +110,28 @@ class Map extends React.Component {
 
   render() {
     return(
-        <MyApp 
-          containerElement= { <div style={{height: '100%', width: '100%'}} /> }
-          mapElement={ <div style={{height: '100%', width: '100%'}} /> }
-          onMapLoad={this.handleMapMounted}
-          onMapClick={function() {} }
-          onMarkerRightClick={function() {}}
-          markers={this.props.markers || []}
-          polygons={this.props.polygons || []}
-          selectedElement={this.props.selectedElement}
-          getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
-          updateSelectedElement={this.props.updateSelectedElement}
-          neighborhoodPolygon={this.props.neighborhoodPolygon}
-          center={this.props.center}
-          children={this.props.children} />
+        <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
+          {this.props.children}
+          <MyApp 
+            containerElement= { <div style={{flexGrow: '1', display: 'flex'}} /> }
+            mapElement={ <div style={{flexGrow: '1'}} /> }
+            onMapLoad={this.handleMapMounted}
+            onMapClick={function() {} }
+            onMarkerRightClick={function() {}}
+            markers={this.props.markers || []}
+            polygons={this.props.polygons || []}
+            selectedElement={this.props.selectedElement}
+            getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
+            updateSelectedElement={this.props.updateSelectedElement}
+            neighborhoodPolygon={this.props.neighborhoodPolygon}
+            center={this.props.center} />
+          <footer className="application-footer">
+            This project developed by CodeForKC - A Code for America Organization&nbsp;&nbsp;&nbsp;
+            <a href="http://codeforkc.org/">
+              <img src={CodeForKcLogo} alt="Code for KC Logo"/>
+            </a>
+          </footer>
+        </div>
     );
   }
 }

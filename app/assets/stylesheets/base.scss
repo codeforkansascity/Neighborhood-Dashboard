@@ -6,13 +6,23 @@ body {
   height:100%;
 }
 
-body {
-  padding-top: 50px;
-}
-
 .application-wrapper {
   height: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+
+.application-footer {
+  padding: 10px;
+  text-align: right;
 }
 
 /* Glyphicon class helpers */

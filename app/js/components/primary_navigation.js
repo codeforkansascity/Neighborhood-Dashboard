@@ -126,7 +126,7 @@ class PrimaryNavigation extends React.Component {
             </div>
           </form>
         </Modal>
-        <nav className="navbar navbar-default navbar-fixed-top">
+        <nav className="navbar navbar-default">
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#primary-nav" aria-expanded="false" aria-controls="navbar">
                 <span className="sr-only">Toggle navigation</span>
