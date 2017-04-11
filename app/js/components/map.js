@@ -45,8 +45,10 @@ const MyApp = withGoogleMap(props => {
         )}
       )}
       {props.selectedElement && props.selectedElement.windowContent && (
-          <InfoWindow position={props.getInfoWindowPosition(props.selectedElement)} onCloseClick={() => props.updateSelectedElement(null)}>
-            <div>{props.selectedElement.windowContent}</div>
+          <InfoWindow
+            position={props.getInfoWindowPosition(props.selectedElement)}
+            onCloseClick={() => props.updateSelectedElement(null)}>
+            <div style={props.selectedElement.windowStyle}>{props.selectedElement.windowContent}</div>
           </InfoWindow>
         )
       }

@@ -44,7 +44,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
           "type" => "Feature",
           "geometry" => value[:geometry],
           "properties" => {
-            "marker_style" => value[:geometry]["type"] == 'Point' ? 'Circle' : nil,
+            "marker_style" => value[:geometry]["type"] == 'Point' ? 'circle' : nil,
             "color" => land_bank_color(value[:points]),
             "disclosure_attributes" =>
               [

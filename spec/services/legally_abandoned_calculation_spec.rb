@@ -340,9 +340,9 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
       expect(target_address['geometry']['type']).to eq('Point')
     end
 
-    it 'adds the property marker_style with the value "Circle" to the properties object' do
+    it 'adds the property marker_style with the value "circle" to the properties object' do
       target_address = vacant_indicators.select{ |address| address['properties']['address'] == 'address 9' }.first
-      expect(target_address['properties']['marker_style']).to eq('Circle')
+      expect(target_address['properties']['marker_style']).to eq('circle')
     end
   end
 end

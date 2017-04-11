@@ -11,7 +11,7 @@ const formatResponse = (response) => {
     .map(function(dataPoint) {
       var iconStyle = {};
 
-      if (dataPoint.properties.marker_style !== 'circle') {
+      if (dataPoint.properties.marker_style == 'circle') {
         iconStyle = {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 5,
@@ -40,7 +40,10 @@ const formatResponse = (response) => {
           defaultAnimation: 2,
           windowContent: dataPoint.properties.disclosure_attributes.map(
             (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
-          )
+          ),
+          windowStyle: {
+            overflow: 'auto'
+          }
         }
       )
     });
