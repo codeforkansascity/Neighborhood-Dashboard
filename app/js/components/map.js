@@ -13,6 +13,7 @@ const MyApp = withGoogleMap(props => {
       ref={props.onMapLoad}
       defaultZoom={props.zoom}
       center={props.center}
+      gestureHandling={'cooperative'}
       defaultCenter={{lat: 39.0997, lng: -94.5786}}>
       <LegendContainer />
       {props.markers.map((marker, index) => (
@@ -116,7 +117,7 @@ class Map extends React.Component {
           {this.props.children}
           <MyApp 
             containerElement= { <div style={{flexGrow: '1', display: 'flex'}} /> }
-            mapElement={ <div style={{flexGrow: '1'}} /> }
+            mapElement={ <div style={{flexGrow: '1', minHeight: '300px'}} /> }
             onMapLoad={this.handleMapMounted}
             onMapClick={function() {} }
             onMarkerRightClick={function() {}}

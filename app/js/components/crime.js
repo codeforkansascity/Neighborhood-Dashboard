@@ -571,6 +571,16 @@ class Crime extends React.Component {
 
     return(
       <div className={className}>
+        <form className="form-inline col-md-12">
+          <div className="form-group">
+            {this.outputDatetimePicker(this.updateStartDate)}
+            <label>Start Date</label>
+          </div>
+          <div className="form-group">
+            {this.outputDatetimePicker(this.updateEndDate)}
+            <label>End Date</label>
+          </div>
+        </form>
         {this.personCrimes()}
         {this.propertyCrimes()}
         {this.societyCrimes()}
@@ -581,7 +591,7 @@ class Crime extends React.Component {
 
   loadingIndicator() {
     return (
-      <span className="pull-right">
+      <span className="filters-loading">
         <i className="fa fa-refresh fa-large fa-spin"></i>
       </span>
     );
@@ -589,7 +599,7 @@ class Crime extends React.Component {
 
   filtersActivationButton() {
     return (
-      <button className="btn btn btn-success pull-right" type="button" onClick={this.toggleFilters}>
+      <button className="btn btn btn-success filters-action" type="button" onClick={this.toggleFilters}>
         Filters
       </button>
     )
@@ -646,25 +656,9 @@ class Crime extends React.Component {
   render() {
     return (
       <div>
-        <nav className={"navbar sub-data-nav"}>
-          <ul id="neighborhood-sub-tabs" className={"navbar-nav nav"}>
-            <li role="presentation">
-              {this.renderingReport()}
-            </li>
-          </ul>
-        </nav>
         <div className="toolbar">
-          <form className="form-inline">
-            <div className="form-group">
-              {this.outputDatetimePicker(this.updateStartDate)}
-              <label>Start Date</label>
-            </div>
-            <div className="form-group">
-              {this.outputDatetimePicker(this.updateEndDate)}
-              <label>End Date</label>
-            </div>
-            {this.state.loading ? this.loadingIndicator() : this.filtersActivationButton()}
-          </form>
+          {this.renderingReport()}
+          {this.state.loading ? this.loadingIndicator() : this.filtersActivationButton()}
           {this.filtersTooltip()}
         </div>
         {this.state.viewingReport && 

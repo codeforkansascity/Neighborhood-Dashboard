@@ -88,6 +88,14 @@
   background-color: #ffffff;
   padding: 10px;
   position: relative;
+
+  display: flex;
+  align-items: center;
+
+  .filters-action,
+  .filters-loading {
+    margin-left: auto;
+  }
 }
 
 .map-filters {

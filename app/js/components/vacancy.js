@@ -42,7 +42,8 @@ const formatResponse = (response) => {
             (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
           ),
           windowStyle: {
-            overflow: 'auto'
+            overflow: 'auto',
+            minHeight: '300px'
           }
         }
       )
@@ -172,8 +173,8 @@ class Vacancy extends React.Component {
 
     return (
       <div className={className}>
-        <p>Only one category of data can be displayed at once. Selecting data in one category will disable the other column.</p>
-        <div className="row">
+        <div>
+          <p className="col-md-12">Only one category of data can be displayed at once. Selecting data in one category will disable the other column.</p>
           <div className="col-md-6">
             <h2>
               Legally Abandoned
@@ -272,7 +273,7 @@ class Vacancy extends React.Component {
 
   filtersActivationButton() {
     return (
-      <button className="btn btn btn-success pull-right" type="button" onClick={this.toggleFilters}>
+      <button className="btn btn btn-success filters-action" type="button" onClick={this.toggleFilters}>
         Filters
       </button>
     )
@@ -280,7 +281,7 @@ class Vacancy extends React.Component {
 
   loadingIndicator() {
     return (
-      <span className="pull-right">
+      <span className="filters-loading">
         <i className="fa fa-refresh fa-large fa-spin"></i>
       </span>
     );
@@ -289,10 +290,8 @@ class Vacancy extends React.Component {
   render() {
     return (
       <div className="toolbar">
-        <form className="form-inline" onSubmit={(e) => e.preventDefault()}>
-          {this.state.loading ? this.loadingIndicator() : this.filtersActivationButton()}
-          {this.mapFilters()}
-        </form>
+        {this.state.loading ? this.loadingIndicator() : this.filtersActivationButton()}
+        {this.mapFilters()}
       </div>
     );
   }
