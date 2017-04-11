@@ -116,8 +116,8 @@ class Map extends React.Component {
         <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
           {this.props.children}
           <MyApp 
-            containerElement= { <div style={{flexGrow: '1', display: 'flex'}} /> }
-            mapElement={ <div style={{flexGrow: '1', minHeight: '300px'}} /> }
+            containerElement= { <div style={{flexGrow: '1', display: 'flex', minHeight: '400px'}} /> }
+            mapElement={ <div style={{flexGrow: '1'}} /> }
             onMapLoad={this.handleMapMounted}
             onMapClick={function() {} }
             onMarkerRightClick={function() {}}
