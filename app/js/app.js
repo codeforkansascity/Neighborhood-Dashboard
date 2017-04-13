@@ -12,6 +12,8 @@ import MapContainer from './containers/map_container';
 import CrimeContainer from './containers/crime_container';
 import VacancyContainer from './containers/vacancy_container';
 import CityOverviewContainer from './containers/city_overview_container';
+import About from './components/about';
+
 import reducer from './reducers';
 
 const store = createStore(reducer)
@@ -19,6 +21,7 @@ const store = createStore(reducer)
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
+      <Route path="/about" component={About} />
       <Route path="/" component={Application}>
         <IndexRoute component={CityOverviewContainer}/>
         <Route path="/neighborhood/:neighborhoodId/" component={NeighborhoodContainer}>

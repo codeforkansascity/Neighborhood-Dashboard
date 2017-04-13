@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import Modal from 'react-modal';
 import axios from 'axios';
 
@@ -138,9 +138,7 @@ class PrimaryNavigation extends React.Component {
           </div>
           <nav id="primary-nav" className="collapse navbar-collapse">
             <ul className="nav navbar-nav navbar-right">
-              <li><a href="#">About</a></li>
-              <li><a href="#">Our Data</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><Link to="/about">About</Link></li>
               <li><a href="#" onClick={this.openModal} data-toggle="modal" data-target="#neighborhood-search-modal">Neighborhood Search</a></li>
             </ul>
           </nav>
