@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import Datetime from 'react-datetime';
+import { toast } from 'react-toastify';
+
 import '../modernizr-bundle';
 import 'react-datetime/css/react-datetime.css';
 
@@ -550,9 +552,15 @@ class Crime extends React.Component {
         _this.props.updateMap(formatResponse(response));
         _this.props.updateLegend(legend);
       })
-      .then(function(error) {
-        console.log(error);
-      })
+      .catch(function(error) {
+        _this.setState({
+          loading: false
+        });
+
+        toast(<p>We're sorry, but the application could not process your request. Please try again later.</p>, {
+          type: toast.TYPE.INFO
+        });
+      });
   }
 
   toggleReport() {

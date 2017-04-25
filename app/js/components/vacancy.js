@@ -2,6 +2,7 @@ import { default as React, PropTypes } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import ReactTooltip from 'react-tooltip';
+import { toast } from 'react-toastify';
 
 const formatResponse = (response) => {
   var markers = response.data
@@ -152,9 +153,15 @@ class Vacancy extends React.Component {
         _this.props.updateMap(formatResponse(response));
         _this.props.updateLegend(legend);
       })
-      .then(function(error) {
-        console.log(error);
-      })
+      .catch(function(error) {
+        _this.setState({
+          loading: false
+        });
+
+        toast(<p>We're sorry, but the application could not process your request. Please try again later.</p>, {
+          type: toast.TYPE.INFO
+        });
+      });
   }
 
   toggleFilters() {

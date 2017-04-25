@@ -1,0 +1,4 @@
+.toastify {
+  /* We need this to display on top of the primary navigation */
+  z-index: 2;
+}

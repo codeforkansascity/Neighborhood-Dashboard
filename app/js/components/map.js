@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-google-maps'
 import axios from 'axios'
+import { toast } from 'react-toastify';
 
 import { uploadMapContext } from '../actions'
 import LegendContainer from '../containers/legend_container'
@@ -110,8 +111,10 @@ class Map extends React.Component {
       .then(function(response) {
         _this.props.loadNeighborhoods(response.data);
       })
-      .then(function(error) {
-        console.log(error);
+      .catch(function(error) {
+        toast(<p>Main Neighborhood map could not load. Please try again later, or try the neighborhood search.</p>, {
+          type: toast.TYPE.INFO
+        });
       });
   }
 
