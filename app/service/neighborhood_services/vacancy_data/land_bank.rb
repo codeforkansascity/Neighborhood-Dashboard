@@ -66,7 +66,7 @@ class NeighborhoodServices::VacancyData::LandBank
     else
       '#000000'
     end
-  rescue ArgumentError
+  rescue
     '#ffffff'
   end
 
