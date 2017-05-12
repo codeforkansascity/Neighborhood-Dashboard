@@ -1,0 +1,42 @@
+# Setup the initial environment
+sudo apt-get update
+sudo apt-get install -y curl gnupg build-essential
+
+# Install Ruby
+sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+curl -sSL https://get.rvm.io | sudo bash -s stable
+sudo usermod -a -G rvm `whoami`
+
+if sudo grep -q secure_path /etc/sudoers; then sudo sh -c "echo export rvmsudo_secure_path=1 >> /etc/profile.d/rvm_secure_path.sh" && echo Environment variable installed; fi
+
+rvm install ruby-2.2.7
+rvm use ruby-2.2.7
+
+# Install Node
+sudo apt-get install -y nodejs &&
+sudo ln -sf /usr/bin/nodejs /usr/local/bin/node
+
+# Get passenger
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
+sudo apt-get install -y apt-transport-https ca-certificates
+
+# Add our APT repository
+sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger xenial main > /etc/apt/sources.list.d/passenger.list'
+sudo apt-get update
+
+sudo apt-get install -y nginx-extras passenger
+
+# Get git
+sudo apt-get install -y git
+
+sudo mkdir -p /var/www/myapp
+sudo chown myappuser: /var/www/myapp
+
+# Install postgres
+sudo apt-get install postgresql postgresql-contrib libpq-dev
+
+<Find syntax for creating a new database with postgresql>
+
+in /etc/profile, paste the generated secret token there.
+
+precompile the assets.

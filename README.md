@@ -92,3 +92,19 @@ When this command is kicked off, a webpack dev server should be running that con
     sudo npm run webpack
 
 That's all you need! Now head to <http://localhost:3000> to view the application!
+
+# Deployment
+
+The first step is to create a container hosting a postgresql database. Create it, and keep in mind the IP address, port, and login credentials of the databasel.
+
+For the app Docker is used to create an nginx and passenger build for the application. To use this, run the following command to get a secret token.
+
+    bundle exec rake secret
+
+From there, run the following command to build the container
+
+    docker build . --tag=neighborhood-dashboard-test --build-arg database_name=<database_name> --build-arg database_user=postgres --build-arg database_password=<database_password> --build-arg secret_key_base=<secret_key> --build-arg postgres_port_5432_tcp_addr=<database_addr> --build-arg postgres_port_5432_tcp_port=<database_port|5432>
+
+After that is complete, take the container, and run it on the box with the following command.
+
+    docker run -d -p 80:80 <docker_container_id_or_name>

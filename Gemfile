@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.2.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
@@ -49,6 +49,9 @@ gem 'roo', '~> 2.5.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# Deploy to a passenger server
+gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
