@@ -1,6 +1,6 @@
 import { connect, Connector } from 'react-redux';
 import Vacancy from '../components/vacancy';
-import { neighborhoodReset, updateMap, updateLegend } from '../actions'
+import { neighborhoodReset, updateMap, updateLegend } from '../actions/index'
 
 const mapStateToProps = (state) => {
   return ({

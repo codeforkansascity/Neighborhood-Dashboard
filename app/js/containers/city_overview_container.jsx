@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, Connector } from 'react-redux';
 import CityOverview from '../components/city_overview';
-import { updateMap, cityOverview, updateLegend } from '../actions';
+import { updateMap, cityOverview, updateLegend } from '../actions/index';
 
 type OwnProps = {
   filter: {}

@@ -2,7 +2,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
 
 var modernizrConfig = {
-  'filename': 'js/modernizr-bundle.js',
+  'filename': 'js/modernizr-bundle.jsx',
   'feature-detects': [
     'inputtypes'
   ]
@@ -12,7 +12,7 @@ module.exports = {
   devtool: 'eval',
   context: __dirname + "/app/js",
 
-  entry: "./app.js",
+  entry: "./app.jsx",
 
   output: {
     filename: "assets/javascripts/app_bundle.js",

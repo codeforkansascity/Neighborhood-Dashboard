@@ -1,6 +1,6 @@
 import { connect, Connector } from 'react-redux';
 import Legend from '../components/legend';
-import { updateMap, updateSelectedElement, fetchNeighborhoods, addMap } from '../actions'
+import { updateMap, updateSelectedElement, fetchNeighborhoods, addMap } from '../actions/index'
 
 type OwnProps = {
   filter: {}

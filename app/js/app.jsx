@@ -14,7 +14,7 @@ import VacancyContainer from './containers/vacancy_container';
 import CityOverviewContainer from './containers/city_overview_container';
 import About from './components/about';
 
-import reducer from './reducers';
+import reducer from './reducers/index';
 
 const store = createStore(reducer)
 
