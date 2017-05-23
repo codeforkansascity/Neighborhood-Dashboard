@@ -4,7 +4,7 @@ import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-goo
 import axios from 'axios'
 import { toast } from 'react-toastify';
 
-import { uploadMapContext } from '../actions'
+import { uploadMapContext } from '../actions/index'
 import LegendContainer from '../containers/legend_container'
 import CodeForKcLogo from '../images/code_for_kc.png'
 

@@ -12,7 +12,7 @@ module.exports = {
   devtool: 'eval',
   context: __dirname + "/app/js",
 
-  entry: "./app.js",
+  entry: "./app.jsx",
 
   output: {
     filename: "assets/javascripts/app_bundle.js",
@@ -25,8 +25,8 @@ module.exports = {
   module: {
     // Load the react-hot-loader
     loaders: [
-      { 
-        test: /\.js$/, 
+      {
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loaders: ['babel-loader?presets[]=es2015&presets[]=react'] 
       },

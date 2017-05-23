@@ -1,6 +1,6 @@
 import { connect, Connector } from 'react-redux';
-import Crime from '../components/crime';
-import { neighborhoodReset, updateMap, updateLegend } from '../actions'
+import Vacancy from '../components/vacancy';
+import { neighborhoodReset, updateMap, updateLegend } from '../actions/index'
 
 const mapStateToProps = (state) => {
   return ({
@@ -29,4 +29,4 @@ const connector: Connector<OwnProps, Props> = connect(
   mapDispatchToProps
 )
 
-export default connector(Crime)
+export default connector(Vacancy)
