@@ -2,7 +2,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
 
 var modernizrConfig = {
-  'filename': 'js/modernizr-bundle.jsx',
+  'filename': 'js/modernizr-bundle.js',
   'feature-detects': [
     'inputtypes'
   ]
