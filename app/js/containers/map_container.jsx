@@ -1,6 +1,6 @@
 import { connect, Connector } from 'react-redux';
 import Map from '../components/map';
-import { updateMap, updateSelectedElement, fetchNeighborhoods, addMap } from '../actions/index'
+import { updateMap, updateSelectedElement, fetchNeighborhoods, addMap, cityOverview } from '../actions/index'
 
 type OwnProps = {
   filter: {}
@@ -30,7 +30,10 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
     },
     addMap: (map) => {
       dispatch(addMap(map))
-    }
+    },
+    loadOverview: (response) => {
+      dispatch(cityOverview())
+    },
   }
 }
 

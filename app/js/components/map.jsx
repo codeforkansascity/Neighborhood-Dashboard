@@ -26,24 +26,17 @@ const MyApp = withGoogleMap(props => {
         <Polygon {...props.neighborhoodPolygon} />
       }
       {props.polygons.map((polygon, index) => {
-        var onMouseClick = () => {},
-            onMouseOver = () => {};
+        var onMouseClick = () => {};
 
-        if(polygon.selectablePolygon) {
-          if(polygon.forceClick || 'ontouchstart' in document.documentElement) {
-            onMouseClick = () => props.updateSelectedElement(polygon)
-          }
-          else {
-            onMouseOver = () => props.updateSelectedElement(polygon)
-          }
+        if(!(props.neighborhoodPolygon && props.neighborhoodPolygon.objectid === polygon.objectid) && polygon.selectablePolygon) {
+          onMouseClick = () => props.updateSelectedElement(polygon);
         }
 
         return(
           <Polygon
             {...polygon}  
             onClick={onMouseClick}
-            onMouseOver={onMouseOver}>
-          </Polygon>
+            key={polygon.objectid} />
         )}
       )}
       {props.selectedElement && props.selectedElement.windowContent && (
@@ -110,6 +103,7 @@ class Map extends React.Component {
     axios.get('https://data.kcmo.org/api/geospatial/q45j-ejyk?method=export&format=GeoJSON')
       .then(function(response) {
         _this.props.loadNeighborhoods(response.data);
+        // _this.props.loadOverview();
       })
       .catch(function(error) {
         toast(<p>Main Neighborhood map could not load. Please try again later, or try the neighborhood search.</p>, {

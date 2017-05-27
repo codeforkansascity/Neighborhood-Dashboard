@@ -54,15 +54,34 @@ const map = (state = {}, action) => {
         selectedElement: null
       }
     case 'FETCH_NEIGHBORHOODS':
-      console.log('Fetched Neighborhoods');
       var data = action.data;
       var validNeighborhoods = data["features"].filter((neighborhood) => {
         return neighborhood['properties']['nbhname'];
       });
 
+      var polygons = validNeighborhoods.map(function(neighborhood) {
+        return {
+          type: 'polygon',
+          paths: neighborhood["geometry"]["coordinates"][0][0].map (function(coordinates) {
+            return {lng: coordinates[0], lat: coordinates[1]}
+          }),
+          objectid: neighborhood.properties.objectid,
+          selectablePolygon: true,
+          options: {
+            fillColor: '#777777'
+          },
+          windowContent: 
+            <div>
+              <p>{neighborhood.properties.nbhname}</p>
+              <a className={'btn btn-primary'} onClick={() => {pushState('/neighborhood/' + neighborhood.properties.objectid + '/crime')}}>Go to Neighborhood</a>
+            </div>
+        }
+      });
+
       return {
         ...state,
-        neighborhoods: validNeighborhoods
+        neighborhoods: validNeighborhoods,
+        polygons: polygons
       }
     case 'NEIGHBORHOOD_RESET':
       var neighborhoods = state.neighborhoods || [];
@@ -71,21 +90,46 @@ const map = (state = {}, action) => {
         return hood.properties.objectid == action.neighborhoodId
       });
 
+      var neighborhoodPolygons = neighborhoods.map(function(neighborhood) {
+        return {
+          type: 'polygon',
+          paths: neighborhood["geometry"]["coordinates"][0][0].map (function(coordinates) {
+            return {lng: coordinates[0], lat: coordinates[1]}
+          }),
+          objectid: neighborhood.properties.objectid,
+          selectablePolygon: true,
+          options: {
+            fillColor: '#777777'
+          },
+          windowContent: 
+            <div>
+              <p>{neighborhood.properties.nbhname}</p>
+              <a className={'btn btn-primary'} onClick={() => {pushState('/neighborhood/' + neighborhood.properties.objectid + '/crime')}}>Go to Neighborhood</a>
+            </div>
+        }
+      });
+
       if (neighborhood) {
+        neighborhood.selectablePolygon = false;
+
         var neighborhoodPolygon = {
           type: 'polygon',
           paths: neighborhood["geometry"]["coordinates"][0][0].map (function(coordinates) {
             return {lng: coordinates[0], lat: coordinates[1]}
           }),
           objectid: neighborhood.properties.objectid,
-          name: neighborhood["properties"]["nbhname"]
+          name: neighborhood["properties"]["nbhname"],
+          options: {
+            fillColor: '#555555'
+          }
         };
 
         return {
           ...state,
           neighborhood: neighborhood,
           neighborhoodPolygon: neighborhoodPolygon,
-          polygons: [],
+          polygons: neighborhoodPolygons,
+          markers: [],
           center: calculatePolygonCenter(neighborhoodPolygon.paths),
           selectedElement: null
         }
@@ -94,12 +138,38 @@ const map = (state = {}, action) => {
         return {
           ...state,
           neighborhood: null,
-          polygons: [],
+          polygons: neighborhoodPolygons,
+          markers: [],
           selectedElement: null
         }
       }
     case 'UPDATE_MAP':
-      var mapData = action.mapData;
+      var mapData = Object.assign({}, action.mapData);
+
+      var currentNeighborhoods = state.neighborhoods || [];
+
+      var neighborhoodPolygons = currentNeighborhoods.map(function(neighborhood) {
+        return {
+          type: 'polygon',
+          paths: neighborhood["geometry"]["coordinates"][0][0].map (function(coordinates) {
+            return {lng: coordinates[0], lat: coordinates[1]}
+          }),
+          objectid: neighborhood.properties.objectid,
+          selectablePolygon: true,
+          windowContent: 
+            <div>
+              <p>{neighborhood.properties.nbhname}</p>
+              <a className={'btn btn-primary'} onClick={() => {pushState('/neighborhood/' + neighborhood.properties.objectid + '/crime')}}>Go to Neighborhood</a>
+            </div>
+        }
+      });
+
+      if (mapData.polygons) {
+        mapData.polygons = [...mapData.polygons, ...neighborhoodPolygons];
+      } else {
+        mapData.polygons = neighborhoodPolygons;
+      }
+
       return {
         ... state,
         ... mapData
