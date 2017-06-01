@@ -76,4 +76,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Allow for this to be used in production url.
+  config.action_dispatch.default_headers = { 'X-Frame-Options' => 'ALLOW-FROM http://www.kcneighborhoodstat.org' }
 end
