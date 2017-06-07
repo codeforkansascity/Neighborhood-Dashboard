@@ -375,8 +375,6 @@ class Crime extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('going well');
-
     if(this.props.params.neighborhoodId !== nextProps.params.neighborhoodId) {
       this.updateReport(nextProps.params.neighborhoodId);
     };
