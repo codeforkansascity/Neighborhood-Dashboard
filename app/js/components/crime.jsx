@@ -336,7 +336,7 @@ class CrimeStatisticsTable extends React.Component {
               <th>
               </th>
               <th colSpan="4">
-                Total Incidents this Year
+                Total Incidents from Previous Year
               </th>
             </tr>
           </thead>
@@ -366,9 +366,31 @@ class Crime extends React.Component {
     this.queryDataset = this.queryDataset.bind(this);
     this.toggleReport = this.toggleReport.bind(this);
 
+    this.updateStartDate = this.updateStartDate.bind(this);
+    this.updateEndDate = this.updateEndDate.bind(this);
+  }
+
+  componentWillMount() {
+    this.updateReport(this.props.params.neighborhoodId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('going well');
+
+    if(this.props.params.neighborhoodId !== nextProps.params.neighborhoodId) {
+      this.updateReport(nextProps.params.neighborhoodId);
+    };
+  }
+
+  updateReport(neighborhoodId) {
     var _this = this;
 
-    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/crime/grouped_totals')
+    _this.setState({
+      reportInformation: null,
+      viewingReport: false
+    });
+
+    axios.get('/api/neighborhood/' + neighborhoodId + '/crime/grouped_totals')
       .then(function(response) {
         _this.setState({
           ... _this.state,
@@ -378,9 +400,6 @@ class Crime extends React.Component {
       .then(function(error) {
         console.log(error);
       });
-
-    this.updateStartDate = this.updateStartDate.bind(this);
-    this.updateEndDate = this.updateEndDate.bind(this);
   }
 
   toggleFilters() {

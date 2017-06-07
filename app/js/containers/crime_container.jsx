@@ -6,7 +6,8 @@ const mapStateToProps = (state) => {
   return ({
     neighborhoods: state.map.neighborhoods,
     map: state.map.map,
-    legend: state.map.legend
+    legend: state.map.legend,
+    neighborhood: state.map.neighborhood
   });
 }
 
