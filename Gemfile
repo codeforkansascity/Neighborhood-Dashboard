@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby '2.2.5'
+ruby '2.4.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.1'
+gem 'rails', '5.0.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -12,7 +12,7 @@ gem 'therubyracer', platforms: :ruby
 # Use Bootstrap for styling the application
 gem 'bootstrap-sass', '~> 3.3.4'
 # Use font-awesome for icons
-gem 'font-awesome-rails', '~> 4.3.0'
+gem 'font-awesome-rails', '~> 4.7.0'
 # Used for web scraping
 gem 'nokogiri', '~> 1.6.6.2'
 # Compares strings to see how similar they are to each other
@@ -51,7 +51,7 @@ gem 'roo', '~> 2.5.0'
 # gem 'capistrano-rails', group: :development
 
 # Deploy to a passenger server
-gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
+gem "passenger", "5.1.2", require: "phusion_passenger/rack_handler"
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -73,11 +73,9 @@ group :development, :test do
 end
 
 group :test do
-  gem 'rspec-rails', '~> 3.4.1'
+  gem 'rspec-rails', '~> 3.6.0'
 end
 
 group :production do
   gem 'pg'
-
-  gem 'rails_12factor'
 end
