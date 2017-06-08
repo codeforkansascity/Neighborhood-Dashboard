@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.4.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.3'
+gem 'rails', '~> 5.0.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -51,7 +51,7 @@ gem 'roo', '~> 2.5.0'
 # gem 'capistrano-rails', group: :development
 
 # Deploy to a passenger server
-gem "passenger", "5.1.2", require: "phusion_passenger/rack_handler"
+gem "passenger", "5.0.25", require: "phusion_passenger/rack_handler"
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -62,14 +62,12 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
 
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
   # Debugging Gem
   gem 'pry'
+  gem 'pry-remote'
 end
 
 group :test do

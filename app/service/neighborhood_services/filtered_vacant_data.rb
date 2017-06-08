@@ -18,33 +18,15 @@ class NeighborhoodServices::FilteredVacantData
       filters_copy['filters'] += NeighborhoodServices::VacancyData::PropertyViolations::POSSIBLE_FILTERS
     end
 
-    threads = []
-    data = []
-
     current_neighborhood = neighborhood
 
-    threads << Thread.new do
-      data += NeighborhoodServices::VacancyData::TaxDelinquent.new(current_neighborhood, filters_copy).data
-    end
+    data = []
+    data += NeighborhoodServices::VacancyData::TaxDelinquent.new(current_neighborhood, filters_copy).data
+    data += NeighborhoodServices::VacancyData::DangerousBuildings.new(current_neighborhood, filters_copy).data
+    data += NeighborhoodServices::VacancyData::LandBank.new(current_neighborhood, filters_copy).data
+    data += NeighborhoodServices::VacancyData::ThreeEleven.new(current_neighborhood, filters_copy).data 
+    data += NeighborhoodServices::VacancyData::PropertyViolations.new(current_neighborhood, filters_copy).data
 
-    threads << Thread.new do
-      data += NeighborhoodServices::VacancyData::DangerousBuildings.new(current_neighborhood, filters_copy).data
-    end
-
-    threads << Thread.new do
-      data += NeighborhoodServices::VacancyData::LandBank.new(current_neighborhood, filters_copy).data
-    end
-
-    threads << Thread.new do
-      data += NeighborhoodServices::VacancyData::ThreeEleven.new(current_neighborhood, filters_copy).data 
-    end
-
-    threads << Thread.new do
-      data += NeighborhoodServices::VacancyData::PropertyViolations.new(current_neighborhood, filters_copy).data
-    end
-
-
-    threads.map(&:join)
     data
   end
 end
