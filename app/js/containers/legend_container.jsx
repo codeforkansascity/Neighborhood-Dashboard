@@ -19,7 +19,6 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
       dispatch(neighborhoodReset(neighborhoodId))
     },
     updateMap:(mapData) => {
-      debugger;
       dispatch(updateMap(mapData))
     }
   }
