@@ -19,3 +19,4 @@ lib/assets/bower_components/**/*
 
 node_modules
 vendor/assets/bower_components
+npm-debug.log

@@ -8,10 +8,9 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
     {
       'parcel_number' => 'parcel-1',
       'location_1'=> {
-        'latitude' => -39.12312,
-        'longitude' => 49.2912,
-        'human_address' => '{"address":"0 NO ADDRESS", "city": "Kansas City", "state": "MO", "zip":"64125"}'
+        'coordinates' => [49.2912, -39.12312]
       },
+      'location_1_address' => "0 NO ADDRESS",
       'acquisition_date' => 'May 15, 2012'
     }
   }
@@ -20,10 +19,9 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
     {
       'parcel_number' => 'parcel-2',
       'location_1'=> {
-        'latitude' => -39.12312,
-        'longitude' => 49.2912,
-        'human_address' => '{"address":"0 NO ADDRESS", "city": "Kansas City", "state": "MO", "zip":"64125"}'
+        'coordinates' => [49.2912, -39.12312]
       },
+      'location_1_address' => "0 NO ADDRESS",
       'acquisition_date' => 'May 15, 2014'
     }
   }
@@ -32,10 +30,9 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
     {
       'parcel_number' => 'parcel-3',
       'location_1'=> {
-        'latitude' => -39.12312,
-        'longitude' => 49.2912,
-        'human_address' => '{"address":"0 NO ADDRESS", "city": "Kansas City", "state": "MO", "zip":"64125"}'
+        'coordinates' => [49.2912, -39.12312]
       },
+      'location_1_address' => "0 NO ADDRESS",
       'acquisition_date' => 'January 15, 2016'
     }
   }

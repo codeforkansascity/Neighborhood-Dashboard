@@ -120,7 +120,7 @@ const map = (state = {}, action) => {
           objectid: neighborhood.properties.objectid,
           name: neighborhood["properties"]["nbhname"],
           options: {
-            fillColor: '#555555'
+            fillColor: '#000000'
           }
         };
 

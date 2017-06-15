@@ -1,4 +1,4 @@
-class NeighborhoodServices::VacancyData::Filters::AllVacantLots
+class NeighborhoodServices::VacancyData::Filters::LandBank
   def initialize(land_bank_data)
     @land_bank_data = land_bank_data.clone
   end

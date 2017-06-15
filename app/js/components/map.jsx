@@ -17,14 +17,14 @@ const MyApp = withGoogleMap(props => {
       gestureHandling={'cooperative'}
       defaultCenter={{lat: 39.0997, lng: -94.5786}}>
       <LegendContainer />
-      {props.markers.map((marker, index) => (
-        <Marker {...marker} 
-         onClick={(e) => {props.updateSelectedElement(marker)}}/>
-      ))}
       {
         props.neighborhoodPolygon && 
         <Polygon {...props.neighborhoodPolygon} />
       }
+      {props.markers.map((marker, index) => (
+        <Marker {...marker}
+         onClick={(e) => {props.updateSelectedElement(marker)}}/>
+      ))}
       {props.polygons.map((polygon, index) => {
         var onMouseClick = () => {};
 
@@ -103,7 +103,6 @@ class Map extends React.Component {
     axios.get('https://data.kcmo.org/api/geospatial/q45j-ejyk?method=export&format=GeoJSON')
       .then(function(response) {
         _this.props.loadNeighborhoods(response.data);
-        // _this.props.loadOverview();
       })
       .catch(function(error) {
         toast(<p>Main Neighborhood map could not load. Please try again later, or try the neighborhood search.</p>, {

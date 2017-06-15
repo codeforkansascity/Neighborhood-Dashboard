@@ -2,8 +2,10 @@ require 'socrata_client'
 
 class NeighborhoodServices::VacancyData::LandBank
   DATA_SOURCE = '2ebw-sp7f'
+  API_SOURCE = 'n653-v74j'
+
   DATA_SOURCE_URI = 'https://data.kcmo.org/Property/Land-Bank-Data/2ebw-sp7f'
-  POSSIBLE_FILTERS = ['foreclosed', 'demo_needed', 'all_vacant_filters']
+  POSSIBLE_FILTERS = ['foreclosed', 'demo_needed', 'landbank_vacant_lots', 'landbank_vacant_structures']
 
   def initialize(neighborhood, vacant_filters = {})
     @neighborhood = neighborhood
@@ -29,15 +31,14 @@ class NeighborhoodServices::VacancyData::LandBank
   private
 
   def query_dataset
-    parcel_data = SocrataClient.get(DATA_SOURCE, build_socrata_query)
-
+    parcel_data = SocrataClient.get(API_SOURCE, build_socrata_query)
     parcel_ids = parcel_data.map { |parcel| parcel['parcel_number'] }
     parcels = StaticData::PARCEL_DATA().select { |parcel| parcel_ids.include?(parcel['properties']['apn']) }
 
     land_bank_filtered_data(parcel_data)
       .values
       .select { |parcel|
-        parcel["location_1"].present? && parcel["location_1"]["latitude"].present?
+        parcel["location_1"].present? && parcel["location_1"]["coordinates"].present?
       }
       .map { |parcel|
         {
@@ -84,14 +85,20 @@ class NeighborhoodServices::VacancyData::LandBank
     query_string = "SELECT * where neighborhood = '#{@neighborhood.name}'"
     query_elements = []
 
-    unless @vacant_filters.include?('all_vacant_filters')
-      if @vacant_filters.include?('demo_needed')
-        query_elements << "demo_needed='Y'"
-      end
+    if @vacant_filters.include?('demo_needed')
+      query_elements << "demo_needed='Y'"
+    end
 
-      if @vacant_filters.include?('foreclosed')
-        query_elements << "(foreclosure_year IS NOT NULL)"
-      end
+    if @vacant_filters.include?('foreclosed')
+      query_elements << "(foreclosure_year IS NOT NULL)"
+    end
+
+    if @vacant_filters.include?('landbank_vacant_lots')
+      query_elements << "property_condition like 'Vacant lot or land%'"
+    end
+
+    if @vacant_filters.include?('landbank_vacant_structures')
+      query_elements << "property_condition like 'Structure%'"
     end
 
     if query_elements.present?
@@ -122,8 +129,8 @@ class NeighborhoodServices::VacancyData::LandBank
       merge_data_set(land_bank_filtered_data, demo_needed_data)
     end
 
-    if @vacant_filters.include?('all_vacant_filters')
-      all_vacant_lots_data = ::NeighborhoodServices::VacancyData::Filters::AllVacantLots.new(parcel_data).filtered_data
+    if @vacant_filters.include?('landbank_vacant_lots') || @vacant_filters.include?('landbank_vacant_structures')
+      all_vacant_lots_data = ::NeighborhoodServices::VacancyData::Filters::LandBank.new(parcel_data).filtered_data
       merge_data_set(land_bank_filtered_data, all_vacant_lots_data)
     end
 
@@ -144,7 +151,7 @@ class NeighborhoodServices::VacancyData::LandBank
     disclosure_attributes = violation['disclosure_attributes'].try(&:uniq) || []
     title = "<h3 class='info-window-header'>Land Bank Data:</h3>&nbsp;<a href='#{DATA_SOURCE_URI}'>Source</a>"
     last_updated = "Last Updated Date: #{last_updated_date}"
-    address = "<b>Address:</b>&nbsp;#{JSON.parse(violation['location_1']['human_address'])['address'].titleize}"
+    address = "<b>Address:</b>&nbsp;#{violation['location_1_address'].titleize}"
     [title, last_updated, address] + disclosure_attributes
   end
 

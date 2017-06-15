@@ -89,7 +89,8 @@ const VACANCY_CODES = {
     OPEN_THREE_ELEVEN: 'open',
     VACANT_STRUCTURE: 'vacant_structure',
     ALL_PROPERTY_VIOLATIONS: 'all_property_violations',
-    ALL_VACANT_LOTS: 'all_vacant_filters',
+    LANDBANK_VACANT_LOTS: 'landbank_vacant_lots',
+    LANDBANK_VACANT_STRUCTURES: 'landbank_vacant_structures',
     DEMO_NEEDED: 'demo_needed',
     FORECLOSED: 'foreclosed'
   }
@@ -235,7 +236,11 @@ class Vacancy extends React.Component {
               </ReactTooltip>
             </h2>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.ALL_VACANT_LOTS)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.ALL_VACANT_LOTS} onChange={this.handleFilterChange} />&nbsp;
+              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_STRUCTURES)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_STRUCTURES} onChange={this.handleFilterChange} />&nbsp;
+              Vacant Building - Land Bank Property (City of KCMO)
+            </label>
+            <label>
+              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_LOTS)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_LOTS} onChange={this.handleFilterChange} />&nbsp;
               Vacant Lot - Land Bank Property (City of KCMO)
             </label>
             <label>
