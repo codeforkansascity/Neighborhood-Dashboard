@@ -12,9 +12,6 @@ Rails.application.routes.draw do
     end
 
     namespace :neighborhood, path: '/neighborhood/:id' do
-      get 'trending_crime' => 'data#trending_crime'
-      get 'trending_three_eleven' => 'data#trending_three_eleven'
-
       resources :crime, only: [:index] do
         collection do
           get 'grouped_totals'
