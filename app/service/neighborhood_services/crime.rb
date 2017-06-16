@@ -56,7 +56,12 @@ class NeighborhoodServices::Crime
     ]
   rescue ArgumentError
     puts 'Invalid Date Format Provided'
-    [coordinate['description']]
+    [
+      coordinate['description'],
+      coordinate['address'].try(:titleize),
+      crime_date_text,
+      "<a href=#{coordinate['source']}>Data Source</a>",
+    ]
   end
 
   def crime_marker_color(ibrs)
