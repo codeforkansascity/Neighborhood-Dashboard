@@ -30,6 +30,6 @@ module NeighborhoodDashboard
     # config.i18n.default_locale = :de
 
     # Autoload all classes
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths += %W(#{config.root}/lib) # add this line
   end
 end

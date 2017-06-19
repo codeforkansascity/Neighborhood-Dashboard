@@ -5,49 +5,6 @@ RSpec.describe NeighborhoodServices::Crime do
   let(:options) { {} }
   let(:mock_kcmo_crime) { double() }
 
-  let(:valid_coordinates_person) {
-    {
-      "location_1" => {
-        "coordinates" => [-39, 39]
-      },
-      "ibrs" => '13A',
-      "disclosure_attributes" => ['<p>Example disclosure</p>'],
-      "from_date" => '2016-03-18T00:00:00.000',
-      "address" => '1519 Main St',
-      "source" => 'www.data_person.org',
-      "last_updated" => '2016-05-23T00:00:00.000'
-    }
-  }
-
-  let(:valid_coordinates_property) {
-    {
-      "location_1" => {
-        "coordinates" => [-39, 39]
-      },
-      "ibrs" => '200',
-      "disclosure_attributes" => ['<p>Example disclosure</p>'],
-      "from_date" => '2016-03-18T00:00:00.000',
-      "address" => '1519 Main St',
-      "source" => 'www.data_property.org',
-      "last_updated" => '2016-05-23T00:00:00.000'
-    }
-  }
-
-  let(:valid_coordinates_society) {
-    {
-      "location_1" => {
-        "coordinates" => [-39, 39]
-      },
-      "ibrs" => '35A',
-      "description" => 'Fake Crime',
-      "disclosure_attributes" => ['<p>Example disclosure</p>'],
-      "from_date" => '2016-03-18T00:00:00.000',
-      "address" => '1519 Main St',
-      "source" => 'www.data_society.org',
-      "last_updated" => '2016-05-23T00:00:00.000'
-    }
-  }
-
   before do
     allow(Neighborhood).to receive(:find).with(neighborhood.id).and_return(neighborhood)
     allow(KcmoDatasets::Crime).to receive(:new).with(neighborhood, options).and_return(mock_kcmo_crime)
@@ -70,130 +27,38 @@ RSpec.describe NeighborhoodServices::Crime do
   end
 
   describe '#mapped_coordinates' do
-    context 'when a valid crime against a person is retrieved' do
-      let(:data) { NeighborhoodServices::Crime.new(neighborhood.id, options).mapped_coordinates }
+    let(:mappable_coordinate_hash) { {mappable: true} }
+    let(:mappable_coordinate) { 
+      double(mappable?: true, to_h: mappable_coordinate_hash) 
+    }
 
-      before do
-        allow(mock_kcmo_crime).to receive(:query_data)
-          .and_return([valid_coordinates_person])
-      end
+    let(:non_mappable_coordinate_hash) { {mappable: false} }
+    let(:non_mappable_coordinate) { 
+      double(mappable?: false, to_h: non_mappable_coordinate_hash) 
+    }
 
-      it 'attaches the correct ibrs to the coordinates' do
-        expect(data.first['ibrs']).to eq(valid_coordinates_person['ibrs'])
-      end
+    let(:fetched_data) {
+      [
+        mappable_coordinate_hash, 
+        non_mappable_coordinate_hash
+      ]
+    }
 
-      it 'sets the type appropriately to "feature"' do
-        expect(data.first['type']).to eq('Feature')
-      end 
+    before do
+      allow(mock_kcmo_crime).to receive(:query_data)
+        .and_return(fetched_data)
 
-      it 'sets the geometry coordinates appropriately' do
-        expect(data.first['geometry']['type']).to eq('Point')
-        expect(data.first['geometry']['coordinates']).to eq(valid_coordinates_person['location_1']['coordinates'])
-      end
+      allow(Entities::Crime).to receive(:deserialize)
+        .with(mappable_coordinate_hash)
+        .and_return(mappable_coordinate)
 
-      it 'attaches the description to the disclosure attributes' do
-        expect(data.first['properties']['disclosure_attributes'][0]).to eq(valid_coordinates_person['description'])
-      end
-
-      it 'returns the coordinates with the correct address' do
-        expect(data.first['properties']['disclosure_attributes'][1]).to eq(valid_coordinates_person['address'].titleize)
-      end
-
-      it 'parses the date correct for the from date' do
-        expect(data.first['properties']['disclosure_attributes'][2]).to eq('Committed on 03/18/2016')
-      end
-
-      it 'displays the correct link for the source' do
-        expect(data.first['properties']['disclosure_attributes'][3]).to eq("<a href=www.data_person.org>Data Source</a>")
-      end
-
-      it 'returns the correct color for the marker' do
-        expect(data.first['properties']['color']).to eq('#626AB2')
-      end
+      allow(Entities::Crime).to receive(:deserialize)
+        .with(non_mappable_coordinate_hash)
+        .and_return(non_mappable_coordinate)
     end
 
-    context 'when a valid crime against a property is retrieved' do
-      let(:data) { NeighborhoodServices::Crime.new(neighborhood.id, options).mapped_coordinates }
-
-      before do
-        allow(mock_kcmo_crime).to receive(:query_data)
-          .and_return([valid_coordinates_property])
-      end
-
-      it 'attaches the correct ibrs to the coordinates' do
-        expect(data.first['ibrs']).to eq(valid_coordinates_property['ibrs'])
-      end
-
-      it 'sets the type appropriately to "feature"' do
-        expect(data.first['type']).to eq('Feature')
-      end 
-
-      it 'sets the geometry coordinates appropriately' do
-        expect(data.first['geometry']['type']).to eq('Point')
-        expect(data.first['geometry']['coordinates']).to eq(valid_coordinates_property['location_1']['coordinates'])
-      end
-
-      it 'attaches the description to the disclosure attributes' do
-        expect(data.first['properties']['disclosure_attributes'][0]).to eq(valid_coordinates_property['description'])
-      end
-
-      it 'returns the coordinates with the correct address' do
-        expect(data.first['properties']['disclosure_attributes'][1]).to eq(valid_coordinates_property['address'].titleize)
-      end
-
-      it 'parses the date correct for the from date' do
-        expect(data.first['properties']['disclosure_attributes'][2]).to eq('Committed on 03/18/2016')
-      end
-
-      it 'displays the correct link for the source' do
-        expect(data.first['properties']['disclosure_attributes'][3]).to eq("<a href=www.data_property.org>Data Source</a>")
-      end
-
-      it 'returns the correct color for the marker' do
-        expect(data.first['properties']['color']).to eq('#313945')
-      end
-    end
-
-    context 'when a valid crime against a property is retrieved' do
-      let(:data) { NeighborhoodServices::Crime.new(neighborhood.id, options).mapped_coordinates }
-
-      before do
-        allow(mock_kcmo_crime).to receive(:query_data)
-          .and_return([valid_coordinates_society])
-      end
-
-      it 'attaches the correct ibrs to the coordinates' do
-        expect(data.first['ibrs']).to eq(valid_coordinates_society['ibrs'])
-      end
-
-      it 'sets the type appropriately to "feature"' do
-        expect(data.first['type']).to eq('Feature')
-      end 
-
-      it 'sets the geometry coordinates appropriately' do
-        expect(data.first['geometry']['type']).to eq('Point')
-        expect(data.first['geometry']['coordinates']).to eq(valid_coordinates_society['location_1']['coordinates'])
-      end
-
-      it 'attaches the description to the disclosure attributes' do
-        expect(data.first['properties']['disclosure_attributes'][0]).to eq(valid_coordinates_society['description'])
-      end
-
-      it 'returns the coordinates with the correct address' do
-        expect(data.first['properties']['disclosure_attributes'][1]).to eq(valid_coordinates_society['address'].titleize)
-      end
-
-      it 'parses the date correct for the from date' do
-        expect(data.first['properties']['disclosure_attributes'][2]).to eq('Committed on 03/18/2016')
-      end
-
-      it 'displays the correct link for the source' do
-        expect(data.first['properties']['disclosure_attributes'][3]).to eq("<a href=www.data_society.org>Data Source</a>")
-      end
-
-      it 'returns the correct color for the marker' do
-        expect(data.first['properties']['color']).to eq('#6B7D96')
-      end
+    it 'only returns items that are mappable' do
+      expect(NeighborhoodServices::Crime.new(neighborhood.id, options).mapped_coordinates).to eq([mappable_coordinate_hash])
     end
   end
 end

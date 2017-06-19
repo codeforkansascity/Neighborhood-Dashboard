@@ -13,77 +13,9 @@ class NeighborhoodServices::Crime
 
   def mapped_coordinates
     @dataset ||= KcmoDatasets::Crime.new(Neighborhood.find(@neighborhood_id), @options)
-    mapify_coordinates(@dataset.query_data)
-  end
-
-  private
-
-  def mapify_coordinates(coordinates)
-    # Not every coordinate is guaraneed to have location_1 populated with
-    coordinates
-      .select{ |coordinate|
-        coordinate["location_1"].present? && coordinate["location_1"]["coordinates"].present?
-      }
-      .map { |coordinate|
-        {
-          "ibrs" => coordinate['ibrs'],
-          "type" => "Feature",
-          "geometry" => {
-            "type" => "Point",
-            "coordinates" => coordinate["location_1"]["coordinates"]
-          },
-          "properties" => {
-            "color" => crime_marker_color(coordinate['ibrs']),
-            "disclosure_attributes" => all_disclosure_attributes(coordinate)
-          }
-        }
-      }
-  end
-
-  def all_disclosure_attributes(coordinate)
-    crime_date_text = begin
-                        "Committed on #{parse_date!(coordinate['from_date'])}"
-                      rescue
-                        "Committed in #{coordinate['dataset_year']}"
-                      end
-
-    [
-      coordinate['description'],
-      coordinate['address'].try(:titleize),
-      crime_date_text,
-      "<a href=#{coordinate['source']}>Data Source</a>",
-      "Last Updated: #{parse_date_timestamp(coordinate['last_updated'])}"
-    ]
-  rescue ArgumentError
-    puts 'Invalid Date Format Provided'
-    [
-      coordinate['description'],
-      coordinate['address'].try(:titleize),
-      crime_date_text,
-      "<a href=#{coordinate['source']}>Data Source</a>",
-    ]
-  end
-
-  def crime_marker_color(ibrs)
-    case
-    when CrimeMapper::CRIME_CATEGORIES[:PERSON].include?(ibrs)
-      '#626AB2'
-    when CrimeMapper::CRIME_CATEGORIES[:PROPERTY].include?(ibrs)
-      '#313945'
-    when CrimeMapper::CRIME_CATEGORIES[:SOCIETY].include?(ibrs)
-      '#6B7D96'
-    else
-      '#ffffff'
-    end
-  end
-
-  def parse_date_timestamp(date)
-    DateTime.strptime(date.to_s, '%s').strftime('%m/%d/%Y')
-  rescue
-    'N/A'
-  end
-
-  def parse_date!(date)
-    DateTime.parse(date).strftime('%m/%d/%Y')
+    @dataset.query_data
+      .map{ |coordinate| Entities::Crime.deserialize(coordinate) }
+      .select(&Entities::GeoJson::MAPPABLE_ITEMS)
+      .map(&:to_h)
   end
 end
