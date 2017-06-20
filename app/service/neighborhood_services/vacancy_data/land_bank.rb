@@ -17,25 +17,18 @@ class NeighborhoodServices::VacancyData::LandBank
   def data
     return @data unless @data.nil?
 
-    querable_dataset = POSSIBLE_FILTERS.any? { |filter|
-      @vacant_filters.include? filter
+    parcel_data = ::KcmoDatasets::LandBankData.new(@neighborhood)
+    parcel_data.filters = {
+      data_filters: @vacant_filters,
+      start_date: @start_date,
+      end_date: @end_date
     }
 
-    if querable_dataset
-      @data ||= query_dataset
-    else
-      @data ||= []
-    end
-  end
-
-  private
-
-  def query_dataset
-    parcel_data = SocrataClient.get(API_SOURCE, build_socrata_query)
+    parcel_data = parcel_data.request_data
     parcel_ids = parcel_data.map { |parcel| parcel['parcel_number'] }
     parcels = StaticData::PARCEL_DATA().select { |parcel| parcel_ids.include?(parcel['properties']['apn']) }
 
-    land_bank_filtered_data(parcel_data)
+    @data = land_bank_filtered_data(parcel_data)
       .values
       .select { |parcel|
         parcel["location_1"].present? && parcel["location_1"]["coordinates"].present?
@@ -58,6 +51,8 @@ class NeighborhoodServices::VacancyData::LandBank
       }
   end
 
+  private
+
   def land_bank_color(vacant_lot)
     case Date.today.mjd - Date.parse(vacant_lot['acquisition_date']).mjd
     when 0...364
@@ -79,41 +74,6 @@ class NeighborhoodServices::VacancyData::LandBank
     else
       []
     end
-  end
-
-  def build_socrata_query
-    query_string = "SELECT * where neighborhood = '#{@neighborhood.name}'"
-    query_elements = []
-
-    if @vacant_filters.include?('demo_needed')
-      query_elements << "demo_needed='Y'"
-    end
-
-    if @vacant_filters.include?('foreclosed')
-      query_elements << "(foreclosure_year IS NOT NULL)"
-    end
-
-    if @vacant_filters.include?('landbank_vacant_lots')
-      query_elements << "property_condition like 'Vacant lot or land%'"
-    end
-
-    if @vacant_filters.include?('landbank_vacant_structures')
-      query_elements << "property_condition like 'Structure%'"
-    end
-
-    if query_elements.present?
-      query_string += " AND (#{query_elements.join(' or ')})"
-    end
-
-    if @start_date && @end_date
-      begin
-        query_string += " AND acquisition_date >= '#{DateTime.parse(@start_date).iso8601[0...-6]}'"
-        query_string += " AND acquisition_date <= '#{DateTime.parse(@end_date).iso8601[0...-6]}'"
-      rescue
-      end
-    end
-
-    query_string
   end
 
   def land_bank_filtered_data(parcel_data)

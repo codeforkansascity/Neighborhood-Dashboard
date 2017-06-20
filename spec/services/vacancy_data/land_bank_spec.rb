@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller do
   let(:neighborhood) { double(name: 'Testing Neighborhood')}
+  let(:mock_landbank_client) { double }
   let(:vacant_filters) { {} }
 
   let(:parcel_old) {
@@ -100,19 +101,20 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
   before do
     allow(StaticData).to receive(:PARCEL_DATA).and_return(parcel_geometric_data)
     allow(Date).to receive('today').and_return(Date.new(2016, 05, 15))
-    allow(SocrataClient).to receive(:get).and_return(parcel_responses)
+    
+    allow(KcmoDatasets::LandBankData).to receive(:new)
+      .with(neighborhood)
+      .and_return(mock_landbank_client)
+
+    allow(mock_landbank_client).to receive(:filters=)
+    allow(mock_landbank_client).to receive(:request_data).and_return(parcel_responses)    
+
     allow(HTTParty).to receive(:get).with('https://data.kcmo.org/api/views/2ebw-sp7f/').and_return(double(response: double(body: metadata)))
   end
 
   subject { NeighborhoodServices::VacancyData::LandBank.new(neighborhood, vacant_filters) }
 
   describe '#data' do
-    context 'when no filters are passed into the dataset' do
-      it 'returns an empty hash' do
-        expect(subject.data).to eq([])
-      end
-    end
-
     context 'when foreclosed vacant code is passed into the data service' do
       let(:filtered_foreclosure_data) {
         [
