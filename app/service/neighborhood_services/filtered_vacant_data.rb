@@ -22,7 +22,11 @@ class NeighborhoodServices::FilteredVacantData
 
     data = []
     data += NeighborhoodServices::VacancyData::TaxDelinquent.new(current_neighborhood, filters_copy).data
-    data += NeighborhoodServices::VacancyData::DangerousBuildings.new(current_neighborhood, filters_copy).data
+
+    if filters_copy['filters'].include?('dangerous_building') do
+      data += NeighborhoodServices::VacancyData::DangerousBuildings.new(current_neighborhood, filters_copy).data
+    end
+
     data += NeighborhoodServices::VacancyData::LandBank.new(current_neighborhood, filters_copy).data
     data += NeighborhoodServices::VacancyData::ThreeEleven.new(current_neighborhood, filters_copy).data 
     data += NeighborhoodServices::VacancyData::PropertyViolations.new(current_neighborhood, filters_copy).data

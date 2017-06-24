@@ -11,39 +11,17 @@ class NeighborhoodServices::VacancyData::DangerousBuildings
   end
 
   def data
-    return @data unless @data.nil?
+    dataset = ::KcmoDatasets::DangerousBuildings.new(@neighborhood)
+    dangerous_buildings = dataset.request_data
+    metadata = dataset.metadata
 
-    querable_dataset = POSSIBLE_FILTERS.any? { |filter|
-      @filters.include? filter
-    }
-
-    if querable_dataset
-      @data ||= query_dataset
-    else
-      @data ||= []
-    end
-  end
-
-  private 
-
-  def query_dataset
-    dangerous_buildings = ::KcmoDatasets::DangerousBuildings.new(@neighborhood).request_data
-
-    dangerous_buildings
-      .select { |building|
-        building['location'].present?
+    @data = dangerous_buildings
+      .map{ |building|
+        entity = Entities::Vacancy::DangerousBuilding.deserialize(building)
+        entity.metadata = metadata
+        entity
       }
-      .map { |building|
-        {
-          'type' => 'Feature',
-          'geometry' => building['location'],
-          'properties' => {
-            'color' => '#ffffff',
-            'disclosure_attributes' => [
-              "<h2 class='info-window-header'>Dangerous Building Case of #{building['statusofcase']}</h2>"
-            ]
-          }
-        }
-      }
+      .select(&Entities::GeoJson::MAPPABLE_ITEMS)
+      .map(&:to_h)
   end
 end
