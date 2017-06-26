@@ -2,7 +2,7 @@ require 'kcmo_datasets/property_violations'
 
 RSpec.describe KcmoDatasets::PropertyViolations do
   let(:neighborhood) { double }
-  let(:primary_dataset) { KcmoDatasets::PropertyViolations.new(neighborhood) } 
+  let(:primary_dataset) { KcmoDatasets::PropertyViolations.new(neighborhood, {}) } 
   let(:expected_endpoint) { 'ha6k-d6qu' }
 
   before do
@@ -30,15 +30,8 @@ RSpec.describe KcmoDatasets::PropertyViolations do
     end
 
     context 'when the user has requested vacant_registry_failure data' do
-      let(:expected_vacant_registry_codes) {
-        [
-          "'NSVACANT'", 
-          "'NSBOARD01'"
-        ]
-      }
-
       let(:expected_filter_query) {
-        "violation_code in (#{expected_vacant_registry_codes.join(',')})"
+        "violation_code = 'NSVACANT'"
       }
 
       before do

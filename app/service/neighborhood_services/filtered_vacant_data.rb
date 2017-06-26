@@ -23,7 +23,7 @@ class NeighborhoodServices::FilteredVacantData
     data = []
     data += NeighborhoodServices::VacancyData::TaxDelinquent.new(current_neighborhood, filters_copy).data
 
-    if filters_copy['filters'].include?('dangerous_building') do
+    if filters_copy['filters'].include?('dangerous_building')
       data += NeighborhoodServices::VacancyData::DangerousBuildings.new(current_neighborhood, filters_copy).data
     end
 

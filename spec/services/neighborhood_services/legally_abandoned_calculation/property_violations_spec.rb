@@ -34,6 +34,7 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolat
   before do
     allow(KcmoDatasets::PropertyViolations).to receive(:new).and_return(violations_query_object)
     allow(violations_query_object).to receive(:vacant_registry_failure).and_return(violations_query_object)
+    allow(violations_query_object).to receive(:boarded_longterm).and_return(violations_query_object)
     allow(violations_query_object).to receive(:request_data).and_return(property_violations_data)
     allow(violations_query_object).to receive(:metadata).and_return(metadata)
   end

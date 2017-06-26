@@ -3,13 +3,14 @@ require 'socrata_client'
 module KcmoDatasets
   class PropertyViolations
     DATASET = 'ha6k-d6qu'
-    SOURCE_URI = 'https://data.kcmo.org/Housing/Property-Violations/nhtf-e75a/data'
+    SOURCE_URI = 'https://data.kcmo.org/Housing/Property-Violations/nhtf-e75a'
 
     attr_accessor :requested_datasets
 
-    def initialize(neighborhood)
+    def initialize(neighborhood, filters = {})
       @neighborhood = neighborhood
-      @requested_datasets = []
+      @filters = filters
+      @requested_datasets = filters[:filters] || []
     end
 
     def request_data
@@ -23,6 +24,11 @@ module KcmoDatasets
 
     def vacant_registry_failure
       @requested_datasets = ['vacant_registry_failure']
+      self
+    end
+
+    def boarded_longterm
+      @requested_datasets = ['boarded_longterm']
       self
     end
 
@@ -48,6 +54,14 @@ module KcmoDatasets
         query += " AND (#{build_query_filters})"
       end
 
+      if @filters[:start_date] && @filters[:end_date]
+        begin
+          query_string += " AND violation_entry_date >= '#{DateTime.parse(@filters[:start_date]).iso8601[0...-6]}'"
+          query_string += " AND violation_entry_date <= '#{DateTime.parse(@filters[:end_date]).iso8601[0...-6]}'"
+        rescue
+        end
+      end
+
       query
     end
 
@@ -58,6 +72,10 @@ module KcmoDatasets
         filters << vacant_registry_failure_query
       end
 
+      if @requested_datasets.include?('boarded_longterm')
+        filters << boarded_longterm_query
+      end
+
       if @requested_datasets.include?('open_cases')
         filters << open_cases_query
       end
@@ -66,13 +84,15 @@ module KcmoDatasets
     end
 
     def vacant_registry_failure_query
-      vacant_registry_code = ["'NSVACANT'", "'NSBOARD01'"]
-
-      "violation_code in (#{vacant_registry_code.join(',')})"
+      "violation_code = 'NSVACANT'"
     end
 
     def open_cases_query
       "status='Open'"
+    end
+
+    def boarded_longterm_query
+      "violation_code = 'NSBOARD01'"
     end
   end
 end

@@ -88,7 +88,7 @@ const VACANCY_CODES = {
     VACANT_REGISTRY_FAILURE: 'vacant_registry_failure',
     OPEN_THREE_ELEVEN: 'open',
     VACANT_STRUCTURE: 'vacant_structure',
-    ALL_PROPERTY_VIOLATIONS: 'all_property_violations',
+    ALL_PROPERTY_VIOLATIONS: 'open_cases',
     LANDBANK_VACANT_LOTS: 'landbank_vacant_lots',
     LANDBANK_VACANT_STRUCTURES: 'landbank_vacant_structures',
     DEMO_NEEDED: 'demo_needed',

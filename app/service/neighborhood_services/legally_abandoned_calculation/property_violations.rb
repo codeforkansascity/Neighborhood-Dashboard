@@ -7,6 +7,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations
     dataset = KcmoDatasets::PropertyViolations.new(@neighborhood)
     property_violations_data = dataset
                                .vacant_registry_failure
+                               .boarded_longterm
                                .request_data
 
     property_violations_data.each_with_object({}) do |violation, hash|

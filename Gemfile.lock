@@ -47,6 +47,7 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     builder (3.2.3)
+    byebug (9.0.6)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
     debug_inspector (0.0.3)
@@ -101,6 +102,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.4.2)
+      byebug (~> 9.0)
+      pry (~> 0.10)
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
@@ -219,6 +223,7 @@ DEPENDENCIES
   passenger (= 5.0.25)
   pg
   pry
+  pry-byebug
   pry-remote
   rails (~> 5.0.3)
   roo (~> 2.5.0)

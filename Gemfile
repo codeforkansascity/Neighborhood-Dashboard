@@ -68,6 +68,7 @@ group :development, :test do
   # Debugging Gem
   gem 'pry'
   gem 'pry-remote'
+  gem 'pry-byebug'
 end
 
 group :test do
