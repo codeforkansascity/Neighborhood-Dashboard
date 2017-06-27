@@ -27,7 +27,6 @@ class NeighborhoodServices::VacancyData::PropertyViolations
   private
 
   def query_dataset
-    puts 'Querying vacancy data'
     dataset = KcmoDatasets::PropertyViolations.new(@neighborhood, @filters)
     metadata = dataset.metadata
 

@@ -3,12 +3,13 @@ require 'socrata_client'
 module KcmoDatasets
   class LandBankData
     DATASET = 'n653-v74j'
+    SOURCE_URI = 'https://data.kcmo.org/Property/Dangerous-Buildings-List/ax3m-jhxx/data'
 
     attr_accessor :filters
 
-    def initialize(neighborhood)
+    def initialize(neighborhood, filters = {})
       @neighborhood = neighborhood
-      @filters = {}
+      @filters = filters
     end
 
     def request_data

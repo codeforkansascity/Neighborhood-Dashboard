@@ -7,7 +7,8 @@ module Entities
 
     attr_accessor :datasets
 
-    def initialize
+    def initialize(args = {})
+      super(args)
       @datasets = []
     end
 
