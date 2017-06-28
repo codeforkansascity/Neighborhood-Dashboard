@@ -44,6 +44,12 @@ module Entities
       hash
     end
 
+    def data_hash
+      instance_variables.each_with_object({}) do |attribute, h|
+        h[attribute.to_s.tr('@', '')] = self.instance_variable_get("#{attribute.to_s}")
+      end
+    end
+
     def self.deserialize(hash)
       self.new(JSON.parse(hash.to_json))
     end

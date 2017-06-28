@@ -6,6 +6,6 @@ module Utilities::AttributesList
   end
 
   def attributes
-    @attributes
+    @attributes || []
   end
 end

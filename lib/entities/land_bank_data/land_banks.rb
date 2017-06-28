@@ -5,14 +5,15 @@ module Entities::LandBankData
 
     def properties 
       {
-        "color" => '#ffffff'
+        'parcel_number' => parcel_number,
+        'color' => land_bank_color
       }
     end
 
     def disclosure_attributes
       title = "<h3 class='info-window-header'>Land Bank Data:</h3>&nbsp;<a href='#{KcmoDatasets::LandBankData::SOURCE_URI}'>Source</a>"
       last_updated = "Last Updated Date: #{last_updated_date}"
-      location_address = "<b>Address:</b>&nbsp;#{address}"
+      location_address = "<b>Address:</b>&nbsp;#{address.try(&:titleize)}"
       [title, last_updated, location_address] + super
     end
 
@@ -39,8 +40,8 @@ module Entities::LandBankData
       'N/A'
     end
 
-    def land_bank_color(vacant_lot)
-      case Date.today.mjd - Date.parse(acquisition_date).mjd
+    def land_bank_color
+      case Date.today.mjd - Date.parse(@acquisition_date).mjd
       when 0...364
         '#A3F5FF'
       when 365...1094

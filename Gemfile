@@ -51,7 +51,7 @@ gem 'roo', '~> 2.5.0'
 # gem 'capistrano-rails', group: :development
 
 # Deploy to a passenger server
-gem "passenger", "5.0.25", require: "phusion_passenger/rack_handler"
+# gem "passenger", "5.0.25", require: "phusion_passenger/rack_handler"
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -68,7 +68,6 @@ group :development, :test do
   # Debugging Gem
   gem 'pry'
   gem 'pry-remote'
-  gem 'pry-byebug'
 end
 
 group :test do

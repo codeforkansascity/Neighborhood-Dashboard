@@ -76,7 +76,7 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
           'apn' => 'parcel-4'
         },
         'geometry' => {
-          'coordinates' => [[[0,0], [1,1], [2,2], [3,3], [4,4]]]
+          'coordinates' => []
         }
       },
       {
@@ -107,7 +107,8 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
       .and_return(mock_landbank_client)
 
     allow(mock_landbank_client).to receive(:filters=)
-    allow(mock_landbank_client).to receive(:request_data).and_return(parcel_responses)    
+    allow(mock_landbank_client).to receive(:request_data).and_return(parcel_responses)
+    allow(mock_landbank_client).to receive(:metadata).and_return(metadata)
 
     allow(HTTParty).to receive(:get).with('https://data.kcmo.org/api/views/2ebw-sp7f/').and_return(double(response: double(body: metadata)))
   end
@@ -127,19 +128,19 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
 
       let(:expected_foreclosed_filter_response_hash) {
         {
-          "type"=>"Feature", 
-          "geometry"=> {
-            "type"=>"Polygon", 
+          type: 'Feature',
+          geometry: {
+            "type"=>"Polygon",
             "coordinates"=>[[0, 0], [1, 1], [2, 2], [3, 3], [4, 4]]
-          }, 
-          "properties"=> {
-            "parcel_number"=>"parcel-1", 
-            "color"=>"#000000", 
-            "disclosure_attributes" => [
-              "<h3 class='info-window-header'>Land Bank Data:</h3>&nbsp;<a href='#{NeighborhoodServices::VacancyData::LandBank::DATA_SOURCE_URI}'>Source</a>",
-              "Last Updated Date: N/A",
+          },
+          properties: {
+            "parcel_number"=>"parcel-1",
+            "color"=>"#000000",
+            disclosure_attributes: [
+              "<h3 class='info-window-header'>Land Bank Data:</h3>&nbsp;<a href='#{KcmoDatasets::LandBankData::SOURCE_URI}'>Source</a>",
+              "Last Updated Date: 06/03/2015",
               "<b>Address:</b>&nbsp;0 No Address",
-              "<p>Foreclosure Year</p>"
+              "<b>Foreclosure Year:</b> "
             ]
           }
         }
@@ -154,28 +155,28 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
       end
 
       it 'returns a hash of all the parcels that also contain geometric parcel data' do
-        expect(subject.data.find{ |parcel| parcel['properties']['parcel_number'] == 'parcel-1'})
+        expect(subject.data.find{ |parcel| parcel[:properties]['parcel_number'] == 'parcel-1'})
           .to eq(expected_foreclosed_filter_response_hash)
       end
 
       it 'excludes any parcels that do not have any geometric coordinates' do
-        expect(subject.data.find{ |parcel| parcel['properties']['parcel_number'] == 'parcel-4'})
+        expect(subject.data.find{ |parcel| parcel[:properties]['parcel_number'] == 'parcel-4'})
           .to be_nil
       end
 
       it 'assigns #000000 for parcels that are older than 3 years' do
-        target_parcel = subject.data.find { |parcel| parcel['properties']['parcel_number'] == 'parcel-1' }
-        expect(target_parcel['properties']['color']).to eq('#000000')
+        target_parcel = subject.data.find { |parcel| parcel[:properties]['parcel_number'] == 'parcel-1' }
+        expect(target_parcel[:properties]['color']).to eq('#000000')
       end
 
       it 'assigns #3A46B2 for parcels between 1 and 3 years in age' do
-        target_parcel = subject.data.find { |parcel| parcel['properties']['parcel_number'] == 'parcel-2' }
-        expect(target_parcel['properties']['color']).to eq('#3A46B2')
+        target_parcel = subject.data.find { |parcel| parcel[:properties]['parcel_number'] == 'parcel-2' }
+        expect(target_parcel[:properties]['color']).to eq('#3A46B2')
       end
 
       it 'assigns #A3F5FF for parcels less than a year in age' do
-        target_parcel = subject.data.find { |parcel| parcel['properties']['parcel_number'] == 'parcel-3' }
-        expect(target_parcel['properties']['color']).to eq('#A3F5FF')
+        target_parcel = subject.data.find { |parcel| parcel[:properties]['parcel_number'] == 'parcel-3' }
+        expect(target_parcel[:properties]['color']).to eq('#A3F5FF')
       end
     end
   end

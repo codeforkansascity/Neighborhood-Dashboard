@@ -28,7 +28,9 @@ class NeighborhoodServices::VacancyData::LandBank
 
     @data = land_bank_filtered_data(parcel_data)
       .values
-      .each { |violation| violation.metadata = parcel_data_set.metadata }
+      .each { |violation| 
+        violation.metadata = parcel_data_set.metadata
+      }
       .select(&Entities::GeoJson::MAPPABLE_ITEMS)
       .map(&:to_h)
   end
@@ -46,13 +48,12 @@ class NeighborhoodServices::VacancyData::LandBank
 
     if @vacant_filters.include?('demo_needed')
       demo_needed_data = ::NeighborhoodServices::VacancyData::Filters::DemoNeeded.new(parcel_data).filtered_data
-      demo_needed_data_entities = foreclosure_data.map{ |land_bank| ::Entities::LandBankData::DemoNeeded.deserialize(land_bank) }
+      demo_needed_data_entities = demo_needed_data.map{ |land_bank| ::Entities::LandBankData::DemoNeeded.deserialize(land_bank) }
       merge_data_set(land_bank_filtered_data, demo_needed_data_entities)
     end
 
     if @vacant_filters.include?('landbank_vacant_lots') || @vacant_filters.include?('landbank_vacant_structures')
       all_vacant_lots_data = ::NeighborhoodServices::VacancyData::Filters::LandBank.new(parcel_data).filtered_data
-      puts all_vacant_lots_data
       all_vacant_lots_data_entities = all_vacant_lots_data.map{ |land_bank| ::Entities::LandBankData::LandBank.deserialize(land_bank) }
       merge_data_set(land_bank_filtered_data, all_vacant_lots_data_entities)
     end
@@ -62,7 +63,7 @@ class NeighborhoodServices::VacancyData::LandBank
 
   def merge_data_set(data, data_set)
     data_set.each do |entity|
-      data[entity.parcel_number] = Entities::LandBankData::LandBanks.new(entity.to_h) unless data[entity.parcel_number]
+      data[entity.parcel_number] = Entities::LandBankData::LandBanks.new(entity.data_hash) unless data[entity.parcel_number]
       data[entity.parcel_number].add_dataset(entity)
     end
   end

@@ -9,13 +9,14 @@ class NeighborhoodServices::FilteredVacantData
 
   def filtered_vacant_data(filters = {})
     filters_copy = filters.dup || {}
+    filters = filters_copy['filters'] || []
 
-    if filters_copy['filters'].include?('all_property_violations')
-      filters_copy['filters'] += NeighborhoodServices::VacancyData::TaxDelinquent::POSSIBLE_FILTERS
-      filters_copy['filters'] += NeighborhoodServices::VacancyData::DangerousBuildings::POSSIBLE_FILTERS
-      filters_copy['filters'] += NeighborhoodServices::VacancyData::LandBank::POSSIBLE_FILTERS
-      filters_copy['filters'] += NeighborhoodServices::VacancyData::ThreeEleven::POSSIBLE_FILTERS
-      filters_copy['filters'] += NeighborhoodServices::VacancyData::PropertyViolations::POSSIBLE_FILTERS
+    if filters.include?('all_property_violations')
+      filters += NeighborhoodServices::VacancyData::TaxDelinquent::POSSIBLE_FILTERS
+      filters += NeighborhoodServices::VacancyData::DangerousBuildings::POSSIBLE_FILTERS
+      filters += NeighborhoodServices::VacancyData::LandBank::POSSIBLE_FILTERS
+      filters += NeighborhoodServices::VacancyData::ThreeEleven::POSSIBLE_FILTERS
+      filters += NeighborhoodServices::VacancyData::PropertyViolations::POSSIBLE_FILTERS
     end
 
     current_neighborhood = neighborhood
@@ -23,7 +24,7 @@ class NeighborhoodServices::FilteredVacantData
     data = []
     data += NeighborhoodServices::VacancyData::TaxDelinquent.new(current_neighborhood, filters_copy).data
 
-    if filters_copy['filters'].include?('dangerous_building')
+    if filters.include?('dangerous_building')
       data += NeighborhoodServices::VacancyData::DangerousBuildings.new(current_neighborhood, filters_copy).data
     end
 

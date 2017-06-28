@@ -3,7 +3,7 @@ module Entities::LandBankData
     attr_accessor :foreclosure_year
 
     def disclosure_attributes
-      ["<b>Foreclosure Year:</b> #{land_bank['foreclosure_year']}"]
+      ["<b>Foreclosure Year:</b> #{foreclosure_year}"]
     end
   end
 end

@@ -29,6 +29,7 @@ class NeighborhoodServices::VacancyData::ThreeEleven
   def query_dataset
     three_eleven_data = SocrataClient.get(DATA_SOURCE, build_socrata_query)
 
+
     three_eleven_filtered_data(three_eleven_data)
       .values
       .select { |parcel|
@@ -50,34 +51,6 @@ class NeighborhoodServices::VacancyData::ThreeEleven
       }
   end
 
-  def build_socrata_query
-    query_string = "SELECT * where neighborhood = '#{@neighborhood.name}'"
-    query_elements = []
-
-    if @three_eleven_filters.include?('vacant_structure')
-      query_elements << "request_type='Nuisance Violations on Private Property Vacant Structure'"
-      query_elements  << "request_type='Vacant Structure Open to Entry'"
-    end
-
-    if @three_eleven_filters.include?('open')
-      query_elements << "status='OPEN'"
-    end
-
-    if query_elements.present?
-      query_string += " AND (#{query_elements.join(' or ')})"
-    end
-
-    if @start_date && @end_date
-      begin
-        query_string += " AND creation_date >= '#{DateTime.parse(@start_date).iso8601[0...-6]}'"
-        query_string += " AND creation_date <= '#{DateTime.parse(@end_date).iso8601[0...-6]}'"
-      rescue
-      end
-    end
-
-    query_string
-  end
-
   def three_eleven_filtered_data(parcel_data)
     three_eleven_filtered_data = {}
 
@@ -96,11 +69,8 @@ class NeighborhoodServices::VacancyData::ThreeEleven
 
   def merge_data_set(data, data_set)
     data_set.each do |entity|
-      if data[entity['parcel_id_no']]
-        data[entity['parcel_id_no']]['disclosure_attributes'] += entity['disclosure_attributes']
-      else
-        data[entity['parcel_id_no']] = entity
-      end
+      data[entity.address] = Entities::PropertyViolations::Violations.new unless data[entity.address]
+      data[entity.address].add_dataset(entity)
     end
   end
 

@@ -7,9 +7,10 @@ module KcmoDatasets
 
     attr_accessor :requested_datasets
 
-    def initialize(neighborhood)
+    def initialize(neighborhood, filters = {})
       @neighborhood = neighborhood
-      @requested_datasets = []
+      @filters = filters
+      @requested_datasets = filters[:filters] || []
     end
 
     def request_data
@@ -39,6 +40,14 @@ module KcmoDatasets
 
       if @requested_datasets.present?
         query += " AND (#{build_query_filters})"
+      end
+
+      if @filters[:start_date] && @filters[:end_date]
+        begin
+          query += " AND creation_date >= '#{DateTime.parse(@start_date).iso8601[0...-6]}'"
+          query += " AND creation_date <= '#{DateTime.parse(@end_date).iso8601[0...-6]}'"
+        rescue
+        end
       end
 
       query
