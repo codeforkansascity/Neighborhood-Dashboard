@@ -8,10 +8,5 @@ class NeighborhoodServices::VacancyData::Filters::OpenThreeEleven
       .select { |three_eleven_violation|
         three_eleven_violation['status'] == 'OPEN'
       }
-      .each { |three_eleven_violation|
-        three_eleven_violation['disclosure_attributes'] = [
-          'Open Case'
-        ]
-      }
   end
 end

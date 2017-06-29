@@ -10,10 +10,5 @@ class NeighborhoodServices::VacancyData::Filters::VacantStructure
         three_eleven_violation['request_type'] == 'Vacant Structure Open to Entry' ||
         three_eleven_violation['request_type'] == 'Animal Control'
       }
-      .each { |three_eleven_violation|
-        three_eleven_violation['disclosure_attributes'] = [
-          three_eleven_violation['request_type']
-        ]
-      }
   end
 end

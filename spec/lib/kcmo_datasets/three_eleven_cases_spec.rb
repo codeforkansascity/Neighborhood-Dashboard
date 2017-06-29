@@ -13,14 +13,14 @@ RSpec.describe KcmoDatasets::ThreeElevenCases do
   describe '#vacant_called_in_violations' do    
     it 'adds vacant_called_in to requested datasets' do
       primary_dataset.vacant_called_in_violations
-      expect(primary_dataset.requested_datasets.include?('vacant_called_in')).to eq(true)
+      expect(primary_dataset.requested_datasets.include?('vacant_structure')).to eq(true)
     end
   end
 
   describe '#open_cases' do    
     it 'adds open_cases to requested datasets' do
       primary_dataset.open_cases
-      expect(primary_dataset.requested_datasets.include?('open_cases')).to eq(true)
+      expect(primary_dataset.requested_datasets.include?('open_three_eleven')).to eq(true)
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe KcmoDatasets::ThreeElevenCases do
       end
     end
 
-    context 'when the dataset is looking for vacant_called_in' do
+    context 'when the dataset is looking for vacant_structure' do
       let(:expected_request_types) {
         [
           "'Animals / Pets-Rat Treatment-Vacant Home'",

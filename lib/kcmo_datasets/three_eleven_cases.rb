@@ -18,12 +18,12 @@ module KcmoDatasets
     end
 
     def vacant_called_in_violations
-      @requested_datasets << 'vacant_called_in'
+      @requested_datasets << 'vacant_structure'
       self
     end
 
     def open_cases
-      @requested_datasets << 'open_cases'
+      @requested_datasets << 'open_three_eleven'
       self
     end
 
@@ -56,18 +56,18 @@ module KcmoDatasets
     def build_query_filters
       filters = []
 
-      if @requested_datasets.include?('vacant_called_in')
-        filters << vacant_called_in_violations_query
+      if @requested_datasets.include?('vacant_structure')
+        filters << vacant_structure_query
       end
 
-      if @requested_datasets.include?('open_cases')
+      if @requested_datasets.include?('open_three_eleven')
         filters << open_cases_query
       end
 
       filters.join(' OR ')
     end
 
-    def vacant_called_in_violations_query
+    def vacant_structure_query
       vacant_violations = [
         "'Animals / Pets-Rat Treatment-Vacant Home'",
         "'Animals / Pets-Rat Treatment-Vacant Property'",

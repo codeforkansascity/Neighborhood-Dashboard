@@ -86,7 +86,7 @@ const VACANCY_CODES = {
     DANGEROUS_BUILDING: 'dangerous_building',
     BOARDED_LONGTERM: 'boarded_longterm',
     VACANT_REGISTRY_FAILURE: 'vacant_registry_failure',
-    OPEN_THREE_ELEVEN: 'open',
+    OPEN_THREE_ELEVEN: 'open_three_eleven',
     VACANT_STRUCTURE: 'vacant_structure',
     ALL_PROPERTY_VIOLATIONS: 'open_cases',
     LANDBANK_VACANT_LOTS: 'landbank_vacant_lots',
