@@ -53,8 +53,7 @@ class NeighborhoodServices::VacancyData::LandBank
     end
 
     if @vacant_filters.include?('landbank_vacant_lots') || @vacant_filters.include?('landbank_vacant_structures')
-      all_vacant_lots_data = ::NeighborhoodServices::VacancyData::Filters::LandBank.new(parcel_data).filtered_data
-      all_vacant_lots_data_entities = all_vacant_lots_data.map{ |land_bank| ::Entities::LandBankData::LandBank.deserialize(land_bank) }
+      all_vacant_lots_data_entities = parcel_data.map{ |land_bank| ::Entities::LandBankData::LandBank.deserialize(land_bank) }
       merge_data_set(land_bank_filtered_data, all_vacant_lots_data_entities)
     end
 

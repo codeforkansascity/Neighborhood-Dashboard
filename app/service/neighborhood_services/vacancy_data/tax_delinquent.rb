@@ -28,21 +28,8 @@ class NeighborhoodServices::VacancyData::TaxDelinquent
     tax_delinquent_data = NeighborhoodServices::VacancyData::Filters::TaxDelinquent.new(@neighborhood.addresses).filtered_data
 
     tax_delinquent_data
-      .select { |address|
-        address['longitude'].present? && address['latitude'].present?
-      }
-      .map { |address|
-        {
-          'type' => 'Feature',
-          'geometry' => {
-            'type' => 'Point',
-            'coordinates' => [address['longitude'].to_f, address['latitude'].to_f]
-          },
-          'properties' => {
-            'color' => '#ffffff',
-            'disclosure_attributes' => address['disclosure_attributes']
-          }
-        }
-      }
+      .map{ |building| Entities::AddressApi::Address.deserialize(building) }
+      .select{ |building| building.mappable? && building.tax_delinquent?}
+      .map(&:to_h)
   end
 end
