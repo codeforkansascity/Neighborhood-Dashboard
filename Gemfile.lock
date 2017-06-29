@@ -93,6 +93,9 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.6.6.4)
       mini_portile (~> 0.6.0)
+    passenger (5.0.25)
+      rack
+      rake (>= 0.8.1)
     pg (0.21.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -213,6 +216,7 @@ DEPENDENCIES
   jquery-rails
   js-routes
   nokogiri (~> 1.6.6.2)
+  passenger (= 5.0.25)
   pg
   pry
   pry-remote
