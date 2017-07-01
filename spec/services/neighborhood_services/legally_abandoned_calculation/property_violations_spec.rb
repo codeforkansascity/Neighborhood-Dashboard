@@ -14,6 +14,13 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolat
         'violation_description' => 'VACANT DATA'
       },
       {
+        'address' => 'Address 1',
+        'mapping_location' => {
+          'coordinates' => [-45,90]
+        },
+        'violation_description' => 'BOARDED'
+      },
+      {
         'mapping_location' => {
           'coordinates' => [-45,90]
         },
@@ -47,13 +54,13 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolat
       expect(calculated_data['address 1']).to_not be_nil
     end
 
-    it 'assigns a point value of 1 to every item with an address' do
-      expect(calculated_data['address 1'][:points]).to eq(2)
-    end
-
     it 'adds in the latitude and longitude from the dataset' do
       expect(calculated_data['address 1'][:longitude]).to eq(-45.0)
       expect(calculated_data['address 1'][:latitude]).to eq(90.0)
+    end
+
+    it 'attaches just one of the violations to the data hash' do
+      expect(calculated_data['address 1'][:violation_description]).to eq('BOARDED')
     end
   end
 end

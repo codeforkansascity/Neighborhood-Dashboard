@@ -14,15 +14,11 @@ class NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations
       street_address = violation['address']
 
       if street_address.present?
-        header = "<h2 class='info-window-header'>Property Violations</h2>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'><small>(Source)</small></a>"
-        last_updated = "Last Updated: #{last_updated_date(dataset.metadata)}"
-
         hash[street_address.downcase] = {
-          points: 2,
+          last_updated_date: last_updated_date(dataset.metadata),
           longitude: violation['mapping_location']['coordinates'][0].to_f,
           latitude: violation['mapping_location']['coordinates'][1].to_f,
-          categories: [NeighborhoodServices::LegallyAbandonedCalculation::VACANT_RELATED_VIOLATION],
-          disclosure_attributes: [header, last_updated, violation['violation_description'].titleize]
+          violation_description: violation['violation_description']
         }
       end
     end

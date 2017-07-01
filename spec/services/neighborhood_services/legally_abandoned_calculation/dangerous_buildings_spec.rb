@@ -45,17 +45,13 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuild
       expect(calculated_data['address 1']).to_not be_nil
     end
 
-    it 'sets the point value to 2 for a dangerous building' do
-      expect(calculated_data['address 1'][:points]).to eq(2)
+    it 'adds status of the case to the hash' do
+      expect(calculated_data['address 1'][:statusofcase]).to eq('statusofcase')
     end
 
     it 'sets the latitude and longitude appropriately for the addresses' do
       expect(calculated_data['address 1'][:longitude]).to eq(-50)
       expect(calculated_data['address 1'][:latitude]).to eq(100)
-    end
-
-    it 'adds the status onto the set of disclosure_attributes' do
-      expect(calculated_data['address 1'][:disclosure_attributes][2]).to eq('statusofcase')
     end
   end
 end

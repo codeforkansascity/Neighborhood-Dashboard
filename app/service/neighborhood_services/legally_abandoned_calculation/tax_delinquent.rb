@@ -21,30 +21,16 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
           current_year -= 1
         end
 
-        points = if consecutive_years >= 3
-                   2
-                 elsif consecutive_years >= 1
-                   1
-                 else
-                   0
-                 end
-
-        if points > 0
-          addresses[current_address.downcase] = {
-            points: points,
-            longitude: taxed_address['census_longitude'].to_f,
-            latitude: taxed_address['census_latitude'].to_f,
-            categories: [NeighborhoodServices::LegallyAbandonedCalculation::TAX_DELINQUENT_VIOLATION],
-            zip: taxed_address['zip'],
-            city: taxed_address['city'],
-            state: taxed_address['state'],
-            owner: taxed_address['county_owner'].try(&:titleize),
-            disclosure_attributes: [
-              "<h2 class='info-window-header'>Tax Delinquency</h2>&nbsp;<a href='#{@neighborhood.address_source_uri}'><small>(Source)</small></a>",
-              "#{consecutive_years} year(s) Tax Delinquent"
-            ]
-          }
-        end
+        addresses[current_address.downcase] = {
+          source: @neighborhood.address_source_uri,
+          longitude: taxed_address['census_longitude'].to_f,
+          latitude: taxed_address['census_latitude'].to_f,
+          consecutive_years: consecutive_years,
+          zip: taxed_address['zip'],
+          city: taxed_address['city'],
+          state: taxed_address['state'],
+          owner: taxed_address['county_owner'].try(&:titleize)
+        }
       end
     end
 
