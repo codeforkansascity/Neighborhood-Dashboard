@@ -1,65 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-google-maps'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 
 import { uploadMapContext } from '../actions/index'
-import LegendContainer from '../containers/legend_container'
 import CodeForKcLogo from '../images/code_for_kc.png'
-
-const MyApp = withGoogleMap(props => {
-  return(
-    <GoogleMap
-      ref={props.onMapLoad}
-      defaultZoom={props.zoom}
-      center={props.center}
-      gestureHandling={'cooperative'}
-      defaultCenter={{lat: 39.0997, lng: -94.5786}}>
-      <LegendContainer />
-      {
-        props.neighborhoodPolygon && 
-        <Polygon {...props.neighborhoodPolygon} />
-      }
-      {props.markers.map((marker, index) => (
-        <Marker {...marker}
-         onClick={(e) => {props.updateSelectedElement(marker)}}/>
-      ))}
-      {props.polygons.map((polygon, index) => {
-        var onMouseClick = () => {};
-
-        if(!(props.neighborhoodPolygon && props.neighborhoodPolygon.objectid === polygon.objectid) && polygon.selectablePolygon) {
-          onMouseClick = () => props.updateSelectedElement(polygon);
-        }
-
-        return(
-          <Polygon
-            {...polygon}  
-            onClick={onMouseClick}
-            key={polygon.objectid} />
-        )}
-      )}
-      {props.selectedElement && props.selectedElement.windowContent && (
-          <InfoWindow
-            position={props.getInfoWindowPosition(props.selectedElement)}
-            onCloseClick={() => props.updateSelectedElement(null)}>
-            <div style={props.selectedElement.windowStyle}>{props.selectedElement.windowContent}</div>
-          </InfoWindow>
-        )
-      }
-    </GoogleMap>
-    );
-  }
-);
-
-MyApp.defaultProps = {
-  markers: [],
-  legend: null,
-  polygons: [],
-  center: {lat: 39.0997, lng: -94.5786},
-  zoom: 14,
-  selectedElement: null
-};
+import GoogleMapsElement from './google_maps_element'
 
 class Map extends React.Component {
   constructor(props) {
@@ -115,7 +61,7 @@ class Map extends React.Component {
     return(
         <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
           {this.props.children}
-          <MyApp 
+          <GoogleMapsElement 
             containerElement= { <div style={{flexGrow: '1', display: 'flex', minHeight: '400px'}} /> }
             mapElement={ <div style={{flexGrow: '1'}} /> }
             onMapLoad={this.handleMapMounted}
