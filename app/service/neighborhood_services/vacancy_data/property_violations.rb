@@ -9,24 +9,6 @@ class NeighborhoodServices::VacancyData::PropertyViolations
   end
 
   def data
-    return @data unless @data.nil?
-
-    data_filters = @filters[:filters] || []
-
-    querable_dataset = POSSIBLE_FILTERS.any? { |filter|
-      data_filters.include? filter
-    }
-
-    if querable_dataset
-      @data ||= query_dataset
-    else
-      @data ||= []
-    end
-  end
-
-  private
-
-  def query_dataset
     dataset = KcmoDatasets::PropertyViolations.new(@neighborhood, @filters)
     metadata = dataset.metadata
 
@@ -35,6 +17,8 @@ class NeighborhoodServices::VacancyData::PropertyViolations
       .each { |violation| violation.metadata = metadata }
       .map(&:to_h)
   end
+
+  private
 
   def property_violations_filtered_data(violation_data)
     property_violations_filtered_data = {}

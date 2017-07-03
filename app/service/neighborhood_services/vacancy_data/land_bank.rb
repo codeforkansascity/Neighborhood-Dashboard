@@ -15,8 +15,6 @@ class NeighborhoodServices::VacancyData::LandBank
   end
 
   def data
-    return @data unless @data.nil?
-
     parcel_data_set = ::KcmoDatasets::LandBankData.new(@neighborhood)
     parcel_data_set.filters = {
       data_filters: @vacant_filters,

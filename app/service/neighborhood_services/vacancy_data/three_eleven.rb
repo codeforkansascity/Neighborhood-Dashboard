@@ -9,24 +9,6 @@ class NeighborhoodServices::VacancyData::ThreeEleven
   end
 
   def data
-    return @data unless @data.nil?
-
-    data_filters = @three_eleven_filters[:filters] || []
-
-    querable_dataset = POSSIBLE_FILTERS.any? { |filter|
-      data_filters.include? filter
-    }
-
-    if querable_dataset
-      @data ||= query_dataset
-    else
-      @data ||= []
-    end
-  end
-
-  private
-
-  def query_dataset
     three_eleven_dataset = KcmoDatasets::ThreeElevenCases.new(@neighborhood, @three_eleven_filters)
     three_eleven_data = three_eleven_dataset.request_data
 
@@ -38,6 +20,8 @@ class NeighborhoodServices::VacancyData::ThreeEleven
       .select(&Entities::GeoJson::MAPPABLE_ITEMS)
       .map(&:to_h)
   end
+
+  private
 
   def three_eleven_filtered_data(parcel_data)
     three_eleven_filtered_data = {}
