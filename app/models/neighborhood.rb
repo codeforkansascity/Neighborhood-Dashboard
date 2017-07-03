@@ -15,9 +15,10 @@ class Neighborhood < ActiveRecord::Base
 
     uri = address_source_uri
     puts "Querying #{uri}"
-    @addresses = JSON.parse(HTTParty.get(uri))
+    address_data = JSON.parse(HTTParty.get(uri))
+    @addresses = address_data['data'] || []
   rescue
-    @addresses = {}
+    @addresses = []
   end
 
   def address_source_uri

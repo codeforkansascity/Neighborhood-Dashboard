@@ -7,9 +7,8 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
   def calculated_data
     addresses = {}
     start_year = [2015, 2014, 2013, 2012]
-    tax_delinquent_data = @neighborhood.addresses['data']
 
-    tax_delinquent_data.each do |taxed_address|
+    @neighborhood.addresses.each do |taxed_address|
       current_address = taxed_address['street_address']
 
       if current_address.present?

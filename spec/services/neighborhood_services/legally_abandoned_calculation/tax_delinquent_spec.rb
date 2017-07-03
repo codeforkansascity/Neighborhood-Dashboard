@@ -5,37 +5,35 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent 
 
   let(:dataset) { NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent.new(neighborhood) }
   let(:addresses) do
-    {
-      'data' => [
-        {
-          'street_address' => 'Address 1',
-          'census_latitude' => '90.0',
-          'census_longitude' => '90.0'
-        },
-        {
-          'street_address' => 'Address 2',
-          'census_latitude' => '90.0',
-          'census_longitude' => '90.0',
-          'county_delinquent_tax_2010' => '45',
-          'county_delinquent_tax_2011' => '45',
-          'county_delinquent_tax_2012' => '45',
-          'county_delinquent_tax_2013' => '45',
-          'county_delinquent_tax_2014' => '45',
-          'county_delinquent_tax_2015' => '0'
-        },
-        {
-          'street_address' => 'Address 3',
-          'census_latitude' => '90.0',
-          'census_longitude' => '90.0',
-          'county_delinquent_tax_2010' => '45',
-          'county_delinquent_tax_2011' => '45',
-          'county_delinquent_tax_2012' => '0',
-          'county_delinquent_tax_2013' => '45',
-          'county_delinquent_tax_2014' => '45',
-          'county_delinquent_tax_2015' => '50'
-        },
-      ]
-    }
+    [
+      {
+        'street_address' => 'Address 1',
+        'census_latitude' => '90.0',
+        'census_longitude' => '90.0'
+      },
+      {
+        'street_address' => 'Address 2',
+        'census_latitude' => '90.0',
+        'census_longitude' => '90.0',
+        'county_delinquent_tax_2010' => '45',
+        'county_delinquent_tax_2011' => '45',
+        'county_delinquent_tax_2012' => '45',
+        'county_delinquent_tax_2013' => '45',
+        'county_delinquent_tax_2014' => '45',
+        'county_delinquent_tax_2015' => '0'
+      },
+      {
+        'street_address' => 'Address 3',
+        'census_latitude' => '90.0',
+        'census_longitude' => '90.0',
+        'county_delinquent_tax_2010' => '45',
+        'county_delinquent_tax_2011' => '45',
+        'county_delinquent_tax_2012' => '0',
+        'county_delinquent_tax_2013' => '45',
+        'county_delinquent_tax_2014' => '45',
+        'county_delinquent_tax_2015' => '50'
+      },
+    ]
   end
 
   before do

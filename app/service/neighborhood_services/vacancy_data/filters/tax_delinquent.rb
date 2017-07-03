@@ -6,9 +6,7 @@ class NeighborhoodServices::VacancyData::Filters::TaxDelinquent
   end
 
   def filtered_data
-    neighborhood_addresses = @addresses['data']
-
-    neighborhood_addresses.select { |address|
+    @addresses.select { |address|
       consecutive_years = 0
       current_address = address['street_address']
 
