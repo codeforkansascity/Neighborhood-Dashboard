@@ -18,9 +18,9 @@ export const fetchNeighborhoods = (data) => {
   })
 }
 
-export const updateSelectedElement = (element) => {
+export const updateSelectedMapElement = (element) => {
   return({
-    type: 'UPDATE_SELECTED_ELEMENT',
+    type: 'UPDATE_SELECTED_MAP_ELEMENT',
     element
   })
 }

@@ -61,7 +61,6 @@ const formatResponse = (response) => {
           paths: dataPoint.geometry.coordinates[0].map(function(data) {
             return {lat: data[1], lng: data[0]}
           }),
-          selectablePolygon: true,
           windowContent: dataPoint.properties.disclosure_attributes.map(
             (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
           )

@@ -1,6 +1,6 @@
 import { connect, Connector } from 'react-redux';
 import Map from '../components/map';
-import { updateMap, updateSelectedElement, fetchNeighborhoods, addMap, cityOverview } from '../actions/index'
+import { updateMap, updateSelectedMapElement, fetchNeighborhoods, addMap, cityOverview } from '../actions/index'
 
 type OwnProps = {
   filter: {}
@@ -11,10 +11,10 @@ const mapStateToProps = (state) => {
 
   return ({
     markers: currentState.markers,
-    polygons: currentState.polygons || [],
-    neighborhoodPolygon: currentState.neighborhoodPolygon,
+    polygons: currentState.polygons,
+    selectedNeighborhood: currentState.selectedNeighborhood,
     center: currentState.center,
-    selectedElement: currentState.selectedElement,
+    selectedMapElement: currentState.selectedMapElement,
     neighborhoods: currentState.neighborhoods,
     map: currentState.map
   });
@@ -22,8 +22,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
   return {
-    updateSelectedElement: (element) => {
-      dispatch(updateSelectedElement(element));
+    updateSelectedMapElement: (element) => {
+      dispatch(updateSelectedMapElement(element));
     },
     loadNeighborhoods: (data) => {
       dispatch(fetchNeighborhoods(data))

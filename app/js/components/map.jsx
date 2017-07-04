@@ -37,6 +37,7 @@ class Map extends React.Component {
           longtitude += coord.lng;
         })
 
+        console.log('Calculating polygon center');
         return {lat: latitude / coordinatesSize, lng: longtitude / coordinatesSize}
       default:
         return {lat: 0, lng: 0}
@@ -69,10 +70,11 @@ class Map extends React.Component {
             onMarkerRightClick={function() {}}
             markers={this.props.markers || []}
             polygons={this.props.polygons || []}
-            selectedElement={this.props.selectedElement}
+            neighborhoods={this.props.neighborhoods || []}
+            selectedMapElement={this.props.selectedMapElement}
             getInfoWindowPosition={this.getInfoWindowPosition.bind(this)}
-            updateSelectedElement={this.props.updateSelectedElement}
-            neighborhoodPolygon={this.props.neighborhoodPolygon}
+            updateSelectedMapElement={this.props.updateSelectedMapElement}
+            selectedNeighborhood={this.props.selectedNeighborhood}
             center={this.props.center} />
           <footer className="application-footer">
             This project developed by CodeForKC - A Code for America Organization&nbsp;&nbsp;&nbsp;

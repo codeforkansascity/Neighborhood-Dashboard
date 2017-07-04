@@ -12,19 +12,18 @@ const GoogleMapsElement = withGoogleMap(props => {
       defaultCenter={{lat: 39.0997, lng: -94.5786}}>
       <LegendContainer />
       {
-        props.neighborhoodPolygon && 
-        <Polygon {...props.neighborhoodPolygon} />
+        props.selectedNeighborhood && 
+        <Polygon 
+          {...props.selectedNeighborhood}
+          options={{fillColor: '#111111'}}
+           />
       }
-      {props.markers.map((marker, index) => (
-        <Marker {...marker}
-         onClick={(e) => {props.updateSelectedElement(marker)}}/>
-      ))}
-      {props.polygons.map((polygon, index) => {
-        var onMouseClick = () => {};
-
-        if(!(props.neighborhoodPolygon && props.neighborhoodPolygon.objectid === polygon.objectid) && polygon.selectablePolygon) {
-          onMouseClick = () => props.updateSelectedElement(polygon);
+      {props.neighborhoods.map((polygon, index) => {
+        if(props.selectedNeighborhood && props.selectedNeighborhood.objectid === polygon.objectid) {
+          return null;
         }
+
+        let onMouseClick = () => props.updateSelectedMapElement(polygon);
 
         return(
           <Polygon
@@ -33,11 +32,26 @@ const GoogleMapsElement = withGoogleMap(props => {
             key={polygon.objectid} />
         )}
       )}
-      {props.selectedElement && props.selectedElement.windowContent && (
+      {props.markers.map((marker, index) => (
+        <Marker {...marker}
+         onClick={(e) => {props.updateSelectedMapElement(marker)}}/>
+      ))}
+      {props.polygons.map((polygon, index) => {
+        var onMouseClick = () => props.updateSelectedMapElement(polygon);
+
+        return(
+          <Polygon
+            {...polygon}
+            options={{zIndex: 200}}
+            onClick={onMouseClick}
+            key={polygon.objectid} />
+        )}
+      )}
+      {props.selectedMapElement && props.selectedMapElement.windowContent && (
           <InfoWindow
-            position={props.getInfoWindowPosition(props.selectedElement)}
-            onCloseClick={() => props.updateSelectedElement(null)}>
-            <div style={props.selectedElement.windowStyle}>{props.selectedElement.windowContent}</div>
+            position={props.getInfoWindowPosition(props.selectedMapElement)}
+            onCloseClick={() => props.updateSelectedMapElement(null)}>
+            <div style={props.selectedMapElement.windowStyle}>{props.selectedMapElement.windowContent}</div>
           </InfoWindow>
         )
       }

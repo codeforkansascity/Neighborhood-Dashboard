@@ -32,7 +32,7 @@ const formatResponse = (response) => {
     )
   });
 
-  return {markers: markers};
+  return {markers: markers, polygons: []};
 }
 
 const CRIME_CODES = {
