@@ -1,3 +1,5 @@
+require 'google_maps/static_generator'
+
 class VacancyPdfExport
   attr_accessor :data_points
 
