@@ -1,3 +1,5 @@
+require 'kcmo_datasets/three_eleven_cases'
+
 class NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData
   def initialize(neighborhood)
     @neighborhood = neighborhood

@@ -1,3 +1,5 @@
+require 'kcmo_datasets/property_violations'
+
 class NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount
   def initialize(neighborhood)
     @neighborhood = neighborhood

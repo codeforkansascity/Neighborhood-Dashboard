@@ -1,3 +1,5 @@
+require 'kcmo_datasets/dangerous_buildings'
+
 class NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings
   def initialize(neighborhood)
     @neighborhood = neighborhood
