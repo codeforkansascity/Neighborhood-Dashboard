@@ -28,7 +28,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     data = NeighborhoodServices::LegallyAbandonedCalculation::PropertyViolations.new(@neighborhood).calculated_data
 
     data.each do |(address, value)|
-      abandoned_candidates[address.downcase] = Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
+      abandoned_candidates[address.downcase] = ::Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
       abandoned_candidates[address.downcase].vacant_registry_failure_data = value
     end
   end
@@ -37,7 +37,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     data = NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent.new(@neighborhood).calculated_data
     
     data.each do |(address, value)|
-      abandoned_candidates[address.downcase] = Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
+      abandoned_candidates[address.downcase] = ::Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
       abandoned_candidates[address.downcase].tax_delinquent_data = value
     end
   end
@@ -46,7 +46,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     data = NeighborhoodServices::LegallyAbandonedCalculation::CodeViolationCount.new(@neighborhood).calculated_data
     
     data.each do |(address, value)|
-      abandoned_candidates[address.downcase] = Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
+      abandoned_candidates[address.downcase] = ::Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
       abandoned_candidates[address.downcase].address_violation_count = value
     end
   end
@@ -55,7 +55,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     data = NeighborhoodServices::LegallyAbandonedCalculation::ThreeElevenData.new(@neighborhood).calculated_data
   
     data.each do |(address, value)|
-      abandoned_candidates[address.downcase] = Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
+      abandoned_candidates[address.downcase] = ::Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
       abandoned_candidates[address.downcase].three_eleven_data = value
     end
   end
@@ -64,7 +64,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     data = NeighborhoodServices::LegallyAbandonedCalculation::DangerousBuildings.new(@neighborhood).calculated_data
   
     data.each do |(address, value)|
-      abandoned_candidates[address.downcase] = Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
+      abandoned_candidates[address.downcase] = ::Entities::LegallyAbandonedCalculation::Item.new(address) unless abandoned_candidates[address]
       abandoned_candidates[address.downcase].dangerous_buildings = value
     end
   end

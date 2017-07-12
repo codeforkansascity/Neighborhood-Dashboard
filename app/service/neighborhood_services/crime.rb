@@ -14,8 +14,8 @@ class NeighborhoodServices::Crime
   def mapped_coordinates
     @dataset ||= KcmoDatasets::Crime.new(Neighborhood.find(@neighborhood_id), @options)
     @dataset.query_data
-      .map{ |coordinate| Entities::Crime.deserialize(coordinate) }
-      .select(&Entities::GeoJson::MAPPABLE_ITEMS)
+      .map{ |coordinate| ::Entities::Crime.deserialize(coordinate) }
+      .select(&::Entities::GeoJson::MAPPABLE_ITEMS)
       .map(&:to_h)
   end
 end
