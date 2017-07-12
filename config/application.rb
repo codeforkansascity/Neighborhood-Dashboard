@@ -31,5 +31,6 @@ module NeighborhoodDashboard
 
     # Autoload all classes
     config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/presenters) # add this line
+    config.eager_load_paths << Rails.root.join('lib')
   end
 end
