@@ -1,6 +1,4 @@
-require 'kcmo_datasets/three_eleven_cases'
-require 'kcmo_datasets/property_violations'
-require 'kcmo_datasets/dangerous_buildings'
+require 'entities/legally_abandoned_calculation/item'
 
 class NeighborhoodServices::LegallyAbandonedCalculation
   CODE_COUNT_VIOLATION = 'code count violation'
