@@ -155,28 +155,28 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
       end
 
       it 'returns a hash of all the parcels that also contain geometric parcel data' do
-        expect(subject.data.find{ |parcel| parcel[:properties]['parcel_number'] == 'parcel-1'})
+        expect(subject.data.find{ |parcel| parcel.parcel_number == 'parcel-1'}.to_h)
           .to eq(expected_foreclosed_filter_response_hash)
       end
 
       it 'excludes any parcels that do not have any geometric coordinates' do
-        expect(subject.data.find{ |parcel| parcel[:properties]['parcel_number'] == 'parcel-4'})
+        expect(subject.data.find{ |parcel| parcel.parcel_number == 'parcel-4'})
           .to be_nil
       end
 
       it 'assigns #000000 for parcels that are older than 3 years' do
-        target_parcel = subject.data.find { |parcel| parcel[:properties]['parcel_number'] == 'parcel-1' }
-        expect(target_parcel[:properties]['color']).to eq('#000000')
+        target_parcel = subject.data.find { |parcel| parcel.parcel_number == 'parcel-1' }
+        expect(target_parcel.properties['color']).to eq('#000000')
       end
 
       it 'assigns #3A46B2 for parcels between 1 and 3 years in age' do
-        target_parcel = subject.data.find { |parcel| parcel[:properties]['parcel_number'] == 'parcel-2' }
-        expect(target_parcel[:properties]['color']).to eq('#3A46B2')
+        target_parcel = subject.data.find { |parcel| parcel.parcel_number == 'parcel-2' }
+        expect(target_parcel.properties['color']).to eq('#3A46B2')
       end
 
       it 'assigns #A3F5FF for parcels less than a year in age' do
-        target_parcel = subject.data.find { |parcel| parcel[:properties]['parcel_number'] == 'parcel-3' }
-        expect(target_parcel[:properties]['color']).to eq('#A3F5FF')
+        target_parcel = subject.data.find { |parcel| parcel.parcel_number == 'parcel-3' }
+        expect(target_parcel.properties['color']).to eq('#A3F5FF')
       end
     end
   end

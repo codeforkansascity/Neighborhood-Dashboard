@@ -11,6 +11,8 @@ RSpec.describe Neighborhood, :type => :model do
     }
   }
 
+  let(:coordinates) { [] }
+
   describe '#addresses' do
     context' when data does not exist for the given neighborhood' do
       before do
@@ -53,6 +55,35 @@ RSpec.describe Neighborhood, :type => :model do
 
       it 'returns an empty array' do
         expect(subject.addresses).to eq(addresses)
+      end
+    end
+  end
+
+  describe '#center' do
+    context 'when the neighborhood does not have coordinates' do
+      it 'returns an empty hash' do
+        expect(subject.center).to eq({})
+      end
+    end
+
+    context 'when the neighborhood has coordinates' do
+      let (:coordinates) { 
+        [
+          double(latitude: 1, longtitude: 1),
+          double(latitude: 2, longtitude: 2),
+          double(latitude: 3, longtitude: 3),
+          double(latitude: 4, longtitude: 4),
+        ] 
+      }
+
+      let(:expected_center) { {latitude: 2.5, longtitude: 2.5} }
+
+      before do
+        allow(subject).to receive(:coordinates).and_return(coordinates)
+      end
+
+      it 'calculates the correct center for the neighborhood' do
+        expect(subject.center).to eq(expected_center)
       end
     end
   end

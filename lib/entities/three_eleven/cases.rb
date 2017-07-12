@@ -39,6 +39,26 @@ module Entities::ThreeEleven
       @datasets.first.try(&:mappable?)
     end
 
+    def latitude
+      first_dataset = @datasets.first
+      
+      if first_dataset
+        first_dataset.latitude
+      else
+        ""
+      end
+    end
+
+    def longitude
+      first_dataset = @datasets.first
+      
+      if first_dataset
+        first_dataset.longitude
+      else
+        ""
+      end
+    end
+
     private
 
     def last_updated_date

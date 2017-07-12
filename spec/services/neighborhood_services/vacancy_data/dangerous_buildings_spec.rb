@@ -12,15 +12,15 @@ RSpec.describe NeighborhoodServices::VacancyData::DangerousBuildings do
   let(:dangerous_building_three_hash) { {'id' => 3} }
 
   let(:dangerous_building_one) {
-    double(mappable?: true, to_h: {'building' => 1})
+    double(mappable?: true)
   }
 
   let(:dangerous_building_two) {
-    double(mappable?: false, to_h: {'building' => 2})
+    double(mappable?: false)
   }
 
   let(:dangerous_building_three) {
-    double(mappable?: true, to_h: {'building' => 3})
+    double(mappable?: true)
   }
 
   let(:mock_dataset) {
@@ -61,8 +61,8 @@ RSpec.describe NeighborhoodServices::VacancyData::DangerousBuildings do
     it 'returns a proper hash of the data' do
       expect(subject.data).to eq(
         [
-          dangerous_building_one.to_h,
-          dangerous_building_three.to_h
+          dangerous_building_one,
+          dangerous_building_three
         ]
       )
     end

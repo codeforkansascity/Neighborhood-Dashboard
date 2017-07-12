@@ -12,13 +12,14 @@ class NeighborhoodServices::VacancyData::ThreeEleven
     three_eleven_dataset = KcmoDatasets::ThreeElevenCases.new(@neighborhood, @three_eleven_filters)
     three_eleven_data = three_eleven_dataset.request_data
 
-    three_eleven_filtered_data(three_eleven_data)
+    data = three_eleven_filtered_data(three_eleven_data)
       .values
       .each { |violation| 
         violation.metadata = three_eleven_dataset.metadata
       }
       .select(&Entities::GeoJson::MAPPABLE_ITEMS)
-      .map(&:to_h)
+
+    data
   end
 
   private

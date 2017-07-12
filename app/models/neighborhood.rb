@@ -32,4 +32,15 @@ class Neighborhood < ActiveRecord::Base
 
     "within_polygon(#{location_attribute}, 'MULTIPOLYGON (((#{neighborhood_coordinates})))')"
   end
+
+  def center
+    if coordinates.present?
+      coordinates.each_with_object({longtitude: 0, latitude: 0}) do |coordinate, hash|
+        hash[:longtitude] += coordinate.longtitude / coordinates.size.to_f
+        hash[:latitude] += coordinate.latitude / coordinates.size.to_f
+      end
+    else
+      {}
+    end
+  end
 end

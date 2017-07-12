@@ -40,6 +40,22 @@ module Entities::PropertyViolations
       @datasets.first && @datasets.first.mappable?
     end
 
+    def latitude
+      if @datasets.first 
+        @datasets.first.latitude
+      else
+        ""
+      end
+    end
+
+    def longitude
+      if @datasets.first 
+        @datasets.first.longitude
+      else
+        ""
+      end
+    end
+
     private
 
     def last_updated_date

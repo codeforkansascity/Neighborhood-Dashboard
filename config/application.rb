@@ -30,6 +30,6 @@ module NeighborhoodDashboard
     # config.i18n.default_locale = :de
 
     # Autoload all classes
-    config.autoload_paths += %W(#{config.root}/lib) # add this line
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/presenters) # add this line
   end
 end

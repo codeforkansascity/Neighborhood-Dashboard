@@ -22,5 +22,21 @@ module Entities::ThreeEleven
     def mappable?
       address_with_geocode["coordinates"].present?
     end
+
+    def latitude
+      if address_with_geocode.present?
+        address_with_geocode['coordinates'][1]
+      else
+        ""
+      end
+    end
+
+    def longitude
+      if address_with_geocode.present?
+        address_with_geocode['coordinates'][0]
+      else
+        ""
+      end
+    end
   end
 end

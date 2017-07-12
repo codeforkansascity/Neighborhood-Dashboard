@@ -12,10 +12,11 @@ class NeighborhoodServices::VacancyData::PropertyViolations
     dataset = KcmoDatasets::PropertyViolations.new(@neighborhood, @filters)
     metadata = dataset.metadata
 
-    property_violations_filtered_data(dataset.request_data)
+    data = property_violations_filtered_data(dataset.request_data)
       .values
       .each { |violation| violation.metadata = metadata }
-      .map(&:to_h)
+
+    data
   end
 
   private

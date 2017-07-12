@@ -1,0 +1,19 @@
+.pdf-disclosure {
+  h3, address {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  > div {
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}

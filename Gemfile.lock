@@ -97,6 +97,7 @@ GEM
       rack
       rake (>= 0.8.1)
     pg (0.21.0)
+    polylines (0.3.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -202,6 +203,9 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    wicked_pdf (1.1.0)
+    wkhtmltopdf-binary (0.12.3.1)
+    wkhtmltopdf-heroku (2.12.4.0)
 
 PLATFORMS
   ruby
@@ -218,6 +222,7 @@ DEPENDENCIES
   nokogiri (~> 1.6.6.2)
   passenger (= 5.0.25)
   pg
+  polylines (~> 0.3.0)
   pry
   pry-remote
   rails (~> 5.0.3)
@@ -233,6 +238,9 @@ DEPENDENCIES
   therubyracer
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  wicked_pdf (~> 1.1.0)
+  wkhtmltopdf-binary (~> 0.12.3.1)
+  wkhtmltopdf-heroku (~> 2.12.4.0)
 
 RUBY VERSION
    ruby 2.4.0p0

@@ -97,6 +97,14 @@ module Entities::LegallyAbandonedCalculation
       end
     end
 
+    def latitude
+      @three_eleven_data[:latitude]
+    end
+
+    def longitude
+      @three_eleven_data[:longitude]
+    end
+
     private
 
     def code_violation_disclosure_attributes

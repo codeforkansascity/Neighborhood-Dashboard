@@ -18,5 +18,21 @@ module Entities::PropertyViolations
     def mappable?
       mapping_location.present? && mapping_location['longitude'].present?
     end
+
+    def latitude
+      if mapping_location.present?
+        mapping_location['coordinates'][1]
+      else
+        ""
+      end
+    end
+
+    def longitude
+      if mapping_location.present?
+        mapping_location['coordinates'][0]
+      else
+        ""
+      end
+    end
   end
 end

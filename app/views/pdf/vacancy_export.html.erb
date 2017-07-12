@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NeighborhoodDashboard</title>
+    <base href="/" />
+    <%= wicked_pdf_stylesheet_link_tag 'application' %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  </head>
+  <body >
+    <h1><%= pdf_generator.name %></h1>
+    <p><img src="<%= pdf_generator.google_maps_uri %>" /></p>
+    <div class="pdf-disclosure">
+      <% pdf_generator.markers.each do |marker|%>
+        <div>
+          <h2 style=<%= "color:##{marker[:color]}" %>><%= marker[:label] %></h2>
+          <% marker[:data].disclosure_attributes.each do |attribute| %>
+            <div style=<%= "color:##{marker[:color]}" %>><%= attribute.html_safe %></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </body>
+</html>

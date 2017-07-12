@@ -12,6 +12,5 @@ class NeighborhoodServices::VacancyData::TaxDelinquent
     @neighborhood.addresses
       .map{ |building| Entities::AddressApi::Address.deserialize(building) }
       .select{ |building| building.mappable? && building.tax_delinquent?}
-      .map(&:to_h)
   end
 end

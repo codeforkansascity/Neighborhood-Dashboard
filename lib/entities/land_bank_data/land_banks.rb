@@ -1,7 +1,7 @@
 module Entities::LandBankData
   class LandBanks < ::Entities::MultiDatasetGeoJson
 
-    attr_accessor :metadata, :location_1, :location_1_address, :parcel_number
+    attr_accessor :metadata, :location_1, :location_1_address, :parcel_number, :longitude, :latitude
 
     def properties 
       {

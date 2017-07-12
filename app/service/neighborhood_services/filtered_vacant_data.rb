@@ -1,10 +1,6 @@
 class NeighborhoodServices::FilteredVacantData
-  def initialize(neighborhood_id)
-    @neighborhood_id = neighborhood_id
-  end
-
-  def neighborhood
-    @neighborhood ||= Neighborhood.find(@neighborhood_id)
+  def initialize(neighborhood)
+    @neighborhood = neighborhood
   end
 
   def filtered_vacant_data(filters = {})
@@ -19,28 +15,26 @@ class NeighborhoodServices::FilteredVacantData
       filters += NeighborhoodServices::VacancyData::PropertyViolations::POSSIBLE_FILTERS
     end
 
-    current_neighborhood = neighborhood
-
     data = []
 
     if contains?(filters, NeighborhoodServices::VacancyData::TaxDelinquent::POSSIBLE_FILTERS)
-      data << NeighborhoodServices::VacancyData::TaxDelinquent.new(current_neighborhood, filters_copy).data
+      data << NeighborhoodServices::VacancyData::TaxDelinquent.new(@neighborhood, filters_copy).data
     end
 
     if contains?(filters, NeighborhoodServices::VacancyData::DangerousBuildings::POSSIBLE_FILTERS)
-      data << NeighborhoodServices::VacancyData::DangerousBuildings.new(current_neighborhood, filters_copy).data
+      data << NeighborhoodServices::VacancyData::DangerousBuildings.new(@neighborhood, filters_copy).data
     end
 
     if contains?(filters, NeighborhoodServices::VacancyData::LandBank::POSSIBLE_FILTERS)
-      data << NeighborhoodServices::VacancyData::LandBank.new(current_neighborhood, filters_copy).data
+      data << NeighborhoodServices::VacancyData::LandBank.new(@neighborhood, filters_copy).data
     end
 
     if contains?(filters, NeighborhoodServices::VacancyData::ThreeEleven::POSSIBLE_FILTERS)
-      data << NeighborhoodServices::VacancyData::ThreeEleven.new(current_neighborhood, filters_copy).data 
+      data << NeighborhoodServices::VacancyData::ThreeEleven.new(@neighborhood, filters_copy).data 
     end
 
     if contains?(filters, NeighborhoodServices::VacancyData::PropertyViolations::POSSIBLE_FILTERS)
-      data << NeighborhoodServices::VacancyData::PropertyViolations.new(current_neighborhood, filters_copy).data
+      data << NeighborhoodServices::VacancyData::PropertyViolations.new(@neighborhood, filters_copy).data
     end
 
     data

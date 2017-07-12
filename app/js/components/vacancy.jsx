@@ -107,6 +107,7 @@ class Vacancy extends React.Component {
     this.toggleFilters = this.toggleFilters.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.queryDataset = this.queryDataset.bind(this);
+    this.exportPdf = this.exportPdf.bind(this);
   }
 
   handleFilterChange(event) {
@@ -124,6 +125,10 @@ class Vacancy extends React.Component {
     this.setState({
       filters: currentFilters
     });
+  }
+
+  exportPdf() {
+    window.open('/api/neighborhood/' + this.props.params.neighborhoodId + '/vacancy.pdf?filters[]=' + this.state.filters.join('&filters[]='))
   }
 
   queryDataset() {
@@ -162,7 +167,7 @@ class Vacancy extends React.Component {
           loading: false
         });
 
-        toast(<p>We're sorry, but the application could not process your request. Please try again later.</p>, {
+        toast(<p>We are sorry, but the application could not process your request. Please try again later.</p>, {
           type: toast.TYPE.INFO
         });
       });
@@ -279,7 +284,8 @@ class Vacancy extends React.Component {
         <div>
           <div className="map-filter-actions pull-right">
             <button className="btn btn-primary" type="button">Reset</button>&nbsp;
-            <button className="btn btn-primary" onClick={this.queryDataset}>Done</button>
+            <button className="btn btn-primary" onClick={this.queryDataset}>Done</button>&nbsp;
+            <button className="btn btn-primary" onClick={this.exportPdf}>Export to PDF</button>
           </div>
         </div>
       </div>

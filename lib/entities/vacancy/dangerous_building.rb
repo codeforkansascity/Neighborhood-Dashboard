@@ -30,6 +30,22 @@ module Entities::Vacancy
       geometry.present?
     end
 
+    def latitude
+      if geometry
+        geometry['coordinates'][1]
+      else
+        ""
+      end
+    end
+
+    def longitude
+      if geometry
+        geometry['coordinates'][0]
+      else
+        ""
+      end
+    end
+
     private
 
     def last_updated_date

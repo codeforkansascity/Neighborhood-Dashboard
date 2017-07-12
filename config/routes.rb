@@ -18,7 +18,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :vacancy, only: [:index]
+      resources :vacancy, only: [:index], defaults: { format: 'json' }
       resources :census_data, only: [:index]
     end
   end

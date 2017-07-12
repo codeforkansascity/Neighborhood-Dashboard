@@ -53,6 +53,13 @@ gem 'roo', '~> 2.5.0'
 # Deploy to a passenger server
 gem "passenger", "5.0.25", require: "phusion_passenger/rack_handler"
 
+# Encodes polylines for us
+gem "polylines", '~> 0.3.0'
+
+# Generate PDF's
+gem 'wicked_pdf', '~> 1.1.0'
+gem 'wkhtmltopdf-binary', '~> 0.12.3.1'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -76,4 +83,5 @@ end
 
 group :production do
   gem 'pg'
+  gem 'wkhtmltopdf-heroku', '~> 2.12.4.0'
 end

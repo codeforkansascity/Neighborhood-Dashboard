@@ -23,11 +23,11 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
   }
 
   let(:address_one_entity) {
-    double(legally_abandoned?: true, to_h: address_one)
+    double(legally_abandoned?: true)
   }
 
   let(:address_two_entity) {
-    double(legally_abandoned?: false, to_h: address_two)
+    double(legally_abandoned?: false)
   }
 
   before do
@@ -88,6 +88,6 @@ RSpec.describe NeighborhoodServices::LegallyAbandonedCalculation do
   end
 
   it 'returns a hash of all the addresses that are deemed to be legally abandoned' do
-    expect(dataset.vacant_indicators).to eq([address_one])
+    expect(dataset.vacant_indicators).to eq([address_one_entity])
   end  
 end

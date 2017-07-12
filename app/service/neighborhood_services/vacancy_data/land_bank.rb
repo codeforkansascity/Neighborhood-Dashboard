@@ -30,7 +30,8 @@ class NeighborhoodServices::VacancyData::LandBank
         violation.metadata = parcel_data_set.metadata
       }
       .select(&Entities::GeoJson::MAPPABLE_ITEMS)
-      .map(&:to_h)
+
+    @data
   end
 
   private

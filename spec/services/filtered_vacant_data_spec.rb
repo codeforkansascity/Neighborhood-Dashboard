@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NeighborhoodServices::FilteredVacantData do
-  subject { NeighborhoodServices::FilteredVacantData.new(neighborhood.id) }
+  subject { NeighborhoodServices::FilteredVacantData.new(neighborhood) }
   let(:filters) { {'filters' => []}}
   let(:neighborhood) { double(id: 1, name: 'Neighborhood')}
   let(:mock_tax_delinquent_data) { double(data: 'tax-delinquent') }
@@ -11,10 +11,6 @@ RSpec.describe NeighborhoodServices::FilteredVacantData do
   let(:mock_property_violations_data) { double(data: 'property-violation') }
 
   before do
-    allow(Neighborhood).to receive(:find)
-      .with(neighborhood.id)
-      .and_return(neighborhood)
-
     allow(NeighborhoodServices::VacancyData::TaxDelinquent).to receive(:new)
       .with(neighborhood, filters)
       .and_return(mock_tax_delinquent_data)

@@ -19,9 +19,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation
     tax_delinquent_datasets(abandoned_candidates)
     address_violation_counts(abandoned_candidates)
 
-    abandoned_candidates.values
-      .select(&:legally_abandoned?)
-      .map(&:to_h)
+    abandoned_candidates.values.select(&:legally_abandoned?)
   end
 
   private

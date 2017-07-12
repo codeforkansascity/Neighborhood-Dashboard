@@ -3,7 +3,11 @@ module Entities::AddressApi
     attr_accessor :longitude, :latitude
 
     def disclosure_attributes
+      full_address = "#{@street_address.titleize}<br/>#{@city.try(&:titleize)} #{@state}, #{@census_zip}"
+
       [
+        "<b>Address</b>",
+        "<address>#{full_address}</address>",
         '<b>Tax Delinquent Years</b>',
         tax_delinquent_years
       ].flatten
@@ -43,6 +47,14 @@ module Entities::AddressApi
       end
 
       consecutive_years
+    end
+
+    def latitude
+      @latitude
+    end
+
+    def longitude
+      @longitude
     end
 
     private

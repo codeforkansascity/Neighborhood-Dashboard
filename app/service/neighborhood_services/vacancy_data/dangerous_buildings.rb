@@ -22,6 +22,7 @@ class NeighborhoodServices::VacancyData::DangerousBuildings
         entity
       }
       .select(&Entities::GeoJson::MAPPABLE_ITEMS)
-      .map(&:to_h)
+
+    @data
   end
 end

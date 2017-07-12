@@ -18,4 +18,16 @@ RSpec.describe Entities::Vacancy::DangerousBuilding do
       expect(subject.properties[:color]).to eq('#ffffff')
     end
   end
+
+  describe '#latitude' do
+    it 'gets the latitude from the geometry' do
+      expect(subject.latitude).to eq(100)
+    end
+  end
+
+  describe '#longitude' do
+    it 'gets the longitude from the geometry' do
+      expect(subject.longitude).to eq(-50)
+    end
+  end
 end

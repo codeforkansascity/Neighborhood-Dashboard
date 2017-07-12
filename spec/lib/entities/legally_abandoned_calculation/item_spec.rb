@@ -5,7 +5,6 @@ RSpec.describe Entities::LegallyAbandonedCalculation::Item do
   let(:vacant_registry_failure_data) { {} }
   let(:tax_delinquent_data) { {} }
   let(:address_violation_count) { {} }
-  let(:three_eleven_data) { {} }
   let(:dangerous_buildings) { {} }
 
   let(:mock_parcel_data_address_present) {
@@ -33,6 +32,7 @@ RSpec.describe Entities::LegallyAbandonedCalculation::Item do
       }
     ]
   }
+
 
   describe '#properties' do
     describe 'marker_type' do
@@ -570,6 +570,26 @@ RSpec.describe Entities::LegallyAbandonedCalculation::Item do
           expect(subject.total_points).to eq(2)
         end
       end
+    end
+  end
+
+  describe '#latitude' do
+    before do
+      subject.instance_variable_set(:@three_eleven_data, {latitude: '10'})
+    end
+
+    it "gets the latitude from it's corresponding three eleven data" do
+      expect(subject.latitude).to eq('10')
+    end
+  end
+
+  describe '#longitude' do
+    before do
+      subject.instance_variable_set(:@three_eleven_data, {longitude: '11'})
+    end
+
+    it "gets the latitude from it's corresponding three eleven data" do
+      expect(subject.longitude).to eq('11')
     end
   end
 end
