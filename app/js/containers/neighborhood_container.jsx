@@ -5,7 +5,7 @@ import { neighborhoodReset, updateMap, updateLegend } from '../actions/index'
 const mapStateToProps = (state) => {
   return ({
     neighborhoods: state.map.neighborhoods,
-    neighborhood: state.map.neighborhood
+    selectedNeighborhood: state.map.selectedNeighborhood
   });
 }
 

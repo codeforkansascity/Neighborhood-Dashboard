@@ -27,7 +27,7 @@ class Neighborhood extends React.Component {
   render() {
     return (
       <div className="neighborhood-content">
-        <h1 className="neighborhood-title">{this.props.neighborhood ? this.props.neighborhood.properties.nbhname : ''}</h1>
+        <h1 className="neighborhood-title">{this.props.selectedNeighborhood ? this.props.selectedNeighborhood.properties.nbhname : ''}</h1>
         <ul className="nav nav-tabs neighborhood-nav">
           <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/crime"} activeClassName='active'>Crime</Link></li>
           <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/vacancy"} activeClassName='active'>Vacancies</Link></li>

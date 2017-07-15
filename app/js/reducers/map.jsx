@@ -38,6 +38,9 @@ const map = (state = {}, action) => {
               return {lng: coordinates[0], lat: coordinates[1]}
             }),
             objectid: neighborhood.properties.objectid,
+            properties: {
+              nbhname: neighborhood.properties.nbhname
+            },
             selectablePolygon: true,
             windowContent: 
               <div>
@@ -74,6 +77,9 @@ const map = (state = {}, action) => {
           }),
           objectid: neighborhood.properties.objectid,
           selectablePolygon: true,
+          properties: {
+            nbhname: neighborhood.properties.nbhname
+          },
           options: {
             fillColor: '#777777'
           },
