@@ -24,6 +24,13 @@ RSpec.describe KcmoDatasets::ThreeElevenCases do
     end
   end
 
+  describe '#sidewalk_issues' do
+    it 'adds sidewalk_issues to requested datasets' do
+      primary_dataset.sidewalk_issues
+      expect(primary_dataset.requested_datasets.include?('sidewalk_issues')).to eq(true)
+    end
+  end
+
   describe '#request_data' do
     context 'when no datasets are requested from this endpoint' do
       it 'sends a query with just the polygon coordinates to the socrata service' do
@@ -56,6 +63,24 @@ RSpec.describe KcmoDatasets::ThreeElevenCases do
       end
 
       it 'sends a query with a request for "vacant called in violations"' do
+        primary_dataset.request_data
+        expect(SocrataClient).to have_received(:get).with(
+          expected_endpoint, 
+          "SELECT * WHERE [],[],[] AND (#{expected_filter_query})"
+        )
+      end
+    end
+
+    context 'when the dataset is looking for sidewalk_issues' do
+      let(:expected_filter_query) {
+        "work_group='Public Works-Capital Projects-Sidewalks' AND status='OPEN'"
+      }
+
+      before do
+        primary_dataset.sidewalk_issues
+      end
+
+      it 'sends a query with a request looking for issues with a sidewalk request type' do
         primary_dataset.request_data
         expect(SocrataClient).to have_received(:get).with(
           expected_endpoint, 

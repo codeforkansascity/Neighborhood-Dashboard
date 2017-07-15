@@ -32,6 +32,7 @@ class Neighborhood extends React.Component {
           <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/crime"} activeClassName='active'>Crime</Link></li>
           <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/vacancy"} activeClassName='active'>Vacancies</Link></li>
           <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/demographics"} activeClassName='active'>Demographics</Link></li>
+          <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/misc"} activeClassName='active'>Miscellaneous</Link></li>
         </ul>
         {this.props.children}
       </div>

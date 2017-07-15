@@ -12,6 +12,8 @@ import MapContainer from './containers/map_container';
 import CrimeContainer from './containers/crime_container';
 import VacancyContainer from './containers/vacancy_container';
 import CityOverviewContainer from './containers/city_overview_container';
+import MiscellaneousContainer from './containers/miscellaneous_container';
+
 import About from './components/about';
 
 import reducer from './reducers/index';
@@ -29,6 +31,7 @@ render(
           <Route path="crime" component={CrimeContainer}/>
           <Route path="vacancy" component={VacancyContainer}/>
           <Route path="demographics" component={Demographics}/>
+          <Route path="misc" component={MiscellaneousContainer}/>
         </Route>
       </Route>
     </Router>

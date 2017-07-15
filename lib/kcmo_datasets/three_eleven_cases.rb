@@ -22,6 +22,11 @@ module KcmoDatasets
       self
     end
 
+    def sidewalk_issues
+      @requested_datasets << 'sidewalk_issues'
+      self
+    end
+
     def open_cases
       @requested_datasets << 'open_three_eleven'
       self
@@ -64,6 +69,10 @@ module KcmoDatasets
         filters << open_cases_query
       end
 
+      if @requested_datasets.include?('sidewalk_issues')
+        filters << sidewalks_query
+      end
+
       filters.join(' OR ')
     end
 
@@ -82,6 +91,10 @@ module KcmoDatasets
 
     def open_cases_query
       "status='OPEN'"
+    end
+
+    def sidewalks_query
+      "work_group='Public Works-Capital Projects-Sidewalks' AND status='OPEN'"
     end
   end
 end

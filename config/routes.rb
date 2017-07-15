@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
       resources :vacancy, only: [:index], defaults: { format: 'json' }
       resources :census_data, only: [:index]
+      resources :miscellaneous_data, only: [:index]
     end
   end
 
