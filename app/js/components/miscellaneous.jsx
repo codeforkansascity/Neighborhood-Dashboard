@@ -123,8 +123,12 @@ class Miscellaenous extends React.Component {
         <div className="col-md-12">
           <h2>Miscellaneous Data</h2>
           <label>
-            <input type="checkbox" value={'sidewalk_issues'} onChange={this.handleFilterChange}/>&nbsp;
+            <input type="checkbox" value="sidewalk_issues" onChange={this.handleFilterChange}/>&nbsp;
             Sidewalk Issues
+          </label>
+          <label>
+            <input type="checkbox" value="problem_renters" onChange={this.handleFilterChange}/>&nbsp;
+            Potential Problem Renters
           </label>
         </div>
         {this.filtersFooter()}

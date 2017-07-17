@@ -57,6 +57,10 @@ module Entities::AddressApi
       @longitude
     end
 
+    def address
+      @street_address
+    end
+
     private
 
     def tax_delinquent_years

@@ -1,6 +1,7 @@
 import { connect, Connector } from 'react-redux';
 import Crime from '../components/crime';
 import { neighborhoodReset, updateMap, updateLegend } from '../actions/index'
+import InfoBox from 'react-google-maps/lib/addons/InfoBox';
 
 const mapStateToProps = (state) => {
   return ({
