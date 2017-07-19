@@ -1,5 +1,4 @@
-#Welcome
-to the KCNeighborhoodStat app project! 
+# Welcome to the KCNeighborhoodStat app project! 
 
 We're working  to help neighborhoods help themselves by giving them easy access to useful civic open data.
 We're ultimately hoping to develop an app that- by providing easier access to civic open data- lets neighborhood
