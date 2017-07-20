@@ -1,7 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-google-maps';
-import axios from 'axios';
 
 class CityOverview extends React.Component {
 
