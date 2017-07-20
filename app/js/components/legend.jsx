@@ -22,7 +22,7 @@ class Legend extends React.Component {
         } else {
           this.state.legendToggle.innerHTML = 'Display Legend';
         }
-      } else if(this.props.legend && this.props.map && this.props.map.controls) {
+      } else if (this.props.legend && this.props.map && this.props.map.controls) {
         this.state.legendContent = document.createElement('div');
         this.state.legendContent.innerHTML = this.props.legend;
         this.state.legend = document.createElement('nav');
