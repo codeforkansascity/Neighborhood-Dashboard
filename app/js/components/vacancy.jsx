@@ -131,7 +131,7 @@ class Vacancy extends React.Component {
   }
 
   queryDataset() {
-    var _this = this;
+    const _this = this;
 
     this.setState({
       ...this.state,
@@ -199,7 +199,8 @@ class Vacancy extends React.Component {
                 className="fa fa-info-circle pull-right"
                 data-tip
                 data-for="legally-abandoned-info"
-                data-event="click focus"></span>
+                data-event="click focus"
+              ></span>
               <ReactTooltip
                 id="legally-abandoned-info"
                 className="vacancy-desriptor"
@@ -249,49 +250,125 @@ class Vacancy extends React.Component {
           <div className="col-md-6">
             <h2>
               Vacant Indicators
-              <span className="fa fa-info-circle pull-right" data-tip data-for='vacant-indicator-info' data-event='click focus'></span>
-              <ReactTooltip id='vacant-indicator-info' className="vacancy-desriptor">
-                <p>Because there is not a fully complete list of vacant properties and no easy way to create one - anyone interested in determining whether a property is vacant must instead look to indicators of vacancy Note that interpreting indicatiors is not 100% accurate and even when a property appears vacant, it may still be occupied.</p>
+              <span
+                className="fa fa-info-circle pull-right"
+                data-tip
+                data-for="vacant-indicator-info"
+                data-event="click focus"
+              ></span>
+              <ReactTooltip id="vacant-indicator-info" className="vacancy-desriptor">
+                <p>Because there is not a fully complete list of vacant properties and no easy way
+                  to create one - anyone interested in determining whether a property is vacant
+                  must instead look to indicators of vacancy Note that interpreting indicatiors
+                  is not 100% accurate and even when a property appears vacant,
+                  it may still be occupied.</p>
               </ReactTooltip>
             </h2>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_STRUCTURES)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_STRUCTURES} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={this.isVacancyFilterDisabled(
+                VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_STRUCTURES,
+                )}
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_STRUCTURES}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               Vacant Building - Land Bank Property (City of KCMO)
             </label>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_LOTS)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_LOTS} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={this.isVacancyFilterDisabled(
+                  VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_LOTS,
+                )}
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_LOTS}
+                onChange={this.handleFilterChange} />&nbsp;
               Vacant Lot - Land Bank Property (City of KCMO)
             </label>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.DEMO_NEEDED)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.DEMO_NEEDED} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.DEMO_NEEDED)}
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.DEMO_NEEDED}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               Demo Needed - Land Bank Property (KCMO Land Bank Property)
             </label>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.VACANT_REGISTRY_FAILURE)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.VACANT_REGISTRY_FAILURE} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={this.isVacancyFilterDisabled(
+                  VACANCY_CODES.VACANT_INDICATOR.VACANT_REGISTRY_FAILURE
+                )}
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.VACANT_REGISTRY_FAILURE}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               Failure to Register as Vacant (City of KCMO)
             </label>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.VACANT_STRUCTURE)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.VACANT_STRUCTURE} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={
+                  this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.VACANT_STRUCTURE)
+                }
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.VACANT_STRUCTURE}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               Vacant Structure (KCMO 311)
             </label>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.OPEN_THREE_ELEVEN)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.OPEN_THREE_ELEVEN} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={
+                this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.OPEN_THREE_ELEVEN)
+                }
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.OPEN_THREE_ELEVEN}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               311 Open Cases (KCMO 311)
             </label>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.DANGEROUS_BUILDING)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.DANGEROUS_BUILDING} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={
+                  this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.DANGEROUS_BUILDING)
+                }
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.DANGEROUS_BUILDING}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               KCMO Dangerous Buildings (City of KCMO)
             </label>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.BOARDED_LONGTERM)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.BOARDED_LONGTERM} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={
+                  this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.BOARDED_LONGTERM)
+                }
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.BOARDED_LONGTERM}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               Vacant and Boarded (City of KCMO)
             </label>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.TAX_DELINQUENT)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.TAX_DELINQUENT} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={this.isVacancyFilterDisabled(
+                  VACANCY_CODES.VACANT_INDICATOR.TAX_DELINQUENT,
+                )}
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.TAX_DELINQUENT}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               Tax Delinquent (Jackson County)
             </label>
             <label>
-              <input disabled={this.isVacancyFilterDisabled(VACANCY_CODES.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS)} type="checkbox" value={VACANCY_CODES.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS} onChange={this.handleFilterChange} />&nbsp;
+              <input
+                disabled={this.isVacancyFilterDisabled(
+                  VACANCY_CODES.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS
+                )}
+                type="checkbox"
+                value={VACANCY_CODES.VACANT_INDICATOR.ALL_PROPERTY_VIOLATIONS}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               All Property Violations (KCMO 311)
             </label>
           </div>
@@ -304,12 +381,12 @@ class Vacancy extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   isVacancyFilterDisabled(value) {
     if (
-      this.state.filters.includes(VACANCY_CODES.LEGALLY_ABANDONED.ALL_ABANDONED) || 
+      this.state.filters.includes(VACANCY_CODES.LEGALLY_ABANDONED.ALL_ABANDONED) ||
       (this.state.filters.length >= 3 && !this.state.filters.includes(value))) {
       return true;
     } else {
@@ -319,10 +396,14 @@ class Vacancy extends React.Component {
 
   filtersActivationButton() {
     return (
-      <button className="btn btn btn-success filters-action" type="button" onClick={this.toggleFilters}>
+      <button
+        className="btn btn btn-success filters-action"
+        type="button"
+        onClick={this.toggleFilters}
+      >
         Filters
       </button>
-    )
+    );
   }
 
   loadingIndicator() {
