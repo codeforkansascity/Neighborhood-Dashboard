@@ -1,7 +1,7 @@
-import React from 'react'
-import { render } from 'react-dom'
-import PrimaryNavigation from './primary_navigation'
-import MapContainer from '../containers/map_container'
+import React from 'react';
+import { render } from 'react-dom';
+import PrimaryNavigation from './primary_navigation';
+import MapContainer from '../containers/map_container';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
