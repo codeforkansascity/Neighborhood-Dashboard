@@ -1,12 +1,7 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { withGoogleMap, GoogleMap, Polygon, InfoWindow, Marker } from 'react-google-maps'
-import axios from 'axios'
+import React from 'react';
+import { render } from 'react-dom';
 
 class CityOverview extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   componentDidMount(nextProps, State) {
     this.props.loadOverview();
@@ -19,7 +14,7 @@ class CityOverview extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <div></div>
     );
   }

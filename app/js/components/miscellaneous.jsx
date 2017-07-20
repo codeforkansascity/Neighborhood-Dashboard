@@ -6,32 +6,29 @@ import { toast } from 'react-toastify';
 import '../modernizr-bundle';
 
 const formatResponse = (response) => {
-  var markers = response.data.map((dataPoint) => {  
-    return(
-      {
-        type: 'marker',
-        position: {
-          lat: dataPoint.geometry.coordinates[1],
-          lng: dataPoint.geometry.coordinates[0]
-        },
-        icon: {
-          path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-          fillColor: dataPoint.properties.color,
-          fillOpacity: 1,
-          strokeColor: '#000',
-          strokeWeight: 2,
-          scale: 1,
-        },
-        defaultAnimation: 2,
-        windowContent: dataPoint.properties.disclosure_attributes.map(
-          (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
-        )
-      }
-    )
-  });
+  const markers = response.data.map(dataPoint => (
+    {
+      type: 'marker',
+      position: {
+        lat: dataPoint.geometry.coordinates[1],
+        lng: dataPoint.geometry.coordinates[0],
+      },
+      icon: {
+        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+        fillColor: dataPoint.properties.color,
+        fillOpacity: 1,
+        strokeColor: '#000',
+        strokeWeight: 2,
+        scale: 1,
+      },
+      defaultAnimation: 2,
+      windowContent: dataPoint.properties.disclosure_attributes.map(
+        attribute => <div dangerouslySetInnerHTML={{ __html: attribute }} />,
+      ),
+    }));
 
-  return {markers: markers, polygons: []};
-}
+  return { markers, polygons: [] };
+};
 
 class Miscellaenous extends React.Component {
   constructor(props) {
@@ -40,23 +37,23 @@ class Miscellaenous extends React.Component {
     this.state = {
       filters: [],
       filtersViewable: false,
-      viewingReport: false
-    }
-    
+      viewingReport: false,
+    };
+
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.toggleFilters = this.toggleFilters.bind(this);
     this.queryDataset = this.queryDataset.bind(this);
   }
 
   handleFilterChange(event) {
-    var currentFilters = this.state.filters,
-        selectedFilters = event.currentTarget.value,
-        filterIsActive = event.currentTarget.checked;
+    const currentFilters = this.state.filters;
+    const selectedFilters = event.currentTarget.value;
+    const filterIsActive = event.currentTarget.checked;
 
-    if(filterIsActive) {
+    if (filterIsActive) {
       currentFilters.push(selectedFilters);
     } else {
-      var filterIndex = currentFilters.indexOf(selectedFilters);
+      const filterIndex = currentFilters.indexOf(selectedFilters);
       currentFilters.splice(filterIndex, 1);
     }
   }
@@ -73,61 +70,70 @@ class Miscellaenous extends React.Component {
   }
 
   queryDataset() {
-    var _this = this;
+    const _this = this;
 
     this.setState({
       ...this.state,
       loading: true,
-      filtersViewable: false
+      filtersViewable: false,
     });
 
-    var queryString = 'filters[]=' + this.state.filters.join('&filters[]=');
+    const queryString = `filters[]=${this.state.filters.join('&filters[]=')}`;
 
-    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/miscellaneous_data?' + queryString)
-      .then(function(response) {
+    axios.get(`/api/neighborhood/${this.props.params.neighborhoodId}/miscellaneous_data?${queryString}`)
+      .then((response) => {
         _this.setState({
           ..._this.state,
-          loading: false
+          loading: false,
         });
 
-        debugger;
+        // debugger;  // commenting out so it doesn't appear in production
         _this.props.updateMap(formatResponse(response));
       })
-      .catch(function(error) {
+      .catch((error) => {
         _this.setState({
-          loading: false
+          loading: false,
         });
 
-        toast(<p>We are sorry, but the application could not process your request. Please try again later.</p>, {
-          type: toast.TYPE.INFO
-        });
+        toast(<p>We are sorry, but the application could not process your request.
+          Please try again later.</p>, {
+            type: toast.TYPE.INFO,
+          });
       });
   }
 
   toggleReport() {
     this.setState({
-      ... this.state,
-      viewingReport: !this.state.viewingReport
-    })
+      ...this.state,
+      viewingReport: !this.state.viewingReport,
+    });
   }
 
   filtersTooltip() {
-    var className = 'map-filters';
+    let className = 'map-filters';
 
-    if(!this.state.filtersViewable) {
-      className += ' hide'
+    if (!this.state.filtersViewable) {
+      className += ' hide';
     }
 
-    return(
+    return (
       <div className={className}>
         <div className="col-md-12">
           <h2>Miscellaneous Data</h2>
           <label>
-            <input type="checkbox" value="sidewalk_issues" onChange={this.handleFilterChange}/>&nbsp;
+            <input
+              type="checkbox"
+              value="sidewalk_issues"
+              onChange={this.handleFilterChange}
+            />&nbsp;
             Sidewalk Issues
           </label>
           <label>
-            <input type="checkbox" value="problem_renters" onChange={this.handleFilterChange}/>&nbsp;
+            <input
+              type="checkbox"
+              value="problem_renters"
+              onChange={this.handleFilterChange}
+            />&nbsp;
             Potential Problem Renters
           </label>
         </div>
@@ -139,7 +145,7 @@ class Miscellaenous extends React.Component {
   loadingIndicator() {
     return (
       <span className="filters-loading">
-        <i className="fa fa-refresh fa-large fa-spin"></i>
+        <i className="fa fa-refresh fa-large fa-spin" />
       </span>
     );
   }
@@ -147,16 +153,20 @@ class Miscellaenous extends React.Component {
   toggleFilters() {
     this.setState({
       ...this.state,
-      filtersViewable: !this.state.filtersViewable
+      filtersViewable: !this.state.filtersViewable,
     });
   }
 
   filtersActivationButton() {
     return (
-      <button className="btn btn btn-success filters-action" type="button" onClick={this.toggleFilters}>
+      <button
+        className="btn btn btn-success filters-action"
+        type="button"
+        onClick={this.toggleFilters}
+      >
         Filters
       </button>
-    )
+    );
   }
 
   render() {
@@ -167,7 +177,7 @@ class Miscellaenous extends React.Component {
           {this.filtersTooltip()}
         </div>
       </div>
-    )
+    );
   }
 }
 

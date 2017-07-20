@@ -3,37 +3,36 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import Datetime from 'react-datetime';
 import { toast } from 'react-toastify';
-
-import '../modernizr-bundle';
 import 'react-datetime/css/react-datetime.css';
+import CrimeStatisticsTable from './crime_statistics_table';
+import '../modernizr-bundle';
+
 
 const formatResponse = (response) => {
-  var markers = response.data.map(function(dataPoint) {
-    return(
-      {
-        type: 'marker',
-        position: {
-          lat: dataPoint.geometry.coordinates[1],
-          lng: dataPoint.geometry.coordinates[0]
-        },
-        icon: {
-          path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-          fillColor: dataPoint.properties.color,
-          fillOpacity: 1,
-          strokeColor: '#000',
-          strokeWeight: 2,
-          scale: 1,
-        },
-        defaultAnimation: 2,
-        windowContent: dataPoint.properties.disclosure_attributes.map(
-          (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
-        )
-      }
-    )
+  var markers = response.data.map(function (dataPoint) {
+    return ({
+      type: 'marker',
+      position: {
+        lat: dataPoint.geometry.coordinates[1],
+        lng: dataPoint.geometry.coordinates[0],
+      },
+      icon: {
+        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+        fillColor: dataPoint.properties.color,
+        fillOpacity: 1,
+        strokeColor: '#000',
+        strokeWeight: 2,
+        scale: 1,
+      },
+      defaultAnimation: 2,
+      windowContent: dataPoint.properties.disclosure_attributes.map(
+        (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
+      ),
+    });
   });
 
-  return {markers: markers, polygons: []};
-}
+  return { markers: markers, polygons: [] };
+};
 
 const CRIME_CODES = {
   ARSON: '200',
@@ -104,20 +103,20 @@ const CRIME_CODES = {
   PEEPING_TOM: '90H',
   RUNAWAY: '90I',
   TRESSPASSING: '90J',
-  OTHER: '90Z'
-}
+  OTHER: '90Z',
+};
 
 const CrimeCodeGroups = (code) => {
-  switch(code) {
+  switch (code) {
     case CRIME_CODES.ASSAULT:
       return [
         CRIME_CODES.ASSAULT_AGGRAVATED,
         CRIME_CODES.ASSAULT_SIMPLE,
-        CRIME_CODES.ASSAULT_INTIMIDATION
+        CRIME_CODES.ASSAULT_INTIMIDATION,
       ];
     case CRIME_CODES.DRUG:
       return [
-        CRIME_CODES.DRUG_NARCOTIC
+        CRIME_CODES.DRUG_NARCOTIC,
       ];
     case CRIME_CODES.FRAUD:
       return [
@@ -125,24 +124,24 @@ const CrimeCodeGroups = (code) => {
         CRIME_CODES.FRAUD_CREDIT_CARD,
         CRIME_CODES.FRAUD_IMPERSONATION,
         CRIME_CODES.FRAUD_WELFARE,
-        CRIME_CODES.FRAUD_WIRE
+        CRIME_CODES.FRAUD_WIRE,
       ];
     case CRIME_CODES.GAMBLING:
       return [
         CRIME_CODES.GAMBLING_BETTING,
         CRIME_CODES.GAMBLING_OPERATING,
         CRIME_CODES.GAMBLING_EQUIPMENT_VIOLATIONS,
-        CRIME_CODES.GAMBLING_TAMPERING
+        CRIME_CODES.GAMBLING_TAMPERING,
       ];
     case CRIME_CODES.HOMICIDE:
       return [
         CRIME_CODES.HOMICIDE_NONNEGLIGENT_MANSLAUGHTER,
-        CRIME_CODES.HOMICIDE_NEGLIGENT_MANSLAUGHETER
+        CRIME_CODES.HOMICIDE_NEGLIGENT_MANSLAUGHETER,
       ];
     case CRIME_CODES.HUMAN_TRAFFICKING:
       return [
         CRIME_CODES.HUMAN_TRAFFICKING_SEX_ACTS,
-        CRIME_CODES.HUMAN_TRAFFICKING_INVOLUNTARY_SERVITUDE
+        CRIME_CODES.HUMAN_TRAFFICKING_INVOLUNTARY_SERVITUDE,
       ];
     case CRIME_CODES.THEFT:
       return [
@@ -154,13 +153,13 @@ const CrimeCodeGroups = (code) => {
         CRIME_CODES.THEFT_MOTOR_VEHICLE,
         CRIME_CODES.THEFT_MOTOR_VEHICLE_PARTS,
         CRIME_CODES.THEFT_OTHER,
-        CRIME_CODES.MOTOR_VEHICLE_THEFT
+        CRIME_CODES.MOTOR_VEHICLE_THEFT,
       ];
     case CRIME_CODES.PROSTITUTION:
       return [
         CRIME_CODES.PROSTITUTION_BASE,
         CRIME_CODES.PROSTITUTION_ASSISTANCE,
-        CRIME_CODES.PROSTITUTION_PURCHASING
+        CRIME_CODES.PROSTITUTION_PURCHASING,
       ];
     case CRIME_CODES.SEX_OFFENSE:
       return [
@@ -170,185 +169,13 @@ const CrimeCodeGroups = (code) => {
         CRIME_CODES.SEX_OFFENSE_FONDLING,
         CRIME_CODES.SEX_OFFENSE_NONFORCIBLE,
         CRIME_CODES.SEX_OFFENSE_NONFORCIBLE_INCEST,
-        CRIME_CODES.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE
+        CRIME_CODES.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE,
       ];
     default:
       return [code];
   }
-}
+};
 
-class CrimeStatisticsTable extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  formatData(data) {
-    var formattedData = {
-      PERSON: {
-        title: 'Person'
-      },
-      PROPERTY: {
-        title: 'Property'
-      },
-      SOCIETY: {
-        title: 'Society'
-      }
-    };
-
-    formattedData.PERSON.data = 
-      [
-        {
-          title: 'Assault',
-          value: data.PERSON.ASSAULT_AGGRAVATED + data.PERSON.ASSAULT_SIMPLE + data.PERSON.ASSAULT_INTIMIDATION
-        },
-        {
-          title: 'Homicide',
-          value: data.PERSON.HOMICIDE_NONNEGLIGENT_MANSLAUGHTER + data.PERSON.HOMICIDE_NEGLIGENT_MANSLAUGHETER
-        },
-        {
-          title: 'Sex Offenses, Forcible',
-          value: data.PERSON.SEX_OFFENSE_RAPE + data.PERSON.SEX_OFFENSE_SODOMY + data.PERSON.SEX_OFFENSE_ASSAULT_WITH_OBJECT + data.PERSON.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE
-        },
-        {
-          title: 'Sex Offenses, Non-Forcible',
-          value: data.PERSON.SEX_OFFENSE_NONFORCIBLE_INCEST + data.PERSON.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE
-        }
-      ];
-
-    formattedData.PROPERTY.data =
-      [
-        {
-          title: 'Arson',
-          value: data.PROPERTY.ARSON
-        },
-        {
-          title: 'Bribery',
-          value: data.PROPERTY.BRIBERY
-        },
-        {
-          title: 'Burglary',
-          value: data.PROPERTY.BURGLARY
-        },
-        {
-          title: 'Forgery',
-          value: data.PROPERTY.FORGERY
-        },
-        {
-          title: 'Vandalism',
-          value: data.PROPERTY.VANDALISM
-        },
-        {
-          title: 'Embezzlement',
-          value: data.PROPERTY.EMBEZZLEMENT
-        },
-        {
-          title: 'Extortion',
-          value: data.PROPERTY.EXTORTING
-        },
-        {
-          title: 'Fraud, Swindle',
-          value: data.PROPERTY.FRAUD_SWINDLE
-        },
-        {
-          title: 'Fraud, Credit Care',
-          value: data.PROPERTY.FRAUD_CREDIT_CARD
-        },
-        {
-          title: 'Fraud, Impersonation',
-          value: data.PROPERTY.FRAUD_IMPERSONATION
-        },
-        {
-          title: 'Fraud, Impersonation',
-          value: data.PROPERTY.FRAUD_WELFARE
-        },
-        {
-          title: 'Fraud, Welfare',
-          value: data.PROPERTY.ARSON
-        },
-        {
-          title: 'Fraud, Wire',
-          value: data.PROPERTY.ARSON
-        },
-      ];
-
-    formattedData.SOCIETY.data = [
-      {
-        title: 'Fraud, Wire',
-        value: data.PROPERTY.ARSON
-      }
-    ]
-
-    formattedData.PERSON.count = this.calculateTotals(formattedData.PERSON.data);
-    formattedData.PROPERTY.count = this.calculateTotals(formattedData.PROPERTY.data);
-
-    return formattedData;
-  }
-
-  calculateTotals(data) {
-      return data.reduce((sum, data) =>(sum + data.value), 0)
-  }
-
-  expandableRow(dataGroup) {
-    return (
-      <tbody className="expandable-row">
-        <tr className="expandable-trigger">
-          <th>
-            <span className="btn btn-default glyphicon glyphicon-plus"></span>
-            <span>
-              <span className="text-muted">Crimes Against</span>
-              <br/>
-              <strong>{dataGroup.title}</strong>
-            </span>
-          </th>
-          <td>
-            {dataGroup.count}
-          </td>
-        </tr>
-        {
-          dataGroup.data.map(function(data) {
-            return (
-              <tr>
-                <th>{data.title}</th>
-                <td>{data.value}</td>
-              </tr>
-            )
-          })
-        }
-      </tbody>
-    )
-  }
-
-  render() {
-    var data = this.formatData(this.props.data);
-
-    if(data) {
-      return (
-        <table className='statistics-table'>
-          <thead>
-            <tr className="title-row">
-              <th>
-              </th>
-              <th colSpan="4">
-                Annual
-              </th>
-            </tr>
-            <tr className="sub-title-row">
-              <th>
-              </th>
-              <th colSpan="4">
-                Total Incidents from Previous Year
-              </th>
-            </tr>
-          </thead>
-          {this.expandableRow(data.PERSON)}
-          {this.expandableRow(data.PROPERTY)}
-        </table>
-      )
-    } else {
-      return <div />
-    }
-  }
-}
 
 class Crime extends React.Component {
   constructor(props) {
@@ -358,9 +185,9 @@ class Crime extends React.Component {
       filters: [],
       filtersViewable: false,
       reportInformation: null,
-      viewingReport: false
-    }
-    
+      viewingReport: false,
+    };
+
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.toggleFilters = this.toggleFilters.bind(this);
     this.queryDataset = this.queryDataset.bind(this);
@@ -375,9 +202,9 @@ class Crime extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.params.neighborhoodId !== nextProps.params.neighborhoodId) {
+    if (this.props.params.neighborhoodId !== nextProps.params.neighborhoodId) {
       this.updateReport(nextProps.params.neighborhoodId);
-    };
+    }
   }
 
   updateReport(neighborhoodId) {
@@ -385,17 +212,17 @@ class Crime extends React.Component {
 
     _this.setState({
       reportInformation: null,
-      viewingReport: false
+      viewingReport: false,
     });
 
     axios.get('/api/neighborhood/' + neighborhoodId + '/crime/grouped_totals')
-      .then(function(response) {
+      .then(function (response) {
         _this.setState({
-          ... _this.state,
+          ..._this.state,
           reportInformation: response.data
-        })
+        });
       })
-      .then(function(error) {
+      .then(function (error) {
         console.log(error);
       });
   }
@@ -409,11 +236,11 @@ class Crime extends React.Component {
 
   handleFilterChange(event) {
     var currentFilters = this.state.filters,
-        crimeCodes = CrimeCodeGroups(event.currentTarget.value),
-        filterIsActive = event.currentTarget.checked;
+      crimeCodes = CrimeCodeGroups(event.currentTarget.value),
+      filterIsActive = event.currentTarget.checked;
 
-    crimeCodes.forEach(function(code) {
-      if(filterIsActive) {
+    crimeCodes.forEach(function (code) {
+      if (filterIsActive) {
         currentFilters.push(code);
       } else {
         var filterIndex = currentFilters.indexOf(code);
@@ -425,22 +252,26 @@ class Crime extends React.Component {
   filterInputs(groups, crimeObject) {
     return (
       <div className="row">
-        {groups.map(function(group, index) {
-            var groupRows = group.map(function(currentFilter) {
-              return (
-                <label>
-                  <input type="checkbox" value={currentFilter.value} onChange={crimeObject.handleFilterChange}/>&nbsp;
-                  {currentFilter.label}
-                </label>
-              )
-            })
-
+        {groups.map(function (group, index) {
+          var groupRows = group.map(function (currentFilter) {
             return (
-              <div className="col-md-6">
-                {groupRows}
-              </div>
+              <label>
+                <input
+                  type="checkbox"
+                  value={currentFilter.value}
+                  onChange={crimeObject.handleFilterChange}
+                />&nbsp;
+                {currentFilter.label}
+              </label>
             );
-          })
+          });
+
+          return (
+            <div className="col-md-6">
+              {groupRows}
+            </div>
+          );
+        })
         }
       </div>
     );
@@ -451,23 +282,39 @@ class Crime extends React.Component {
       <div className="col-md-2">
         <h2>Person</h2>
         <label>
-          <input type="checkbox" value={CRIME_CODES.ASSAULT} onChange={this.handleFilterChange}/>&nbsp;
+          <input
+            type="checkbox"
+            value={CRIME_CODES.ASSAULT}
+            onChange={this.handleFilterChange}
+          />&nbsp;
           Assault
         </label>
         <label>
-          <input type="checkbox" value={CRIME_CODES.HOMICIDE} onChange={this.handleFilterChange}/>&nbsp;
+          <input
+            type="checkbox"
+            value={CRIME_CODES.HOMICIDE}
+            onChange={this.handleFilterChange}
+          />&nbsp;
           Homicide
         </label>
         <label>
-          <input type="checkbox" value={CRIME_CODES.SEX_OFFENSE_FORCIBLE} onChange={this.handleFilterChange}/>&nbsp;
+          <input
+            type="checkbox"
+            value={CRIME_CODES.SEX_OFFENSE_FORCIBLE}
+            onChange={this.handleFilterChange}
+          />&nbsp;
           Sex Offense, Forcible
         </label>
         <label>
-          <input type="checkbox" value={CRIME_CODES.SEX_OFFENSE_NON_FORCIBLE} onChange={this.handleFilterChange}/>&nbsp;
+          <input
+            type="checkbox"
+            value={CRIME_CODES.SEX_OFFENSE_NON_FORCIBLE}
+            onChange={this.handleFilterChange}
+          />&nbsp;
           Sex Offense, Non Forcible
         </label>
       </div>
-    )
+    );
   }
 
   propertyCrimes() {
@@ -475,23 +322,23 @@ class Crime extends React.Component {
 
     var groups = [
       [
-        {value: CRIME_CODES.ARSON, label: 'Arson'},
-        {value: CRIME_CODES.BURGLARY, label: 'Burglary'},
-        {value: 'counterfeit', label: 'Counterfeiting'},
-        {value: CRIME_CODES.EMBEZZLEMENT, label: 'Embezzlement'},
-        {value: CRIME_CODES.EXTORTION, label: 'Extortion'},
-        {value: CRIME_CODES.FRAUD, label: 'Fraud'}
+        { value: CRIME_CODES.ARSON, label: 'Arson' },
+        { value: CRIME_CODES.BURGLARY, label: 'Burglary' },
+        { value: 'counterfeit', label: 'Counterfeiting' },
+        { value: CRIME_CODES.EMBEZZLEMENT, label: 'Embezzlement' },
+        { value: CRIME_CODES.EXTORTION, label: 'Extortion' },
+        { value: CRIME_CODES.FRAUD, label: 'Fraud' },
       ],
       [
-        {value: CRIME_CODES.MOTOR_VEHICLE_THEFT, label: 'Motor Vehicle Theft'},
-        {value: CRIME_CODES.ROBBERY, label: 'Robbery'},
-        {value: CRIME_CODES.STOLEN_PROPERTY, label: 'Stolen Property'},
-        {value: CRIME_CODES.THEFT, label: 'Theft'},
-        {value: CRIME_CODES.VANDALISM, label: 'Vandalism'},
-      ]
+        { value: CRIME_CODES.MOTOR_VEHICLE_THEFT, label: 'Motor Vehicle Theft' },
+        { value: CRIME_CODES.ROBBERY, label: 'Robbery' },
+        { value: CRIME_CODES.STOLEN_PROPERTY, label: 'Stolen Property' },
+        { value: CRIME_CODES.THEFT, label: 'Theft' },
+        { value: CRIME_CODES.VANDALISM, label: 'Vandalism' },
+      ],
     ];
 
-    return(
+    return (
       <div className="col-md-5">
         <h2>Property</h2>
         {this.filterInputs(groups, _this)}
@@ -504,22 +351,22 @@ class Crime extends React.Component {
 
     var groups = [
       [
-        {value: CRIME_CODES.BAD_CHECKS, label: 'Bad Checks'},
-        {value: CRIME_CODES.CURFEW, label: 'Curfew & Loitering'},
-        {value: CRIME_CODES.DISORDERLY_CONDUCT, label: 'Disorderly Conduct'},
-        {value: CRIME_CODES.DUI, label: 'DUI'},
-        {value: CRIME_CODES.DRUNKNESS, label: 'Drunkenness'},
-        {value: 'domestic', label: 'Domestic Nonviolent'} // should this be matched to FAMILY_OFFENSES_NON_VIOLENT: '90F',?
+        { value: CRIME_CODES.BAD_CHECKS, label: 'Bad Checks' },
+        { value: CRIME_CODES.CURFEW, label: 'Curfew & Loitering' },
+        { value: CRIME_CODES.DISORDERLY_CONDUCT, label: 'Disorderly Conduct' },
+        { value: CRIME_CODES.DUI, label: 'DUI' },
+        { value: CRIME_CODES.DRUNKNESS, label: 'Drunkenness' },
+        { value: 'domestic', label: 'Domestic Nonviolent' }, // should this be matched to FAMILY_OFFENSES_NON_VIOLENT: '90F',?
       ],
       [
-        {value: CRIME_CODES.GAMBLING, label: 'Gambling'},
-        {value: CRIME_CODES.PORNOGRAPHY, label: 'Pornography'},
-        {value: CRIME_CODES.LIQUOR_LAW_VIOLATIONS, label: 'Liquor Law Violation'},
-        {value: CRIME_CODES.TRESSPASSING, label: 'Trespassing'}
+        { value: CRIME_CODES.GAMBLING, label: 'Gambling' },
+        { value: CRIME_CODES.PORNOGRAPHY, label: 'Pornography' },
+        { value: CRIME_CODES.LIQUOR_LAW_VIOLATIONS, label: 'Liquor Law Violation' },
+        { value: CRIME_CODES.TRESSPASSING, label: 'Trespassing' },
       ]
     ];
-    
-    return(
+
+    return (
       <div className="col-md-5">
         <h2>Society</h2>
         {this.filterInputs(groups, _this)}
@@ -531,7 +378,8 @@ class Crime extends React.Component {
     return (
       <div>
         <div className="map-filter-actions pull-right">
-          <button className="btn btn-primary" type="button">Reset</button>&nbsp;
+          <button className="btn btn-primary" type="button">Reset</button>
+          &nbsp;
           <button className="btn btn-primary" onClick={this.queryDataset}>Done</button>
         </div>
       </div>
@@ -548,13 +396,13 @@ class Crime extends React.Component {
     });
 
     var queryString = 'crime_codes[]=' + this.state.filters.join('&crime_codes[]=')
-       + '&start_date=' + this.state.startDate 
-       + '&end_date=' + this.state.endDate;
+      + '&start_date=' + this.state.startDate
+      + '&end_date=' + this.state.endDate;
 
     axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/crime?' + queryString)
-      .then(function(response) {
-        var legend = 
-        `<ul>
+      .then(function (response) {
+        var legend =
+          `<ul>
           <li><span class="legend-element" style="background-color: #626AB2;"></span>Person</li>
           <li><span class="legend-element" style="background-color: #313945;"></span>Property</li>
           <li><span class="legend-element" style="background-color: #6B7D96;"></span>Society</li>
@@ -563,38 +411,39 @@ class Crime extends React.Component {
 
         _this.setState({
           ..._this.state,
-          loading: false
+          loading: false,
         });
 
         _this.props.updateMap(formatResponse(response));
         _this.props.updateLegend(legend);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         _this.setState({
-          loading: false
+          loading: false,
         });
 
-        toast(<p>We're sorry, but the application could not process your request. Please try again later.</p>, {
-          type: toast.TYPE.INFO
-        });
+        toast(<p>We&apos;re sorry, but the application could not process your request.
+          Please try again later.</p>, {
+            type: toast.TYPE.INFO,
+          });
       });
   }
 
   toggleReport() {
     this.setState({
-      ... this.state,
-      viewingReport: !this.state.viewingReport
-    })
+      ...this.state,
+      viewingReport: !this.state.viewingReport,
+    });
   }
 
   filtersTooltip() {
     var className = 'map-filters';
 
-    if(!this.state.filtersViewable) {
-      className += ' hide'
+    if (!this.state.filtersViewable) {
+      className += ' hide';
     }
 
-    return(
+    return (
       <div className={className}>
         <form className="form-inline col-md-12">
           <div className="form-group">
@@ -624,14 +473,18 @@ class Crime extends React.Component {
 
   filtersActivationButton() {
     return (
-      <button className="btn btn btn-success filters-action" type="button" onClick={this.toggleFilters}>
+      <button
+        className="btn btn btn-success filters-action"
+        type="button"
+        onClick={this.toggleFilters}
+      >
         Filters
       </button>
-    )
+    );
   }
 
   renderingReport() {
-    if(!this.state.reportInformation) {
+    if (!this.state.reportInformation) {
       return null;
     } else if (this.state.viewingReport) {
       return <a role="tab" onClick={this.toggleReport}>Close Report</a>
@@ -643,38 +496,43 @@ class Crime extends React.Component {
   updateStartDate(e) {
     var date;
 
-    if(e._isAMomentObject) {
+    if (e._isAMomentObject) {
       date = e.format();
     } else {
       date = e.currentTarget.value;
     }
 
     this.setState({
-      ... this.state,
-      startDate: date
-    })
+      ...this.state,
+      startDate: date,
+    });
   }
 
   updateEndDate(e) {
     var date;
 
-    if(e._isAMomentObject) {
+    if (e._isAMomentObject) {
       date = e.format();
     } else {
       date = e.currentTarget.value;
     }
 
     this.setState({
-      ... this.state,
-      endDate: date
-    })  
+      ...this.state,
+      endDate: date,
+    });
   }
 
   outputDatetimePicker(onChangeFunction) {
-    if(Modernizr.inputtypes.date) {
+    if (Modernizr.inputtypes.date) {
       return <input type="date" className="form-control" onChange={onChangeFunction}/>
     } else {
-      return <Datetime inputProps={{placeholder: 'mm/dd/yyyy'}} timeFormat={false} input={true} onChange={onChangeFunction}/>
+      return <Datetime
+        inputProps={{ placeholder: 'mm/dd/yyyy' }}
+        timeFormat={false}
+        input={true}
+        onChange={onChangeFunction}
+      />;
     }
   }
 
@@ -686,13 +544,13 @@ class Crime extends React.Component {
           {this.state.loading ? this.loadingIndicator() : this.filtersActivationButton()}
           {this.filtersTooltip()}
         </div>
-        {this.state.viewingReport && 
-          <div className='statistics-panel'>
-            <CrimeStatisticsTable data={this.state.reportInformation}/>
-          </div>
+        {this.state.viewingReport &&
+        <div className="statistics-panel">
+          <CrimeStatisticsTable data={this.state.reportInformation}/>
+        </div>
         }
       </div>
-    )
+    );
   }
 }
 
