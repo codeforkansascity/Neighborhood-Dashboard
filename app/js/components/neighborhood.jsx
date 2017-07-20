@@ -1,11 +1,11 @@
-import { default as React, PropTypes } from 'react'
-import { render } from 'react-dom'
-import { Link } from 'react-router'
+import { default as React, PropTypes } from 'react';
+import { render } from 'react-dom';
+import { Link } from 'react-router';
 
 class Neighborhood extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {legend: null}
+    this.state = { legend: null };
   }
 
   componentDidMount() {
@@ -29,14 +29,26 @@ class Neighborhood extends React.Component {
       <div className="neighborhood-content">
         <h1 className="neighborhood-title">{this.props.selectedNeighborhood ? this.props.selectedNeighborhood.properties.nbhname : ''}</h1>
         <ul className="nav nav-tabs neighborhood-nav">
-          <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/crime"} activeClassName='active'>Crime</Link></li>
-          <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/vacancy"} activeClassName='active'>Vacancies</Link></li>
-          <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/demographics"} activeClassName='active'>Demographics</Link></li>
-          <li><Link to={"/neighborhood/" + this.props.params.neighborhoodId + "/misc"} activeClassName='active'>Miscellaneous</Link></li>
+          <li><Link
+            to={'/neighborhood/' + this.props.params.neighborhoodId + '/crime'}
+            activeClassName="active"
+          >Crime</Link></li>
+          <li><Link
+            to={'/neighborhood/' + this.props.params.neighborhoodId + '/vacancy'}
+            activeClassName="active"
+          >Vacancies</Link></li>
+          <li><Link
+            to={'/neighborhood/' + this.props.params.neighborhoodId + '/demographics'}
+            activeClassName="active"
+          >Demographics</Link></li>
+          <li><Link
+            to={'/neighborhood/' + this.props.params.neighborhoodId + '/misc'}
+            activeClassName="active"
+          >Miscellaneous</Link></li>
         </ul>
         {this.props.children}
       </div>
-    )
+    );
   }
 }
 
