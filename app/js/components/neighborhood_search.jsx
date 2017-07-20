@@ -5,9 +5,6 @@ import Select2 from 'react-select2-wrapper';
 import { browserHistory } from 'react-router';
 
 class NeighborhoodSearch extends React.Component {
-  constructor() {
-    super();
-  }
 
   neighborhoodSelect(e) {
     e.preventDefault();
@@ -15,7 +12,7 @@ class NeighborhoodSearch extends React.Component {
   }
 
   render() {
-    var _this = this;
+    const _this = this;
 
     return (
       <Select2
@@ -27,22 +24,23 @@ class NeighborhoodSearch extends React.Component {
             url: '/api/neighborhood/search',
             delay: 250,
             dataType: 'json',
-            data: function(params) {
+            data: function (params) {
               return {
-                search_neighborhood: params.term
-              }
+                search_neighborhood: params.term,
+              };
             },
-            processResults: function(data, params) {
-              var formattedResponse = data.map(function(element) {
-                return {id: element.id, text: element.name}
-              })
+            processResults: function (data, params) {
+              const formattedResponse = data.map(function (element) {
+                return { id: element.id, text: element.name };
+              });
 
-              return {results: formattedResponse}
+              return { results: formattedResponse };
             },
-            cache: true
-          }
-        }}/>
-    )
+            cache: true,
+          },
+        }}
+      />
+    );
   }
 }
 
