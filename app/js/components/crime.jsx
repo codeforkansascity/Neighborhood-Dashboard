@@ -509,11 +509,11 @@ class Crime extends React.Component {
         {value: CRIME_CODES.DISORDERLY_CONDUCT, label: 'Disorderly Conduct'},
         {value: CRIME_CODES.DUI, label: 'DUI'},
         {value: CRIME_CODES.DRUNKNESS, label: 'Drunkenness'},
-        {value: 'domestic', label: 'Domestic Nonviolent'}
+        {value: 'domestic', label: 'Domestic Nonviolent'} // should this be matched to FAMILY_OFFENSES_NON_VIOLENT: '90F',?
       ],
       [
-        {value: CRIME_CODES.GAMBLING, label: 'Motor Vehicle Theft'},
-        {value: CRIME_CODES.PORNOGRAPHY, label: 'Robbery'},
+        {value: CRIME_CODES.GAMBLING, label: 'Gambling'},
+        {value: CRIME_CODES.PORNOGRAPHY, label: 'Pornography'},
         {value: CRIME_CODES.LIQUOR_LAW_VIOLATIONS, label: 'Liquor Law Violation'},
         {value: CRIME_CODES.TRESSPASSING, label: 'Trespassing'}
       ]
