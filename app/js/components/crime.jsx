@@ -521,7 +521,7 @@ class Crime extends React.Component {
     
     return(
       <div className="col-md-5">
-        <h2>Property</h2>
+        <h2>Society</h2>
         {this.filterInputs(groups, _this)}
       </div>
     );
