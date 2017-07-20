@@ -6,8 +6,7 @@ import { toast } from 'react-toastify';
 import '../modernizr-bundle';
 
 const formatResponse = (response) => {
-  const markers = response.data.map((dataPoint) => {
-    return (
+  const markers = response.data.map(dataPoint => (
     {
       type: 'marker',
       position: {
@@ -24,12 +23,11 @@ const formatResponse = (response) => {
       },
       defaultAnimation: 2,
       windowContent: dataPoint.properties.disclosure_attributes.map(
-        (attribute) => <div dangerouslySetInnerHTML={{ __html: attribute }} />,
+        attribute => <div dangerouslySetInnerHTML={{ __html: attribute }} />,
       ),
-    });
-  });
+    }));
 
-  return { markers: markers, polygons: [] };
+  return { markers, polygons: [] };
 };
 
 class Miscellaenous extends React.Component {
@@ -80,10 +78,10 @@ class Miscellaenous extends React.Component {
       filtersViewable: false,
     });
 
-    const queryString = 'filters[]=' + this.state.filters.join('&filters[]=');
+    const queryString = `filters[]=${this.state.filters.join('&filters[]=')}`;
 
-    axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/miscellaneous_data?' + queryString)
-      .then(function (response) {
+    axios.get(`/api/neighborhood/${this.props.params.neighborhoodId}/miscellaneous_data?${queryString}`)
+      .then((response) => {
         _this.setState({
           ..._this.state,
           loading: false,
@@ -92,7 +90,7 @@ class Miscellaenous extends React.Component {
         // debugger;  // commenting out so it doesn't appear in production
         _this.props.updateMap(formatResponse(response));
       })
-      .catch(function (error) {
+      .catch((error) => {
         _this.setState({
           loading: false,
         });
@@ -147,7 +145,7 @@ class Miscellaenous extends React.Component {
   loadingIndicator() {
     return (
       <span className="filters-loading">
-        <i className="fa fa-refresh fa-large fa-spin"></i>
+        <i className="fa fa-refresh fa-large fa-spin" />
       </span>
     );
   }
@@ -155,7 +153,7 @@ class Miscellaenous extends React.Component {
   toggleFilters() {
     this.setState({
       ...this.state,
-      filtersViewable: !this.state.filtersViewable
+      filtersViewable: !this.state.filtersViewable,
     });
   }
 
