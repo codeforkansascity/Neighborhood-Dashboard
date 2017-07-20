@@ -48,10 +48,10 @@ class PrimaryNavigation extends React.Component {
     });
 
     axios.get('/api/neighborhood/locate?search_address=' + this.state.neighborhoodSearch)
-      .then(function (response) {
+      .then((response) => {
         browserHistory.replace('/neighborhood/' + response.data.id + '/crime');
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
 
         _this.setState({
