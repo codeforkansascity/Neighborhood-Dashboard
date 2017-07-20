@@ -6,10 +6,10 @@ import { toast } from 'react-toastify';
 
 const formatResponse = (response) => {
   const markers = response.data
-    .filter(function (dataPoint) {
+    .filter((dataPoint) => {
       return dataPoint.geometry.type === 'Point' && dataPoint.geometry.coordinates[1] !== 0.0;
     })
-    .map(function (dataPoint) {
+    .map((dataPoint) => {
       let iconStyle = {};
 
       if (dataPoint.properties.marker_style === 'circle') {
@@ -50,14 +50,14 @@ const formatResponse = (response) => {
     });
 
   const polygons = response.data
-    .filter(function (dataPoint) {
+    .filter((dataPoint) => {
       return dataPoint.geometry.type === 'Polygon';
     })
-    .map(function (dataPoint) {
+    .map((dataPoint) => {
       return (
       {
         type: 'polygon',
-        paths: dataPoint.geometry.coordinates[0].map(function (data) {
+        paths: dataPoint.geometry.coordinates[0].map((data) => {
           return { lat: data[1], lng: data[0] };
         }),
         windowContent: dataPoint.properties.disclosure_attributes.map(
@@ -67,7 +67,7 @@ const formatResponse = (response) => {
       );
     });
 
-  return { markers: markers, polygons: polygons };
+  return { markers, polygons };
 };
 
 const VACANCY_CODES = {
@@ -140,7 +140,7 @@ class Vacancy extends React.Component {
     });
 
     axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/vacancy?filters[]=' + this.state.filters.join('&filters[]='))
-      .then(function (response) {
+      .then((response) => {
         const legend =
         `<ul>
           <li><span class="legend-element" style="background-color: #CCC;"></span>Low Indication of Vacancy</li>
@@ -161,7 +161,7 @@ class Vacancy extends React.Component {
         _this.props.updateMap(formatResponse(response));
         _this.props.updateLegend(legend);
       })
-      .catch(function (error) {
+      .catch((error) => {
         _this.setState({
           loading: false,
         });
