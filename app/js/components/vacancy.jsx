@@ -5,20 +5,20 @@ import ReactTooltip from 'react-tooltip';
 import { toast } from 'react-toastify';
 
 const formatResponse = (response) => {
-  var markers = response.data
-    .filter(function(dataPoint) {
+  const markers = response.data
+    .filter(function (dataPoint) {
       return dataPoint.geometry.type === 'Point' && dataPoint.geometry.coordinates[1] !== 0.0;
     })
-    .map(function(dataPoint) {
-      var iconStyle = {};
+    .map(function (dataPoint) {
+      let iconStyle = {};
 
-      if (dataPoint.properties.marker_style == 'circle') {
+      if (dataPoint.properties.marker_style === 'circle') {
         iconStyle = {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 5,
           fillColor: dataPoint.properties.color,
           fillOpacity: 0.9,
-          strokeWeight: 0
+          strokeWeight: 0,
         };
       } else {
         iconStyle = {
@@ -28,48 +28,47 @@ const formatResponse = (response) => {
           strokeColor: '#000',
           strokeWeight: 2,
           scale: 1,
-        }
+        };
       }
-      return(
-        {
-          type: 'marker',
-          position: {
-            lat: dataPoint.geometry.coordinates[1],
-            lng: dataPoint.geometry.coordinates[0]
-          },
-          icon: iconStyle,
-          defaultAnimation: 2,
-          windowContent: dataPoint.properties.disclosure_attributes.map(
-            (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
-          ),
-          windowStyle: {
-            overflow: 'auto',
-            minHeight: '300px'
-          }
-        }
-      )
+      return (
+      {
+        type: 'marker',
+        position: {
+          lat: dataPoint.geometry.coordinates[1],
+          lng: dataPoint.geometry.coordinates[0],
+        },
+        icon: iconStyle,
+        defaultAnimation: 2,
+        windowContent: dataPoint.properties.disclosure_attributes.map(
+          (attribute) => <div dangerouslySetInnerHTML={{ __html: attribute }} />,
+        ),
+        windowStyle: {
+          overflow: 'auto',
+          minHeight: '300px',
+        },
+      });
     });
 
-  var polygons = response.data
-    .filter(function(dataPoint) {
+  const polygons = response.data
+    .filter(function (dataPoint) {
       return dataPoint.geometry.type === 'Polygon';
     })
-    .map(function(dataPoint) {
+    .map(function (dataPoint) {
       return (
-        {
-          type: 'polygon',
-          paths: dataPoint.geometry.coordinates[0].map(function(data) {
-            return {lat: data[1], lng: data[0]}
-          }),
-          windowContent: dataPoint.properties.disclosure_attributes.map(
-            (attribute) => <div dangerouslySetInnerHTML={{__html: attribute}}/>
-          )
-        }
-      )
+      {
+        type: 'polygon',
+        paths: dataPoint.geometry.coordinates[0].map(function (data) {
+          return { lat: data[1], lng: data[0] };
+        }),
+        windowContent: dataPoint.properties.disclosure_attributes.map(
+          (attribute) => <div dangerouslySetInnerHTML={{ __html: attribute }} />,
+        ),
+      }
+      );
     });
 
-  return {markers: markers, polygons: polygons};
-}
+  return { markers: markers, polygons: polygons };
+};
 
 const VACANCY_CODES = {
   LEGALLY_ABANDONED: {
@@ -78,7 +77,7 @@ const VACANCY_CODES = {
     THREE_YEARS_PLUS: 'three_years_plus_violation_length',
     BOARDED_LONGTERM: 'boarded_longterm',
     VACANT_REGISTRY_FAILURE: 'vacant_registry_failure',
-    DANGEROUS_BUILDING: 'dangerous_building'
+    DANGEROUS_BUILDING: 'dangerous_building',
   },
   VACANT_INDICATOR: {
     TAX_DELINQUENT: 'tax_delinquent',
@@ -91,9 +90,9 @@ const VACANCY_CODES = {
     LANDBANK_VACANT_LOTS: 'landbank_vacant_lots',
     LANDBANK_VACANT_STRUCTURES: 'landbank_vacant_structures',
     DEMO_NEEDED: 'demo_needed',
-    FORECLOSED: 'foreclosed'
-  }
-}
+    FORECLOSED: 'foreclosed',
+  },
+};
 
 class Vacancy extends React.Component {
   constructor(props) {
@@ -101,8 +100,8 @@ class Vacancy extends React.Component {
 
     this.state = {
       filters: [],
-      filtersViewable: false
-    }
+      filtersViewable: false,
+    };
 
     this.toggleFilters = this.toggleFilters.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
@@ -111,24 +110,24 @@ class Vacancy extends React.Component {
   }
 
   handleFilterChange(event) {
-    var currentFilters = this.state.filters.splice(0),
-        vacancyCode = event.currentTarget.value,
-        filterIsActive = event.currentTarget.checked;
+    const currentFilters = this.state.filters.splice(0);
+    const vacancyCode = event.currentTarget.value;
+    const filterIsActive = event.currentTarget.checked;
 
-    if(filterIsActive) {
+    if (filterIsActive) {
       currentFilters.push(vacancyCode);
     } else {
-      var filterIndex = currentFilters.indexOf(vacancyCode);
+      const filterIndex = currentFilters.indexOf(vacancyCode);
       currentFilters.splice(filterIndex, 1);
     }
 
     this.setState({
-      filters: currentFilters
+      filters: currentFilters,
     });
   }
 
   exportPdf() {
-    window.open('/api/neighborhood/' + this.props.params.neighborhoodId + '/vacancy.pdf?filters[]=' + this.state.filters.join('&filters[]='))
+    window.open('/api/neighborhood/' + this.props.params.neighborhoodId + '/vacancy.pdf?filters[]=' + this.state.filters.join('&filters[]='));
   }
 
   queryDataset() {
@@ -137,12 +136,12 @@ class Vacancy extends React.Component {
     this.setState({
       ...this.state,
       loading: true,
-      filtersViewable: false
+      filtersViewable: false,
     });
 
     axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/vacancy?filters[]=' + this.state.filters.join('&filters[]='))
-      .then(function(response) {
-        var legend = 
+      .then(function (response) {
+        const legend =
         `<ul>
           <li><span class="legend-element" style="background-color: #CCC;"></span>Low Indication of Vacancy</li>
           <li><span class="legend-element" style="background-color: #888;"></span>Medium Indication of Vacancy</li>
@@ -152,55 +151,71 @@ class Vacancy extends React.Component {
         <ul>
           <li>Circle - Vacant Building</li>
           <li>Polygon - Vacant Lot</li>
-        </ul>`
+        </ul>`;
 
         _this.setState({
           ..._this.state,
-          loading: false
+          loading: false,
         });
 
         _this.props.updateMap(formatResponse(response));
         _this.props.updateLegend(legend);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         _this.setState({
-          loading: false
+          loading: false,
         });
 
-        toast(<p>We are sorry, but the application could not process your request. Please try again later.</p>, {
-          type: toast.TYPE.INFO
-        });
+        toast(<p>We are sorry, but the application could not process your request.
+          Please try again later.</p>, {
+            type: toast.TYPE.INFO,
+          });
       });
   }
 
   toggleFilters() {
     this.setState({
-      ... this.state,
-      filtersViewable: !this.state.filtersViewable
-    })
+      ...this.state,
+      filtersViewable: !this.state.filtersViewable,
+    });
   }
 
   mapFilters() {
-    var className = 'map-filters'
+    let className = 'map-filters';
 
-    if(!this.state.filtersViewable) {
-      className += ' hide'
+    if (!this.state.filtersViewable) {
+      className += ' hide';
     }
 
     return (
       <div className={className}>
         <div>
-          <p className="col-md-12">Only one category of data can be displayed at once. Selecting data in one category will disable the other column.</p>
+          <p className="col-md-12">Only one category of data can be displayed at once. Selecting
+            data in one category will disable the other column.</p>
           <div className="col-md-6">
             <h2>
               Legally Abandoned
-              <span className="fa fa-info-circle pull-right" data-tip data-for='legally-abandoned-info' data-event='click focus'></span>
-              <ReactTooltip id='legally-abandoned-info' className="vacancy-desriptor">
-                <p>Under the Missouri Abandoned Housing Act, a lawsuit maybe filed on properties that are legally abandoned allowing new owners to purchase the property. To be considered legally abandoned, a property must be vacant for at least 6 months, tax delinquent, and have open code violations.</p>
+              <span
+                className="fa fa-info-circle pull-right"
+                data-tip
+                data-for="legally-abandoned-info"
+                data-event="click focus"></span>
+              <ReactTooltip
+                id="legally-abandoned-info"
+                className="vacancy-desriptor"
+              >
+                <p>Under the Missouri Abandoned Housing Act, a lawsuit maybe filed on properties
+                  that are legally abandoned allowing new owners to purchase the property. To be
+                  considered legally abandoned, a property must be vacant for at least 6 months,
+                  tax delinquent, and have open code violations.</p>
               </ReactTooltip>
             </h2>
             <label>
-              <input type="checkbox" value={VACANCY_CODES.LEGALLY_ABANDONED.ALL_ABANDONED} onChange={this.handleFilterChange}/>&nbsp;
+              <input
+                type="checkbox"
+                value={VACANCY_CODES.LEGALLY_ABANDONED.ALL_ABANDONED}
+                onChange={this.handleFilterChange}
+              />&nbsp;
               View all Legally Abandoned Projects
             </label>
             <h4>Tax Delinquency (Jackson County)</h4>
