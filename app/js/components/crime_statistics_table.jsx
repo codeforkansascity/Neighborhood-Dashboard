@@ -85,23 +85,19 @@ class CrimeStatisticsTable extends React.Component {
         value: data.PROPERTY.FRAUD_IMPERSONATION,
       },
       {
-        title: 'Fraud, Impersonation',
+        title: 'Fraud, Welfare',
         value: data.PROPERTY.FRAUD_WELFARE,
       },
       {
-        title: 'Fraud, Welfare',
-        value: data.PROPERTY.ARSON,
-      },
-      {
         title: 'Fraud, Wire',
-        value: data.PROPERTY.ARSON,
+        value: data.PROPERTY.FRAUD_WIRE,
       },
     ];
 
     formattedData.SOCIETY.data = [
       {
         title: 'Fraud, Wire',
-        value: data.PROPERTY.ARSON,
+        value: data.PROPERTY.FRAUD_WIRE,
       },
     ];
 
@@ -131,8 +127,8 @@ class CrimeStatisticsTable extends React.Component {
           {dataGroup.count}
         </td>
       </tr>
-      {
-        dataGroup.data.map(function (data) {
+        {
+        dataGroup.data.map((data) => {
           return (
             <tr>
               <th>{data.title}</th>
@@ -152,20 +148,20 @@ class CrimeStatisticsTable extends React.Component {
       return (
         <table className="statistics-table">
           <thead>
-          <tr className="title-row">
-            <th>
-            </th>
-            <th colSpan="4">
-              Annual
-            </th>
-          </tr>
-          <tr className="sub-title-row">
-            <th>
-            </th>
-            <th colSpan="4">
-              Total Incidents from Previous Year
-            </th>
-          </tr>
+            <tr className="title-row">
+              <th>
+              </th>
+              <th colSpan="4">
+                Annual
+              </th>
+            </tr>
+            <tr className="sub-title-row">
+              <th>
+              </th>
+              <th colSpan="4">
+                Total Incidents from Previous Year
+              </th>
+            </tr>
           </thead>
           {this.expandableRow(data.PERSON)}
           {this.expandableRow(data.PROPERTY)}
