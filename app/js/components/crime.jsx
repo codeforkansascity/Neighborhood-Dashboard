@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
@@ -525,7 +526,7 @@ class Crime extends React.Component {
 
   outputDatetimePicker(onChangeFunction) {
     if (Modernizr.inputtypes.date) {
-      return <input type="date" className="form-control" onChange={onChangeFunction}/>
+      return <input type="date" className="form-control" onChange={onChangeFunction} />;
     } else {
       return <Datetime
         inputProps={{ placeholder: 'mm/dd/yyyy' }}
@@ -553,5 +554,10 @@ class Crime extends React.Component {
     );
   }
 }
+
+Crime.propTypes = {
+  neighborhoodId: PropTypes.number.isRequired,
+  params: PropTypes.object.isRequired,
+};
 
 export default Crime;

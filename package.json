@@ -24,6 +24,7 @@
     "jsx-loader": "^0.13.2",
     "modernizr-webpack-plugin": "^1.0.5",
     "moment": "^2.18.1",
+    "prop-types": "^15.5.10",
     "react": "^15.4.2",
     "react-datetime": "^2.8.8",
     "react-dom": "^15.4.2",
