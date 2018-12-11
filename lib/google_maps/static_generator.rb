@@ -15,7 +15,7 @@ module GoogleMaps
     private
 
     def api_key
-      '&key=AIzaSyAXZbTnHGQ-80pXHD5TK_Rq7LDuTWZSVaE'
+      '&key=AIzaSyBekrZ6VLHHIOfxpAjucOq-47DpBw51QGs'
     end
 
     def styles

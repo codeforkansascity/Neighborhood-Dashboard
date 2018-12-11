@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a42d0b68-65b5-4759-9fdf-cef18d3ba1c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/google_maps/static_generator.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/google_maps/static_generator.rb" afterDir="false" />
-    </list>
+    <list default="true" id="a42d0b68-65b5-4759-9fdf-cef18d3ba1c4" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,9 +41,12 @@
       </list>
     </option>
   </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="516" />
-    <option name="y" value="389" />
+    <option name="x" value="2195" />
+    <option name="y" value="-35" />
     <option name="width" value="1404" />
     <option name="height" value="811" />
   </component>
@@ -140,15 +140,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544491551195</updated>
-      <workItem from="1544491552627" duration="133000" />
+      <workItem from="1544491552627" duration="246000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133000" />
+    <option name="totallyTimeSpent" value="246000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="516" y="389" width="1404" height="811" extended-state="0" />
+    <frame x="1956" y="461" width="1404" height="811" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="npm" side_tool="true" />
