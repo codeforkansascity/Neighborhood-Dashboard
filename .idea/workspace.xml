@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a42d0b68-65b5-4759-9fdf-cef18d3ba1c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/google_maps/static_generator.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/google_maps/static_generator.rb" afterDir="false" />
-    </list>
+    <list default="true" id="a42d0b68-65b5-4759-9fdf-cef18d3ba1c4" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,12 +141,12 @@
       <option name="presentableId" value="Default" />
       <updated>1544491551195</updated>
       <workItem from="1544491552627" duration="246000" />
-      <workItem from="1544507747268" duration="556000" />
+      <workItem from="1544507747268" duration="1075000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="802000" />
+    <option name="totallyTimeSpent" value="1321000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2195" y="-35" width="1404" height="811" extended-state="0" />
