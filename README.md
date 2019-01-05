@@ -109,3 +109,9 @@ From there, run the following command to build the container
 After that is complete, take the container, and run it on the box with the following command.
 
     docker run -d -p 80:80 <docker_container_id_or_name>
+
+
+# Hosting
+
+We are in the process of gaining control of the http://www.kcneighborhoodstat.org/ domain.
+
