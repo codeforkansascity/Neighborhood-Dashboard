@@ -51,7 +51,7 @@ gem 'roo', '~> 2.5.0'
 # gem 'capistrano-rails', group: :development
 
 # Deploy to a passenger server
-gem "passenger", "5.0.25", require: "phusion_passenger/rack_handler"
+gem "passenger", "5.1.11", require: "phusion_passenger/rack_handler"
 
 # Encodes polylines for us
 gem "polylines", '~> 0.3.0'
