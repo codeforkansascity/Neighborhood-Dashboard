@@ -1,6 +1,6 @@
 module Entities
   class Crime < GeoJson
-    attr_accessor :ibrs, :description, :address, :from_date, :dataset_year, :source, :last_updated, :location_1
+    attr_accessor :ibrs,  :description, :address, :from_date, :dataset_year, :source, :last_updated, :location, :location_1
 
     def initialize(args)
       super(args)
@@ -23,7 +23,11 @@ module Entities
     end
 
     def geometry
-      location_1
+      if location.nil? 
+        location_1
+      else
+        location
+      end
     end
 
     def mappable?
