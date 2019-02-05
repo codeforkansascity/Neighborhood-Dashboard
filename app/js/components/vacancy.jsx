@@ -44,7 +44,6 @@ const formatResponse = (response) => {
         ),
         windowStyle: {
           overflow: 'auto',
-          minHeight: '300px',
         },
       });
     });
