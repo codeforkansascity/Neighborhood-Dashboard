@@ -128,9 +128,12 @@ module KcmoDatasets
     end
 
     def grouped_totals
-      query = "SELECT ibrs, count(ibrs) WHERE #{@neighborhood.within_polygon_query('location')} GROUP BY ibrs"
+      query = "SELECT DISTINCT report_no, ibrs WHERE #{@neighborhood.within_polygon_query('location')} |> SELECT ibrs, count(ibrs) GROUP BY ibrs"
 
       crimes = SocrataClient.get(API_DATASOURCE_2018, query)
+
+      puts("== TRACE == Grouped Crime Totals")
+      puts(crimes)
 
       crime_counts = crimes.inject({}) {|crime_hash, crime|
         crime_hash.merge(crime['ibrs'] => crime['count_ibrs'])
@@ -147,7 +150,7 @@ module KcmoDatasets
     end
 
     def build_socrata_query(location_field_name)
-      query = "SELECT * WHERE #{@neighborhood.within_polygon_query(location_field_name)}"
+      query = "SELECT DISTINCT report_no, ibrs, description, address, from_date, #{location_field_name} WHERE #{@neighborhood.within_polygon_query(location_field_name)}"
 
       beginning_date = parse_date(@options[:start_date])
       end_date = parse_date(@options[:end_date])
