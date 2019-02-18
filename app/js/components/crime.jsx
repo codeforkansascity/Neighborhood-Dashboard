@@ -8,15 +8,17 @@ import CrimeStatisticsTable from './crime_statistics_table';
 import '../modernizr-bundle';
 import moment from 'moment';
 
-const DEFAULT_START_DATE = '2018-01-01';
-const DEFAULT_END_DATE = '2018-12-31';
+const formatCoordinates = (point) => {
+    return '' + point[0] + point[1];
+};
 
 const formatResponse = (response) => {
     // aggregate crimes for a particular "address"
     // (to help protect privacy, KCMO locates a crime at the nearest intersection)
     var aggregatedCrimes = response.data.reduce(function(addresses, incident) {
-        if (incident.address in addresses) {
-            addresses[incident.address].properties.disclosure_attributes.push(
+        let crime_location = formatCoordinates(incident.geometry.coordinates);
+        if (crime_location in addresses) {
+            addresses[crime_location].properties.disclosure_attributes.push(
                 incident.properties.disclosure_attributes[0] + ' - ' + incident.properties.disclosure_attributes[2]
             );
         } else {
@@ -33,7 +35,7 @@ const formatResponse = (response) => {
             address.description = incident.description;
             address.geometry = incident.geometry;
             address.ibrs = incident.ibrs;
-            addresses[address.address] = address;
+            addresses[crime_location] = address;
         }
         return addresses;
     }, {});
