@@ -188,15 +188,18 @@ const CrimeCodeGroups = (code) => {
                 CRIME_CODES.PROSTITUTION_ASSISTANCE,
                 CRIME_CODES.PROSTITUTION_PURCHASING
             ];
+        case CRIME_CODES.SEX_OFFENSE_NONFORCIBLE:
+            return [
+                CRIME_CODES.SEX_OFFENSE_NONFORCIBLE,
+                CRIME_CODES.SEX_OFFENSE_NONFORCIBLE_INCEST,
+                CRIME_CODES.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE
+            ];
         case CRIME_CODES.SEX_OFFENSE:
             return [
                 CRIME_CODES.SEX_OFFENSE_RAPE,
                 CRIME_CODES.SEX_OFFENSE_SODOMY,
                 CRIME_CODES.SEX_OFFENSE_ASSAULT_WITH_OBJECT,
-                CRIME_CODES.SEX_OFFENSE_FONDLING,
-                CRIME_CODES.SEX_OFFENSE_NONFORCIBLE,
-                CRIME_CODES.SEX_OFFENSE_NONFORCIBLE_INCEST,
-                CRIME_CODES.SEX_OFFENSE_NONFORCIBLE_STATUATORY_RAPE
+                CRIME_CODES.SEX_OFFENSE_FONDLING
             ];
         default:
             return [ code ];
@@ -314,16 +317,13 @@ class Crime extends React.Component {
                     Homicide
                 </label>
                 <label>
-                    <input
-                        type="checkbox"
-                        value={CRIME_CODES.SEX_OFFENSE_FORCIBLE}
-                        onChange={this.handleFilterChange}
-                    />&nbsp; Sex Offense, Forcible
+                    <input type="checkbox" value={CRIME_CODES.SEX_OFFENSE} onChange={this.handleFilterChange} />&nbsp;
+                    Sex Offense, Forcible
                 </label>
                 <label>
                     <input
                         type="checkbox"
-                        value={CRIME_CODES.SEX_OFFENSE_NON_FORCIBLE}
+                        value={CRIME_CODES.SEX_OFFENSE_NONFORCIBLE}
                         onChange={this.handleFilterChange}
                     />&nbsp; Sex Offense, Non Forcible
                 </label>
@@ -338,7 +338,7 @@ class Crime extends React.Component {
             [
                 { value: CRIME_CODES.ARSON, label: 'Arson' },
                 { value: CRIME_CODES.BURGLARY, label: 'Burglary' },
-                { value: 'counterfeit', label: 'Counterfeiting' },
+                { value: CRIME_CODES.FORGERY, label: 'Forgery/Counterfeiting' },
                 { value: CRIME_CODES.EMBEZZLEMENT, label: 'Embezzlement' },
                 { value: CRIME_CODES.EXTORTION, label: 'Extortion' },
                 { value: CRIME_CODES.FRAUD, label: 'Fraud' }
@@ -370,7 +370,7 @@ class Crime extends React.Component {
                 { value: CRIME_CODES.DISORDERLY_CONDUCT, label: 'Disorderly Conduct' },
                 { value: CRIME_CODES.DUI, label: 'DUI' },
                 { value: CRIME_CODES.DRUNKNESS, label: 'Drunkenness' },
-                { value: 'domestic', label: 'Domestic Nonviolent' } // should this be matched to FAMILY_OFFENSES_NON_VIOLENT: '90F',?
+                { value: CRIME_CODES.FAMILY_OFFENSES_NON_VIOLENT, label: 'Domestic Nonviolent' }
             ],
             [
                 { value: CRIME_CODES.GAMBLING, label: 'Gambling' },
