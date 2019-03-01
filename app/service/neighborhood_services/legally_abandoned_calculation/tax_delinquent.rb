@@ -1,12 +1,11 @@
 class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
-  START_YEAR = 2015
+  START_YEAR = 2018
   def initialize(neighborhood)
     @neighborhood = neighborhood
   end
 
   def calculated_data
     addresses = {}
-    start_year = [2015, 2014, 2013, 2012]
 
     @neighborhood.addresses.each do |taxed_address|
       current_address = taxed_address['street_address']

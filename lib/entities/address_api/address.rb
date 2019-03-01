@@ -36,7 +36,7 @@ module Entities::AddressApi
 
     def consecutive_years
       consecutive_years = 0
-      possible_years = Array(2010..2015).reverse
+      possible_years = Array(2014..2018).reverse
 
       possible_years.each do |year|
         if self.instance_variable_get("@county_delinquent_tax_#{year}").to_f > 0
@@ -65,7 +65,7 @@ module Entities::AddressApi
 
     def tax_delinquent_years
       years = []
-      possible_years = Array(2010..2015).reverse
+      possible_years = Array(2014..2018).reverse
 
       possible_years.each do |year|
         if self.instance_variable_get("@county_delinquent_tax_#{year}").to_f > 0
