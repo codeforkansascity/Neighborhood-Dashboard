@@ -134,7 +134,7 @@ class Miscellaenous extends React.Component {
               value="problem_renters"
               onChange={this.handleFilterChange}
             />&nbsp;
-            Potential Problem Renters
+            Potential Problem Landlords (Rental properties with code violations)
           </label>
         </div>
         {this.filtersFooter()}

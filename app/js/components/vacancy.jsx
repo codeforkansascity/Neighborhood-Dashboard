@@ -140,17 +140,16 @@ class Vacancy extends React.Component {
 
     axios.get('/api/neighborhood/' + this.props.params.neighborhoodId + '/vacancy?filters[]=' + this.state.filters.join('&filters[]='))
       .then((response) => {
-        const legend =
-        `<ul>
-          <li><span class="legend-element" style="background-color: #CCC;"></span>Low Indication of Vacancy</li>
-          <li><span class="legend-element" style="background-color: #888;"></span>Medium Indication of Vacancy</li>
-          <li><span class="legend-element" style="background-color: #444;"></span>High Indication of Vacancy</li>
-          <li><span class="legend-element" style="border: #000 solid 1px; background-color: #000;"></span>Very High Indication of Vacancy</li>
-        </ul>
-        <ul>
-          <li>Circle - Vacant Building</li>
-          <li>Polygon - Vacant Lot</li>
-        </ul>`;
+        let legend = null;
+        if (_this.state.filters.includes(VACANCY_CODES.LEGALLY_ABANDONED.ALL_ABANDONED)) {
+          legend =
+          `<ul>
+            <li><span class="legend-element" style="background-color: #CCC;"></span>Weak Abandoned Housing Act Case</li>
+            <li><span class="legend-element" style="background-color: #888;"></span>Medium Abandoned Housing Act Case</li>
+            <li><span class="legend-element" style="background-color: #444;"></span>Strong Abandoned Housing Act Case</li>
+            <li><span class="legend-element" style="border: #000 solid 1px; background-color: #000;"></span>Very Strong Abandoned Housing Act Case</li>
+          </ul>`;
+        }
 
         _this.setState({
           ..._this.state,

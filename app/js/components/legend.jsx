@@ -22,6 +22,12 @@ class Legend extends React.Component {
         } else {
           this.state.legendToggle.innerHTML = 'Display Legend';
         }
+
+        if (!this.state.legend.innerHTML) {
+          this.state.legend.className = 'legend clearfix';
+          this.state.legend.appendChild(this.state.legendToggle);
+          this.state.legend.appendChild(this.state.legendContent);
+        }
       } else if (this.props.legend && this.props.map && this.props.map.controls) {
         this.state.legendContent = document.createElement('div');
         this.state.legendContent.innerHTML = this.props.legend;
