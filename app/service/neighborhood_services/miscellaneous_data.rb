@@ -13,8 +13,8 @@ class NeighborhoodServices::MiscellaneousData
       data << NeighborhoodServices::MiscellaneousData::SidewalkData.new(@neighborhood, filters_copy).data
     end
 
-    if contains?(data_filters, NeighborhoodServices::MiscellaneousData::ProblemRenters::POSSIBLE_FILTERS)
-      data << NeighborhoodServices::MiscellaneousData::ProblemRenters.new(@neighborhood, filters_copy).data
+    if contains?(data_filters, NeighborhoodServices::MiscellaneousData::ProblemLandlords::POSSIBLE_FILTERS)
+      data << NeighborhoodServices::MiscellaneousData::ProblemLandlords.new(@neighborhood, filters_copy).data
     end
 
     data.flatten

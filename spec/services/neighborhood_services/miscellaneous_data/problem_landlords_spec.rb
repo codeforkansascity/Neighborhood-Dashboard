@@ -1,5 +1,5 @@
-describe NeighborhoodServices::MiscellaneousData::ProblemRenters do
-  subject { NeighborhoodServices::MiscellaneousData::ProblemRenters.new(neighborhood, filters) }
+describe NeighborhoodServices::MiscellaneousData::ProblemLandlords do
+  subject { NeighborhoodServices::MiscellaneousData::ProblemLandlords.new(neighborhood, filters) }
 
   let(:filters) { [] }
   let(:non_renter_property) {

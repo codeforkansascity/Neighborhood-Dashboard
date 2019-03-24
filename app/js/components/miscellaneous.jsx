@@ -131,7 +131,7 @@ class Miscellaenous extends React.Component {
           <label>
             <input
               type="checkbox"
-              value="problem_renters"
+              value="problem_landlords"
               onChange={this.handleFilterChange}
             />&nbsp;
             Potential Problem Landlords (Rental properties with code violations)

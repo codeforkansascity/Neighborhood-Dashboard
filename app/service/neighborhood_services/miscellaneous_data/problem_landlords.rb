@@ -1,5 +1,5 @@
-class NeighborhoodServices::MiscellaneousData::ProblemRenters
-  POSSIBLE_FILTERS = ['problem_renters']
+class NeighborhoodServices::MiscellaneousData::ProblemLandlords
+  POSSIBLE_FILTERS = ['problem_landlords']
 
   def initialize(neighborhood, filters = {})
     @neighborhood = neighborhood
@@ -11,7 +11,7 @@ class NeighborhoodServices::MiscellaneousData::ProblemRenters
 
     @neighborhood.addresses.each do |address|
       if address['county_owner_address'] != address['street_address']
-        data[address['street_address'].downcase] = Entities::AddressApi::PotentialRenterProblem.deserialize(address)
+        data[address['street_address'].downcase] = Entities::AddressApi::PotentialLandlordProblem.deserialize(address)
       end
     end
 
