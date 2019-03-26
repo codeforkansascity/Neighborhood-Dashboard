@@ -1,5 +1,5 @@
 import { connect, Connector } from 'react-redux';
-import Miscellaneous from '../components/Miscellaneous';
+import Miscellaneous from '../components/miscellaneous';
 import { neighborhoodReset, updateMap, updateLegend } from '../actions/index'
 
 const mapStateToProps = (state) => {
