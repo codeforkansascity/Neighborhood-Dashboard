@@ -58,6 +58,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack",
     "webpack-dev-server": "webpack && webpack-dev-server --config webpack.hot.config.js --hot --progress --inline",
-    "heroku-postbuild": "webpack"
+    "heroku-postbuild": "webpack -p"
   }
 }
