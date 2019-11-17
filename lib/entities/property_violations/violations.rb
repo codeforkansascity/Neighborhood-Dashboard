@@ -10,7 +10,7 @@ module Entities::PropertyViolations
     end
 
     def disclosure_attributes
-      title = "<h3 class='info-window-header'>Property Violations:</h3>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'>Source</a>"
+      title = "<h3 class='info-window-header'>Property Violations:</h3>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}' target='_blank'>Source</a>"
       last_updated = "Last Updated Date: #{last_updated_date}"
       location_address = "<b>Address:</b>&nbsp;#{address}"
       [title, last_updated, location_address] + super

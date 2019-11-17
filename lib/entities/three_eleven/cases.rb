@@ -9,7 +9,7 @@ module Entities::ThreeEleven
     end
 
     def disclosure_attributes
-      title = "<h3 class='info-window-header'>KCMO 311 Data:</h3>&nbsp;<a href='#{KcmoDatasets::ThreeElevenCases::SOURCE_URI}'>Source</a>"
+      title = "<h3 class='info-window-header'>KCMO 311 Data:</h3>&nbsp;<a href='#{KcmoDatasets::ThreeElevenCases::SOURCE_URI}' target='_blank'>Source</a>"
       last_updated = "Last Updated Date: #{last_updated_date}"
       location_address = "<b>Address:</b>&nbsp;#{address}"
       [title, last_updated, location_address] + super

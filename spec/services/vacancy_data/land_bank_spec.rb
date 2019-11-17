@@ -137,7 +137,7 @@ RSpec.describe NeighborhoodServices::VacancyData::LandBank, :type => :controller
             "parcel_number"=>"parcel-1",
             "color"=>"#000000",
             disclosure_attributes: [
-              "<h3 class='info-window-header'>Land Bank Data:</h3>&nbsp;<a href='#{KcmoDatasets::LandBankData::SOURCE_URI}'>Source</a>",
+              "<h3 class='info-window-header'>Land Bank Data:</h3>&nbsp;<a href='#{KcmoDatasets::LandBankData::SOURCE_URI}' target='_blank'>Source</a>",
               "Last Updated Date: 06/03/2015",
               "<b>Address:</b>&nbsp;0 No Address",
               "<b>Foreclosure Year:</b> "

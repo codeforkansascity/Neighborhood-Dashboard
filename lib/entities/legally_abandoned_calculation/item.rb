@@ -110,7 +110,7 @@ module Entities::LegallyAbandonedCalculation
     def code_violation_disclosure_attributes
       return [] unless @address_violation_count.present?
 
-      source_link = "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}'><small>(Source)</small></a>"
+      source_link = "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}' target='_blank'><small>(Source)</small></a>"
 
       [
         "<h2 class='info-window-header'>Code Violation Count</h2>&nbsp;#{source_link}",
@@ -121,7 +121,7 @@ module Entities::LegallyAbandonedCalculation
     def dangerous_buildings_disclosure_attributes
       return [] unless @dangerous_buildings.present?
 
-      source_link = "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}'><small>(Source)</small></a>"
+      source_link = "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}' target='_blank'><small>(Source)</small></a>"
 
       [
         "<h2 class='info-window-header'>Dangerous Building</h2>&nbsp;#{source_link}",
@@ -146,14 +146,14 @@ module Entities::LegallyAbandonedCalculation
       return [] unless @tax_delinquent_data.present?
 
       [
-        "<h2 class='info-window-header'>Tax Delinquency</h2>&nbsp;<a href='#{@tax_delinquent_data[:source]}'><small>(Source)</small></a>",
+        "<h2 class='info-window-header'>Tax Delinquency</h2>&nbsp;<a href='#{@tax_delinquent_data[:source]}' target='_blank'><small>(Source)</small></a>",
         "#{@tax_delinquent_data[:consecutive_years]} year(s) Tax Delinquent"
       ]
     end
 
     def vacant_registry_disclosure_attributes
       return [] unless @vacant_registry_failure_data.present?
-      source_link = "<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'><small>(Source)</small></a>"
+      source_link = "<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}' target='_blank'><small>(Source)</small></a>"
 
       [
         "<h2 class='info-window-header'>Property Violations</h2>&nbsp;#{source_link}",

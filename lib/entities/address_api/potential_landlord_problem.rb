@@ -18,7 +18,7 @@ module Entities::AddressApi
     end
 
     def disclosure_attributes
-      title = "<h3 class='info-window-header'>Potential Landlord Problem: </h3>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'>Source</a>"
+      title = "<h3 class='info-window-header'>Potential Landlord Problem: </h3>&nbsp;<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}' target='_blank'>Source</a>"
       full_address = "#{@street_address.titleize}<br/>#{@city.try(&:titleize)} #{@state}, #{@census_zip}"
       owner_address = "<address>#{@county_owner_address}<br/>#{@county_owner_city} #{@county_owner_state}, #{@county_owner_zip}</address>"
 

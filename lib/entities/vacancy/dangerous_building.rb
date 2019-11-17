@@ -13,7 +13,7 @@ module Entities::Vacancy
     end
 
     def disclosure_attributes
-      source_link = "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}'><small>(Source)</small></a>"
+      source_link = "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}' target='_blank'><small>(Source)</small></a>"
 
       [
         "<h2 class='info-window-header'>Dangerous Building</h2>&nbsp;#{source_link}",

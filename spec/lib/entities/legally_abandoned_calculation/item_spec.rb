@@ -212,7 +212,7 @@ RSpec.describe Entities::LegallyAbandonedCalculation::Item do
     end
 
     describe '#dangerous building headers' do
-      let (:source_link) { "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}'><small>(Source)</small></a>" }
+      let (:source_link) { "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}' target='_blank'><small>(Source)</small></a>" }
 
       context 'when dangerous building data is not available' do
         it 'does not add any three eleven headers to the disclosure attributes' do
@@ -250,7 +250,7 @@ RSpec.describe Entities::LegallyAbandonedCalculation::Item do
     end
 
     describe '#vacant registry failure headers' do
-      let (:source_link) { "<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}'><small>(Source)</small></a>" }
+      let (:source_link) { "<a href='#{KcmoDatasets::PropertyViolations::SOURCE_URI}' target='_blank'><small>(Source)</small></a>" }
 
       context 'when vacant registry violation data is not available' do
         it 'does not add any three eleven headers to the disclosure attributes' do
@@ -318,7 +318,7 @@ RSpec.describe Entities::LegallyAbandonedCalculation::Item do
     end
 
     describe '#code violation count attributes' do
-      let (:source_link) { "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}'><small>(Source)</small></a>" }
+      let (:source_link) { "<a href='#{KcmoDatasets::DangerousBuildings::SOURCE_URI}' target='_blank'><small>(Source)</small></a>" }
 
       context 'when tax delinquent data is not available' do
         it 'does not add any three eleven headers to the disclosure attributes' do

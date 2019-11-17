@@ -3,7 +3,7 @@ module Entities::ThreeEleven
     attr_accessor :street_address, :creation_date, :case_id, :request_type, :zip_code, :address_with_geocode, :metadata
 
     def disclosure_attributes
-      title = "<h3 class='info-window-header'>Sidewalk Issue:</h3>&nbsp;<a href='#{KcmoDatasets::ThreeElevenCases::SOURCE_URI}'>Source</a>"
+      title = "<h3 class='info-window-header'>Sidewalk Issue:</h3>&nbsp;<a href='#{KcmoDatasets::ThreeElevenCases::SOURCE_URI}' target='_blank'>Source</a>"
       last_updated = "Last Updated Date: #{last_updated_date}"
       location_address = "<b>Address:</b>&nbsp;#{address.try(&:titleize) || 'N/A'}"
       [
