@@ -115,3 +115,16 @@ After that is complete, take the container, and run it on the box with the follo
 
 We are in the process of gaining control of the http://www.kcneighborhoodstat.org/ domain.
 
+# Vacancy Indicator Sources
+
+The Vacancy tab currently includes filters which pull data from a variety of sources to display on the map:
+
+*  **Land Bank Property with Building**: KCMO Land Bank Data dataset where property_condition like 'Structure%'
+*  **Land Bank Property - Vacant Lot, No Building**: KCMO Land Bank Data dataset where property_condition like 'Vacant lot or land%'
+*  **Land Bank Property with Demo Needed**: KCMO Land Bank Data dataset where demo_needed = 'Y'
+*  **Failure to Register as Vacant**: KCMO Property Violations dataset where violation_code = 'NSVACANT'
+*  **Vacant Structure**: KCMO 311 Call dataset where request_type in ('Animals / Pets-Rat Treatment-Vacant Home','Animals / Pets-Rat Treatment-Vacant Property','Cleaning vacant Land Trust Lots','Mowing / Weeds-Public Property-City Vacant Lot','Nuisance Violations on Private Property Vacant Structure','Vacant Structure Open to Entry')
+*  **311 Open Cases**: KCMO 311 Call dataset where status='OPEN'
+*  **KCMO Dangerous Buildings**: KCMO Dangerous Buildings dataset (no additional criteria)
+*  **Vacant and Boarded**: KCMO Property Violations dataset where violation_code = 'NSBOARD01'
+*  **Tax Delinquent**: CodeForKC Address API which includes county_delinquent_tax_[year] fields for each year
