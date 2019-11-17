@@ -14,7 +14,7 @@ gem 'bootstrap-sass', '~> 3.3.4'
 # Use font-awesome for icons
 gem 'font-awesome-rails', '~> 4.7.0'
 # Used for web scraping
-gem 'nokogiri', '~> 1.6.6.2'
+gem 'nokogiri', '~> 1.10.4'
 # Compares strings to see how similar they are to each other
 gem 'similar_text'
 
