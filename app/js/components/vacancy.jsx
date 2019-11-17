@@ -271,7 +271,7 @@ class Vacancy extends React.Component {
                 value={VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_STRUCTURES}
                 onChange={this.handleFilterChange}
               />&nbsp;
-              Vacant Building - Land Bank Property (City of KCMO)
+              Land Bank Property with Building (City of KCMO Land Bank Data)
             </label>
             <label>
               <input
@@ -281,7 +281,7 @@ class Vacancy extends React.Component {
                 type="checkbox"
                 value={VACANCY_CODES.VACANT_INDICATOR.LANDBANK_VACANT_LOTS}
                 onChange={this.handleFilterChange} />&nbsp;
-              Vacant Lot - Land Bank Property (City of KCMO)
+              Land Bank Property - Vacant Lot, No Building (City of KCMO Land Bank Data)
             </label>
             <label>
               <input
@@ -290,7 +290,7 @@ class Vacancy extends React.Component {
                 value={VACANCY_CODES.VACANT_INDICATOR.DEMO_NEEDED}
                 onChange={this.handleFilterChange}
               />&nbsp;
-              Demo Needed - Land Bank Property (KCMO Land Bank Property)
+              Land Bank Property with Demo Needed (City of KCMO Land Bank Data)
             </label>
             <label>
               <input
@@ -301,7 +301,7 @@ class Vacancy extends React.Component {
                 value={VACANCY_CODES.VACANT_INDICATOR.VACANT_REGISTRY_FAILURE}
                 onChange={this.handleFilterChange}
               />&nbsp;
-              Failure to Register as Vacant (City of KCMO)
+              Failure to Register as Vacant (City of KCMO Property Violations Data)
             </label>
             <label>
               <input
