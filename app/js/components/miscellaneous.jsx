@@ -36,7 +36,7 @@ class Miscellaenous extends React.Component {
 
     this.state = {
       filters: [],
-      filtersViewable: false,
+      filtersViewable: true,
       viewingReport: false,
     };
 
@@ -63,7 +63,7 @@ class Miscellaenous extends React.Component {
       <div>
         <div className="map-filter-actions pull-right">
           <button className="btn btn-primary" type="button">Reset</button>&nbsp;
-          <button className="btn btn-primary" onClick={this.queryDataset}>Done</button>
+          <button className="btn btn-primary" onClick={this.queryDataset}>Apply</button>
         </div>
       </div>
     );

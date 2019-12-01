@@ -212,7 +212,7 @@ class Crime extends React.Component {
 
         this.state = {
             filters: [],
-            filtersViewable: false,
+            filtersViewable: true,
             reportInformation: null,
             viewingReport: false
         };
@@ -397,7 +397,7 @@ class Crime extends React.Component {
                     </button>
                     &nbsp;
                     <button className="btn btn-primary" onClick={this.queryDataset}>
-                        Done
+                        Apply
                     </button>
                 </div>
             </div>
