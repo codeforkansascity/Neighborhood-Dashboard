@@ -146,7 +146,7 @@ module Entities::LegallyAbandonedCalculation
       return [] unless @tax_delinquent_data.present?
 
       [
-        "<h2 class='info-window-header'>Tax Delinquency</h2>&nbsp;<a href='#{@tax_delinquent_data[:tax_delinquent_source]}' target='_blank'><small>(Source)</small></a>",
+        "<h2 class='info-window-header'>Tax Delinquency</h2>&nbsp;<a href='#{@tax_delinquent_data[:source]}' target='_blank'><small>(Source)</small></a>",
         "#{@tax_delinquent_data[:consecutive_years]} year(s) Tax Delinquent"
       ]
     end

@@ -24,8 +24,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/tax_delinquency/:county_id', to: 'tax_delinquency#index'
-
   get "/*path" => 'home#index', via: [:get]
 
   root 'home#index'
