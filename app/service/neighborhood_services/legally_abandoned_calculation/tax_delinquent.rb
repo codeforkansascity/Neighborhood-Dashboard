@@ -21,6 +21,7 @@ class NeighborhoodServices::LegallyAbandonedCalculation::TaxDelinquent
 
         addresses[current_address.downcase] = {
           source: @neighborhood.address_source_uri,
+          tax_delinquent_source: URI::escape("tax_delinquency/#{taxed_address['county_id']}"),
           longitude: taxed_address['census_longitude'].to_f,
           latitude: taxed_address['census_latitude'].to_f,
           consecutive_years: consecutive_years,

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tax Delinquency Info</title>
+    <style>
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+      h2 {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+
+      table {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      th, td {
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body >
+    <h2><%= @full_address %></h2>
+
+    <table border="1">
+      <tr>
+        <th>Year</th>
+        <th>Delinquent Tax</th>
+      </tr>
+
+      <tr>
+        <td>2014</td>
+        <td>$<%= @address_data['county_delinquent_tax_2014'] or 0 %></td>
+      </tr>
+
+      <tr>
+        <td>2015</td>
+        <td>$<%= @address_data['county_delinquent_tax_2015'] or 0 %></td>
+      </tr>
+
+      <tr>
+        <td>2016</td>
+        <td>$<%= @address_data['county_delinquent_tax_2016'] or 0 %></td>
+      </tr>
+
+      <tr>
+        <td>2017</td>
+        <td>$<%= @address_data['county_delinquent_tax_2017'] or 0 %></td>
+      </tr>
+
+      <tr>
+        <td>2018</td>
+        <td>$<%= @address_data['county_delinquent_tax_2018'] or 0 %></td>
+      </tr>
+    </table>
+  </body>
+</html>
