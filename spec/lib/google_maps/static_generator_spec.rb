@@ -25,7 +25,7 @@ RSpec.describe GoogleMaps::StaticGenerator do
 
   describe '#generate_static_api_uri' do
     it 'includes the correct api key' do
-      expect(subject.generate_static_api_uri).to include('key=AIzaSyCJnHS662l7UYK3EKYDwwuGtaFfnlc1qBU')
+      expect(subject.generate_static_api_uri).to include('key=AIzaSyAhJj7KI0SOUpT3-dUrT5bGHibT9fD7Zd0')
     end
 
     it 'includes the correct size' do
