@@ -10,7 +10,7 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 # Use Bootstrap for styling the application
-gem 'bootstrap-sass', '~> 3.3.4'
+gem 'bootstrap-sass', '~> 3.4.1'
 # Use font-awesome for icons
 gem 'font-awesome-rails', '~> 4.7.0'
 # Used for web scraping
