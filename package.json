@@ -20,7 +20,7 @@
     "babel-preset-react": "^6.23.0",
     "bower": "^1.7.2",
     "file-loader": "^0.11.1",
-    "jquery": "^2.1.4",
+    "jquery": "^3.5.0",
     "jsx-loader": "^0.13.2",
     "modernizr-webpack-plugin": "^1.0.5",
     "moment": "^2.18.1",
